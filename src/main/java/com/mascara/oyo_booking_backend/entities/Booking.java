@@ -1,5 +1,7 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -52,4 +54,8 @@ public class Booking {
 
     @Column(name = "num_of_room")
     private String numOfRoom;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private BookingStatusEnum bookingStatusEnum;
 }

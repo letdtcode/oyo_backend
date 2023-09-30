@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -24,5 +26,9 @@ public class Role {
     private UUID id;
 
     @Column(name = "role_name")
-    private String roleName;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum roleName;
+
+    @ManyToMany(mappedBy = "roleSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<User> userSet;
 }

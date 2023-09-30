@@ -23,9 +23,10 @@ public class Cart {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "user_id", columnDefinition = "BINARY(16)")
-    private UUID userId;
-
     @Column(name = "total_price")
     private BigDecimal totalPrice;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id",columnDefinition = "BINARY(16)")
+    private User user;
 }

@@ -25,4 +25,19 @@ public class ImageRoom {
 
     @Column(name = "img_room_link")
     private String imgRoomLink;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "room_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_image_room_room"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private Room room;
+
+    @Column(name = "room_id", columnDefinition = "BINARY(16)")
+    private UUID roomId;
 }

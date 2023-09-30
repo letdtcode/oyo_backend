@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -25,4 +26,12 @@ public class FacilityAccom {
 
     @Column(name = "facility_name")
     private String facilityName;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "facility_accom_accom",
+            joinColumns = {@JoinColumn(name = "facility_accom_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "accom_id", referencedColumnName = "id")}
+    )
+    private Set<AccomPlace> accomPlaceSet;
 }

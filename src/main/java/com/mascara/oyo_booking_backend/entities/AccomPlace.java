@@ -7,6 +7,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -35,7 +36,7 @@ public class AccomPlace {
     private Float gradeRate;
 
     @Column(name = "num_review")
-    private Double numReview;
+    private Long numReview;
 
     @ManyToOne
     @JoinColumn(
@@ -84,5 +85,16 @@ public class AccomPlace {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)
-    private List<ImageAccom> imageAccoms;
+    private Set<ImageAccom> imageAccoms;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<WishItem> wishItemSet;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<Room> roomSet;
+
+    @ManyToMany(mappedBy = "accomPlaceSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<FacilityAccom> facilityAccomSet;
 }

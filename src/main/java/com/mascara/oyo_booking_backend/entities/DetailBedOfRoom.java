@@ -23,9 +23,36 @@ public class DetailBedOfRoom {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "bed_cate_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_detail_bed_bed_categories"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private BedCategories bedCategories;
+
     @Column(name = "bed_cate_id", columnDefinition = "BINARY(16)")
     private UUID bedCateId;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+    @ManyToOne
+    @JoinColumn(
+            name = "room_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_detail_bed_room"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private Room room;
+
+    @Column(name = "room_id", columnDefinition = "BINARY(16)")
+    private UUID roomId;
 }

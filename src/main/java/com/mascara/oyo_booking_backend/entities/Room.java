@@ -7,8 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -54,4 +57,54 @@ public class Room {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private CommonStatusEnum status;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<ImageRoom> imageRoomSet;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<DetailBedOfRoom> detailBedOfRoomSet;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<Review> reviewSet;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "accom_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_room_accom"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private AccomPlace accomPlace;
+
+    @Column(name = "accom_id", columnDefinition = "BINARY(16)")
+    private UUID accomId;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "room_facility_room",
+            joinColumns = {@JoinColumn(name = "room_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "facility_room_id", referencedColumnName = "id")}
+    )
+    private Set<FacilityRoom> facilityRoomSet;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "room_cate_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_room_room_cate"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private RoomCategories roomCategories;
+
+    @Column(name = "room_cate_id", columnDefinition = "BINARY(16)")
+    private UUID roomCateId;
 }

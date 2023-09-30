@@ -23,8 +23,32 @@ public class WishItem {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "accom_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_wish_item_accom"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private AccomPlace accomPlace;
+
     @Column(name = "accom_id", columnDefinition = "BINARY(16)")
     private UUID accomId;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "wish_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_wish_item_wish_list"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private WishList wishList;
 
     @Column(name = "wish_id", columnDefinition = "BINARY(16)")
     private UUID wishId;

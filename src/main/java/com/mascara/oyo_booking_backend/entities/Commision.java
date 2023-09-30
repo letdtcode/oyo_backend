@@ -10,40 +10,46 @@ import lombok.experimental.SuperBuilder;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+/**
+ * Created by: IntelliJ IDEA
+ * User      : boyng
+ * Date      : 30/09/2023
+ * Time      : 10:34 CH
+ * Filename  : Commision
+ */
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="review")
-public class Review {
+@Table(name="commision")
+public class Commision {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "comm_pay")
+    private BigDecimal commPay;
 
-    @Column(name = "content")
-    private String content;
-
-    @Column(name = "rate_star")
-    private Float rateStar;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_code")
+    private Booking bookingCode;
 
     @ManyToOne
     @JoinColumn(
-            name = "room_id",
+            name = "comm_list_id",
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_association_review_room"),
+            foreignKey = @ForeignKey(name = "fk_association_comm_comm_list"),
             nullable = false,
             insertable = false,
             updatable = false,
             columnDefinition = "BINARY(16)"
     )
-    private Room room;
+    private CommisionList commisionList;
 
-    @Column(name = "room_id", columnDefinition = "BINARY(16)")
-    private UUID roomId;
+    @Column(name = "comm_list_id", columnDefinition = "BINARY(16)")
+    private UUID commListId;
 }
