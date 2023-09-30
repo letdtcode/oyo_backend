@@ -23,8 +23,32 @@ public class CartItem {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "room_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_cart_item_room"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private Room room;
+
     @Column(name = "room_id", columnDefinition = "BINARY(16)")
     private UUID roomId;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "cart_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_cart_item_cart"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private Cart cart;
 
     @Column(name = "cart_id", columnDefinition = "BINARY(16)")
     private UUID cartId;

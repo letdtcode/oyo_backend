@@ -13,23 +13,35 @@ import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Created by: IntelliJ IDEA
+ * User      : boyng
+ * Date      : 30/09/2023
+ * Time      : 10:35 CH
+ * Filename  : CommisionList
+ */
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="facility_room_categories")
-public class FacilityRoomCategories {
+@Table(name="commision_list")
+public class CommisionList {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "faci_romm_cate_name", columnDefinition = "NVARCHAR(255) NOT NULL")
-    private String faciRoomCateName;
+    @Column(name = "discount")
+    private Float discount;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "facilityRoomCategories")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "commisionList")
     @Fetch(FetchMode.SUBSELECT)
-    private Set<FacilityRoom> facilityRoomSet;
+    private Set<Commision> commisionSet;
 }
