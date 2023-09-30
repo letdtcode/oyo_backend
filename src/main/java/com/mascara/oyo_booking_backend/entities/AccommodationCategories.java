@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,25 +19,20 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="wish_list")
-public class WishList {
+@Table(name="accommodation_categories")
+public class AccommodationCategories {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-//    @Column(name = "room_id", columnDefinition = "BINARY(16)")
-//    private UUID roomId;
-//
-//    @Column(name = "cart_id", columnDefinition = "BINARY(16)")
-//    private UUID cartId;
-//
-//    @Column(name = "quantity")
-//    private Integer quantity;
-//
-//    @Column(name = "total_price_item")
-//    private BigDecimal totalPriceItem;
+    @Column(name = "accom_cate_name", columnDefinition = "NOT NULL")
+    private String accomCateName;
 
+    @Column(name = "description")
+    private String description;
 
-    private List<WishItem> wishItem;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodationCategories")
+    @Fetch(FetchMode.SUBSELECT)
+    private List<AccomPlace> accomPlaces;
 }

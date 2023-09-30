@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @SuperBuilder
@@ -16,19 +15,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="review")
-public class Review {
+@Table(name="bed_categories")
+public class BedCategories {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "content")
-    private String content;
-
-    @Column(name = "rate_star")
-    private Float rateStar;
+    @Column(name = "bed_name", columnDefinition = "NVARCHAR(255) NOT NULL")
+    private String bedName;
 }

@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @SuperBuilder
@@ -17,25 +16,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="wish_list")
-public class WishList {
+@Table(name="facility_accom_categories")
+public class FacilityAccomCategories {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-//    @Column(name = "room_id", columnDefinition = "BINARY(16)")
-//    private UUID roomId;
-//
-//    @Column(name = "cart_id", columnDefinition = "BINARY(16)")
-//    private UUID cartId;
-//
-//    @Column(name = "quantity")
-//    private Integer quantity;
-//
-//    @Column(name = "total_price_item")
-//    private BigDecimal totalPriceItem;
-
-
-    private List<WishItem> wishItem;
+    @Column(name = "faci_accom_cate_name")
+    private String faciAccomCateName;
 }
