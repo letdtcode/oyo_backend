@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,4 +33,19 @@ public class FacilityAccom {
             inverseJoinColumns = {@JoinColumn(name = "accom_id", referencedColumnName = "id")}
     )
     private Set<AccomPlace> accomPlaceSet;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "facility_cate_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_facil_accom_facil_acc_cate"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private FacilityAccomCategories facilityAccomCategories;
+
+    @Column(name = "facility_cate_id", columnDefinition = "BINARY(16)")
+    private UUID facilityCateId;
 }

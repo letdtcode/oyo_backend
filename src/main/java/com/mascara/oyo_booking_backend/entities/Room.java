@@ -70,6 +70,14 @@ public class Room {
     @Fetch(FetchMode.SUBSELECT)
     private Set<Review> reviewSet;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<CartItem> cartItemSet;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<Booking> bookingSet;
+
     @ManyToOne
     @JoinColumn(
             name = "accom_id",

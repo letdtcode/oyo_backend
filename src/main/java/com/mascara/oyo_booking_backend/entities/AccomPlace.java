@@ -1,5 +1,7 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -97,4 +99,8 @@ public class AccomPlace {
 
     @ManyToMany(mappedBy = "accomPlaceSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<FacilityAccom> facilityAccomSet;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private CommonStatusEnum status;
 }

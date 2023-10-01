@@ -58,4 +58,34 @@ public class Booking {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private BookingStatusEnum bookingStatusEnum;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "room_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_booking_room"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private Room room;
+
+    @Column(name = "room_id", columnDefinition = "BINARY(16)")
+    private UUID roomId;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "booking_list_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_booking_booking_list"),
+            nullable = false,
+            insertable = false,
+            updatable = false,
+            columnDefinition = "BINARY(16)"
+    )
+    private BookingList bookingList;
+
+    @Column(name = "booking_list_id", columnDefinition = "BINARY(16)")
+    private UUID bookListId;
 }

@@ -1,5 +1,7 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -34,5 +37,9 @@ public class AccommodationCategories {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodationCategories")
     @Fetch(FetchMode.SUBSELECT)
-    private List<AccomPlace> accomPlaces;
+    private Set<AccomPlace> accomPlaces;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private CommonStatusEnum status;
 }

@@ -10,6 +10,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -25,10 +26,10 @@ public class BedCategories {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "bed_name", columnDefinition = "NVARCHAR(255) NOT NULL")
-    private String bedName;
+    @Column(name = "bed_cate_name", columnDefinition = "NVARCHAR(255) NOT NULL")
+    private String bedCateName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bedCategories")
     @Fetch(FetchMode.SUBSELECT)
-    private List<DetailBedOfRoom> detailBedOfRooms;
+    private Set<DetailBedOfRoom> detailBedOfRooms;
 }

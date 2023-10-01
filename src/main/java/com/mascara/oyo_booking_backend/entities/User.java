@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,14 +59,18 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatusEnum status;
 
-    @OneToMany(mappedBy = "userOwn")
-    private List<AccomPlace> accomPlace;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userOwn")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<AccomPlace> accomPlace;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private WishList wishList;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private BookingList bookingList;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private ReviewList reviewList;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private CommisionList commisionList;

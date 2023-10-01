@@ -6,9 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -28,5 +31,7 @@ public class WishList {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private List<WishItem> wishItem;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wishList")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<WishItem> wishItem;
 }

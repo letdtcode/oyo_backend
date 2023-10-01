@@ -11,6 +11,7 @@ import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -34,5 +35,5 @@ public class Province {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "province")
     @Fetch(FetchMode.SUBSELECT)
-    private List<AccomPlace> accomPlaces;
+    private Set<AccomPlace> accomPlaces;
 }

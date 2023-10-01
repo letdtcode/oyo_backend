@@ -6,8 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 
 @SuperBuilder
@@ -25,4 +28,8 @@ public class FacilityAccomCategories {
 
     @Column(name = "faci_accom_cate_name")
     private String faciAccomCateName;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "facilityAccomCategories")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<FacilityAccom> facilityAccomSet;
 }
