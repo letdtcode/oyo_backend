@@ -1,5 +1,8 @@
 package com.mascara.oyo_booking_backend.exceptions;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng

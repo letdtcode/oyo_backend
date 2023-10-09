@@ -1,8 +1,10 @@
 package com.mascara.oyo_booking_backend.securities;
 
+import com.mascara.oyo_booking_backend.entities.Role;
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
+import com.mascara.oyo_booking_backend.utils.AppContants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,15 +29,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String mail) {
 
-        User user = userRepository.findByMail(mail).orElseThrow(
-                () -> new ResourceNotFoundException(AppConstant.MAIL_NOT_FOUND + mail));
+        User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppContants.MAIL_NOT_FOUND + mail));
 
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        for (Role role : user.getRoles()) {
+        for (Role role : user.getRoleSet()) {
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
         }
 
-        return new CustomUserDetail(user, grantedAuthorities);
+        return new CustomUserDetails(user, grantedAuthorities);
     }
 }

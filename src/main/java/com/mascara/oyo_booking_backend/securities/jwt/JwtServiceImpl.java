@@ -1,9 +1,8 @@
 package com.mascara.oyo_booking_backend.securities.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,13 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Created by: IntelliJ IDEA
@@ -27,11 +24,12 @@ import java.util.stream.Collectors;
  * Filename  : JwtServiceImpl
  */
 @Component
-public class JwtServiceImpl implements Serializable, JwtService {
-    private static final String SECRET_KEY = "thisissecret";
+public class JwtServiceImpl implements IJwtService {
+
+    @Value("${jwt.secret}")
+    private String secret;
     private final long JWT_EXPIRATION = 10 * 60 * 1000;
     private final long REFRESH_JWT_EXPIRATION = 30 * 60 * 1000;
-
     @Autowired
     @Qualifier("CustomUserDetailsService")
     private final UserDetailsService userDetailsService;
@@ -53,18 +51,15 @@ public class JwtServiceImpl implements Serializable, JwtService {
 
     @Override
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        try {
-            final Claims claims = extractAllClaims(token);
-            return claimsResolver.apply(claims);
-        } catch (MalformedJwtException ex) {
-            throw new JWTException(ex.getMessage());
-        }
-
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
     }
 
     @Override
     public Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        Key key = Keys.hmacShaKeyFor(keyBytes);
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
     @Override
@@ -73,27 +68,30 @@ public class JwtServiceImpl implements Serializable, JwtService {
     }
 
     @Override
-    public String generateToken(UserDetails userDetail) {
+    public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", userDetail.getAuthorities().toString());
-        return Jwts.builder().setClaims(claims)
-                .setSubject(userDetail.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-                .compact();
+        claims.put("roles", userDetails.getAuthorities().toString());
+        return doGenerateToken(claims, userDetails.getUsername(), true);
     }
 
     @Override
-    public String generateRefreshToken(UserDetails userDetail) {
+    public String generateRefreshToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", userDetail.getAuthorities().toString());
-        return Jwts.builder().setClaims(claims)
-                .setSubject(userDetail.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_JWT_EXPIRATION))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-                .compact();
+        claims.put("roles", userDetails.getAuthorities().toString());
+        return doGenerateToken(claims, userDetails.getUsername(), false);
+    }
+
+    @Override
+    public String doGenerateToken(Map<String, Object> claims, String subject, Boolean isAccessToken) {
+        long expirationTime = 0;
+        if (isAccessToken) {
+            expirationTime = JWT_EXPIRATION;
+        } else {
+            expirationTime = REFRESH_JWT_EXPIRATION;
+        }
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        Key key = Keys.hmacShaKeyFor(keyBytes);
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + expirationTime * 1000)).signWith(key, SignatureAlgorithm.HS256).compact();
     }
 
     @Override

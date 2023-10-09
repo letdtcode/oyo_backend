@@ -24,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private User user;
-    private List<SimpleGrantedAuthority> authorities;
+        private List<SimpleGrantedAuthority> authorities;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities == null ? null : new ArrayList<>(this.authorities);

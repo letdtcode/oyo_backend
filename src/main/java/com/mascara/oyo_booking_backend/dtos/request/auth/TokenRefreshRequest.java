@@ -1,5 +1,8 @@
 package com.mascara.oyo_booking_backend.dtos.request.auth;
 
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -7,5 +10,8 @@ package com.mascara.oyo_booking_backend.dtos.request.auth;
  * Time      : 4:14 CH
  * Filename  : TokenRefreshRequest
  */
+@Data
 public class TokenRefreshRequest {
+    @NotBlank
+    private String tokenRefresh;
 }
