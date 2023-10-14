@@ -11,7 +11,14 @@ import lombok.Getter;
  */
 @Getter
 public enum RoleEnum {
-    USER,
-    ADMIN,
-    PARTNER
+    ROLE_CLIENT("ROLE_CLIENT", "Khách hàng"),
+    ROLE_ADMIN("ROLE_ADMIN", "Admin"),
+    ROLE_PARTNER("ROLE_PARTNER", "Đối tác");
+    private final String key;
+    private final String value;
+
+    RoleEnum(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
 }

@@ -34,7 +34,7 @@ public class FacilityAccom {
     )
     private Set<AccomPlace> accomPlaceSet;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "facility_cate_id",
             referencedColumnName = "id",

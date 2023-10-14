@@ -29,7 +29,7 @@ public class Cart {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",columnDefinition = "BINARY(16)")
     private User user;
 

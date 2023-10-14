@@ -2,10 +2,7 @@ package com.mascara.oyo_booking_backend.entities;
 
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -21,7 +18,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -59,23 +56,23 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatusEnum status;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userOwn")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Fetch(FetchMode.SUBSELECT)
     private Set<AccomPlace> accomPlace;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private WishList wishList;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private BookingList bookingList;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private ReviewList reviewList;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private CommisionList commisionList;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Cart cart;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

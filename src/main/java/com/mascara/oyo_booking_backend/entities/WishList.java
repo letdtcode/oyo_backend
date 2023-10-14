@@ -27,7 +27,7 @@ public class WishList {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

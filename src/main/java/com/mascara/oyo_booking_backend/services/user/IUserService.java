@@ -1,10 +1,7 @@
 package com.mascara.oyo_booking_backend.services.user;
 
-import com.mascara.oyo_booking_backend.dtos.request.user.UserDTO;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.Set;
+import com.mascara.oyo_booking_backend.dtos.request.user.CreateUserRequest;
+import com.mascara.oyo_booking_backend.dtos.response.user.CreateUserResponse;
 
 /**
  * Created by: IntelliJ IDEA
@@ -14,17 +11,5 @@ import java.util.Set;
  * Filename  : IUserService
  */
 public interface IUserService {
-    UserDTO findByMail(String email);
-
-    UserDTO createUser(UserDTO userDTO, String passwordEncode, Set role);
-
-    List<UserDTO> getAllUser();
-
-    UserDTO findUserById(Long id);
-
-    UserDTO updateUser(UserDTO userDTO, Long id);
-
-    UserDTO updateImageProfile(MultipartFile file, Long id);
-
-    UserDTO changePassword(String mail, String passwordNew);
+    CreateUserResponse createUser(CreateUserRequest request, String passwordEncode);
 }

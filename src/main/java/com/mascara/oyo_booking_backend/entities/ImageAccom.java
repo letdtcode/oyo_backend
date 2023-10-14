@@ -26,7 +26,7 @@ public class ImageAccom {
     @Column(name = "img_accom_link")
     private String imgAccomLink;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "accom_place_id",
             referencedColumnName = "id",

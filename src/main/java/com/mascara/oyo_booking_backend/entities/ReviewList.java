@@ -26,7 +26,7 @@ public class ReviewList {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -3,8 +3,9 @@ package com.mascara.oyo_booking_backend.securities.auth;
 import com.mascara.oyo_booking_backend.dtos.request.auth.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
-import com.mascara.oyo_booking_backend.dtos.response.auth.AuthResponse;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.mascara.oyo_booking_backend.dtos.response.auth.LoginResponse;
+import com.mascara.oyo_booking_backend.dtos.response.auth.RegisterResponse;
+import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 
 /**
  * Created by: IntelliJ IDEA
@@ -13,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Time      : 4:19 CH
  * Filename  : AuthenticationService
  */
+
 public interface IAuthenticationService {
-    AuthResponse register(@RequestBody RegisterRequest request);
+    RegisterResponse register(RegisterRequest request);
 
-    AuthResponse authenticate(LoginRequest request);
+    LoginResponse authenticate(LoginRequest request);
 
-    AuthResponse refresh(TokenRefreshRequest request);
+    TokenRefreshResponse refresh(TokenRefreshRequest request);
 }

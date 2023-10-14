@@ -1,37 +1,47 @@
-package com.mascara.oyo_booking_backend.dtos.request.user;
+package com.mascara.oyo_booking_backend.dtos.response.auth;
 
-import jakarta.validation.constraints.NotEmpty;
+import com.mascara.oyo_booking_backend.entities.Role;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
- * Date      : 09/10/2023
- * Time      : 6:02 CH
- * Filename  : UserDTO
+ * Date      : 13/10/2023
+ * Time      : 4:09 CH
+ * Filename  : RegisterResponse
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
-    private Long Id;
-    @Length(min = 5)
+public class RegisterResponse {
+    private UUID id;
+
     private String userName;
+
     private String password;
-    @NotEmpty
+
     private String firstName;
+
     private String lastName;
+
     private Integer gender;
+
     private LocalDate dateOfBirth;
+
     private String mail;
+
     private String address;
+
     private String phone;
-    private String avatar;
-    private List<String> roleName;
+
+    private Set<Role> roleSet;
 }

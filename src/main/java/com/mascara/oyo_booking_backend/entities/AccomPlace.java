@@ -40,7 +40,7 @@ public class AccomPlace {
     @Column(name = "num_review")
     private Long numReview;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id",
             referencedColumnName = "id",
@@ -55,7 +55,7 @@ public class AccomPlace {
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
     private UUID userId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "accom_cate_id",
             referencedColumnName = "id",
@@ -70,7 +70,7 @@ public class AccomPlace {
     @Column(name = "accom_cate_id", columnDefinition = "BINARY(16)")
     private UUID accomCateId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "province_id",
             referencedColumnName = "id",

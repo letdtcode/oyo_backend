@@ -27,13 +27,4 @@ public class RegisterRequest {
 
     @NotBlank
     private String password;
-
-    @NotBlank
-    private String address;
-
-    @NotBlank
-    private String phone;
-
-    @NotBlank
-    private Set<String> roles = new HashSet<>(Arrays.asList("Client"));
 }

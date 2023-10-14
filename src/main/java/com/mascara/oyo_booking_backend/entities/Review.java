@@ -38,7 +38,7 @@ public class Review {
     @Enumerated(EnumType.STRING)
     private ReviewStatusEnum status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "room_id",
             referencedColumnName = "id",
@@ -53,7 +53,7 @@ public class Review {
     @Column(name = "room_id", columnDefinition = "BINARY(16)")
     private UUID roomId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "review_list_id",
             referencedColumnName = "id",

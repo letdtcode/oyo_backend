@@ -78,7 +78,7 @@ public class Room {
     @Fetch(FetchMode.SUBSELECT)
     private Set<Booking> bookingSet;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "accom_id",
             referencedColumnName = "id",
@@ -101,7 +101,7 @@ public class Room {
     )
     private Set<FacilityRoom> facilityRoomSet;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "room_cate_id",
             referencedColumnName = "id",

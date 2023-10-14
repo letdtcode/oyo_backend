@@ -23,7 +23,7 @@ public class CartItem {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "room_id",
             referencedColumnName = "id",
@@ -38,7 +38,7 @@ public class CartItem {
     @Column(name = "room_id", columnDefinition = "BINARY(16)")
     private UUID roomId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "cart_id",
             referencedColumnName = "id",

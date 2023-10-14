@@ -48,7 +48,7 @@ public class BookingList {
     @Column(name = "total_pay")
     private BigDecimal totalPay;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -37,7 +37,7 @@ public class CommisionList {
     @Column(name = "discount")
     private Float discount;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

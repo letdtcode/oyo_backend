@@ -26,7 +26,7 @@ public class DetailBedOfRoom {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "bed_cate_id",
             referencedColumnName = "id",
@@ -41,7 +41,7 @@ public class DetailBedOfRoom {
     @Column(name = "bed_cate_id", columnDefinition = "BINARY(16)")
     private UUID bedCateId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "room_id",
             referencedColumnName = "id",

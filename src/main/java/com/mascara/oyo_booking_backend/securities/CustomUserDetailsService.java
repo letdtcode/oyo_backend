@@ -3,7 +3,7 @@ package com.mascara.oyo_booking_backend.securities;
 import com.mascara.oyo_booking_backend.entities.Role;
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.repositories.UserRepository;
+import com.mascara.oyo_booking_backend.repositories.IUserRepository;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +24,7 @@ import java.util.List;
 @Service("CustomUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String mail) {

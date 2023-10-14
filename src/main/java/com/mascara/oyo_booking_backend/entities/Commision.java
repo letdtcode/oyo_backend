@@ -34,11 +34,11 @@ public class Commision {
     @Column(name = "comm_pay")
     private BigDecimal commPay;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_code")
     private Booking bookingCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "comm_list_id",
             referencedColumnName = "id",

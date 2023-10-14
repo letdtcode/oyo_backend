@@ -27,10 +27,10 @@ public class FacilityRoom {
     @Column(name = "facility_name", columnDefinition = "NVARCHAR(255)")
     private String facilityName;
 
-    @ManyToMany(mappedBy = "room_facility_room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "facilityRoomSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Room> roomSet;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "facil_room_cate_id",
             referencedColumnName = "id",

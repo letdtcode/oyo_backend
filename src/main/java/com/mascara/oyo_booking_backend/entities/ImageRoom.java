@@ -26,7 +26,7 @@ public class ImageRoom {
     @Column(name = "img_room_link")
     private String imgRoomLink;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "room_id",
             referencedColumnName = "id",

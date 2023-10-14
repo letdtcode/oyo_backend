@@ -29,7 +29,7 @@ public class AccommodationCategories {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "accom_cate_name", columnDefinition = "NOT NULL")
+    @Column(name = "accom_cate_name", columnDefinition = "VARCHAR(255) NOT NULL")
     private String accomCateName;
 
     @Column(name = "description")

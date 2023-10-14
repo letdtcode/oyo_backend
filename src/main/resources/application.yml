@@ -1,2 +1,16 @@
 jwt:
   secret:dthanh
+spring:
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/oyo?createDatabaseIfNotExist=true
+    username: root
+    password: 20021223
+    driverClassName: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      platform: mysql

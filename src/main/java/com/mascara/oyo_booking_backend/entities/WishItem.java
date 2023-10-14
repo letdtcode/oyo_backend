@@ -23,7 +23,7 @@ public class WishItem {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "accom_id",
             referencedColumnName = "id",
@@ -38,7 +38,7 @@ public class WishItem {
     @Column(name = "accom_id", columnDefinition = "BINARY(16)")
     private UUID accomId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "wish_id",
             referencedColumnName = "id",

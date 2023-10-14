@@ -59,7 +59,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatusEnum bookingStatusEnum;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "room_id",
             referencedColumnName = "id",
@@ -74,7 +74,7 @@ public class Booking {
     @Column(name = "room_id", columnDefinition = "BINARY(16)")
     private UUID roomId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "booking_list_id",
             referencedColumnName = "id",
