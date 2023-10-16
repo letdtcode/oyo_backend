@@ -5,7 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.response.user.CreateUserResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
-import com.mascara.oyo_booking_backend.repositories.IUserRepository;
+import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ import java.util.Set;
 public class UserServiceImpl implements IUserService {
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private ModelMapper mapper;

@@ -1,6 +1,7 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
+import com.mascara.oyo_booking_backend.entities.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,9 +11,9 @@ import java.util.UUID;
  * Created by: IntelliJ IDEA
  * User      : boyng
  * Date      : 01/10/2023
- * Time      : 3:33 CH
- * Filename  : AccommodationCategoriesRepository
+ * Time      : 3:32 CH
+ * Filename  : CartRepository
  */
 @Repository
-public interface IAccommodationCategoriesRepository extends JpaRepository<AccommodationCategories, UUID> {
+public interface CartRepository extends JpaRepository<Cart, UUID> {
 }

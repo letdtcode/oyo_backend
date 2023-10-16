@@ -18,8 +18,10 @@ import java.util.UUID;
  * Filename  : UserRepository
  */
 @Repository
-public interface IUserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByMail(String email);
+
+    Optional<User> findByUsername(String username);
 
     @Query(value = "select if(count(mail) > 0,'true','false') from user u where u.mail=:mail", nativeQuery = true)
     Boolean existsByMail(@Param("mail") String mail);

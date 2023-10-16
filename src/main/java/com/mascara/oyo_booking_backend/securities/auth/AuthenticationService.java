@@ -15,7 +15,7 @@ import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
  * Filename  : AuthenticationService
  */
 
-public interface IAuthenticationService {
+public interface AuthenticationService {
     RegisterResponse register(RegisterRequest request);
 
     LoginResponse authenticate(LoginRequest request);

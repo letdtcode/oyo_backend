@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
-import com.mascara.oyo_booking_backend.entities.BookingList;
+import com.mascara.oyo_booking_backend.entities.BedCategories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,8 +12,8 @@ import java.util.UUID;
  * User      : boyng
  * Date      : 01/10/2023
  * Time      : 3:32 CH
- * Filename  : BookingListRepository
+ * Filename  : BedCategoriesRepository
  */
 @Repository
-public interface IBookingListRepository extends JpaRepository<BookingList, UUID> {
+public interface BedCategoriesRepository extends JpaRepository<BedCategories, UUID> {
 }

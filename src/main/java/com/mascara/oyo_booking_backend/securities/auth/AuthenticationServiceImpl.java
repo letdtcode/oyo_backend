@@ -10,7 +10,7 @@ import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.dtos.response.user.CreateUserResponse;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
-import com.mascara.oyo_booking_backend.repositories.IUserRepository;
+import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.services.user.IUserService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import org.modelmapper.ModelMapper;
@@ -29,10 +29,10 @@ import java.util.HashSet;
  * Filename  : AuthenticationServiceImpl
  */
 @Service
-public class AuthenticationServiceImpl implements IAuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

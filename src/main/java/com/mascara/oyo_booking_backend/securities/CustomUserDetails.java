@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.securities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Created by: IntelliJ IDEA
@@ -19,25 +22,63 @@ import java.util.List;
  * Time      : 4:23 CH
  * Filename  : CustomUserDetails
  */
-@Data
-@Slf4j
-@AllArgsConstructor
+@Service
 public class CustomUserDetails implements UserDetails {
-    private User user;
-        private List<SimpleGrantedAuthority> authorities;
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
+
+    private String username;
+
+    private String email;
+
+    @JsonIgnore
+    private String password;
+
+    private Collection<? extends GrantedAuthority> authorities;
+
+    public CustomUserDetails(Long id, String username, String email, String password,
+                             Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
+    public static CustomUserDetails build(User user) {
+        List<GrantedAuthority> authorities = user.getRoleSet().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
+                .collect(Collectors.toList());
+        return new CustomUserDetails(
+                user.getId(),
+                user.getUserName(),
+                user.getMail(),
+                user.getPassword(),
+                authorities);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities == null ? null : new ArrayList<>(this.authorities);
+        return authorities;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
     public String getPassword() {
-        return this.user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return this.user.getMail();
+        return username;
     }
 
     @Override
@@ -58,5 +99,15 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        CustomUserDetails user = (CustomUserDetails) o;
+        return Objects.equals(id, user.id);
     }
 }

@@ -15,5 +15,5 @@ import java.util.UUID;
  * Filename  : CommisionRepository
  */
 @Repository
-public interface ICommisionRepository extends JpaRepository<Commision, UUID> {
+public interface CommisionRepository extends JpaRepository<Commision, UUID> {
 }
