@@ -1,8 +1,9 @@
-package com.mascara.oyo_booking_backend.securities;
+package com.mascara.oyo_booking_backend.securities.service;
 
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,16 +17,18 @@ import org.springframework.stereotype.Service;
  * Time      : 4:24 CH
  * Filename  : CustomUserDetailsService
  */
-@Service("CustomUserDetailsService")
+@Service
+@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByMail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
+        log.error(user.getMail());
         return CustomUserDetails.build(user);
     }
 }

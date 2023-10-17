@@ -12,7 +12,6 @@ import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.util.Set;
-import java.util.UUID;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -20,18 +19,17 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="room")
+@Table(name = "room")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "room_name")
     private String roomName;
 
     @Column(name = "acreage")
-    private Float acreage ;
+    private Float acreage;
 
     @Column(name = "num_people")
     private Integer numPeople;
@@ -85,15 +83,14 @@ public class Room {
             foreignKey = @ForeignKey(name = "fk_association_room_accom"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private AccomPlace accomPlace;
 
-    @Column(name = "accom_id", columnDefinition = "BINARY(16)")
-    private UUID accomId;
+    @Column(name = "accom_id")
+    private Long accomId;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "room_facility_room",
             joinColumns = {@JoinColumn(name = "room_id", referencedColumnName = "id")},
@@ -108,11 +105,10 @@ public class Room {
             foreignKey = @ForeignKey(name = "fk_association_room_room_cate"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private RoomCategories roomCategories;
 
-    @Column(name = "room_cate_id", columnDefinition = "BINARY(16)")
-    private UUID roomCateId;
+    @Column(name = "room_cate_id")
+    private Long roomCateId;
 }

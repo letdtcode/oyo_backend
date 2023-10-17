@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 /**
  * Created by: IntelliJ IDEA
@@ -23,18 +22,17 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="commision")
+@Table(name = "commision")
 public class Commision {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "comm_pay")
     private BigDecimal commPay;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_code")
     private Booking bookingCode;
 
@@ -45,11 +43,10 @@ public class Commision {
             foreignKey = @ForeignKey(name = "fk_association_comm_comm_list"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private CommisionList commisionList;
 
-    @Column(name = "comm_list_id", columnDefinition = "BINARY(16)")
-    private UUID commListId;
+    @Column(name = "comm_list_id")
+    private Long commListId;
 }

@@ -1,7 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
-import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -18,14 +16,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="booking")
+@Table(name = "booking")
 public class Booking {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
-    @Column(name = "code",columnDefinition = "NVARCHAR(255) NOT NULL")
+    @Column(name = "code", columnDefinition = "NVARCHAR(255) NOT NULL")
     private String code;
 
     @Column(name = "date_check_in")
@@ -66,13 +63,12 @@ public class Booking {
             foreignKey = @ForeignKey(name = "fk_association_booking_room"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private Room room;
 
-    @Column(name = "room_id", columnDefinition = "BINARY(16)")
-    private UUID roomId;
+    @Column(name = "room_id")
+    private Long roomId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -81,11 +77,10 @@ public class Booking {
             foreignKey = @ForeignKey(name = "fk_association_booking_booking_list"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private BookingList bookingList;
 
-    @Column(name = "booking_list_id", columnDefinition = "BINARY(16)")
-    private UUID bookListId;
+    @Column(name = "booking_list_id")
+    private Long bookListId;
 }

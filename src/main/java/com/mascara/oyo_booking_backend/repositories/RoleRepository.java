@@ -1,11 +1,11 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
 import com.mascara.oyo_booking_backend.entities.Role;
+import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import java.util.Optional;
 
 /**
  * Created by: IntelliJ IDEA
@@ -15,5 +15,6 @@ import java.util.UUID;
  * Filename  : RoleRepository
  */
 @Repository
-public interface RoleRepository extends JpaRepository<Role, UUID> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Optional<Role> findByRoleName(RoleEnum name);
 }

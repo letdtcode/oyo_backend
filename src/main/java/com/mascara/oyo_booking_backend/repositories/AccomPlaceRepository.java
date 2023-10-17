@@ -1,11 +1,8 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.AccomPlace;
-import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.UUID;
 
 /**
  * Created by: IntelliJ IDEA
@@ -15,5 +12,5 @@ import java.util.UUID;
  * Filename  : AccomPlaceRepository
  */
 @Repository
-public interface AccomPlaceRepository extends JpaRepository<AccomPlace, UUID> {
+public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
 }

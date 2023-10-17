@@ -9,10 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -20,12 +17,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="province")
+@Table(name = "province")
 public class Province {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "province_name")
     private String provinceName;

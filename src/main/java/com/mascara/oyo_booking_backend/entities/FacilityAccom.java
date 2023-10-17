@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
-import java.util.UUID;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -16,17 +15,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="facility_accom")
+@Table(name = "facility_accom")
 public class FacilityAccom {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "facility_name")
     private String facilityName;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "facility_accom_accom",
             joinColumns = {@JoinColumn(name = "facility_accom_id", referencedColumnName = "id")},
@@ -41,11 +39,10 @@ public class FacilityAccom {
             foreignKey = @ForeignKey(name = "fk_association_facil_accom_facil_acc_cate"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private FacilityAccomCategories facilityAccomCategories;
 
-    @Column(name = "facility_cate_id", columnDefinition = "BINARY(16)")
-    private UUID facilityCateId;
+    @Column(name = "facility_cate_id")
+    private Long facilityCateId;
 }

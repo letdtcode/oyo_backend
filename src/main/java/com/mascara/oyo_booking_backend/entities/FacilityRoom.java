@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
 import java.util.Set;
-import java.util.UUID;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -17,12 +15,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="facility_room")
+@Table(name = "facility_room")
 public class FacilityRoom {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "facility_name", columnDefinition = "NVARCHAR(255)")
     private String facilityName;
@@ -37,11 +34,10 @@ public class FacilityRoom {
             foreignKey = @ForeignKey(name = "fk_association_facil_room_facil_room_cate"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private FacilityRoomCategories facilityRoomCategories;
 
-    @Column(name = "facil_room_cate_id", columnDefinition = "BINARY(16)")
-    private UUID facilRoomCateId;
+    @Column(name = "facil_room_cate_id")
+    private Long facilRoomCateId;
 }

@@ -1,6 +1,5 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
 import com.mascara.oyo_booking_backend.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Created by: IntelliJ IDEA
@@ -18,11 +16,14 @@ import java.util.UUID;
  * Filename  : UserRepository
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
-    Optional<User> findByMail(String email);
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByUsername(String username);
+    @Query(value = "select * from users u where u.mail =:mail", nativeQuery = true)
+    Optional<User> findByMail(@Param("mail") String email);
 
-    @Query(value = "select if(count(mail) > 0,'true','false') from user u where u.mail=:mail", nativeQuery = true)
+    @Query(value = "select if(count(mail) > 0,'true','false') from users u where u.mail =:mail", nativeQuery = true)
     Boolean existsByMail(@Param("mail") String mail);
+
+    @Query(value = "select u.* from users u join refresh_token r on u.id = r.user_id where r.token =:token", nativeQuery = true)
+    Optional<User> findByRefreshToken(@Param("token") String refreshToken);
 }

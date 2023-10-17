@@ -7,21 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="image_accom")
+@Table(name = "image_accom")
 public class ImageAccom {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "img_accom_link")
     private String imgAccomLink;
@@ -33,11 +29,10 @@ public class ImageAccom {
             foreignKey = @ForeignKey(name = "fk_association_image_accom_accom"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private AccomPlace accomPlace;
 
-    @Column(name = "accom_place_id", columnDefinition = "BINARY(16)")
-    private UUID accomPlaceId;
+    @Column(name = "accom_place_id")
+    private Long accomPlaceId;
 }

@@ -1,6 +1,5 @@
 package com.mascara.oyo_booking_backend.entities;
 
-import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,10 +10,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -22,12 +18,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="accommodation_categories")
+@Table(name = "accommodation_categories")
 public class AccommodationCategories {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "accom_cate_name", columnDefinition = "VARCHAR(255) NOT NULL")
     private String accomCateName;

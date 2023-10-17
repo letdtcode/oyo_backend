@@ -29,5 +29,7 @@ public class AppContants {
     public static final String CATEGORY_EXIST_WITH_NAME = "This category already exist in database";
     public static final String ORDER_NOT_FOUND = "Not found Order with id: ";
     public static final String NOTIFICATION_NOT_FOUND = "Not found Notification with id: ";
+    public static final String REFRESH_TOKEN_NOT_FOUND = "Refresh token is invalid";
+    public static final String USER_NOT_FOUND_WITH_REFRESH_TOKEN = "Not found User with token: ";
     public static String Size_NOT_FOUND = "Not found Size with name: ";
 }

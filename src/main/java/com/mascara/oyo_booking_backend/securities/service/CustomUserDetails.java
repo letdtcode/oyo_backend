@@ -1,10 +1,8 @@
-package com.mascara.oyo_booking_backend.securities;
+package com.mascara.oyo_booking_backend.securities.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +21,7 @@ import java.util.stream.Collectors;
  * Filename  : CustomUserDetails
  */
 @Service
+@NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
 
@@ -78,7 +77,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

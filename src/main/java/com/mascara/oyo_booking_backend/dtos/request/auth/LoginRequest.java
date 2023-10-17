@@ -1,9 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.request.auth;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * Created by: IntelliJ IDEA
@@ -12,9 +10,8 @@ import lombok.NoArgsConstructor;
  * Time      : 4:13 CH
  * Filename  : LoginRequest
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 public class LoginRequest {
     @NotBlank
     private String email;

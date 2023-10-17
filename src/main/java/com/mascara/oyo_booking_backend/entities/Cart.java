@@ -11,7 +11,6 @@ import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.util.Set;
-import java.util.UUID;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -19,18 +18,17 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="cart")
+@Table(name = "cart")
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id",columnDefinition = "BINARY(16)")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cart")

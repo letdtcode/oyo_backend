@@ -7,21 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="wish_item")
+@Table(name = "wish_item")
 public class WishItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -30,13 +26,12 @@ public class WishItem {
             foreignKey = @ForeignKey(name = "fk_association_wish_item_accom"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private AccomPlace accomPlace;
 
-    @Column(name = "accom_id", columnDefinition = "BINARY(16)")
-    private UUID accomId;
+    @Column(name = "accom_id")
+    private Long accomId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -45,11 +40,10 @@ public class WishItem {
             foreignKey = @ForeignKey(name = "fk_association_wish_item_wish_list"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private WishList wishList;
 
-    @Column(name = "wish_id", columnDefinition = "BINARY(16)")
-    private UUID wishId;
+    @Column(name = "wish_id")
+    private Long wishId;
 }

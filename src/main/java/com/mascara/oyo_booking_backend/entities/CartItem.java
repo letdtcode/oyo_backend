@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -16,12 +15,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="cart_item")
+@Table(name = "cart_item")
 public class CartItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -30,13 +28,12 @@ public class CartItem {
             foreignKey = @ForeignKey(name = "fk_association_cart_item_room"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private Room room;
 
-    @Column(name = "room_id", columnDefinition = "BINARY(16)")
-    private UUID roomId;
+    @Column(name = "room_id")
+    private Long roomId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -45,13 +42,12 @@ public class CartItem {
             foreignKey = @ForeignKey(name = "fk_association_cart_item_cart"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private Cart cart;
 
-    @Column(name = "cart_id", columnDefinition = "BINARY(16)")
-    private UUID cartId;
+    @Column(name = "cart_id")
+    private Long cartId;
 
     @Column(name = "quantity")
     private Integer quantity;

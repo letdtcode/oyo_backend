@@ -7,21 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="detail_bed_of_room")
+@Table(name = "detail_bed_of_room")
 public class DetailBedOfRoom {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -33,13 +29,12 @@ public class DetailBedOfRoom {
             foreignKey = @ForeignKey(name = "fk_association_detail_bed_bed_categories"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private BedCategories bedCategories;
 
-    @Column(name = "bed_cate_id", columnDefinition = "BINARY(16)")
-    private UUID bedCateId;
+    @Column(name = "bed_cate_id")
+    private Long bedCateId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -48,11 +43,10 @@ public class DetailBedOfRoom {
             foreignKey = @ForeignKey(name = "fk_association_detail_bed_room"),
             nullable = false,
             insertable = false,
-            updatable = false,
-            columnDefinition = "BINARY(16)"
+            updatable = false
     )
     private Room room;
 
-    @Column(name = "room_id", columnDefinition = "BINARY(16)")
-    private UUID roomId;
+    @Column(name = "room_id")
+    private Long roomId;
 }
