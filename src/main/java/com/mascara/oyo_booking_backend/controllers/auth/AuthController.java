@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.controllers;
+package com.mascara.oyo_booking_backend.controllers.auth;
 
 import com.mascara.oyo_booking_backend.dtos.request.auth.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
