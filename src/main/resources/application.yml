@@ -1,9 +1,21 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ndtforwork@gmail.com
+    password: ixlfnhqlmfmcoufn
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      port: 25
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
   jpa:
     database: MYSQL
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   datasource:
     url: jdbc:mysql://localhost:3306/oyo?createDatabaseIfNotExist=true
     username: root
@@ -12,6 +24,10 @@ spring:
   sql:
     init:
       platform: mysql
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: ftl
+    content-type: text/html
 
 jwt:
   secret: qOevUET/5tgg91Awfv2LKufDRzfSeCcDobw3LlV+YoggfwJYyc6mCrBNd4nIDus7sBYB4Bs
@@ -19,3 +35,6 @@ jwt:
 mascara:
   openapi:
     dev-url: http://localhost:8080
+
+token:
+  expired: 5

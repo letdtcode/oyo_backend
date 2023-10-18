@@ -2,6 +2,8 @@ package com.mascara.oyo_booking_backend.controllers;
 
 import com.mascara.oyo_booking_backend.entities.Role;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
+import com.mascara.oyo_booking_backend.mail.EmailDetails;
+import com.mascara.oyo_booking_backend.mail.service.EmailServiceImpl;
 import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * Time      : 2:39 SA
  * Filename  : TestController
  */
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/test")
 public class TestController {
@@ -45,9 +47,17 @@ public class TestController {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    private EmailServiceImpl emailService;
+
     @GetMapping("/create")
     public ResponseEntity<?> createRole() {
         Role role = Role.builder().roleName(RoleEnum.ROLE_PARTNER).build();
         return ResponseEntity.ok(roleRepository.save(role));
+    }
+
+    @GetMapping("/email")
+    public ResponseEntity<?> testMail(@RequestBody EmailDetails emailDetails) {
+        return ResponseEntity.ok(emailService.sendSimpleMessage(emailDetails));
     }
 }

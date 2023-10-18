@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -53,9 +54,9 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 
-    public Instant extractExpiration(String token) {
+    public Date extractExpiration(String token) {
         return Jwts.parserBuilder().setSigningKey(key()).build()
-                .parseClaimsJws(token).getBody().getExpiration().toInstant();
+                .parseClaimsJws(token).getBody().getExpiration();
     }
 
     public String getEmailFromJwtToken(String token) {
