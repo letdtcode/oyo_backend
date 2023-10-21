@@ -26,4 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select u.* from users u join refresh_token r on u.id = r.user_id where r.token =:token", nativeQuery = true)
     Optional<User> findByRefreshToken(@Param("token") String refreshToken);
+    
+    @Query(value = "select u.* from users u join mail_confirm_token mct on u.id = mct.user_id where mct.id = :id",nativeQuery = true)
+    Optional<User> findByMailConfirmTokenId(@Param("id") Long id);
 }

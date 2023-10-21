@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.NaturalId;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * Created by: IntelliJ IDEA
@@ -41,8 +42,8 @@ public class RefreshToken {
     @Column(name = "refresh_count")
     private Long refreshCount;
 
-    @Column(name = "expired_date", nullable = false)
-    private Instant expiryDate;
+    @Column(name = "expired_date", nullable = false, columnDefinition = "TIMESTAMP")
+    private LocalDateTime expiryDate;
 
     public void incrementRefreshCount() {
         refreshCount = refreshCount + 1;

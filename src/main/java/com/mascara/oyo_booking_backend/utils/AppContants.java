@@ -31,5 +31,10 @@ public class AppContants {
     public static final String NOTIFICATION_NOT_FOUND = "Not found Notification with id: ";
     public static final String REFRESH_TOKEN_NOT_FOUND = "Refresh token is invalid";
     public static final String USER_NOT_FOUND_WITH_REFRESH_TOKEN = "Not found User with token: ";
+    public static final String SEND_MAIL_SUCCESS = "Send mail success";
+    public static final String CONFIRM_TOKEN_NOT_FOUND = "Token is invalid";
+    public static final String ACTIVE_USER_SUCCESS = "Active User thành công";
+    public static final String ACTIVE_USER_MAIL_INVALID = "Mail không hợp lệ";
+    public static final String ACTIVE_USER_TOKEN_EXPIRED = "Token hết hạn";
     public static String Size_NOT_FOUND = "Not found Size with name: ";
 }
