@@ -40,7 +40,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -48,7 +47,6 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -140,7 +138,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already exist!"));
         }
         String passwordEncoded = encoder.encode(registerRequest.getPassword());
-        User user = userService.createUser(registerRequest, passwordEncoded);
+        User user = userService.addUser(registerRequest, passwordEncoded);
 //        String codeConfirm = UUID.randomUUID().toString();
         String codeConfirm = getRandomNumberString();
         verifyTokenService.generateTokenConfirmMail(codeConfirm, user);
@@ -157,6 +155,7 @@ public class AuthController {
         emailService.sendMailWithTemplate(emailDetails);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     public static String getRandomNumberString() {
@@ -168,6 +167,7 @@ public class AuthController {
         // this will convert any number sequence into 6 character.
         return String.format("%06d", number);
     }
+
     @Operation(summary = "Verify Token", description = "Api for Verify Token")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),

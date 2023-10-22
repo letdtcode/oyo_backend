@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User createUser(RegisterRequest request, String passwordEncode) {
+    public User addUser(RegisterRequest request, String passwordEncode) {
         User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())

@@ -23,7 +23,7 @@ public class Province {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "province_name")
+    @Column(name = "province_name", unique = true)
     private String provinceName;
 
     @Column(name = "thumbnail_link")

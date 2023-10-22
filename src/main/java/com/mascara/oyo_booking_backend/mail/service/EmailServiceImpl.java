@@ -52,7 +52,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendMailWithTemplate(EmailDetails emailDetails) throws MessagingException, IOException, TemplateException {
         Map<String, Object> templateModel = new HashMap<>();
-        templateModel.put("model",emailDetails);
+        templateModel.put("model", emailDetails);
         Template freemarkerTemplate = freemarkerConfigurer.getConfiguration()
                 .getTemplate("Email_Active_Account.ftl");
         String htmlBody = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerTemplate, templateModel);
@@ -65,6 +65,4 @@ public class EmailServiceImpl implements EmailService {
         helper.setText(htmlBody, true);
         emailSender.send(message);
     }
-//
-//    public void sendMailUsingFreemarkerTemplate
 }

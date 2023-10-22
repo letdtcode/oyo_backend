@@ -15,7 +15,7 @@ spring:
     database: MYSQL
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
     url: jdbc:mysql://localhost:3306/oyo?createDatabaseIfNotExist=true
     username: root

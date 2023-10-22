@@ -50,8 +50,8 @@ public class TestController {
     @Autowired
     private EmailServiceImpl emailService;
 
-    @GetMapping("/create")
-    public ResponseEntity<?> createRole() {
+    @GetMapping("/add")
+    public ResponseEntity<?> addRole() {
         Role role = Role.builder().roleName(RoleEnum.ROLE_PARTNER).build();
         return ResponseEntity.ok(roleRepository.save(role));
     }
