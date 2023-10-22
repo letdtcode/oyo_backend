@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Filename  : IUserService
  */
 public interface UserService {
-    User createUser(RegisterRequest request, String passwordEncode);
+    User addUser(RegisterRequest request, String passwordEncode);
 
     @Transactional
     TokenRefreshResponse refreshJwtToken(TokenRefreshRequest tokenRefreshRequest);
