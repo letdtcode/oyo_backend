@@ -102,9 +102,6 @@ public class AuthController {
         String accessToken = jwtUtils.generateAccessJwtToken(userMail);
         String refreshToken = jwtUtils.generateRefreshJwtToken(userMail);
 
-//        User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
-//        RefreshToken tokenRefresh = refreshTokenRepository.findByUserMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
-
         Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByUserMail(userMail);
         if (refreshTokenOptional.isPresent()) {
             refreshTokenOptional.get().setRefreshToken(refreshToken);

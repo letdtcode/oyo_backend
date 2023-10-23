@@ -6,7 +6,6 @@ import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
-import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by: IntelliJ IDEA
@@ -97,6 +97,11 @@ public class UserServiceImpl implements UserService {
 
         Cart cart = Cart.builder().totalPrice(BigDecimal.valueOf(0)).user(user).build();
 
+        int desiredLength = 7;
+        String randomUsername = UUID.randomUUID()
+                .toString()
+                .substring(0, desiredLength);
+        user.setUserName("user-" + randomUsername);
         user.setRoleSet(roles);
         user.setWishList(wishList);
         user.setBookingList(bookingList);
