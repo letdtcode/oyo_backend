@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -30,11 +32,16 @@ public class ProvinceServiceImpl implements ProvinceService {
     private ModelMapper mapper;
 
     @Override
+    public List<Province> getAllProvinceDetails() {
+        return provinceRepository.findAll();
+    }
+
+    @Override
     @Transactional
     public MessageResponse addProvince(AddProvinceRequest request) {
         Province province = Province.builder()
                 .provinceName(request.getProvinceName())
-                .thumbnailLink(request.getThumbnailLink()).build();
+                .thumbnail(request.getThumbnailLink()).build();
         provinceRepository.save(province);
         return new MessageResponse("Add Province Success !");
     }
@@ -45,7 +52,7 @@ public class ProvinceServiceImpl implements ProvinceService {
         Province province = provinceRepository.findByProvinceName(provinceName)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.PROVINCE_NOT_FOUND));
         province.setProvinceName(request.getProvinceName());
-        province.setThumbnailLink(request.getThumbnailLink());
+        province.setThumbnail(request.getThumbnailLink());
         province = provinceRepository.save(province);
         return mapper.map(province, UpdateProvinceResponse.class);
     }

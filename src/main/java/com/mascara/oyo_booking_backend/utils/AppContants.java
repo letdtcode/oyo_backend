@@ -17,4 +17,5 @@ public class AppContants {
     public static final String ACTIVE_USER_MAIL_INVALID = "Mail không hợp lệ";
     public static final String ACTIVE_USER_TOKEN_EXPIRED = "Token hết hạn";
     public static final String PROVINCE_NOT_FOUND = "Province not found";
+    public static final String DISTRICT_NOT_FOUND = "District not found";
 }

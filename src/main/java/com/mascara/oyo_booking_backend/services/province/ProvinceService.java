@@ -4,7 +4,10 @@ import com.mascara.oyo_booking_backend.dtos.request.province.AddProvinceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.province.UpdateProvinceRequest;
 import com.mascara.oyo_booking_backend.dtos.response.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.province.UpdateProvinceResponse;
+import com.mascara.oyo_booking_backend.entities.Province;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by: IntelliJ IDEA
@@ -14,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
  * Filename  : ProvinceService
  */
 public interface ProvinceService {
+    List<Province> getAllProvinceDetails();
+
     @Transactional
     MessageResponse addProvince(AddProvinceRequest request);
 

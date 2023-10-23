@@ -16,6 +16,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
   datasource:
     url: jdbc:mysql://localhost:3306/oyo?createDatabaseIfNotExist=true
     username: root
@@ -38,3 +39,4 @@ mascara:
 
 token:
   expired: 5
+

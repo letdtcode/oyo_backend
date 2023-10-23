@@ -56,6 +56,7 @@ import java.util.stream.Collectors;
  * Time      : 4:01 CH
  * Filename  : AuthController
  */
+//@CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "AuthController", description = "Authentication APIs")
 @RestController
 @RequestMapping("/api/v1/auth")

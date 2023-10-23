@@ -27,7 +27,17 @@ public class Province {
     private String provinceName;
 
     @Column(name = "thumbnail_link")
-    private String thumbnailLink;
+    private String thumbnail;
+
+    @Column(name = "province_code", unique = true)
+    private String provinceCode;
+
+    @Column(name = "division_type",columnDefinition = "varchar (255)")
+    private String divisionType;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "province")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<District> districtSet;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "province")
     @Fetch(FetchMode.SUBSELECT)
