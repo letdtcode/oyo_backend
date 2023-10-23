@@ -8,6 +8,8 @@ import com.mascara.oyo_booking_backend.dtos.response.auth.LoginResponse;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.entities.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.User;
+import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
+import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
@@ -83,8 +85,7 @@ public class AuthController {
     @Autowired
     private VerifyTokenService verifyTokenService;
 
-    @Autowired
-    private EmailService emailService;
+
 
     @Operation(summary = "Sign in", description = "Api for Sign in")
     @ApiResponses({
@@ -99,6 +100,10 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
         String userMail = (userPrincipal.getEmail());
+        User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+        if (user.getStatus() == UserStatusEnum.PEDING) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new MessageResponse("User is peding"));
+        }
         String accessToken = jwtUtils.generateAccessJwtToken(userMail);
         String refreshToken = jwtUtils.generateRefreshJwtToken(userMail);
 
@@ -107,7 +112,7 @@ public class AuthController {
             refreshTokenOptional.get().setRefreshToken(refreshToken);
             refreshTokenRepository.save(refreshTokenOptional.get());
         } else {
-            User user = userRepository.findByMail(userMail).get();
+//            User user = userRepository.findByMail(userMail).get();
             LocalDateTime expiredToken = jwtUtils.extractExpiration(refreshToken)
                     .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
             RefreshToken refreshOfUser = RefreshToken.builder()
@@ -137,34 +142,13 @@ public class AuthController {
         }
         String passwordEncoded = encoder.encode(registerRequest.getPassword());
         User user = userService.addUser(registerRequest, passwordEncoded);
-//        String codeConfirm = UUID.randomUUID().toString();
-        String codeConfirm = getRandomNumberString();
-        verifyTokenService.generateTokenConfirmMail(codeConfirm, user);
-
-        String objectSend = "email=" + registerRequest.getEmail() + "&token=" + codeConfirm;
-        String encoded = URLEncoder.encode(objectSend, StandardCharsets.UTF_8);
-        String baseURL = "http://localhost:8080/api/v1/auth/verify?";
-        String message = baseURL + objectSend;
-
-        EmailDetails emailDetails = EmailDetails.builder()
-                .recipient(registerRequest.getEmail())
-                .subject("Xác nhận đăng kí")
-                .msgBody(message).build();
-        emailService.sendMailWithTemplate(emailDetails);
+        verifyTokenService.sendMailVerifyToken(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    public static String getRandomNumberString() {
-        // It will generate 6 digit random Number.
-        // from 0 to 999999
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999);
 
-        // this will convert any number sequence into 6 character.
-        return String.format("%06d", number);
-    }
 
     @Operation(summary = "Verify Token", description = "Api for Verify Token")
     @ApiResponses({
@@ -173,11 +157,7 @@ public class AuthController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/verify")
     public ResponseEntity<?> verifyTokenMail(@RequestParam("email") String email,
-                                             @RequestParam("token") String token) {
-//        email = URLDecoder.decode(email,StandardCharsets.UTF_8);
-//        token = URLDecoder.decode(token,StandardCharsets.UTF_8);
-        logger.info(email);
-        logger.info(token);
+                                             @RequestParam("token") String token) throws MessagingException, TemplateException, IOException {
         MessageResponse messageResponse = verifyTokenService.verifyMailUser(email, token);
         switch (messageResponse.getMessage()) {
             case AppContants.ACTIVE_USER_MAIL_INVALID:

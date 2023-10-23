@@ -38,5 +38,5 @@ mascara:
     dev-url: http://localhost:8080
 
 token:
-  expired: 5
+  expired: 0
 

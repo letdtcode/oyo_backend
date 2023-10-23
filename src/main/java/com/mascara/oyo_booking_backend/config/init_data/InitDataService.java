@@ -132,8 +132,8 @@ public class InitDataService implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         initDataUser();
-        implementInitDataMenuActionProvince();
-        implementInitDataMenuActionDistrict();
-        implementInitDataMenuActionWard();
+//        implementInitDataMenuActionProvince();
+//        implementInitDataMenuActionDistrict();
+//        implementInitDataMenuActionWard();
     }
 }
