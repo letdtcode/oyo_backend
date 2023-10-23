@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -28,6 +27,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.* from users u join refresh_token r on u.id = r.user_id where r.token =:token", nativeQuery = true)
     Optional<User> findByRefreshToken(@Param("token") String refreshToken);
 
-    @Query(value = "SELECT u.* FROM users u JOIN mail_confirm_token mct ON u.id = mct.user_id WHERE mct.id = :id",nativeQuery = true)
+    @Query(value = "select u.first_name,u.id,u.address,u.date_of_birth,u.user_name,u.password,u.last_name,u.gender,u.mail,u.phone,u.status from users u join mail_confirm_token mct on u.id = mct.user_id where mct.id = :id", nativeQuery = true)
     Optional<User> findByMailConfirmTokenId(@Param("id") Long id);
 }

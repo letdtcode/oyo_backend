@@ -1,10 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.response.province;
 
 import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Created by: IntelliJ IDEA
@@ -13,10 +10,9 @@ import lombok.Setter;
  * Time      : 7:08 CH
  * Filename  : UpdateProvinceResponse
  */
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UpdateProvinceResponse {
     private Long Id;
     private String provinceName;

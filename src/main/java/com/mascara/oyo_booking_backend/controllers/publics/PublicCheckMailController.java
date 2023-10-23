@@ -1,8 +1,7 @@
 package com.mascara.oyo_booking_backend.controllers.publics;
 
-import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.CheckMailRequest;
-import com.mascara.oyo_booking_backend.dtos.response.MessageResponse;
+import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

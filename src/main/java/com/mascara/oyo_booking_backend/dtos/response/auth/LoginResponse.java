@@ -1,9 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.response.auth;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,14 +13,12 @@ import java.util.List;
  * Filename  : LoginResponse
  */
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LoginResponse {
     private String accessToken;
     private String refreshToken;
-    private String userName;
-    private String email;
     private List<String> roles;
+    private InfoUserResponse infoUserResponse;
 }

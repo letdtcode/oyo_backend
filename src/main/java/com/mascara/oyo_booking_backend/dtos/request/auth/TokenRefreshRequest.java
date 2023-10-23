@@ -1,7 +1,9 @@
 package com.mascara.oyo_booking_backend.dtos.request.auth;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by: IntelliJ IDEA
@@ -11,6 +13,8 @@ import lombok.Data;
  * Filename  : TokenRefreshRequest
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TokenRefreshRequest {
     @NotBlank(message = "Refresh token is empty")
     private String tokenRefresh;

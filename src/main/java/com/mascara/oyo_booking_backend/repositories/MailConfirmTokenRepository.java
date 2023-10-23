@@ -22,10 +22,8 @@ public interface MailConfirmTokenRepository extends JpaRepository<MailConfirmTok
     @Query(value = "select mct.* from mail_confirm_token mct where mct.verify_token = :token", nativeQuery = true)
     Optional<MailConfirmToken> findByVerifyToken(@Param("token") String token);
 
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE mail_confirm_token mct set mct.verify_token = :token where mct.user_id = :userid", nativeQuery = true)
-    void updateVerifyToken(@Param("userid") Long userId, @Param("token") String token);
-
     boolean existsByUserId(Long userId);
+
+    @Query(value = "select mct.* from mail_confirm_token mct where mct.user_id = :userid", nativeQuery = true)
+    Optional<MailConfirmToken> findByUserId(@Param("userid") Long userId);
 }

@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.dtos.response;
+package com.mascara.oyo_booking_backend.dtos.response.general;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

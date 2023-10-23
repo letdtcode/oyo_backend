@@ -1,7 +1,10 @@
 package com.mascara.oyo_booking_backend.dtos.request.province;
 
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by: IntelliJ IDEA
@@ -10,7 +13,9 @@ import lombok.Getter;
  * Time      : 7:08 CH
  * Filename  : UpdateProvinceRequest
  */
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateProvinceRequest {
     private String provinceName;
     private String thumbnailLink;

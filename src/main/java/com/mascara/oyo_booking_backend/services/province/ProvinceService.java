@@ -2,7 +2,7 @@ package com.mascara.oyo_booking_backend.services.province;
 
 import com.mascara.oyo_booking_backend.dtos.request.province.AddProvinceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.province.UpdateProvinceRequest;
-import com.mascara.oyo_booking_backend.dtos.response.MessageResponse;
+import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.province.UpdateProvinceResponse;
 import com.mascara.oyo_booking_backend.entities.Province;
 import org.springframework.transaction.annotation.Transactional;

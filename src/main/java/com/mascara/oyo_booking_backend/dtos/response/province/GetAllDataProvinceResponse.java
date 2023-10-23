@@ -1,10 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.response.province;
 
 import com.mascara.oyo_booking_backend.entities.Province;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,10 +12,9 @@ import java.util.List;
  * Time      : 2:43 CH
  * Filename  : GetAllProvinceFullData
  */
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class GetAllDataProvinceResponse {
     private List<Province> provinceList;
 }

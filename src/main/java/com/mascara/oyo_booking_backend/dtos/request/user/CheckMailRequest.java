@@ -3,8 +3,7 @@ package com.mascara.oyo_booking_backend.dtos.request.user;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Created by: IntelliJ IDEA
@@ -13,8 +12,9 @@ import lombok.Setter;
  * Time      : 9:39 CH
  * Filename  : CheckMailRequest
  */
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CheckMailRequest {
     @NotBlank
     @Size(max = 50)

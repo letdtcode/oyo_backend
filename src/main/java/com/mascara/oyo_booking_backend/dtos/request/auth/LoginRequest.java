@@ -10,8 +10,9 @@ import lombok.*;
  * Time      : 4:13 CH
  * Filename  : LoginRequest
  */
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginRequest {
     @NotBlank
     private String email;

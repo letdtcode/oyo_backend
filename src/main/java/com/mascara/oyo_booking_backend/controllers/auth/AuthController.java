@@ -3,15 +3,14 @@ package com.mascara.oyo_booking_backend.controllers.auth;
 import com.mascara.oyo_booking_backend.dtos.request.auth.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
-import com.mascara.oyo_booking_backend.dtos.response.MessageResponse;
+import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.auth.LoginResponse;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
+import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mail.EmailDetails;
-import com.mascara.oyo_booking_backend.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
@@ -29,8 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -42,13 +40,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -85,7 +80,8 @@ public class AuthController {
     @Autowired
     private VerifyTokenService verifyTokenService;
 
-
+    @Autowired
+    private ModelMapper mapper;
 
     @Operation(summary = "Sign in", description = "Api for Sign in")
     @ApiResponses({
@@ -100,6 +96,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
         String userMail = (userPrincipal.getEmail());
+
         User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
         if (user.getStatus() == UserStatusEnum.PEDING) {
             return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new MessageResponse("User is peding"));
@@ -112,7 +109,6 @@ public class AuthController {
             refreshTokenOptional.get().setRefreshToken(refreshToken);
             refreshTokenRepository.save(refreshTokenOptional.get());
         } else {
-//            User user = userRepository.findByMail(userMail).get();
             LocalDateTime expiredToken = jwtUtils.extractExpiration(refreshToken)
                     .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
             RefreshToken refreshOfUser = RefreshToken.builder()
@@ -126,8 +122,8 @@ public class AuthController {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-
-        return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, userDetails.getUsername(), userDetails.getEmail(), roles));
+        InfoUserResponse infoUser = mapper.map(user, InfoUserResponse.class);
+        return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, roles, infoUser));
     }
 
     @Operation(summary = "Sign up", description = "Api for Sign up")
@@ -146,10 +142,6 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-
-
-
     @Operation(summary = "Verify Token", description = "Api for Verify Token")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
@@ -160,7 +152,7 @@ public class AuthController {
                                              @RequestParam("token") String token) throws MessagingException, TemplateException, IOException {
         MessageResponse messageResponse = verifyTokenService.verifyMailUser(email, token);
         switch (messageResponse.getMessage()) {
-            case AppContants.ACTIVE_USER_MAIL_INVALID:
+            case AppContants.TOKEN_ACTIVE_MAIL_INVALID:
                 return ResponseEntity.status(HttpStatusCode.valueOf(407)).body(messageResponse);
             case AppContants.ACTIVE_USER_TOKEN_EXPIRED:
                 return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(messageResponse);

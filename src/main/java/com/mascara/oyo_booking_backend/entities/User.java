@@ -23,6 +23,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long Id;
 
     @Column(name = "user_name")
@@ -52,31 +53,40 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
+
     @OneToOne(optional = true, mappedBy = "user")
     private RefreshToken refreshToken;
+
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private UserStatusEnum status;
 
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Fetch(FetchMode.SUBSELECT)
     private Set<AccomPlace> accomPlace;
 
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private WishList wishList;
+
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private BookingList bookingList;
 
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ReviewList reviewList;
+
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CommisionList commisionList;
 
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
+
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -87,6 +97,6 @@ public class User {
     private Set<Role> roleSet;
 
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private MailConfirmToken mailConfirmToken;
 }

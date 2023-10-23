@@ -3,8 +3,7 @@ package com.mascara.oyo_booking_backend.dtos.request.auth;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
@@ -15,8 +14,9 @@ import java.util.Set;
  * Time      : 4:13 CH
  * Filename  : RegisterRequest
  */
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegisterRequest {
     @NotBlank
     @Size(max = 20)

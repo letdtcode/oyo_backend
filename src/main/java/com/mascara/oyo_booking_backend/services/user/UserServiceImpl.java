@@ -2,7 +2,11 @@ package com.mascara.oyo_booking_backend.services.user;
 
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
+import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
+import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
+import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
+import com.mascara.oyo_booking_backend.dtos.response.user.UpdateInfoPersonalReponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
@@ -13,8 +17,10 @@ import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import com.mascara.oyo_booking_backend.utils.PasswordValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +52,10 @@ public class UserServiceImpl implements UserService {
     private RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
-    JwtUtils jwtUtils;
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     @Transactional
@@ -125,5 +134,37 @@ public class UserServiceImpl implements UserService {
             return new TokenRefreshResponse(accessTokenNew);
         }
         throw new TokenRefreshException(refreshToken, "Missing refresh token in database. Please login again");
+    }
+
+    @Override
+    @Transactional
+    public UpdateInfoPersonalReponse updateInfoPersonal(UpdateInfoPersonalRequest request, String email) {
+        User user = userRepository.findByMail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+        user.setUserName(request.getUserName());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setGender(request.getGender());
+        user.setDateOfBirth(request.getDateOfBirth());
+        user.setAddress(request.getAddress());
+        user.setPhone(request.getPhone());
+        user = userRepository.save(user);
+        return mapper.map(user, UpdateInfoPersonalReponse.class);
+    }
+
+    @Override
+    public MessageResponse changePassword(ChangePasswordRequest request) {
+        User user = userRepository.findByMail(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+        String oldPassRequest = request.getOldPassword();
+        if (encoder.matches(user.getPassword(), oldPassRequest)) {
+            if(PasswordValidator.isValid(request.getNewPassword())) {
+                String newPassEncoded = encoder.encode(request.getNewPassword());
+                user.setPassword(newPassEncoded);
+                return new MessageResponse(AppContants.CHANGE_PASSWORD_SUCCESS);
+            }
+            return new MessageResponse(AppContants.NEW_PASSWORD_NOT_MATCH_PATTERN);
+        }
+        return new MessageResponse(AppContants.PASSWORD_INCORRECT);
     }
 }

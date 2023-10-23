@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.mail.service;
 
-import com.mascara.oyo_booking_backend.dtos.response.MessageResponse;
+import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.mail.EmailDetails;
 import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
