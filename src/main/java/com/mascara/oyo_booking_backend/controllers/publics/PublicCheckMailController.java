@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
  * Time      : 9:46 CH
  * Filename  : PublicCheckUserController
  */
-@CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "Public Check Mail", description = "Authentication APIs")
 @RestController
 @RequestMapping("/api/v1/public/user")
