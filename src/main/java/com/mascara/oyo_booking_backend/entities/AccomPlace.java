@@ -69,8 +69,8 @@ public class AccomPlace {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "province_id",
-            referencedColumnName = "id",
+            name = "province_code",
+            referencedColumnName = "province_code",
             foreignKey = @ForeignKey(name = "fk_association_accom_province"),
             nullable = false,
             insertable = false,
@@ -78,8 +78,8 @@ public class AccomPlace {
     )
     private Province province;
 
-    @Column(name = "province_id")
-    private Long provinceId;
+    @Column(name = "province_code")
+    private String provinceCode;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)

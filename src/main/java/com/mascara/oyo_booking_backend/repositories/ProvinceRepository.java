@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,6 +19,12 @@ import java.util.Optional;
 @Repository
 public interface ProvinceRepository extends JpaRepository<Province, Long> {
 
-    @Query(value = "select p.* from province p where p.province_name = :provincename",nativeQuery = true)
+    @Query(value = "select p.* from province p where p.province_name = :provincename", nativeQuery = true)
     Optional<Province> findByProvinceName(@Param("provincename") String provinceName);
+
+    @Query(value = "select p.* from province p limit 1", nativeQuery = true)
+    List<Province> checkExistData();
+
+    @Query(value = "select p.* from province p where p.province_code = :provincecode", nativeQuery = true)
+    Optional<Province> findByProvinceCode(@Param("provincecode") String provinceCode);
 }
