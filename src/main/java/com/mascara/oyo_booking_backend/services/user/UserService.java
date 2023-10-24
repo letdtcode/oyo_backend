@@ -6,7 +6,7 @@ import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
-import com.mascara.oyo_booking_backend.dtos.response.user.UpdateInfoPersonalReponse;
+import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.User;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,10 +25,10 @@ public interface UserService {
     TokenRefreshResponse refreshJwtToken(TokenRefreshRequest tokenRefreshRequest);
 
     @Transactional
-    UpdateInfoPersonalReponse updateInfoPersonal(UpdateInfoPersonalRequest request, String email);
+    InfoUserResponse updateInfoPersonal(UpdateInfoPersonalRequest request, String email);
 
     @Transactional
-    UpdateInfoPersonalReponse updateAvatar(MultipartFile file, String mail);
+    InfoUserResponse updateAvatar(MultipartFile file, String mail);
 
     MessageResponse changePassword(ChangePasswordRequest request);
 }

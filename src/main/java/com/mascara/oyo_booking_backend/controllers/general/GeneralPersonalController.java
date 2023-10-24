@@ -40,8 +40,8 @@ public class GeneralPersonalController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/update-info")
-    public ResponseEntity<?> updateInfoPersonal(@Valid @RequestBody UpdateInfoPersonalRequest updateInfoPersonalRequest, String email) {
+    @PutMapping("/update-info")
+    public ResponseEntity<?> updateInfoPersonal(@Valid @RequestBody UpdateInfoPersonalRequest updateInfoPersonalRequest, @Email @RequestParam("mail") String email) {
         return ResponseEntity.ok(userService.updateInfoPersonal(updateInfoPersonalRequest, email));
     }
 
@@ -50,7 +50,7 @@ public class GeneralPersonalController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/change-password")
+    @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
         return ResponseEntity.ok(userService.changePassword(changePasswordRequest));
     }
@@ -60,7 +60,7 @@ public class GeneralPersonalController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/update_avatar")
+    @PutMapping("/update_avatar")
     public ResponseEntity<?> updateAvatar(@RequestParam("file") MultipartFile file, @NotBlank @Email @RequestParam("mail") String mail) {
         return ResponseEntity.ok(userService.updateAvatar(file, mail));
     }

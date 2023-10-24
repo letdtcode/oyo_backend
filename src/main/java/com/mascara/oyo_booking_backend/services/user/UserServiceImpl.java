@@ -6,7 +6,7 @@ import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
-import com.mascara.oyo_booking_backend.dtos.response.user.UpdateInfoPersonalReponse;
+import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UpdateInfoPersonalReponse updateInfoPersonal(UpdateInfoPersonalRequest request, String email) {
+    public InfoUserResponse updateInfoPersonal(UpdateInfoPersonalRequest request, String email) {
         User user = userRepository.findByMail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
         user.setUserName(request.getUserName());
@@ -154,18 +154,18 @@ public class UserServiceImpl implements UserService {
         user.setAddress(request.getAddress());
         user.setPhone(request.getPhone());
         user = userRepository.save(user);
-        return mapper.map(user, UpdateInfoPersonalReponse.class);
+        return mapper.map(user, InfoUserResponse.class);
     }
 
     @Override
     @Transactional
-    public UpdateInfoPersonalReponse updateAvatar(MultipartFile file, String mail) {
+    public InfoUserResponse updateAvatar(MultipartFile file, String mail) {
         if (!file.isEmpty()) {
             User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
             String pathImg = cloudinaryService.store(file);
             user.setAvatarUrl(pathImg);
             userRepository.save(user);
-            return mapper.map(user, UpdateInfoPersonalReponse.class);
+            return mapper.map(user, InfoUserResponse.class);
         }
         throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
     }
