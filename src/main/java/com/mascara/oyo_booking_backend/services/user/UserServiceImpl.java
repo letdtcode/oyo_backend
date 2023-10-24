@@ -175,10 +175,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByMail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
         String oldPassRequest = request.getOldPassword();
-        if (encoder.matches(user.getPassword(), oldPassRequest)) {
+        if (encoder.matches(oldPassRequest, user.getPassword())) {
             if (PasswordValidator.isValid(request.getNewPassword())) {
                 String newPassEncoded = encoder.encode(request.getNewPassword());
                 user.setPassword(newPassEncoded);
+                userRepository.save(user);
                 return new MessageResponse(AppContants.CHANGE_PASSWORD_SUCCESS);
             }
             return new MessageResponse(AppContants.NEW_PASSWORD_NOT_MATCH_PATTERN);
