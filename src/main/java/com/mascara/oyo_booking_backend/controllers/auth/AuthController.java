@@ -3,9 +3,9 @@ package com.mascara.oyo_booking_backend.controllers.auth;
 import com.mascara.oyo_booking_backend.dtos.request.auth.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.auth.LoginResponse;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
+import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.User;
@@ -30,6 +30,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -83,6 +84,9 @@ public class AuthController {
     @Autowired
     private ModelMapper mapper;
 
+    @Value("${avatar.default}")
+    private String avatar_default;
+
     @Operation(summary = "Sign in", description = "Api for Sign in")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = LoginResponse.class), mediaType = "application/json")}),
@@ -123,6 +127,9 @@ public class AuthController {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
         InfoUserResponse infoUser = mapper.map(user, InfoUserResponse.class);
+        if (infoUser.getAvatarUrl().equals(null)) {
+            infoUser.setAvatarUrl(avatar_default);
+        }
         return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, roles, infoUser));
     }
 

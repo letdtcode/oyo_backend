@@ -20,6 +20,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 430482886897-aigo5f3p4lfli4kg3psjj1o0n3olbsc4.apps.googleusercontent.com
+            client-secret: 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
   datasource:
     url: jdbc:mysql://localhost:3306/oyo?createDatabaseIfNotExist=true
     username: root
@@ -43,3 +50,14 @@ mascara:
 token:
   expired: 1
 
+cloudinary:
+  name: dyv5zrsgj
+  api_key: 725286843731793
+  api_secret: vlXQhzYH_ngfJqQHo5As0LAC0gc
+  secure_mode: true
+
+storage:
+    location: uploads/images
+
+avatar:
+  default: https://res.cloudinary.com/dyv5zrsgj/image/upload/v1698163058/oyo_booking/nqxq12lb5gazvph6rwf7.png

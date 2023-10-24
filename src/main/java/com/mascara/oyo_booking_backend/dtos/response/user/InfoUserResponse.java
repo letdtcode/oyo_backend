@@ -31,4 +31,5 @@ public class InfoUserResponse {
     private String mail;
     private String address;
     private String phone;
+    private String avatarUrl;
 }

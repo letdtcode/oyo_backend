@@ -53,6 +53,9 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
 
     @OneToOne(optional = true, mappedBy = "user")
     private RefreshToken refreshToken;

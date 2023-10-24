@@ -11,14 +11,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by: IntelliJ IDEA
@@ -36,17 +35,17 @@ public class GeneralPersonalController {
     @Autowired
     private UserService userService;
 
-    @Operation(summary = "Check Mail Exist", description = "Public Api check mail exist for Sign Up")
+    @Operation(summary = "Update info user", description = "General Api for update info user")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/update-info")
     public ResponseEntity<?> updateInfoPersonal(@Valid @RequestBody UpdateInfoPersonalRequest updateInfoPersonalRequest, String email) {
-        return ResponseEntity.ok(userService.updateInfoPersonal(updateInfoPersonalRequest,email));
+        return ResponseEntity.ok(userService.updateInfoPersonal(updateInfoPersonalRequest, email));
     }
 
-    @Operation(summary = "Check Mail Exist", description = "Public Api check mail exist for Sign Up")
+    @Operation(summary = "Change password user", description = "General Api for change password user")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
@@ -55,4 +54,16 @@ public class GeneralPersonalController {
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
         return ResponseEntity.ok(userService.changePassword(changePasswordRequest));
     }
+
+    @Operation(summary = "Update avatar user", description = "General Api for update avatar")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @PostMapping("/update_avatar")
+    public ResponseEntity<?> updateAvatar(@RequestParam("file") MultipartFile file, @NotBlank @Email @RequestParam("mail") String mail) {
+        return ResponseEntity.ok(userService.updateAvatar(file, mail));
+    }
+
+
 }

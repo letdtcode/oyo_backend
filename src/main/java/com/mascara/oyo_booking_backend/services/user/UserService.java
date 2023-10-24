@@ -9,6 +9,7 @@ import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.user.UpdateInfoPersonalReponse;
 import com.mascara.oyo_booking_backend.entities.User;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by: IntelliJ IDEA
@@ -25,6 +26,9 @@ public interface UserService {
 
     @Transactional
     UpdateInfoPersonalReponse updateInfoPersonal(UpdateInfoPersonalRequest request, String email);
+
+    @Transactional
+    UpdateInfoPersonalReponse updateAvatar(MultipartFile file, String mail);
 
     MessageResponse changePassword(ChangePasswordRequest request);
 }

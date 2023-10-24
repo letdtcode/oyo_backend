@@ -5,10 +5,12 @@ import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.mail.service.EmailServiceImpl;
 import com.mascara.oyo_booking_backend.repositories.RoleRepository;
+import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by: IntelliJ IDEA
@@ -50,6 +52,9 @@ public class TestController {
     @Autowired
     private EmailServiceImpl emailService;
 
+    @Autowired
+    private CloudinaryService cloudinaryService;
+
     @GetMapping("/add")
     public ResponseEntity<?> addRole() {
         Role role = Role.builder().roleName(RoleEnum.ROLE_PARTNER).build();
@@ -59,5 +64,10 @@ public class TestController {
     @GetMapping("/email")
     public ResponseEntity<?> testMail(@RequestBody EmailDetails emailDetails) {
         return ResponseEntity.ok(emailService.sendSimpleMessage(emailDetails));
+    }
+
+    @GetMapping("/image")
+    public ResponseEntity<?> testMail(@RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok(cloudinaryService.store(file));
     }
 }

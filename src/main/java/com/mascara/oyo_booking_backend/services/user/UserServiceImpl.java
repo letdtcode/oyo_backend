@@ -16,6 +16,7 @@ import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
+import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.PasswordValidator;
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -56,6 +58,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Override
     @Transactional
@@ -153,12 +158,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
+    public UpdateInfoPersonalReponse updateAvatar(MultipartFile file, String mail) {
+        if (!file.isEmpty()) {
+            User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+            String pathImg = cloudinaryService.store(file);
+            user.setAvatarUrl(pathImg);
+            userRepository.save(user);
+            return mapper.map(user, UpdateInfoPersonalReponse.class);
+        }
+        throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
+    }
+
+    @Override
     public MessageResponse changePassword(ChangePasswordRequest request) {
         User user = userRepository.findByMail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
         String oldPassRequest = request.getOldPassword();
         if (encoder.matches(user.getPassword(), oldPassRequest)) {
-            if(PasswordValidator.isValid(request.getNewPassword())) {
+            if (PasswordValidator.isValid(request.getNewPassword())) {
                 String newPassEncoded = encoder.encode(request.getNewPassword());
                 user.setPassword(newPassEncoded);
                 return new MessageResponse(AppContants.CHANGE_PASSWORD_SUCCESS);
