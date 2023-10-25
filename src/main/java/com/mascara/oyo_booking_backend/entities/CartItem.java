@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -21,19 +22,9 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "room_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_association_cart_item_room"),
-            nullable = false,
-            insertable = false,
-            updatable = false
-    )
-    private Room room;
-
-    @Column(name = "room_id")
-    private Long roomId;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "accom_id")
+    private AccomPlace accomPlace;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -49,8 +40,11 @@ public class CartItem {
     @Column(name = "cart_id")
     private Long cartId;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+    @Column(name = "date_check_in")
+    private LocalDateTime checkIn;
+
+    @Column(name = "date_check_out")
+    private LocalDateTime checkOut;
 
     @Column(name = "total_price_item")
     private BigDecimal totalPriceItem;

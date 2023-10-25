@@ -70,10 +70,8 @@ public class User {
     @Fetch(FetchMode.SUBSELECT)
     private Set<AccomPlace> accomPlace;
 
-
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private WishList wishList;
-
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private BookingList bookingList;

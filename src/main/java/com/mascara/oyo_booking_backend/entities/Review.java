@@ -35,17 +35,17 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "room_id",
+            name = "accom_id",
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_association_review_room"),
+            foreignKey = @ForeignKey(name = "fk_association_review_accom"),
             nullable = false,
             insertable = false,
             updatable = false
     )
-    private Room room;
+    private AccomPlace accomPlace;
 
-    @Column(name = "room_id")
-    private Long roomId;
+    @Column(name = "accom_id")
+    private Long accomPlaceId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

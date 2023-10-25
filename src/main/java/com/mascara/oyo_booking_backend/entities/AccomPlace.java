@@ -87,11 +87,18 @@ public class AccomPlace {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)
+    private Set<Review> reviewSet;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
+    @Fetch(FetchMode.SUBSELECT)
     private Set<WishItem> wishItemSet;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)
-    private Set<Room> roomSet;
+    private Set<Booking> bookingSet;
+
+    @OneToOne(mappedBy = "accomPlace", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CartItem cartItem;
 
     @ManyToMany(mappedBy = "accomPlaceSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<FacilityAccom> facilityAccomSet;

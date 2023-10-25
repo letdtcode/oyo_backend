@@ -58,17 +58,17 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "room_id",
+            name = "accom_id",
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_association_booking_room"),
+            foreignKey = @ForeignKey(name = "fk_association_accom_room"),
             nullable = false,
             insertable = false,
             updatable = false
     )
-    private Room room;
+    private AccomPlace accomPlace;
 
-    @Column(name = "room_id")
-    private Long roomId;
+    @Column(name = "accom_id")
+    private Long accomId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
