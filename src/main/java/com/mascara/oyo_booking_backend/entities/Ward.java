@@ -47,7 +47,4 @@ public class Ward {
 
     @Column(name = "district_code")
     private String districtCode;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "district_code")
-//    private District district;
 }

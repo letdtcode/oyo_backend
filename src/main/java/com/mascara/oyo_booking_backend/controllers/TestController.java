@@ -2,8 +2,8 @@ package com.mascara.oyo_booking_backend.controllers;
 
 import com.mascara.oyo_booking_backend.entities.Role;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
-import com.mascara.oyo_booking_backend.mail.EmailDetails;
-import com.mascara.oyo_booking_backend.mail.service.EmailServiceImpl;
+import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
+import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailServiceImpl;
 import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;

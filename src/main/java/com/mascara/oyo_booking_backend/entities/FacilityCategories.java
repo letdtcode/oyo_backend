@@ -17,16 +17,19 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "facility_accom_categories")
-public class FacilityAccomCategories {
+@Table(name = "facility_categories")
+public class FacilityCategories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "faci_accom_cate_name")
-    private String faciAccomCateName;
+    @Column(name = "faci_cate_name")
+    private String faciCateName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "facilityAccomCategories")
+    @Column(name = "faci_cate_code",unique = true)
+    private String faciCateCode;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "facilityCategories")
     @Fetch(FetchMode.SUBSELECT)
-    private Set<FacilityAccom> facilityAccomSet;
+    private Set<Facility> facilitySet;
 }

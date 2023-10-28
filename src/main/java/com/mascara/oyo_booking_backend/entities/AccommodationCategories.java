@@ -24,11 +24,14 @@ public class AccommodationCategories {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "accom_cate_name", columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(name = "accom_cate_name", columnDefinition = "VARCHAR(255) NOT NULL", unique = true)
     private String accomCateName;
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "icon", unique = true, nullable = false)
+    private String icon;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodationCategories")
     @Fetch(FetchMode.SUBSELECT)

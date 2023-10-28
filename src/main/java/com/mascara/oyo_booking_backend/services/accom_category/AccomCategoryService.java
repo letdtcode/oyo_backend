@@ -1,5 +1,14 @@
 package com.mascara.oyo_booking_backend.services.accom_category;
 
+import com.mascara.oyo_booking_backend.dtos.request.accom_category.AddAccomCategoryRequest;
+import com.mascara.oyo_booking_backend.dtos.request.accom_category.UpdateAccomCategoryRequest;
+import com.mascara.oyo_booking_backend.dtos.response.accom_category.GetAllAccomCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
+import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -8,4 +17,13 @@ package com.mascara.oyo_booking_backend.services.accom_category;
  * Filename  : AccomCategoryService
  */
 public interface AccomCategoryService {
+    @Transactional
+    List<GetAllAccomCategoryResponse> getAllAccomCategory();
+
+    AccommodationCategories addAccomCategory(AddAccomCategoryRequest request);
+
+    AccommodationCategories updateAccomCategory(UpdateAccomCategoryRequest request);
+
+    @Transactional
+    MessageResponse deleteAccomCategory(String accomCateName);
 }

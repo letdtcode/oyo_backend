@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     public TokenRefreshResponse refreshJwtToken(TokenRefreshRequest tokenRefreshRequest) {
         String refreshToken = tokenRefreshRequest.getTokenRefresh();
         RefreshToken token = refreshTokenRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.REFRESH_TOKEN_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("refresh token")));
         if (jwtUtils.validateJwtToken(refreshToken)) {
             User user = userRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND_WITH_REFRESH_TOKEN + refreshToken));
             token.incrementRefreshCount();
@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public InfoUserResponse updateInfoPersonal(UpdateInfoPersonalRequest request, String email) {
         User user = userRepository.findByMail(email)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         user.setUserName(request.getUserName());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public InfoUserResponse updateAvatar(MultipartFile file, String mail) {
         if (!file.isEmpty()) {
-            User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+            User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
             String pathImg = cloudinaryService.store(file);
             user.setAvatarUrl(pathImg);
             userRepository.save(user);
@@ -173,7 +173,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public MessageResponse changePassword(ChangePasswordRequest request) {
         User user = userRepository.findByMail(request.getEmail())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String oldPassRequest = request.getOldPassword();
         if (encoder.matches(oldPassRequest, user.getPassword())) {
             if (PasswordValidator.isValid(request.getNewPassword())) {
