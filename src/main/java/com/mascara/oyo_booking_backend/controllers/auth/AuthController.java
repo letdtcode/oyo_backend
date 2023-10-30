@@ -101,7 +101,7 @@ public class AuthController {
         CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
         String userMail = (userPrincipal.getEmail());
 
-        User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+        User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         if (user.getStatus() == UserStatusEnum.PEDING) {
             return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new MessageResponse("User is peding"));
         }

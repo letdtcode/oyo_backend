@@ -1,34 +1,35 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.entities.base.Audit;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.util.Set;
 
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "accommodation_categories")
-public class AccommodationCategories {
+public class AccommodationCategories extends Audit<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "accom_cate_name", columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(name = "accom_cate_name", columnDefinition = "VARCHAR(255) NOT NULL", unique = true)
     private String accomCateName;
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "icon", unique = true, nullable = false)
+    private String icon;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodationCategories")
     @Fetch(FetchMode.SUBSELECT)

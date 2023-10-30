@@ -15,17 +15,19 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "wish_list")
-public class WishList extends Audit<String> {
+@Table(name = "facility_categories")
+public class FacilityCategories extends Audit<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "faci_cate_name")
+    private String faciCateName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wishList")
+    @Column(name = "faci_cate_code",unique = true)
+    private String faciCateCode;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "facilityCategories")
     @Fetch(FetchMode.SUBSELECT)
-    private Set<WishItem> wishItem;
+    private Set<Facility> facilitySet;
 }

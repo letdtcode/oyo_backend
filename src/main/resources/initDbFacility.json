@@ -1,0 +1,320 @@
+{
+  "data": [
+    {
+      "facilityName": "Tủ áo",
+      "facilityCateCode": "FACI_CATE_01"
+    },
+    {
+      "facilityName": "Máy sấy",
+      "facilityCateCode": "FACI_CATE_01"
+    },
+    {
+      "facilityName": "Quạt (trần hoặc đứng)",
+      "facilityCateCode": "FACI_CATE_01"
+    },
+    {
+      "facilityName": "Bàn ủi (bàn là)",
+      "facilityCateCode": "FACI_CATE_01"
+    },
+    {
+      "facilityName": "Bộ ga giường",
+      "facilityCateCode": "FACI_CATE_01"
+    },
+    {
+      "facilityName": "Tiệm giặt là gần đây",
+      "facilityCateCode": "FACI_CATE_01"
+    },
+    {
+      "facilityName": "Máy giặt",
+      "facilityCateCode": "FACI_CATE_01"
+    },
+    {
+      "facilityName": "Chuông/liên lạc không dây",
+      "facilityCateCode": "FACI_CATE_02"
+    },
+    {
+      "facilityName": "Nhân viên trực cửa",
+      "facilityCateCode": "FACI_CATE_02"
+    },
+    {
+      "facilityName": "Thang máy trong tòa nhà",
+      "facilityCateCode": "FACI_CATE_02"
+    },
+    {
+      "facilityName": "Bãi đỗ xe trả phí",
+      "facilityCateCode": "FACI_CATE_02"
+    },
+    {
+      "facilityName": "Máy pha cà phê/trà",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Cà phê",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Ăn sáng miễn phí",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Bát đĩa và dụng cụ ăn uống",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Máy rửa bát",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Tủ đông",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Nhà bếp",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Lò vi sóng",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Lò nướng",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Tủ lạnh",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Bếp",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Trà",
+      "facilityCateCode": "FACI_CATE_03"
+    },
+    {
+      "facilityName": "Máy sấy tóc",
+      "facilityCateCode": "FACI_CATE_04"
+    },
+    {
+      "facilityName": "Dầu gội đầu",
+      "facilityCateCode": "FACI_CATE_04"
+    },
+    {
+      "facilityName": "Sữa tắm",
+      "facilityCateCode": "FACI_CATE_04"
+    },
+    {
+      "facilityName": "Bồn tắm",
+      "facilityCateCode": "FACI_CATE_04"
+    },
+    {
+      "facilityName": "Bếp nướng",
+      "facilityCateCode": "FACI_CATE_05"
+    },
+    {
+      "facilityName": "Xe đạp",
+      "facilityCateCode": "FACI_CATE_05"
+    },
+    {
+      "facilityName": "Vườn hoặc sân sau",
+      "facilityCateCode": "FACI_CATE_05"
+    },
+    {
+      "facilityName": "Lối vào hồ",
+      "facilityCateCode": "FACI_CATE_05"
+    },
+    {
+      "facilityName": "Trượt tuyết vào/ra",
+      "facilityCateCode": "FACI_CATE_05"
+    },
+    {
+      "facilityName": "Khu bờ sông",
+      "facilityCateCode": "FACI_CATE_05"
+    },
+    {
+      "facilityName": "Trò chơi bàn cờ",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Truyền hình cáp",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Internet tính phí",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Wifi tính phí",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Wi-Fi [cho thuê loại xách tay]",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Internet miễn phí",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Hệ thống âm thanh",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Thiết bị chơi điện tử",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Dịch vụ truyền hình trực tuyến",
+      "facilityCateCode": "FACI_CATE_06"
+    },
+    {
+      "facilityName": "Bồn tắm trẻ em",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Thiết bị giám sát trẻ",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Bàn thay tã",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Sách và đồ chơi cho trẻ em",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Bát đĩa cho trẻ",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Cũi em bé",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Ghế cao cho trẻ con ngồi ăn",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Cũi vải",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Cửa chặn cầu thang",
+      "facilityCateCode": "FACI_CATE_07"
+    },
+    {
+      "facilityName": "Bảo vệ [24 giờ]",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Cảm biến báo khí CO",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Được làm sạch bởi công ty làm sạch chuyên nghiệp",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Được làm sạch theo hướng dẫn về y tế hoặc của OYO",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Sản phẩm làm sạch được sử dụng dựa trên hướng dẫn về y tế",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Vật dụng làm vệ sinh được cung cấp cho khách",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Nhận phòng/trả phòng không tiếp xúc",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Khẩu trang được cung cấp cho khách",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Bình chữa cháy",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Bộ sơ cấp cứu",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Nước rửa tay và xà phòng được cung cấp",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Các quy định giãn cách vật lý được chấp hành",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Đồ che mặt bảo vệ cho nhân viên",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Màn bảo vệ ở khu vực chung",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Được khử trùng theo nguyên tắc về y tế hoặc của OYO",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Cảm biến báo khói",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Kiểm tra nhiệt độ cho khách và nhân viên",
+      "facilityCateCode": "FACI_CATE_08"
+    },
+    {
+      "facilityName": "Bãi đỗ xe [tại chỗ]",
+      "facilityCateCode": "FACI_CATE_09"
+    },
+    {
+      "facilityName": "Bãi đỗ xe đạp",
+      "facilityCateCode": "FACI_CATE_09"
+    },
+    {
+      "facilityName": "Dịch vụ taxi",
+      "facilityCateCode": "FACI_CATE_09"
+    },
+    {
+      "facilityName": "Phòng tập gym",
+      "facilityCateCode": "FACI_CATE_10"
+    },
+    {
+      "facilityName": "Bồn tắm nước nóng",
+      "facilityCateCode": "FACI_CATE_10"
+    },
+    {
+      "facilityName": "Lò sưởi trong nhà",
+      "facilityCateCode": "FACI_CATE_10"
+    },
+    {
+      "facilityName": "Hồ bơi trong nhà",
+      "facilityCateCode": "FACI_CATE_10"
+    },
+    {
+      "facilityName": "Cho phép vật nuôi",
+      "facilityCateCode": "FACI_CATE_10"
+    },
+    {
+      "facilityName": "Hồ bơi ngoài trời",
+      "facilityCateCode": "FACI_CATE_10"
+    },
+    {
+      "facilityName": "Hồ bơi riêng",
+      "facilityCateCode": "FACI_CATE_10"
+    },
+    {
+      "facilityName": "Được hút thuốc",
+      "facilityCateCode": "FACI_CATE_10"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "faciCateName": "Tiêu chuẩn",
+      "faciCateCode": "FACI_CATE_01"
+    },
+    {
+      "faciCateName": "Lối vào",
+      "faciCateCode": "FACI_CATE_02"
+    },
+    {
+      "faciCateName": "Bếp",
+      "faciCateCode": "FACI_CATE_03"
+    },
+    {
+      "faciCateName": "Phòng tắm",
+      "faciCateCode": "FACI_CATE_04"
+    },
+    {
+      "faciCateName": "Ngoài trời",
+      "faciCateCode": "FACI_CATE_05"
+    },
+    {
+      "faciCateName": "Giải trí",
+      "faciCateCode": "FACI_CATE_06"
+    },
+    {
+      "faciCateName": "Gia đình",
+      "faciCateCode": "FACI_CATE_07"
+    },
+    {
+      "faciCateName": "Độ an toàn và sạch sẽ",
+      "faciCateCode": "FACI_CATE_08"
+    },
+    {
+      "faciCateName": "Đi lại",
+      "faciCateCode": "FACI_CATE_09"
+    },
+    {
+      "faciCateName": "Khác",
+      "faciCateCode": "FACI_CATE_10"
+    }
+  ]
+}

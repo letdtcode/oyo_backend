@@ -1,7 +1,7 @@
-package com.mascara.oyo_booking_backend.mail.service;
+package com.mascara.oyo_booking_backend.external_modules.mail.service;
 
 import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
-import com.mascara.oyo_booking_backend.mail.EmailDetails;
+import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
 

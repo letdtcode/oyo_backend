@@ -5,8 +5,8 @@ import com.mascara.oyo_booking_backend.entities.MailConfirmToken;
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mail.EmailDetails;
-import com.mascara.oyo_booking_backend.mail.service.EmailService;
+import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
+import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.repositories.MailConfirmTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.utils.AppContants;
@@ -58,9 +58,9 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
     @Override
     public MessageResponse verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException {
         MailConfirmToken mailConfirmToken = mailConfirmTokenRepository.findByVerifyToken(token)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.CONFIRM_TOKEN_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("confirm token")));
         User user = userRepository.findByMailConfirmTokenId(mailConfirmToken.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         if (!mailConfirmToken.getDateExpired().isBefore(LocalDateTime.now())) {
             if (user.getMail().equals(mail)) {
                 user.setStatus(UserStatusEnum.ACTIVE);

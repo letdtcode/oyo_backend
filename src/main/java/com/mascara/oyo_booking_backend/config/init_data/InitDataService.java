@@ -1,19 +1,12 @@
 package com.mascara.oyo_booking_backend.config.init_data;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mascara.oyo_booking_backend.config.init_data.models.InitDbDistrictModel;
-import com.mascara.oyo_booking_backend.config.init_data.models.InitDbProvinceModel;
-import com.mascara.oyo_booking_backend.config.init_data.models.InitDbWardModel;
-import com.mascara.oyo_booking_backend.entities.District;
-import com.mascara.oyo_booking_backend.entities.Province;
-import com.mascara.oyo_booking_backend.entities.Role;
-import com.mascara.oyo_booking_backend.entities.Ward;
+import com.mascara.oyo_booking_backend.config.init_data.models.InitDbModel;
+import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.repositories.DistrictRepository;
-import com.mascara.oyo_booking_backend.repositories.ProvinceRepository;
-import com.mascara.oyo_booking_backend.repositories.RoleRepository;
-import com.mascara.oyo_booking_backend.repositories.WardRepository;
+import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -37,12 +30,22 @@ public class InitDataService implements CommandLineRunner {
     private final WardRepository wardRepository;
     private final RoleRepository roleRepository;
 
-    public InitDataService(ProvinceRepository provinceRepository, DistrictRepository districtRepository, WardRepository wardRepository, RoleRepository roleRepository) {
+    private final FacilityCategoriesRepository facilityCategoriesRepository;
+
+    private final FacilityRepository facilityRepository;
+
+    private final AccommodationCategoriesRepository accommodationCategoriesRepository;
+
+    public InitDataService(ProvinceRepository provinceRepository, DistrictRepository districtRepository, WardRepository wardRepository, RoleRepository roleRepository, FacilityCategoriesRepository facilityCategoriesRepository, FacilityRepository facilityRepository, AccommodationCategoriesRepository accommodationCategoriesRepository) {
         this.provinceRepository = provinceRepository;
         this.districtRepository = districtRepository;
         this.wardRepository = wardRepository;
         this.roleRepository = roleRepository;
+        this.facilityCategoriesRepository = facilityCategoriesRepository;
+        this.facilityRepository = facilityRepository;
+        this.accommodationCategoriesRepository = accommodationCategoriesRepository;
     }
+
 
     public void initDataUser() {
         Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN);
@@ -72,12 +75,13 @@ public class InitDataService implements CommandLineRunner {
                         Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbDistrict.json")).getFile()
                 );
                 ObjectMapper mapper = new ObjectMapper();
-                InitDbDistrictModel initModel = mapper.readValue(file, InitDbDistrictModel.class);
+                InitDbModel<District> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
                 List<District> districtList = initModel.getData();
                 for (int i = 0; i < districtList.size(); i++) {
                     District district = districtList.get(i);
                     district.setProvince(provinceRepository.findByProvinceCode(district.getProvinceCode())
-                            .orElseThrow(() -> new ResourceNotFoundException(AppContants.PROVINCE_NOT_FOUND)));
+                            .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province"))));
                     districtList.set(i, district);
                 }
                 districtRepository.saveAll(districtList);
@@ -96,7 +100,8 @@ public class InitDataService implements CommandLineRunner {
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
-                InitDbProvinceModel initModel = mapper.readValue(file, InitDbProvinceModel.class);
+                InitDbModel<Province> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
                 provinceRepository.saveAll(initModel.getData());
             }
         } catch (Exception e) {
@@ -113,13 +118,14 @@ public class InitDataService implements CommandLineRunner {
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
-                InitDbWardModel initModel = mapper.readValue(file, InitDbWardModel.class);
+                InitDbModel<Ward> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
 
                 List<Ward> wardList = initModel.getData();
                 for (int i = 0; i < wardList.size(); i++) {
                     Ward ward = wardList.get(i);
                     ward.setDistrict(districtRepository.findByDistrictCode(ward.getDistrictCode())
-                            .orElseThrow(() -> new ResourceNotFoundException(AppContants.DISTRICT_NOT_FOUND)));
+                            .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district"))));
                     wardList.set(i, ward);
                 }
                 wardRepository.saveAll(wardList);
@@ -129,11 +135,79 @@ public class InitDataService implements CommandLineRunner {
         }
     }
 
+    public void implementInitDataMenuActionFacilityCategory() {
+        List<FacilityCategories> checkList = facilityCategoriesRepository.checkExistData();
+        try {
+            if (checkList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbFacilityCategory.json")).getFile()
+                );
+
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<FacilityCategories> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+
+                List<FacilityCategories> facilityCategoriesList = initModel.getData();
+                facilityCategoriesRepository.saveAll(facilityCategoriesList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void implementInitDataMenuActionFacility() {
+        List<Facility> checkList = facilityRepository.checkExistData();
+        try {
+            if (checkList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbFacility.json")).getFile()
+                );
+
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<Facility> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+
+                List<Facility> facilityList = initModel.getData();
+                for (int i = 0; i < facilityList.size(); i++) {
+                    Facility facility = facilityList.get(i);
+                    facility.setFacilityCategories(facilityCategoriesRepository.findByFaciCateCode(facility.getFacilityCateCode())
+                            .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility category"))));
+                    facilityList.set(i, facility);
+                }
+                facilityRepository.saveAll(facilityList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void implementInitDataMenuActionAccomCategory() {
+        List<AccommodationCategories> checkList = accommodationCategoriesRepository.checkExistData();
+        try {
+            if (checkList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbAccomCategory.json")).getFile()
+                );
+
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<AccommodationCategories> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+                List<AccommodationCategories> accommodationCategoriesList = initModel.getData();
+                accommodationCategoriesRepository.saveAll(accommodationCategoriesList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run(String... args) throws Exception {
         initDataUser();
-//        implementInitDataMenuActionProvince();
-//        implementInitDataMenuActionDistrict();
-//        implementInitDataMenuActionWard();
+        implementInitDataMenuActionProvince();
+        implementInitDataMenuActionDistrict();
+        implementInitDataMenuActionWard();
+        implementInitDataMenuActionFacilityCategory();
+        implementInitDataMenuActionFacility();
+        implementInitDataMenuActionAccomCategory();
     }
 }

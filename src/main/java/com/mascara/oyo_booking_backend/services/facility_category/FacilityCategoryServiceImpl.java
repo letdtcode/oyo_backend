@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.services.facil_accom_category;
+package com.mascara.oyo_booking_backend.services.facility_category;
 
 /**
  * Created by: IntelliJ IDEA
@@ -7,5 +7,5 @@ package com.mascara.oyo_booking_backend.services.facil_accom_category;
  * Time      : 7:37 CH
  * Filename  : FacilAccomCategoryServiceImpl
  */
-public class FacilAccomCategoryServiceImpl implements FacilAccomCategoryService{
+public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 }

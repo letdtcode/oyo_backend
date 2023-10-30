@@ -1,25 +1,24 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.entities.base.Audit;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "accom_place")
-public class AccomPlace {
+public class AccomPlace extends Audit<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -30,8 +29,8 @@ public class AccomPlace {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "address_detail")
+    private String addressDetail;
 
     @Column(name = "grade_rate")
     private Float gradeRate;
@@ -81,9 +80,34 @@ public class AccomPlace {
     @Column(name = "province_code")
     private String provinceCode;
 
+    @Column(name = "district_code")
+    private String districtCode;
+
+    @Column(name = "ward_code")
+    private String wardCode;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)
     private Set<ImageAccom> imageAccoms;
+
+    @Column(name = "acreage")
+    private Float acreage;
+
+    @Column(name = "num_people")
+    private Integer numPeople;
+
+    @Column(name = "num_bathroom")
+    private Integer numBathRoom;
+
+    @Column(name = "num_bed")
+    private Integer numBed;
+
+    @Column(name = "price_per_night")
+    private BigDecimal pricePerNight;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private CommonStatusEnum status;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)
@@ -101,9 +125,5 @@ public class AccomPlace {
     private CartItem cartItem;
 
     @ManyToMany(mappedBy = "accomPlaceSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<FacilityAccom> facilityAccomSet;
-
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private CommonStatusEnum status;
+    private Set<Facility> facilitySet;
 }

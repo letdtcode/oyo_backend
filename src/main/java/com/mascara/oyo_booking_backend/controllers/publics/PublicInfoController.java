@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/public/province")
 @RequiredArgsConstructor
-public class PublicProvinceController {
+public class PublicInfoController {
 
     @Autowired
     private ProvinceService provinceService;

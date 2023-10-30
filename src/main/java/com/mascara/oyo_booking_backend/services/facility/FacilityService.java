@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.services.facil_accom;
+package com.mascara.oyo_booking_backend.services.facility;
 
 /**
  * Created by: IntelliJ IDEA
@@ -7,5 +7,5 @@ package com.mascara.oyo_booking_backend.services.facil_accom;
  * Time      : 7:37 CH
  * Filename  : FacilAccomService
  */
-public interface FacilAccomService {
+public interface FacilityService {
 }

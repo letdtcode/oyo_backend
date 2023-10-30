@@ -50,7 +50,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Transactional
     public UpdateProvinceResponse updateProvince(UpdateProvinceRequest request, String provinceName) {
         Province province = provinceRepository.findByProvinceName(provinceName)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.PROVINCE_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
         province.setProvinceName(request.getProvinceName());
         province.setThumbnail(request.getThumbnailLink());
         province = provinceRepository.save(province);
@@ -61,7 +61,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Transactional
     public MessageResponse deleteProvince(String provinceName) {
         Province province = provinceRepository.findByProvinceName(provinceName)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.PROVINCE_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
         provinceRepository.delete(province);
         return new MessageResponse("Province Success !");
     }
