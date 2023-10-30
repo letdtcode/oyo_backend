@@ -1,23 +1,21 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.entities.base.Audit;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "role")
-public class Role {
+public class Role extends Audit<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

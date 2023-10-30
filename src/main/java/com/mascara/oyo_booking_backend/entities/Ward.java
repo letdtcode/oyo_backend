@@ -1,11 +1,9 @@
 package com.mascara.oyo_booking_backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mascara.oyo_booking_backend.entities.base.Audit;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -15,19 +13,19 @@ import lombok.experimental.SuperBuilder;
  * Time      : 11:45 CH
  * Filename  : Ward
  */
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "ward")
-public class Ward {
+public class Ward extends Audit<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "ward_code")
+    @Column(name = "ward_code",unique = true)
     private String wardCode;
 
     @Column(name = "ward_name")

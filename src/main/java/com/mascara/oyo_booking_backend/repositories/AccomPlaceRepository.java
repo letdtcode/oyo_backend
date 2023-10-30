@@ -1,8 +1,15 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.AccomPlace;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by: IntelliJ IDEA
@@ -13,4 +20,28 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
+
+    @Query(value = "SELECT ap.* FROM accom_place ap LEFT JOIN facility_accom fa " +
+            "ON ap.id = fa.accom_id LEFT JOIN facility f ON fa.facility_id = f.id " +
+            "WHERE (:provinceCode is null or ap.province_code = :provinceCode) AND (:districtCode is null or ap.district_code = :districtCode) " +
+            "AND (:wardCode is null or ap.ward_code = :wardCode) AND (:priceFrom is null or :priceTo is null or (ap.price_per_night BETWEEN :priceFrom AND :priceTo)) " +
+            "AND IF(:size > 0, f.facility_name IN :facilityName,true) AND (:numBathroom is null or ap.num_bathroom = :numBathroom) " +
+            "AND (:numPeople is null or ap.num_people = :numPeople) AND (:numBed is null or ap.num_bed = :numBed) and ap.status = 'ACTIVE'",
+            countQuery = "SELECT count(ap.id) FROM accom_place ap LEFT JOIN facility_accom fa ON ap.id = fa.accom_id LEFT JOIN facility f ON " +
+                    "fa.facility_id = f.id WHERE (:provinceCode is null or ap.province_code = :provinceCode) AND (:districtCode is null or ap.district_code = :districtCode) " +
+                    "AND (:wardCode is null or ap.ward_code = :wardCode) AND (:priceFrom is null or :priceTo is null or (ap.price_per_night BETWEEN :priceFrom AND :priceTo)) " +
+                    "AND IF(:size > 0, f.facility_name IN :facilityName,true) AND (:numBathroom is null or ap.num_bathroom = :numBathroom) AND (:numPeople is null or ap.num_people = :numPeople) " +
+                    "AND (:numBed is null or ap.num_bed = :numBed) and ap.status = 'ACTIVE'", nativeQuery = true)
+    Page<AccomPlace> getPageWithFullFilter(@Param("provinceCode") String provinceCode,
+                                           @Param("districtCode") String districtCode,
+                                           @Param("wardCode") String wardCode,
+                                           @Param("priceFrom") BigDecimal priceFrom,
+                                           @Param("priceTo") BigDecimal priceTo,
+                                           @Param("facilityName") List<String> facilityName,
+                                           @Param("size") Integer size,
+                                           @Param("numBathroom") Integer numBathroom,
+                                           @Param("numPeople") Integer numPeople,
+                                           @Param("numBed") Integer numBed,
+                                           Pageable pageable);
+
 }

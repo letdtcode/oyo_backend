@@ -1,10 +1,8 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.entities.base.Audit;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
@@ -16,14 +14,14 @@ import java.math.BigDecimal;
  * Time      : 10:34 CH
  * Filename  : Commision
  */
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "commision")
-public class Commision {
+public class Commision extends Audit<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

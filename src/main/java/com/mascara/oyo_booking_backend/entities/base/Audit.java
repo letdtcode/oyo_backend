@@ -2,23 +2,34 @@ package com.mascara.oyo_booking_backend.entities.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
-import lombok.Builder;
-
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Super;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@MappedSuperclass
+@SuperBuilder(toBuilder = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 public abstract class Audit<U extends Serializable> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @CreatedBy
-    @Column(name = "created_by",  length = 50, updatable = false)
+    @Column(name = "created_by", length = 50, updatable = false)
     @JsonIgnore
     private U createdBy;
 

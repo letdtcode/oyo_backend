@@ -21,6 +21,9 @@ public interface FacilityRepository extends JpaRepository<Facility, Long> {
     @Query(value = "select f.* from facility f limit 1", nativeQuery = true)
     List<Facility> checkExistData();
 
-    @Query(value = "select f from facility f where f.facility_name = :facilityName", nativeQuery = true)
+    @Query(value = "select f.* from facility f where f.facility_name = :facilityName", nativeQuery = true)
     Optional<Facility> findByFacilityName(@Param("facilityName") String facilityName);
+
+    @Query(value = "select f.* from facility f where f.facility_name in :listFacilityName",nativeQuery = true)
+    List<Facility> findByListFacilityName(@Param("listFacilityName") List<String> listFacilityName);
 }

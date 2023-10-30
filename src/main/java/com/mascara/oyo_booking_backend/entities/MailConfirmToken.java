@@ -1,9 +1,8 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.mascara.oyo_booking_backend.entities.base.Audit;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
@@ -19,13 +18,14 @@ import java.util.TimeZone;
  * Time      : 2:51 SA
  * Filename  : MailConfirmToken
  */
-@SuperBuilder
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "mail_confirm_token")
-public class MailConfirmToken {
+public class MailConfirmToken extends Audit<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

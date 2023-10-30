@@ -1,17 +1,27 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
 import com.mascara.oyo_booking_backend.dtos.request.accommodation.AddAccommodationRequest;
+import com.mascara.oyo_booking_backend.dtos.request.accommodation.GetAccomPlaceFilterRequest;
+import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Created by: IntelliJ IDEA
@@ -20,6 +30,7 @@ import java.util.Set;
  * Time      : 7:40 CH
  * Filename  : AccomPlaceServiceImpl
  */
+@Service
 public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Autowired
@@ -42,6 +53,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Autowired
     private FacilityRepository facilityRepository;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     @Transactional
@@ -84,5 +98,40 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .build();
         accomPlaceRepository.save(accomPlace);
         return new MessageResponse(AppContants.ADD_SUCCESS_MESSAGE("Accom Place"));
+    }
+
+    @Override
+    @Transactional
+    public List<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
+        List<AccomPlace> accomPlaceList = accomPlaceRepository.findAll(paging).toList();
+        return accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace, GetAccomPlaceResponse.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public List<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum, Integer pageSize) {
+        int length = 0;
+        if (filter.getFacilityName() != null) {
+            length = filter.getFacilityName().size();
+        }
+        if (filter.getFacilityName() == null || filter.getFacilityName().isEmpty()) {
+            filter.setFacilityName(List.of(UUID.randomUUID().toString()));
+        }
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
+        List<AccomPlace> accomPlaceList = accomPlaceRepository.getPageWithFullFilter(filter.getProvinceCode(),
+                filter.getDistrictCode(),
+                filter.getWardCode(),
+                filter.getPriceFrom(),
+                filter.getPriceTo(),
+                filter.getFacilityName(),
+                length,
+                filter.getNumBathroom(),
+                filter.getNumPeople(),
+                filter.getNumBed(),
+                paging).toList();
+        return accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace, GetAccomPlaceResponse.class))
+                .collect(Collectors.toList());
     }
 }

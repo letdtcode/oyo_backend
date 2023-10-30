@@ -2,11 +2,9 @@ package com.mascara.oyo_booking_backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mascara.oyo_booking_backend.entities.base.Audit;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -20,15 +18,15 @@ import java.util.Set;
  * Time      : 11:44 CH
  * Filename  : District
  */
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "district")
-@JsonIgnoreProperties(value = { "province" })
-public class District {
+@JsonIgnoreProperties(value = {"province"})
+public class District extends Audit<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
