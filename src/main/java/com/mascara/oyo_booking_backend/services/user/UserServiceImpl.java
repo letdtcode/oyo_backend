@@ -84,12 +84,12 @@ public class UserServiceImpl implements UserService {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
+                    case "Admin":
                         Role adminRole = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
                         break;
-                    case "partner":
+                    case "Partner":
                         Role modRole = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);

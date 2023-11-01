@@ -1,49 +1,45 @@
-package com.mascara.oyo_booking_backend.controllers.partner;
+package com.mascara.oyo_booking_backend.controllers.publics;
 
-import com.mascara.oyo_booking_backend.dtos.request.accommodation.AddAccommodationRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
-import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
+import com.mascara.oyo_booking_backend.services.facility.FacilityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
- * Date      : 25/10/2023
- * Time      : 8:28 CH
- * Filename  : PartnerManageController
+ * Date      : 31/10/2023
+ * Time      : 5:55 CH
+ * Filename  : PublicFacilityController
  */
-@Tag(name = "Partner Manage", description = "Partner Manage APIs")
+@Tag(name = "Public Facility", description = "Public Facility APIs")
 @RestController
-@RequestMapping("/api/v1/partner")
+@RequestMapping("/api/v1/public/facility")
 @RequiredArgsConstructor
-public class PartnerManageController {
-
+public class PublicFacilityController {
     @Autowired
-    private AccomPlaceService accomPlaceService;
+    private FacilityService facilityService;
 
-    @Operation(summary = "Add Accom Place For Rent", description = "Partner Api for add accom place")
+    @Operation(summary = "Check Mail Exist", description = "Public Api check mail exist for Sign Up")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/add-accom-place")
-    @PreAuthorize("hasRole('PARTNER')")
-    public ResponseEntity<?> addAccomPlace(@RequestBody @Valid AddAccommodationRequest addAccommodationRequest,
-                                           @RequestParam("mail") String mail) {
+    @GetMapping("/get-all")
+    public ResponseEntity<?> getAllDataFacility() {
         return ResponseEntity.ok(new BaseResponse<>(
-                accomPlaceService.addAccomPlace(addAccommodationRequest,mail)));
+                facilityService.getAllDataFacility()));
     }
-
 }

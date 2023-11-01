@@ -52,7 +52,7 @@ mascara:
     dev-url: http://localhost:8080
 
 token:
-  expired: 1
+  expired: 10
 
 cloudinary:
   name: dyv5zrsgj

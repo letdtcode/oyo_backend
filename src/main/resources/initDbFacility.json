@@ -2,319 +2,471 @@
   "data": [
     {
       "facilityName": "Tủ áo",
-      "facilityCateCode": "FACI_CATE_01"
-    },
-    {
-      "facilityName": "Máy sấy",
-      "facilityCateCode": "FACI_CATE_01"
-    },
-    {
-      "facilityName": "Quạt (trần hoặc đứng)",
-      "facilityCateCode": "FACI_CATE_01"
-    },
-    {
-      "facilityName": "Bàn ủi (bàn là)",
-      "facilityCateCode": "FACI_CATE_01"
-    },
-    {
-      "facilityName": "Bộ ga giường",
-      "facilityCateCode": "FACI_CATE_01"
-    },
-    {
-      "facilityName": "Tiệm giặt là gần đây",
-      "facilityCateCode": "FACI_CATE_01"
-    },
-    {
-      "facilityName": "Máy giặt",
-      "facilityCateCode": "FACI_CATE_01"
-    },
-    {
-      "facilityName": "Chuông/liên lạc không dây",
-      "facilityCateCode": "FACI_CATE_02"
-    },
-    {
-      "facilityName": "Nhân viên trực cửa",
-      "facilityCateCode": "FACI_CATE_02"
-    },
-    {
-      "facilityName": "Thang máy trong tòa nhà",
-      "facilityCateCode": "FACI_CATE_02"
-    },
-    {
-      "facilityName": "Bãi đỗ xe trả phí",
-      "facilityCateCode": "FACI_CATE_02"
-    },
-    {
-      "facilityName": "Máy pha cà phê/trà",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Cà phê",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Ăn sáng miễn phí",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Bát đĩa và dụng cụ ăn uống",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Máy rửa bát",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Tủ đông",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Nhà bếp",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Lò vi sóng",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Lò nướng",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Tủ lạnh",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Bếp",
-      "facilityCateCode": "FACI_CATE_03"
-    },
-    {
-      "facilityName": "Trà",
-      "facilityCateCode": "FACI_CATE_03"
+      "facilityCateCode": "FACI_CATE_01",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Máy sấy tóc",
-      "facilityCateCode": "FACI_CATE_04"
+      "facilityCateCode": "FACI_CATE_01",
+      "imgModeLight":"https://img.icons8.com/ios/25/hair-dryer.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/hair-dryer.png"
+    },
+    {
+      "facilityName": "Quạt (trần hoặc đứng)",
+      "facilityCateCode": "FACI_CATE_01",
+      "imgModeLight":"https://img.icons8.com/ios/25/fan.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/fan.png"
+    },
+    {
+      "facilityName": "Bàn ủi (bàn là)",
+      "facilityCateCode": "FACI_CATE_01",
+      "imgModeLight":"https://img.icons8.com/ios/25/iron.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/iron.png"
+    },
+    {
+      "facilityName": "Bộ ga giường",
+      "facilityCateCode": "FACI_CATE_01",
+      "imgModeLight":"https://img.icons8.com/ios/25/bed.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/bed.png"
+    },
+    {
+      "facilityName": "Tiệm giặt là gần đây",
+      "facilityCateCode": "FACI_CATE_01",
+      "imgModeLight":"https://img.icons8.com/ios/25/laundry-bag.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/laundry-bag.png"
+    },
+    {
+      "facilityName": "Máy giặt",
+      "facilityCateCode": "FACI_CATE_01",
+      "imgModeLight":"https://img.icons8.com/dotty/25/washing-machine.png",
+      "imgModeDark": "https://img.icons8.com/dotty/25/FFFFFF/washing-machine.png"
+    },
+    {
+      "facilityName": "Chuông/liên lạc không dây",
+      "facilityCateCode": "FACI_CATE_02",
+      "imgModeLight":"https://img.icons8.com/ios/25/bell.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/bell.png"
+    },
+    {
+      "facilityName": "Nhân viên trực cửa",
+      "facilityCateCode": "FACI_CATE_02",
+      "imgModeLight":"https://img.icons8.com/ios/25/staff.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/staff.png"
+    },
+    {
+      "facilityName": "Thang máy trong tòa nhà",
+      "facilityCateCode": "FACI_CATE_02",
+      "imgModeLight":"https://img.icons8.com/ios/25/elevator.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/elevator.png"
+    },
+    {
+      "facilityName": "Bãi đỗ xe trả phí",
+      "facilityCateCode": "FACI_CATE_02",
+      "imgModeLight":"https://img.icons8.com/ios/25/paid-parking.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/paid-parking.png"
+    },
+    {
+      "facilityName": "Máy pha cà phê/trà",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/ios/25/coffee-maker.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/coffee-maker.png"
+    },
+    {
+      "facilityName": "Cà phê",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/ios/25/espresso-cup.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/espresso-cup.png"
+    },
+    {
+      "facilityName": "Ăn sáng miễn phí",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/pastel-glyph/25/breakfast--v1.png",
+      "imgModeDark": "https://img.icons8.com/pastel-glyph/25/FFFFFF/breakfast--v1.png"
+    },
+    {
+      "facilityName": "Bát đĩa và dụng cụ ăn uống",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/dotty/25/poolside-bar.png",
+      "imgModeDark": "https://img.icons8.com/dotty/25/FFFFFF/poolside-bar.png"
+    },
+    {
+      "facilityName": "Máy rửa bát",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/ios/25/dishwasher.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/dishwasher.png"
+    },
+    {
+      "facilityName": "Tủ đông",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/external-bearicons-glyph-bearicons/25/external-Freezer-cooking-bearicons-glyph-bearicons.png",
+      "imgModeDark": "https://img.icons8.com/external-bearicons-glyph-bearicons/25/FFFFFF/external-Freezer-cooking-bearicons-glyph-bearicons.png"
+    },
+    {
+      "facilityName": "Nhà bếp",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/dotty/25/kitchen.png",
+      "imgModeDark": "https://img.icons8.com/dotty/25/FFFFFF/kitchen.png"
+    },
+    {
+      "facilityName": "Lò vi sóng",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/ios/25/microwave.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/microwave.png"
+    },
+    {
+      "facilityName": "Lò nướng",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/external-konkapp-detailed-outline-konkapp/25/external-oven-cafe-konkapp-detailed-outline-konkapp.png",
+      "imgModeDark": "https://img.icons8.com/external-konkapp-detailed-outline-konkapp/25/FFFFFF/external-oven-cafe-konkapp-detailed-outline-konkapp.png"
+    },
+    {
+      "facilityName": "Tủ lạnh",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/ios/25/fridge.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/fridge.png"
+    },
+    {
+      "facilityName": "Bếp",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/ios/25/gas-stove.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/gas-stove.png"
+    },
+    {
+      "facilityName": "Trà",
+      "facilityCateCode": "FACI_CATE_03",
+      "imgModeLight":"https://img.icons8.com/ios/25/tea--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/tea--v1.png"
+    },
+    {
+      "facilityName": "Máy làm khô tay",
+      "facilityCateCode": "FACI_CATE_04",
+      "imgModeLight":"https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/25/external-hand-dryer-hygiene-vitaliy-gorbachev-fill-vitaly-gorbachev-2.png",
+      "imgModeDark": "https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/25/FFFFFF/external-hand-dryer-hygiene-vitaliy-gorbachev-fill-vitaly-gorbachev-2.png"
     },
     {
       "facilityName": "Dầu gội đầu",
-      "facilityCateCode": "FACI_CATE_04"
+      "facilityCateCode": "FACI_CATE_04",
+      "imgModeLight":"https://img.icons8.com/external-phatplus-solid-phatplus/25/external-shampoo-bathroom-phatplus-solid-phatplus.png",
+      "imgModeDark": "https://img.icons8.com/external-phatplus-solid-phatplus/25/FFFFFF/external-shampoo-bathroom-phatplus-solid-phatplus.png"
     },
     {
       "facilityName": "Sữa tắm",
-      "facilityCateCode": "FACI_CATE_04"
+      "facilityCateCode": "FACI_CATE_04",
+      "imgModeLight":"https://img.icons8.com/dotty/25/shampoo-dispenser.png\" alt=\"shampoo-dispenser",
+      "imgModeDark": "https://img.icons8.com/dotty/25/FFFFFF/shampoo-dispenser.png\" alt=\"shampoo-dispenser"
     },
     {
       "facilityName": "Bồn tắm",
-      "facilityCateCode": "FACI_CATE_04"
+      "facilityCateCode": "FACI_CATE_04",
+      "imgModeLight":"https://img.icons8.com/ios/25/shower-and-tub.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/shower-and-tub.png"
     },
     {
       "facilityName": "Bếp nướng",
-      "facilityCateCode": "FACI_CATE_05"
+      "facilityCateCode": "FACI_CATE_05",
+      "imgModeLight":"https://img.icons8.com/ios/25/grill.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/grill.png"
     },
     {
       "facilityName": "Xe đạp",
-      "facilityCateCode": "FACI_CATE_05"
+      "facilityCateCode": "FACI_CATE_05",
+      "imgModeLight":"https://img.icons8.com/ios/25/bicycle.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/bicycle.png"
     },
     {
       "facilityName": "Vườn hoặc sân sau",
-      "facilityCateCode": "FACI_CATE_05"
+      "facilityCateCode": "FACI_CATE_05",
+      "imgModeLight":"https://img.icons8.com/external-flatart-icons-outline-flatarticons/25/external-garden-city-elements-flatart-icons-outline-flatarticons-1.png",
+      "imgModeDark": "https://img.icons8.com/external-flatart-icons-outline-flatarticons/25/FFFFFF/external-garden-city-elements-flatart-icons-outline-flatarticons-1.png"
     },
     {
       "facilityName": "Lối vào hồ",
-      "facilityCateCode": "FACI_CATE_05"
+      "facilityCateCode": "FACI_CATE_05",
+      "imgModeLight":"https://img.icons8.com/ios/25/lake.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/lake.png"
     },
     {
       "facilityName": "Trượt tuyết vào/ra",
-      "facilityCateCode": "FACI_CATE_05"
+      "facilityCateCode": "FACI_CATE_05",
+      "imgModeLight":"https://img.icons8.com/external-solid-chattapat-/25/external-holiday-holiday-solid-chattapat--3.png",
+      "imgModeDark": "https://img.icons8.com/external-solid-chattapat-/25/FFFFFF/external-holiday-holiday-solid-chattapat--3.png"
     },
     {
       "facilityName": "Khu bờ sông",
-      "facilityCateCode": "FACI_CATE_05"
+      "facilityCateCode": "FACI_CATE_05",
+      "imgModeLight":"https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/25/external-river-adventure-and-camping-xnimrodx-lineal-xnimrodx.png",
+      "imgModeDark": "https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/25/FFFFFF/external-river-adventure-and-camping-xnimrodx-lineal-xnimrodx.png"
     },
     {
       "facilityName": "Trò chơi bàn cờ",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/external-smashingstocks-glyph-smashing-stocks/25/external-Board-Game-geek-smashingstocks-glyph-smashing-stocks-2.png",
+      "imgModeDark": "https://img.icons8.com/external-smashingstocks-glyph-smashing-stocks/25/FFFFFF/external-Board-Game-geek-smashingstocks-glyph-smashing-stocks-2.png"
     },
     {
       "facilityName": "Truyền hình cáp",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/ios-filled/25/tv-antenna.png\" alt=\"tv-antenna",
+      "imgModeDark": "https://img.icons8.com/ios-filled/25/FFFFFF/tv-antenna.png\" alt=\"tv-antenna"
     },
     {
       "facilityName": "Internet tính phí",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/dotty/25/domain.png",
+      "imgModeDark": "https://img.icons8.com/dotty/25/FFFFFF/domain.png"
     },
     {
       "facilityName": "Wifi tính phí",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/dotty/25/wifi-logo.png",
+      "imgModeDark": "https://img.icons8.com/dotty/25/FFFFFF/wifi-logo.png"
     },
     {
       "facilityName": "Wi-Fi [cho thuê loại xách tay]",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/external-others-iconmarket/25/external-wifi-social-media-others-iconmarket-3.png",
+      "imgModeDark": "https://img.icons8.com/external-others-iconmarket/25/FFFFFF/external-wifi-social-media-others-iconmarket-3.png"
     },
     {
       "facilityName": "Internet miễn phí",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/pastel-glyph/25/wireless-cloud-access--v2.png",
+      "imgModeDark": "https://img.icons8.com/pastel-glyph/25/FFFFFF/wireless-cloud-access--v2.png"
     },
     {
       "facilityName": "Hệ thống âm thanh",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/external-kmg-design-detailed-outline-kmg-design/25/external-sound-system-home-appliances-kmg-design-detailed-outline-kmg-design.png",
+      "imgModeDark": "https://img.icons8.com/external-kmg-design-detailed-outline-kmg-design/25/FFFFFF/external-sound-system-home-appliances-kmg-design-detailed-outline-kmg-design.png"
     },
     {
       "facilityName": "Thiết bị chơi điện tử",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/external-line-vectorslab/25/external-Play-Video-Game-gaming-line-vectorslab.png",
+      "imgModeDark": "https://img.icons8.com/external-line-vectorslab/25/FFFFFF/external-Play-Video-Game-gaming-line-vectorslab.png"
     },
     {
       "facilityName": "Dịch vụ truyền hình trực tuyến",
-      "facilityCateCode": "FACI_CATE_06"
+      "facilityCateCode": "FACI_CATE_06",
+      "imgModeLight":"https://img.icons8.com/pastel-glyph/25/tv--v1.png",
+      "imgModeDark": "https://img.icons8.com/pastel-glyph/25/FFFFFF/tv--v1.png"
     },
     {
       "facilityName": "Bồn tắm trẻ em",
-      "facilityCateCode": "FACI_CATE_07"
+      "facilityCateCode": "FACI_CATE_07",
+      "imgModeLight":"https://img.icons8.com/ios/25/jacuzzi.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/jacuzzi.png"
     },
     {
       "facilityName": "Thiết bị giám sát trẻ",
-      "facilityCateCode": "FACI_CATE_07"
+      "facilityCateCode": "FACI_CATE_07",
+      "imgModeLight":"https://img.icons8.com/ios/25/child-safe-zone--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/child-safe-zone--v1.png"
     },
     {
       "facilityName": "Bàn thay tã",
-      "facilityCateCode": "FACI_CATE_07"
+      "facilityCateCode": "FACI_CATE_07",
+      "imgModeLight":"https://img.icons8.com/dotty/25/mother-room.png",
+      "imgModeDark": "https://img.icons8.com/dotty/25/FFFFFF/mother-room.png"
     },
     {
       "facilityName": "Sách và đồ chơi cho trẻ em",
-      "facilityCateCode": "FACI_CATE_07"
+      "facilityCateCode": "FACI_CATE_07",
+      "imgModeLight":"https://img.icons8.com/external-wanicon-lineal-wanicon/25/external-toy-gift-box-wanicon-lineal-wanicon.png",
+      "imgModeDark": "https://img.icons8.com/external-wanicon-lineal-wanicon/25/FFFFFF/external-toy-gift-box-wanicon-lineal-wanicon.png"
     },
     {
       "facilityName": "Bát đĩa cho trẻ",
-      "facilityCateCode": "FACI_CATE_07"
+      "facilityCateCode": "FACI_CATE_07",
+      "imgModeLight":"https://img.icons8.com/ios/25/washing-dishes.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/washing-dishes.png"
     },
     {
       "facilityName": "Cũi em bé",
-      "facilityCateCode": "FACI_CATE_07"
-    },
-    {
-      "facilityName": "Ghế cao cho trẻ con ngồi ăn",
-      "facilityCateCode": "FACI_CATE_07"
+      "facilityCateCode": "FACI_CATE_07",
+      "imgModeLight":"https://img.icons8.com/external-nawicon-detailed-outline-nawicon/25/external-baby-crib-bedroom-nawicon-detailed-outline-nawicon.png",
+      "imgModeDark": "https://img.icons8.com/external-nawicon-detailed-outline-nawicon/25/FFFFFF/external-baby-crib-bedroom-nawicon-detailed-outline-nawicon.png"
     },
     {
       "facilityName": "Cũi vải",
-      "facilityCateCode": "FACI_CATE_07"
+      "facilityCateCode": "FACI_CATE_07",
+      "imgModeLight":"https://img.icons8.com/ios/25/crib.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/crib.png"
     },
     {
       "facilityName": "Cửa chặn cầu thang",
-      "facilityCateCode": "FACI_CATE_07"
+      "facilityCateCode": "FACI_CATE_07",
+      "imgModeLight":"https://img.icons8.com/ios/25/FFFFFF/stairs-up.png",
+      "imgModeDark": "https://img.icons8.com/ios/25/FFFFFF/stairs-up.png"
     },
     {
       "facilityName": "Bảo vệ [24 giờ]",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Cảm biến báo khí CO",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Được làm sạch bởi công ty làm sạch chuyên nghiệp",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Được làm sạch theo hướng dẫn về y tế hoặc của OYO",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Sản phẩm làm sạch được sử dụng dựa trên hướng dẫn về y tế",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Vật dụng làm vệ sinh được cung cấp cho khách",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Nhận phòng/trả phòng không tiếp xúc",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Khẩu trang được cung cấp cho khách",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Bình chữa cháy",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Bộ sơ cấp cứu",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Nước rửa tay và xà phòng được cung cấp",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Các quy định giãn cách vật lý được chấp hành",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Đồ che mặt bảo vệ cho nhân viên",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Màn bảo vệ ở khu vực chung",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Được khử trùng theo nguyên tắc về y tế hoặc của OYO",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Cảm biến báo khói",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Kiểm tra nhiệt độ cho khách và nhân viên",
-      "facilityCateCode": "FACI_CATE_08"
+      "facilityCateCode": "FACI_CATE_08",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Bãi đỗ xe [tại chỗ]",
-      "facilityCateCode": "FACI_CATE_09"
+      "facilityCateCode": "FACI_CATE_09",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Bãi đỗ xe đạp",
-      "facilityCateCode": "FACI_CATE_09"
+      "facilityCateCode": "FACI_CATE_09",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Dịch vụ taxi",
-      "facilityCateCode": "FACI_CATE_09"
+      "facilityCateCode": "FACI_CATE_09",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Phòng tập gym",
-      "facilityCateCode": "FACI_CATE_10"
+      "facilityCateCode": "FACI_CATE_10",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Bồn tắm nước nóng",
-      "facilityCateCode": "FACI_CATE_10"
+      "facilityCateCode": "FACI_CATE_10",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Lò sưởi trong nhà",
-      "facilityCateCode": "FACI_CATE_10"
+      "facilityCateCode": "FACI_CATE_10",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Hồ bơi trong nhà",
-      "facilityCateCode": "FACI_CATE_10"
+      "facilityCateCode": "FACI_CATE_10",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Cho phép vật nuôi",
-      "facilityCateCode": "FACI_CATE_10"
+      "facilityCateCode": "FACI_CATE_10",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Hồ bơi ngoài trời",
-      "facilityCateCode": "FACI_CATE_10"
+      "facilityCateCode": "FACI_CATE_10",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Hồ bơi riêng",
-      "facilityCateCode": "FACI_CATE_10"
+      "facilityCateCode": "FACI_CATE_10",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     },
     {
       "facilityName": "Được hút thuốc",
-      "facilityCateCode": "FACI_CATE_10"
+      "facilityCateCode": "FACI_CATE_10",
+      "imgModeLight":"https://img.icons8.com/ios/25/wardrobe--v1.png",
+      "imgModeDark": "https://img.icons8.com/ios/50/FFFFFF/wardrobe--v1.png"
     }
   ]
 }

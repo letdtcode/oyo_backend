@@ -51,18 +51,21 @@ public class InitDataService implements CommandLineRunner {
         Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN);
         if (!roleAdmin.isPresent()) {
             Role admin = Role.builder().roleName(RoleEnum.ROLE_ADMIN).build();
+            admin.setCreatedBy("dev");
             roleRepository.save(admin);
         }
 
         Optional<Role> rolePartner = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER);
         if (!rolePartner.isPresent()) {
             Role partner = Role.builder().roleName(RoleEnum.ROLE_PARTNER).build();
+            partner.setCreatedBy("dev");
             roleRepository.save(partner);
         }
 
         Optional<Role> roleClient = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT);
         if (!roleClient.isPresent()) {
             Role client = Role.builder().roleName(RoleEnum.ROLE_CLIENT).build();
+            client.setCreatedBy("dev");
             roleRepository.save(client);
         }
     }
@@ -82,6 +85,7 @@ public class InitDataService implements CommandLineRunner {
                     District district = districtList.get(i);
                     district.setProvince(provinceRepository.findByProvinceCode(district.getProvinceCode())
                             .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province"))));
+                    district.setCreatedBy("dev");
                     districtList.set(i, district);
                 }
                 districtRepository.saveAll(districtList);
@@ -102,6 +106,9 @@ public class InitDataService implements CommandLineRunner {
                 ObjectMapper mapper = new ObjectMapper();
                 InitDbModel<Province> initModel = mapper.readValue(file, new TypeReference<>() {
                 });
+                for (Province province : initModel.getData()) {
+                    province.setCreatedBy("dev");
+                }
                 provinceRepository.saveAll(initModel.getData());
             }
         } catch (Exception e) {
@@ -126,6 +133,7 @@ public class InitDataService implements CommandLineRunner {
                     Ward ward = wardList.get(i);
                     ward.setDistrict(districtRepository.findByDistrictCode(ward.getDistrictCode())
                             .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district"))));
+                    ward.setCreatedBy("dev");
                     wardList.set(i, ward);
                 }
                 wardRepository.saveAll(wardList);
@@ -146,7 +154,9 @@ public class InitDataService implements CommandLineRunner {
                 ObjectMapper mapper = new ObjectMapper();
                 InitDbModel<FacilityCategories> initModel = mapper.readValue(file, new TypeReference<>() {
                 });
-
+                for (FacilityCategories facilityCate : initModel.getData()) {
+                    facilityCate.setCreatedBy("dev");
+                }
                 List<FacilityCategories> facilityCategoriesList = initModel.getData();
                 facilityCategoriesRepository.saveAll(facilityCategoriesList);
             }
@@ -172,6 +182,7 @@ public class InitDataService implements CommandLineRunner {
                     Facility facility = facilityList.get(i);
                     facility.setFacilityCategories(facilityCategoriesRepository.findByFaciCateCode(facility.getFacilityCateCode())
                             .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility category"))));
+                    facility.setCreatedBy("dev");
                     facilityList.set(i, facility);
                 }
                 facilityRepository.saveAll(facilityList);
@@ -193,6 +204,9 @@ public class InitDataService implements CommandLineRunner {
                 InitDbModel<AccommodationCategories> initModel = mapper.readValue(file, new TypeReference<>() {
                 });
                 List<AccommodationCategories> accommodationCategoriesList = initModel.getData();
+                for (AccommodationCategories accomCate : accommodationCategoriesList) {
+                    accomCate.setCreatedBy("dev");
+                }
                 accommodationCategoriesRepository.saveAll(accommodationCategoriesList);
             }
         } catch (Exception e) {

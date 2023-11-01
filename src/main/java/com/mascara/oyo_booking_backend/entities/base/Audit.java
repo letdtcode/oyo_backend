@@ -8,7 +8,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Super;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -29,12 +28,12 @@ public abstract class Audit<U extends Serializable> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @CreatedBy
-    @Column(name = "created_by", length = 50, updatable = false)
+    @Column(name = "created_by", length = 50, updatable = false, nullable = false)
     @JsonIgnore
     private U createdBy;
 
     @CreatedDate
-    @Column(name = "created_date", updatable = false)
+    @Column(name = "created_date", updatable = false, nullable = false)
     @JsonIgnore
     @Builder.Default
     private LocalDateTime createdDate = getLocalDateTimeGMT7();
