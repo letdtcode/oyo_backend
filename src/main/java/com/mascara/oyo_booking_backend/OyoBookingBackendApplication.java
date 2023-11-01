@@ -1,6 +1,5 @@
 package com.mascara.oyo_booking_backend;
 
-import com.cloudinary.Cloudinary;
 import com.mascara.oyo_booking_backend.config.StorageProperties;
 import com.mascara.oyo_booking_backend.services.storage.file_system.FileSystemStoreService;
 import org.springframework.boot.CommandLineRunner;
@@ -13,11 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @EnableConfigurationProperties(StorageProperties.class)
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 @EnableWebSecurity
 @SpringBootApplication
 public class OyoBookingBackendApplication {

@@ -32,12 +32,6 @@ public class AccomPlace extends Audit<String> {
     @Column(name = "address_detail")
     private String addressDetail;
 
-    @Column(name = "grade_rate")
-    private Float gradeRate;
-
-    @Column(name = "num_review")
-    private Long numReview;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id",
@@ -101,6 +95,18 @@ public class AccomPlace extends Audit<String> {
 
     @Column(name = "num_bed")
     private Integer numBed;
+
+    @Column(name = "num_bed_room")
+    private Integer numBedRoom;
+
+    @Column(name = "num_view")
+    private Integer numView;
+
+    @Column(name = "grade_rate")
+    private Float gradeRate;
+
+    @Column(name = "num_review")
+    private Long numReview;
 
     @Column(name = "price_per_night")
     private BigDecimal pricePerNight;

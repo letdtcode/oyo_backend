@@ -3,7 +3,6 @@ package com.mascara.oyo_booking_backend.entities;
 import com.mascara.oyo_booking_backend.entities.base.Audit;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
@@ -19,7 +18,7 @@ public class Facility extends Audit<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "facility_name",unique = true)
+    @Column(name = "facility_name", unique = true)
     private String facilityName;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -43,4 +42,10 @@ public class Facility extends Audit<String> {
 
     @Column(name = "faci_cate_code")
     private String facilityCateCode;
+
+    @Column(name = "image_mode_light")
+    private String imgModeLight;
+
+    @Column(name = "image_mode_dark")
+    private String imgModeDark;
 }

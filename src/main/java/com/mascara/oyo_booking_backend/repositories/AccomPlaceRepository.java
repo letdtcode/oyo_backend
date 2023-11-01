@@ -43,5 +43,4 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
                                            @Param("numPeople") Integer numPeople,
                                            @Param("numBed") Integer numBed,
                                            Pageable pageable);
-
 }

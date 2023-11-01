@@ -1,5 +1,10 @@
 package com.mascara.oyo_booking_backend.services.facility;
 
+import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -8,4 +13,6 @@ package com.mascara.oyo_booking_backend.services.facility;
  * Filename  : FacilAccomService
  */
 public interface FacilityService {
+    @Transactional
+    List<GetFacilityCategoryResponse> getAllDataFacility();
 }

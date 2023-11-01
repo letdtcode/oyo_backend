@@ -94,7 +94,6 @@ public class User extends Audit<String> {
     )
     private Set<Role> roleSet;
 
-
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private MailConfirmToken mailConfirmToken;
 }
