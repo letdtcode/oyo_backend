@@ -1,8 +1,9 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
-import com.mascara.oyo_booking_backend.dtos.request.accommodation.AddAccommodationRequest;
-import com.mascara.oyo_booking_backend.dtos.request.accommodation.GetAccomPlaceFilterRequest;
+import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
+import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility.InfoFacilityResponse;
 import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
@@ -17,10 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -59,7 +57,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public MessageResponse addAccomPlace(AddAccommodationRequest request, String mail) {
+    public MessageResponse addAccomPlace(AddAccomPlaceRequest request, String mail) {
         Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
         District district = districtRepository.findByDistrictCode(request.getDistrictCode())
@@ -76,7 +74,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             facilitySet.add(facilityRepository.findByFacilityName(facilityName)
                     .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility"))));
         }
-        String addressDetail = request.getNumHouseAndStreetName() + " " + ward.getWardName() + district.getDistrictName() + province.getProvinceName();
+        String addressDetail = request.getNumHouseAndStreetName() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
         AccomPlace accomPlace = AccomPlace.builder()
                 .accomName(request.getAccomName())
                 .description(request.getDescription())
@@ -101,7 +99,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .facilitySet(facilitySet)
                 .status(CommonStatusEnum.ACTIVE)
                 .build();
-        accomPlaceRepository.save(accomPlace);
+        accomPlace = accomPlaceRepository.save(accomPlace);
         return new MessageResponse(AppContants.ADD_SUCCESS_MESSAGE("Accom Place"));
     }
 
@@ -110,13 +108,16 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     public List<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
         List<AccomPlace> accomPlaceList = accomPlaceRepository.findAll(paging).toList();
-        return accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace, GetAccomPlaceResponse.class))
+        return accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace,
+                        GetAccomPlaceResponse.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum, Integer pageSize) {
+    public List<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter,
+                                                                     Integer pageNum,
+                                                                     Integer pageSize) {
         int length = 0;
         if (filter.getFacilityName() != null) {
             length = filter.getFacilityName().size();
@@ -136,7 +137,36 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 filter.getNumPeople(),
                 filter.getNumBed(),
                 paging).toList();
-        return accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace, GetAccomPlaceResponse.class))
+        return accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace,
+                        GetAccomPlaceResponse.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public GetAccomPlaceResponse getAccomPlaceDetails(Long id) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants
+                        .NOT_FOUND_MESSAGE("accom place")));
+        List<String> imageAccom = new ArrayList();
+        List<InfoFacilityResponse> facilityResponseList = new ArrayList();
+        for (ImageAccom imgAccom : accomPlace.getImageAccoms()) {
+            imageAccom.add(imgAccom.getImgAccomLink());
+        }
+        for (Facility facility : accomPlace.getFacilitySet()) {
+            InfoFacilityResponse facilityResponse = mapper.map(facility, InfoFacilityResponse.class);
+            facilityResponseList.add(facilityResponse);
+        }
+
+        Province province = provinceRepository.findByProvinceCode(accomPlace.getProvinceCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
+        District district = districtRepository.findByDistrictCode(accomPlace.getDistrictCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district")));
+        String addressGeneral = district.getDistrictName() + ", " + province.getProvinceName();
+        GetAccomPlaceResponse accomPlaceResponse = mapper.map(accomPlace, GetAccomPlaceResponse.class);
+        accomPlaceResponse.setAddressGeneral(addressGeneral);
+        accomPlaceResponse.setImageAccomsUrls(imageAccom);
+        accomPlaceResponse.setInfoFacilityResponseList(facilityResponseList);
+        return accomPlaceResponse;
     }
 }

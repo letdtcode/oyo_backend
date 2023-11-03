@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.dtos.response.accommodation;
 
+import com.mascara.oyo_booking_backend.dtos.response.facility.InfoFacilityResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,18 +29,19 @@ public class GetAccomPlaceResponse {
     private String accomName;
     private String description;
     private String addressDetail;
-    private Float gradeRate;
-    private Long numReview;
     private Long userId;
-    private String provinceCode;
-    private String districtCode;
-    private String wardCode;
-    private Set<ImageAccom> imageAccoms;
+    private Long accomCateId;
+    private String addressGeneral;
+    private List<String> imageAccomsUrls;
     private Float acreage;
     private Integer numPeople;
     private Integer numBathRoom;
     private Integer numBed;
+    private Integer numBedRoom;
+    private Integer numView;
+    private Float gradeRate;
+    private Long numReview;
     private BigDecimal pricePerNight;
-    private Set<Review> reviewSet;
-    private Set<Facility> facilitySet;
+//    private Set<Review> reviewSet;
+    private List<InfoFacilityResponse> infoFacilityResponseList;
 }

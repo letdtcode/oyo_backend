@@ -1,6 +1,5 @@
-package com.mascara.oyo_booking_backend.dtos.request.accommodation;
+package com.mascara.oyo_booking_backend.dtos.request.accom_place;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;

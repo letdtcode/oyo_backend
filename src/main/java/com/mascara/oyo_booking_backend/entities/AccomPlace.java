@@ -130,6 +130,12 @@ public class AccomPlace extends Audit<String> {
     @OneToOne(mappedBy = "accomPlace", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CartItem cartItem;
 
-    @ManyToMany(mappedBy = "accomPlaceSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "facility_accom",
+            joinColumns = {@JoinColumn(name = "facility_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "accom_id", referencedColumnName = "id")}
+    )
     private Set<Facility> facilitySet;
 }

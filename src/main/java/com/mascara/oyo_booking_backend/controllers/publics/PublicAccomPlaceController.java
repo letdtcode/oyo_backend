@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.controllers.publics;
 
-import com.mascara.oyo_booking_backend.dtos.request.accommodation.GetAccomPlaceFilterRequest;
+import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.services.accom_category.AccomCategoryService;
@@ -16,10 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by: IntelliJ IDEA
@@ -60,5 +57,15 @@ public class PublicAccomPlaceController {
                                                      @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                                                      @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
         return ResponseEntity.ok(new BaseResponse<>(accomPlaceService.getAccomPlaceFilterWithPaging(filter, pageNum, pageSize)));
+    }
+
+    @Operation(summary = "Info Detail Accom Place", description = "Public Api detail of accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<?> getInfoAccomPlaceDetails(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(new BaseResponse<>(accomPlaceService.getAccomPlaceDetails(id)));
     }
 }

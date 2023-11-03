@@ -4,7 +4,10 @@ import com.mascara.oyo_booking_backend.entities.base.Audit;
 import com.mascara.oyo_booking_backend.enums.ReviewStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -26,6 +29,13 @@ public class Review extends Audit<String> {
 
     @Column(name = "rate_star")
     private Float rateStar;
+
+    @Column(name = "have_img", nullable = false)
+    private Boolean haveImage;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<ImageReview> imageReviewSet;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

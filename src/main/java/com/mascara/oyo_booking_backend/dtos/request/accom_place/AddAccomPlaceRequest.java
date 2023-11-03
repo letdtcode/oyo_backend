@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.dtos.request.accommodation;
+package com.mascara.oyo_booking_backend.dtos.request.accom_place;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class AddAccommodationRequest {
+public class AddAccomPlaceRequest {
     @NotBlank
     @NotNull
     private String accomName;
