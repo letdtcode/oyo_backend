@@ -1,9 +1,6 @@
 package com.mascara.oyo_booking_backend.dtos.response.general;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Created by: IntelliJ IDEA
@@ -12,8 +9,7 @@ import lombok.Setter;
  * Time      : 2:11 SA
  * Filename  : MessageResponse
  */
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageResponse {

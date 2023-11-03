@@ -21,12 +21,10 @@ public class Facility extends Audit<String> {
     @Column(name = "facility_name", unique = true)
     private String facilityName;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "facility_accom",
-            joinColumns = {@JoinColumn(name = "facility_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "accom_id", referencedColumnName = "id")}
-    )
+    @Column(name = "faci_code")
+    private String facilityCode;
+
+    @ManyToMany(mappedBy = "facilitySet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<AccomPlace> accomPlaceSet;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,9 +41,6 @@ public class Facility extends Audit<String> {
     @Column(name = "faci_cate_code")
     private String facilityCateCode;
 
-    @Column(name = "image_mode_light")
-    private String imgModeLight;
-
-    @Column(name = "image_mode_dark")
-    private String imgModeDark;
+    @Column(name = "image_url", unique = true, nullable = false)
+    private String imageUrl;
 }
