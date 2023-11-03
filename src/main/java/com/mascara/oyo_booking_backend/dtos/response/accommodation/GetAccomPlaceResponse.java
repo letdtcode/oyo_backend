@@ -42,6 +42,5 @@ public class GetAccomPlaceResponse {
     private Float gradeRate;
     private Long numReview;
     private BigDecimal pricePerNight;
-//    private Set<Review> reviewSet;
     private List<InfoFacilityResponse> infoFacilityResponseList;
 }

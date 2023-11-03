@@ -4,7 +4,6 @@ import com.mascara.oyo_booking_backend.entities.base.Audit;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -87,17 +86,17 @@ public class AccomPlace extends Audit<String> {
     @Column(name = "acreage")
     private Float acreage;
 
-    @Column(name = "num_people")
+    @Column(name = "num_people", nullable = false)
     private Integer numPeople;
 
     @Column(name = "num_bathroom")
     private Integer numBathRoom;
 
-    @Column(name = "num_bed")
-    private Integer numBed;
-
-    @Column(name = "num_bed_room")
+    @Column(name = "num_bed_room", nullable = false)
     private Integer numBedRoom;
+
+    @Column(name = "num_kitchen", nullable = false)
+    private Integer numKitchen;
 
     @Column(name = "num_view")
     private Integer numView;
@@ -108,7 +107,7 @@ public class AccomPlace extends Audit<String> {
     @Column(name = "num_review")
     private Long numReview;
 
-    @Column(name = "price_per_night")
+    @Column(name = "price_per_night", nullable = false)
     private BigDecimal pricePerNight;
 
     @Column(name = "status")
@@ -127,10 +126,6 @@ public class AccomPlace extends Audit<String> {
     @Fetch(FetchMode.SUBSELECT)
     private Set<Booking> bookingSet;
 
-    @OneToOne(mappedBy = "accomPlace", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private CartItem cartItem;
-
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "facility_accom",
@@ -138,4 +133,8 @@ public class AccomPlace extends Audit<String> {
             inverseJoinColumns = {@JoinColumn(name = "accom_id", referencedColumnName = "id")}
     )
     private Set<Facility> facilitySet;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<BedRoom> bedRoomSet;
 }

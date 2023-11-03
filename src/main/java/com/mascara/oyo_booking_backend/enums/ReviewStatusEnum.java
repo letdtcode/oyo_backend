@@ -8,5 +8,5 @@ package com.mascara.oyo_booking_backend.enums;
  * Filename  : ReviewStatusEnum
  */
 public enum ReviewStatusEnum {
-    SHOW,HIDE
+    ACTIVE, DELETED
 }

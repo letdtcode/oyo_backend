@@ -29,4 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select u.* from users u join mail_confirm_token mct on u.id = mct.user_id where mct.id = :id", nativeQuery = true)
     Optional<User> findByMailConfirmTokenId(@Param("id") Long id);
+
+    @Query(value = "select u.* from users u where u.id = :id",nativeQuery = true)
+    Optional<User> findByUserId(@Param("id") Long id);
 }

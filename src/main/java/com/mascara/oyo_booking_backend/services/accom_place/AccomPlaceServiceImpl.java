@@ -92,14 +92,14 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .acreage(request.getAcreage())
                 .numPeople(request.getNumPeople())
                 .numBathRoom(request.getNumBathRoom())
-                .numBed(request.getNumBed())
                 .numBedRoom(request.getNumBedRoom())
+                .numKitchen(request.getNumKitchen())
                 .numView(0)
                 .pricePerNight(request.getPricePerNight())
                 .facilitySet(facilitySet)
                 .status(CommonStatusEnum.ACTIVE)
                 .build();
-        accomPlace = accomPlaceRepository.save(accomPlace);
+        accomPlaceRepository.save(accomPlace);
         return new MessageResponse(AppContants.ADD_SUCCESS_MESSAGE("Accom Place"));
     }
 

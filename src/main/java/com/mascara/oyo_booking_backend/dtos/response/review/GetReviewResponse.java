@@ -1,17 +1,11 @@
 package com.mascara.oyo_booking_backend.dtos.response.review;
 
-import com.mascara.oyo_booking_backend.entities.AccomPlace;
-import com.mascara.oyo_booking_backend.entities.ImageReview;
-import com.mascara.oyo_booking_backend.entities.ReviewList;
-import com.mascara.oyo_booking_backend.enums.ReviewStatusEnum;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by: IntelliJ IDEA
@@ -29,7 +23,10 @@ public class GetReviewResponse {
     private String content;
     private Float rateStar;
     private Boolean haveImage;
-    private Set<ImageReview> imageReviewSet;
+    private List<String> imageReviewUrls;
     private Long accomPlaceId;
     private Long reviewListId;
+    private String firstNameUser;
+    private String avatarUserUrl;
+    private LocalDateTime createdDate;
 }

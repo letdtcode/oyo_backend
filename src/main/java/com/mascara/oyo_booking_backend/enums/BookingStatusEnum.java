@@ -8,7 +8,8 @@ package com.mascara.oyo_booking_backend.enums;
  * Filename  : BookingStatusEnum
  */
 public enum BookingStatusEnum {
-    PENDING,
-    ACCEPT,
+    AWAIT,
+    CURRENT,
+    COMPLETED,
     CANCLE
 }

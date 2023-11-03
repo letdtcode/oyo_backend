@@ -4,9 +4,9 @@ import com.mascara.oyo_booking_backend.entities.base.Audit;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Builder
 @AllArgsConstructor
@@ -20,35 +20,44 @@ public class Booking extends Audit<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "code", columnDefinition = "NVARCHAR(255) NOT NULL")
-    private String code;
+    @Column(name = "booking_code", columnDefinition = "VARCHAR(255)", nullable = false)
+    private String bookingCode;
 
-    @Column(name = "date_check_in")
-    private LocalDateTime checkIn;
+    @Column(name = "date_check_in", nullable = false)
+    private LocalDate checkIn;
 
-    @Column(name = "date_check_out")
-    private LocalDateTime checkOut;
+    @Column(name = "date_check_out", nullable = false)
+    private LocalDate checkOut;
 
-    @Column(name = "name_customer")
-    private String nameCustomer;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "mail_customer", nullable = false)
+    private String mailCustomer;
 
     @Column(name = "origin_pay")
-    private String originPay;
+    private BigDecimal originPay;
 
     @Column(name = "surcharge")
-    private String surcharge;
+    private BigDecimal surcharge;
 
-    @Column(name = "total_pay")
-    private String totalPay;
+    @Column(name = "total_bill")
+    private BigDecimal totalBill;
 
-    @Column(name = "payments")
-    private String payments;
+    @Column(name = "total_transfer")
+    private BigDecimal totalTransfer;
 
-    @Column(name = "num_of_room")
-    private String numOfRoom;
+    @Column(name = "payment_method")
+    private Integer paymentMethod;
+
+    @Column(name = "payment_by")
+    private Integer paymentBy;
+
+    @Column(name = "num_adult")
+    private Integer numAdult;
+
+    @Column(name = "num_child")
+    private Integer numChild;
+
+    @Column(name = "num_born_child")
+    private Integer numBornChild;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -58,7 +67,7 @@ public class Booking extends Audit<String> {
     @JoinColumn(
             name = "accom_id",
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_association_accom_room"),
+            foreignKey = @ForeignKey(name = "fk_association_accom_booking"),
             nullable = false,
             insertable = false,
             updatable = false
@@ -81,4 +90,7 @@ public class Booking extends Audit<String> {
 
     @Column(name = "booking_list_id")
     private Long bookListId;
+
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Revenue revenue;
 }

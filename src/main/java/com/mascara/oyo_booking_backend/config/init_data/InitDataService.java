@@ -36,7 +36,10 @@ public class InitDataService implements CommandLineRunner {
 
     private final AccommodationCategoriesRepository accommodationCategoriesRepository;
 
-    public InitDataService(ProvinceRepository provinceRepository, DistrictRepository districtRepository, WardRepository wardRepository, RoleRepository roleRepository, FacilityCategoriesRepository facilityCategoriesRepository, FacilityRepository facilityRepository, AccommodationCategoriesRepository accommodationCategoriesRepository) {
+    private final TypeBedRepository typeBedRepository;
+
+
+    public InitDataService(ProvinceRepository provinceRepository, DistrictRepository districtRepository, WardRepository wardRepository, RoleRepository roleRepository, FacilityCategoriesRepository facilityCategoriesRepository, FacilityRepository facilityRepository, AccommodationCategoriesRepository accommodationCategoriesRepository, TypeBedRepository typeBedRepository) {
         this.provinceRepository = provinceRepository;
         this.districtRepository = districtRepository;
         this.wardRepository = wardRepository;
@@ -44,6 +47,7 @@ public class InitDataService implements CommandLineRunner {
         this.facilityCategoriesRepository = facilityCategoriesRepository;
         this.facilityRepository = facilityRepository;
         this.accommodationCategoriesRepository = accommodationCategoriesRepository;
+        this.typeBedRepository = typeBedRepository;
     }
 
 
@@ -59,6 +63,7 @@ public class InitDataService implements CommandLineRunner {
         if (!rolePartner.isPresent()) {
             Role partner = Role.builder().roleName(RoleEnum.ROLE_PARTNER).build();
             partner.setCreatedBy("dev");
+            partner.setLastModifiedBy("dev");
             roleRepository.save(partner);
         }
 
@@ -86,6 +91,7 @@ public class InitDataService implements CommandLineRunner {
                     district.setProvince(provinceRepository.findByProvinceCode(district.getProvinceCode())
                             .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province"))));
                     district.setCreatedBy("dev");
+                    district.setLastModifiedBy("dev");
                     districtList.set(i, district);
                 }
                 districtRepository.saveAll(districtList);
@@ -108,6 +114,7 @@ public class InitDataService implements CommandLineRunner {
                 });
                 for (Province province : initModel.getData()) {
                     province.setCreatedBy("dev");
+                    province.setLastModifiedBy("dev");
                 }
                 provinceRepository.saveAll(initModel.getData());
             }
@@ -134,6 +141,7 @@ public class InitDataService implements CommandLineRunner {
                     ward.setDistrict(districtRepository.findByDistrictCode(ward.getDistrictCode())
                             .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district"))));
                     ward.setCreatedBy("dev");
+                    ward.setLastModifiedBy("dev");
                     wardList.set(i, ward);
                 }
                 wardRepository.saveAll(wardList);
@@ -156,6 +164,7 @@ public class InitDataService implements CommandLineRunner {
                 });
                 for (FacilityCategories facilityCate : initModel.getData()) {
                     facilityCate.setCreatedBy("dev");
+                    facilityCate.setLastModifiedBy("dev");
                 }
                 List<FacilityCategories> facilityCategoriesList = initModel.getData();
                 facilityCategoriesRepository.saveAll(facilityCategoriesList);
@@ -183,6 +192,7 @@ public class InitDataService implements CommandLineRunner {
                     facility.setFacilityCategories(facilityCategoriesRepository.findByFaciCateCode(facility.getFacilityCateCode())
                             .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility category"))));
                     facility.setCreatedBy("dev");
+                    facility.setLastModifiedBy("dev");
                     facilityList.set(i, facility);
                 }
                 facilityRepository.saveAll(facilityList);
@@ -206,8 +216,32 @@ public class InitDataService implements CommandLineRunner {
                 List<AccommodationCategories> accommodationCategoriesList = initModel.getData();
                 for (AccommodationCategories accomCate : accommodationCategoriesList) {
                     accomCate.setCreatedBy("dev");
+                    accomCate.setLastModifiedBy("dev");
                 }
                 accommodationCategoriesRepository.saveAll(accommodationCategoriesList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void implementInitDataMenuActionTypeBed() {
+        List<TypeBed> checkList = typeBedRepository.checkExistData();
+        try {
+            if (checkList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbTypeBed.json")).getFile()
+                );
+
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<TypeBed> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+                List<TypeBed> typeBedList = initModel.getData();
+                for (TypeBed typeBed : typeBedList) {
+                    typeBed.setCreatedBy("dev");
+                    typeBed.setLastModifiedBy("dev");
+                }
+                typeBedRepository.saveAll(typeBedList);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -223,5 +257,6 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionFacilityCategory();
         implementInitDataMenuActionFacility();
         implementInitDataMenuActionAccomCategory();
+        implementInitDataMenuActionTypeBed();
     }
 }

@@ -59,12 +59,12 @@ public class AddAccomPlaceRequest {
     private Integer numBathRoom;
 
     @NotNull
-    @Min(value = 0, message = "Num bed should not be less than 0")
-    private Integer numBed;
-
-    @NotNull
     @Min(value = 0, message = "Num bed room should not be less than 0")
     private Integer numBedRoom;
+
+    @NotNull
+    @Min(value = 0, message = "Num kitchen should not be less than 0")
+    private Integer numKitchen;
 
     @NotNull
     @Min(value = 0, message = "Price per night should not be less than 0")

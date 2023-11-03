@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -107,9 +106,7 @@ public class UserServiceImpl implements UserService {
 
         ReviewList reviewList = ReviewList.builder().user(user).build();
 
-        CommisionList commisionList = CommisionList.builder().user(user).build();
-
-        Cart cart = Cart.builder().totalPrice(BigDecimal.valueOf(0)).user(user).build();
+        RevenueList revenueList = RevenueList.builder().user(user).build();
 
         int desiredLength = 7;
         String randomUsername = UUID.randomUUID()
@@ -120,8 +117,7 @@ public class UserServiceImpl implements UserService {
         user.setWishList(wishList);
         user.setBookingList(bookingList);
         user.setReviewList(reviewList);
-        user.setCommisionList(commisionList);
-        user.setCart(cart);
+        user.setRevenueList(revenueList);
         return userRepository.save(user);
     }
 

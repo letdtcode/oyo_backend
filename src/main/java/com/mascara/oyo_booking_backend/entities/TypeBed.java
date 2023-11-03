@@ -3,7 +3,6 @@ package com.mascara.oyo_booking_backend.entities;
 import com.mascara.oyo_booking_backend.entities.base.Audit;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -12,9 +11,9 @@ import java.util.Set;
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
- * Date      : 30/09/2023
- * Time      : 10:35 CH
- * Filename  : CommisionList
+ * Date      : 03/11/2023
+ * Time      : 10:50 CH
+ * Filename  : TypeBed
  */
 @Builder
 @AllArgsConstructor
@@ -22,21 +21,19 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "commision_list")
-public class CommisionList extends Audit<String> {
-
+@Table(name = "type_bed")
+public class TypeBed extends Audit<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "discount")
-    private Float discount;
+    @Column(name = "type_bed_name", columnDefinition = "NVARCHAR(255) NOT NULL")
+    private String typeBedName;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "type_bed_code", columnDefinition = "VARCHAR(255)", nullable = false, unique = true)
+    private String typeBedCode;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "commisionList")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeBed")
     @Fetch(FetchMode.SUBSELECT)
-    private Set<Commision> commisionSet;
+    private Set<BedRoom> bedRoomSet;
 }

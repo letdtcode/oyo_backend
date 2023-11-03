@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "typeBedName": "Giường đôi",
+      "typeBedCode": "TYPE_BED_001"
+    },
+    {
+      "typeBedName": "Giường Queen",
+      "typeBedCode": "TYPE_BED_002"
+    },
+    {
+      "typeBedName": "Giường đơn",
+      "typeBedCode": "TYPE_BED_003"
+    },
+    {
+      "typeBedName": "Sofa giường",
+      "typeBedCode": "TYPE_BED_004"
+    },
+    {
+      "typeBedName": "Giường King",
+      "typeBedCode": "TYPE_BED_005"
+    },
+    {
+      "typeBedName": "Giường đôi nhỏ",
+      "typeBedCode": "TYPE_BED_006"
+    },
+    {
+      "typeBedName": "Đi-văng",
+      "typeBedCode": "TYPE_BED_007"
+    },
+    {
+      "typeBedName": "Giường tầng",
+      "typeBedCode": "TYPE_BED_008"
+    },
+    {
+      "typeBedName": "Nệm trải sàn",
+      "typeBedCode": "TYPE_BED_009"
+    },
+    {
+      "typeBedName": "Đệm hơi",
+      "typeBedCode": "TYPE_BED_010"
+    },
+    {
+      "typeBedName": "Cũi",
+      "typeBedCode": "TYPE_BED_011"
+    },
+    {
+      "typeBedName": "Giường cho trẻ tập đi",
+      "typeBedCode": "TYPE_BED_012"
+    },
+    {
+      "typeBedName": "Võng",
+      "typeBedCode": "TYPE_BED_013"
+    },
+    {
+      "typeBedName": "Giường đệm nước",
+      "typeBedCode": "TYPE_BED_014"
+    }
+  ]
+}

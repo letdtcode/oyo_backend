@@ -1,16 +1,16 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.Commision;
+import com.mascara.oyo_booking_backend.entities.BedRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
- * Date      : 01/10/2023
- * Time      : 3:31 CH
- * Filename  : CommisionRepository
+ * Date      : 04/11/2023
+ * Time      : 2:31 SA
+ * Filename  : BedRoomRepository
  */
 @Repository
-public interface CommisionRepository extends JpaRepository<Commision, Long> {
+public interface BedRoomRepository extends JpaRepository<BedRoom, Long> {
 }

@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.CommisionList;
+import com.mascara.oyo_booking_backend.entities.Revenue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
  * User      : boyng
  * Date      : 01/10/2023
  * Time      : 3:31 CH
- * Filename  : CommisionListRepository
+ * Filename  : CommisionRepository
  */
 @Repository
-public interface CommisionListRepository extends JpaRepository<CommisionList, Long> {
+public interface RevenueRepository extends JpaRepository<Revenue, Long> {
 }
