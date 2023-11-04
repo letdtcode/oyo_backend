@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
 
         ReviewList reviewList = ReviewList.builder().user(user).build();
 
-        RevenueList revenueList = RevenueList.builder().user(user).build();
+        RevenueList revenueList = RevenueList.builder().discount(10F).user(user).build();
 
         int desiredLength = 7;
         String randomUsername = UUID.randomUUID()

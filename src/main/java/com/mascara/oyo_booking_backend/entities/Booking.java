@@ -20,7 +20,7 @@ public class Booking extends Audit<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "booking_code", columnDefinition = "VARCHAR(255)", nullable = false)
+    @Column(name = "booking_code", columnDefinition = "VARCHAR(255)", nullable = false, unique = true)
     private String bookingCode;
 
     @Column(name = "date_check_in", nullable = false)

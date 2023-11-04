@@ -29,6 +29,7 @@ public class Revenue extends Audit<String> {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_code",
             referencedColumnName = "booking_code",
+            foreignKey = @ForeignKey(name = "fk_association_revenue_booking"),
             nullable = false,
             insertable = false,
             updatable = false)
