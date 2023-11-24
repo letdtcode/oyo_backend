@@ -1,6 +1,7 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.AccomPlace;
+import com.mascara.oyo_booking_backend.entities.District;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -56,4 +57,7 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
 
     @Query(value = "select ap.* from accom_place ap where ap.id = :id and ap.status = 'ACTIVE'",nativeQuery = true)
     Optional<AccomPlace> findById(@Param("id") Long id);
+
+    @Query(value = "select ap.* from accom_place ap limit 1", nativeQuery = true)
+    List<AccomPlace> checkExistData();
 }

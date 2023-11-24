@@ -1,0 +1,35 @@
+{
+  "data": [
+    {
+      "firstName": "Admin",
+      "lastName": "Adam",
+      "email": "admin@gmail.com",
+      "role": [
+        "Client",
+        "Partner",
+        "Admin"
+      ],
+      "password": "123456"
+    },
+    {
+      "firstName": "Nguyen Duc",
+      "lastName": "Thanh",
+      "email": "client1@gmail.com",
+      "role": [
+        "Client",
+        "Partner"
+      ],
+      "password": "123456"
+    },
+    {
+      "firstName": "Mai Bao",
+      "lastName": "Huy",
+      "email": "client2@gmail.com",
+      "role": [
+        "Client",
+        "Partner"
+      ],
+      "password": "123456"
+    }
+  ]
+}

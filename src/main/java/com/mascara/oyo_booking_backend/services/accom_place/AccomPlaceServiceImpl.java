@@ -4,7 +4,6 @@ import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceReq
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.InfoFacilityResponse;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
@@ -15,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,6 +100,12 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .facilitySet(facilitySet)
                 .status(CommonStatusEnum.ACTIVE)
                 .build();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            accomPlace.setCreatedBy("dev");
+            accomPlace.setLastModifiedBy("dev");
+        }
         accomPlaceRepository.save(accomPlace);
         return AppContants.ADD_SUCCESS_MESSAGE("Accom Place");
     }

@@ -3,12 +3,20 @@ package com.mascara.oyo_booking_backend.config.init_data;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mascara.oyo_booking_backend.config.init_data.models.InitDbModel;
+import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
+import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
+import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
+import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
+import com.mascara.oyo_booking_backend.services.user.UserService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -24,32 +32,48 @@ import java.util.Optional;
  * Filename  : InitDbProvinceService
  */
 @Component
+@AllArgsConstructor
 public class InitDataService implements CommandLineRunner {
+
+    @Autowired
     private final ProvinceRepository provinceRepository;
+
+    @Autowired
     private final DistrictRepository districtRepository;
+
+    @Autowired
     private final WardRepository wardRepository;
+
+    @Autowired
     private final RoleRepository roleRepository;
+
+    @Autowired
 
     private final FacilityCategoriesRepository facilityCategoriesRepository;
 
+    @Autowired
     private final FacilityRepository facilityRepository;
 
+    @Autowired
     private final AccommodationCategoriesRepository accommodationCategoriesRepository;
 
+    @Autowired
     private final TypeBedRepository typeBedRepository;
 
+    @Autowired
+    private final AccomPlaceRepository accomPlaceRepository;
 
-    public InitDataService(ProvinceRepository provinceRepository, DistrictRepository districtRepository, WardRepository wardRepository, RoleRepository roleRepository, FacilityCategoriesRepository facilityCategoriesRepository, FacilityRepository facilityRepository, AccommodationCategoriesRepository accommodationCategoriesRepository, TypeBedRepository typeBedRepository) {
-        this.provinceRepository = provinceRepository;
-        this.districtRepository = districtRepository;
-        this.wardRepository = wardRepository;
-        this.roleRepository = roleRepository;
-        this.facilityCategoriesRepository = facilityCategoriesRepository;
-        this.facilityRepository = facilityRepository;
-        this.accommodationCategoriesRepository = accommodationCategoriesRepository;
-        this.typeBedRepository = typeBedRepository;
-    }
+    @Autowired
+    private final AccomPlaceService accomPlaceService;
 
+    @Autowired
+    private final UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder encoder;
+
+    @Autowired
+    private UserService userService;
 
     public void initDataUser() {
         Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN);
@@ -72,6 +96,27 @@ public class InitDataService implements CommandLineRunner {
             Role client = Role.builder().roleName(RoleEnum.ROLE_CLIENT).build();
             client.setCreatedBy("dev");
             roleRepository.save(client);
+        }
+
+        List<User> userList = userRepository.checkExistData();
+        try {
+            if (userList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbUser.json")).getFile()
+                );
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<RegisterRequest> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+                List<RegisterRequest> registerRequestList = initModel.getData();
+                for (RegisterRequest registerRequest : registerRequestList) {
+                    String passwordEncoded = encoder.encode(registerRequest.getPassword());
+                    userService.addUser(registerRequest, passwordEncoded);
+//                    user.setStatus(UserStatusEnum.ACTIVE);
+//                    userRepository.save(user);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -248,6 +293,27 @@ public class InitDataService implements CommandLineRunner {
         }
     }
 
+    public void implementInitDataAccomPlace() {
+        List<AccomPlace> checkList = accomPlaceRepository.checkExistData();
+        try {
+            if (checkList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbAccomPlace.json")).getFile()
+                );
+
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<AddAccomPlaceRequest> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+                List<AddAccomPlaceRequest> accomPlaceRequestList = initModel.getData();
+                for (AddAccomPlaceRequest accomPlace : accomPlaceRequestList) {
+                    accomPlaceService.addAccomPlace(accomPlace, "client1@gmail.com");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run(String... args) throws Exception {
         initDataUser();
@@ -258,5 +324,6 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionFacility();
         implementInitDataMenuActionAccomCategory();
         implementInitDataMenuActionTypeBed();
+        implementInitDataAccomPlace();
     }
 }

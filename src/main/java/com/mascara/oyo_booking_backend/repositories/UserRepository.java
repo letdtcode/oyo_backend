@@ -1,11 +1,13 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.User;
+import com.mascara.oyo_booking_backend.entities.Ward;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,6 +19,9 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    @Query(value = "select u.* from users u limit 1", nativeQuery = true)
+    List<User> checkExistData();
 
     @Query(value = "select * from users u where u.mail =:mail", nativeQuery = true)
     Optional<User> findByMail(@Param("mail") String email);

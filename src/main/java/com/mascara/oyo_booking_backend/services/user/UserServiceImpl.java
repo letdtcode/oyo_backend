@@ -5,7 +5,6 @@ import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
@@ -21,11 +20,14 @@ import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.PasswordValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -112,6 +114,25 @@ public class UserServiceImpl implements UserService {
         String randomUsername = UUID.randomUUID()
                 .toString()
                 .substring(0, desiredLength);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            wishList.setCreatedBy("dev");
+            wishList.setLastModifiedBy("dev");
+            bookingList.setCreatedBy("dev");
+            bookingList.setLastModifiedBy("dev");
+            reviewList.setCreatedBy("dev");
+            reviewList.setLastModifiedBy("dev");
+            revenueList.setCreatedBy("dev");
+            revenueList.setLastModifiedBy("dev");
+
+            user.setCreatedBy("dev");
+            user.setLastModifiedBy("dev");
+            user.setStatus(UserStatusEnum.ACTIVE);
+            user.setAddress("Tp.HCM");
+            user.setAvatarUrl("https://res.cloudinary.com/dyv5zrsgj/image/upload/v1698163058/oyo_booking/nqxq12lb5gazvph6rwf7.png");
+            user.setDateOfBirth(LocalDate.ofEpochDay(23/12/2002));
+        }
         user.setUserName("user-" + randomUsername);
         user.setRoleSet(roles);
         user.setWishList(wishList);
