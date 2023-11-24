@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.base.Audit;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,11 +34,14 @@ public class Province extends Audit<String> {
     @Column(name = "division_type",columnDefinition = "varchar (255)")
     private String divisionType;
 
+//    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "province")
     @Fetch(FetchMode.SUBSELECT)
     private Set<District> districtSet;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "province")
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "province")
     @Fetch(FetchMode.SUBSELECT)
     private Set<AccomPlace> accomPlaces;
 }

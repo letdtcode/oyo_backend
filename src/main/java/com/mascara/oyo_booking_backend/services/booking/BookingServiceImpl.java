@@ -42,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public MessageResponse bookingAccomPlace(BookingRequest request) {
+    public String bookingAccomPlace(BookingRequest request) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
         BookingList bookingList = bookingListRepository.findByUserId(request.getUserId())
@@ -56,6 +56,6 @@ public class BookingServiceImpl implements BookingService {
         booking.setBookingCode(bookingCode);
         booking.setBookingStatusEnum(BookingStatusEnum.AWAIT);
         bookingRepository.save(booking);
-        return new MessageResponse("Booking succesful !");
+        return "Booking succesful !";
     }
 }

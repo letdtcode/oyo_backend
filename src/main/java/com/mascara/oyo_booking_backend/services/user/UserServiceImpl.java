@@ -167,7 +167,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MessageResponse changePassword(ChangePasswordRequest request) {
+    public String changePassword(ChangePasswordRequest request) {
         User user = userRepository.findByMail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String oldPassRequest = request.getOldPassword();
@@ -176,10 +176,10 @@ public class UserServiceImpl implements UserService {
                 String newPassEncoded = encoder.encode(request.getNewPassword());
                 user.setPassword(newPassEncoded);
                 userRepository.save(user);
-                return new MessageResponse(AppContants.CHANGE_PASSWORD_SUCCESS);
+                return AppContants.CHANGE_PASSWORD_SUCCESS;
             }
-            return new MessageResponse(AppContants.NEW_PASSWORD_NOT_MATCH_PATTERN);
+            return AppContants.NEW_PASSWORD_NOT_MATCH_PATTERN;
         }
-        return new MessageResponse(AppContants.PASSWORD_INCORRECT);
+        return AppContants.PASSWORD_INCORRECT;
     }
 }

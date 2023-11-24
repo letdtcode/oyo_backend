@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface AccomPlaceService {
     @Transactional
-    MessageResponse addAccomPlace(AddAccomPlaceRequest request, String mail);
+    String addAccomPlace(AddAccomPlaceRequest request, String mail);
 
     @Transactional
     List<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize);

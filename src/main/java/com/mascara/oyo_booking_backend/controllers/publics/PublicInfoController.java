@@ -37,7 +37,6 @@ public class PublicInfoController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PreAuthorize("hasRole('PARTNER')")
     @GetMapping("/getall-details")
     public ResponseEntity<?> getAllProvinceDetails() {
         return ResponseEntity.ok(provinceService.getAllProvinceDetails());

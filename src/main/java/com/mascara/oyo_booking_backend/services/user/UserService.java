@@ -30,5 +30,5 @@ public interface UserService {
     @Transactional
     InfoUserResponse updateAvatar(MultipartFile file, String mail);
 
-    MessageResponse changePassword(ChangePasswordRequest request);
+    String changePassword(ChangePasswordRequest request);
 }

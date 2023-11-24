@@ -103,7 +103,7 @@ public class AuthController {
 
         User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         if (user.getStatus() == UserStatusEnum.PEDING) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new MessageResponse("User is peding"));
+            return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new MessageResponse("User is peding",true,408));
         }
         String accessToken = jwtUtils.generateAccessJwtToken(userMail);
         String refreshToken = jwtUtils.generateRefreshJwtToken(userMail);
@@ -141,30 +141,12 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) throws MessagingException, TemplateException, IOException {
         if (userRepository.existsByMail(registerRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already exist!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already exist!",false,400));
         }
         String passwordEncoded = encoder.encode(registerRequest.getPassword());
         User user = userService.addUser(registerRequest, passwordEncoded);
         verifyTokenService.sendMailVerifyToken(user);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-    }
-
-    @Operation(summary = "Verify Token", description = "Api for Verify Token")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
-            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @GetMapping("/verify")
-    public ResponseEntity<?> verifyTokenMail(@RequestParam("email") String email,
-                                             @RequestParam("token") String token) throws MessagingException, TemplateException, IOException {
-        MessageResponse messageResponse = verifyTokenService.verifyMailUser(email, token);
-        switch (messageResponse.getMessage()) {
-            case AppContants.TOKEN_ACTIVE_MAIL_INVALID:
-                return ResponseEntity.status(HttpStatusCode.valueOf(407)).body(messageResponse);
-            case AppContants.ACTIVE_USER_TOKEN_EXPIRED:
-                return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(messageResponse);
-        }
-        return ResponseEntity.ok(messageResponse);
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!",true,200));
     }
 
     @Operation(summary = "Refresh token", description = "Api for Refresh token")
@@ -176,4 +158,24 @@ public class AuthController {
     public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest tokenRefreshRequest) {
         return ResponseEntity.ok(userService.refreshJwtToken(tokenRefreshRequest));
     }
+
+    @Operation(summary = "Verify Token", description = "Api for Verify Token")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class),
+                    mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping(value = "/verify")
+    public ResponseEntity<?> verifyTokenMail(@RequestParam("email") String email,
+                                             @RequestParam("token") String token) throws MessagingException, TemplateException, IOException {
+        String messageResponse = verifyTokenService.verifyMailUser(email, token);
+        switch (messageResponse) {
+            case AppContants.TOKEN_ACTIVE_MAIL_INVALID:
+                return ResponseEntity.status(HttpStatusCode.valueOf(407)).body(new MessageResponse(messageResponse,false,407));
+            case AppContants.ACTIVE_USER_TOKEN_EXPIRED:
+                return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new MessageResponse(messageResponse,false,408));
+        }
+        return ResponseEntity.ok(new MessageResponse(messageResponse,true,200));
+    }
 }
+

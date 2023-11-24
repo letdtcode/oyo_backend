@@ -36,7 +36,7 @@ public class AppContants {
     }
 
     public static final String NOT_FOUND_MESSAGE(String entity) {
-        return entity + "not found";
+        return entity + " not found";
     }
 
 //    public static final String WARD_NOT_FOUND = "Ward not found";

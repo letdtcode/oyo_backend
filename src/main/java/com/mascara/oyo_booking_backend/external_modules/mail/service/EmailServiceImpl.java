@@ -39,14 +39,14 @@ public class EmailServiceImpl implements EmailService {
     private String sender;
 
     @Override
-    public MessageResponse sendSimpleMessage(EmailDetails emailDetails) {
+    public String sendSimpleMessage(EmailDetails emailDetails) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(sender);
         message.setTo(emailDetails.getRecipient());
         message.setSubject(emailDetails.getSubject());
         message.setText(emailDetails.getMsgBody());
         emailSender.send(message);
-        return new MessageResponse(AppContants.SEND_MAIL_SUCCESS);
+        return AppContants.SEND_MAIL_SUCCESS;
     }
 
     @Override

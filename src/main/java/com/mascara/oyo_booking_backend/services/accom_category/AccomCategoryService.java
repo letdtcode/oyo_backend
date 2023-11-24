@@ -25,5 +25,5 @@ public interface AccomCategoryService {
     AccommodationCategories updateAccomCategory(UpdateAccomCategoryRequest request);
 
     @Transactional
-    MessageResponse deleteAccomCategory(String accomCateName);
+    String deleteAccomCategory(String accomCateName);
 }

@@ -18,7 +18,7 @@ import java.io.IOException;
 public interface VerifyTokenService {
     MailConfirmToken generateTokenConfirmMail(String token, User user);
 
-    MessageResponse verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException;
+    String verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException;
 
     void sendMailVerifyToken(User user) throws MessagingException, TemplateException, IOException;
 }

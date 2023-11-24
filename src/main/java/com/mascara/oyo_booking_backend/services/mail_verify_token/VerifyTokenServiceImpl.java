@@ -56,7 +56,7 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
     }
 
     @Override
-    public MessageResponse verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException {
+    public String verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException {
         MailConfirmToken mailConfirmToken = mailConfirmTokenRepository.findByVerifyToken(token)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("confirm token")));
         User user = userRepository.findByMailConfirmTokenId(mailConfirmToken.getId())
@@ -65,15 +65,15 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
             if (user.getMail().equals(mail)) {
                 user.setStatus(UserStatusEnum.ACTIVE);
                 userRepository.save(user);
-                return new MessageResponse(AppContants.ACTIVE_USER_SUCCESS);
+                return AppContants.ACTIVE_USER_SUCCESS;
             }
-            return new MessageResponse(AppContants.TOKEN_ACTIVE_MAIL_INVALID);
+            return AppContants.TOKEN_ACTIVE_MAIL_INVALID;
         }
         if (user.getStatus() == UserStatusEnum.ACTIVE) {
-            return new MessageResponse(AppContants.TOKEN_ACTIVE_MAIL_INVALID);
+            return AppContants.TOKEN_ACTIVE_MAIL_INVALID;
         }
         sendMailVerifyToken(user);
-        return new MessageResponse(AppContants.ACTIVE_USER_TOKEN_EXPIRED);
+        return AppContants.ACTIVE_USER_TOKEN_EXPIRED;
     }
 
     @Override

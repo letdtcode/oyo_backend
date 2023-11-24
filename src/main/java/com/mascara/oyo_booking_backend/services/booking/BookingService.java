@@ -13,5 +13,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface BookingService {
     @Transactional
-    MessageResponse bookingAccomPlace(BookingRequest request);
+    String bookingAccomPlace(BookingRequest request);
 }

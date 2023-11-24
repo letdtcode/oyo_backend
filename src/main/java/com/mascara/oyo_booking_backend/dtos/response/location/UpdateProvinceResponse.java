@@ -1,6 +1,5 @@
-package com.mascara.oyo_booking_backend.dtos.response.province;
+package com.mascara.oyo_booking_backend.dtos.response.location;
 
-import jakarta.persistence.Column;
 import lombok.*;
 
 /**

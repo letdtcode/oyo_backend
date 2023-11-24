@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.base.Audit;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
@@ -59,6 +60,7 @@ public class AccomPlace extends Audit<String> {
     @Column(name = "accom_cate_id")
     private Long accomCateId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "province_code",

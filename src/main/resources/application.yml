@@ -39,11 +39,11 @@ spring:
     template-loader-path: classpath:/templates/
     suffix: ftl
     content-type: text/html
-  mvc:
+    charset: UTF-8
+    cache: true
     hiddenmethod:
       filter:
         enabled: true
-
 jwt:
   secret: qOevUET/5tgg91Awfv2LKufDRzfSeCcDobw3LlV+YoggfwJYyc6mCrBNd4nIDus7sBYB4Bs
 
@@ -65,4 +65,3 @@ storage:
 
 avatar:
   default: https://res.cloudinary.com/dyv5zrsgj/image/upload/v1698163058/oyo_booking/nqxq12lb5gazvph6rwf7.png
-

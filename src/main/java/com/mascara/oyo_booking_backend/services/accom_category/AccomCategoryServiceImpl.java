@@ -62,10 +62,10 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
 
     @Override
     @Transactional
-    public MessageResponse deleteAccomCategory(String accomCateName) {
+    public String deleteAccomCategory(String accomCateName) {
         AccommodationCategories accommodationCategories = accomCategoriesRepository.findByAccomCateName(accomCateName)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
         accomCategoriesRepository.delete(accommodationCategories);
-        return new MessageResponse(AppContants.DELETE_SUCCESS_MESSAGE("accommodation category"));
+        return AppContants.DELETE_SUCCESS_MESSAGE("accommodation category");
     }
 }

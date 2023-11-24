@@ -74,7 +74,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public MessageResponse reviewAccomPlace(ReviewAccomPlaceRequest request,
+    public String reviewAccomPlace(ReviewAccomPlaceRequest request,
                                             List<MultipartFile> imageReviewFiles) {
         ReviewList reviewList = reviewListRepository.findByUserId(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
@@ -100,6 +100,6 @@ public class ReviewServiceImpl implements ReviewService {
             review.setHaveImage(false);
             reviewRepository.save(review);
         }
-        return new MessageResponse("Add review accom place success !");
+        return "Add review accom place success !";
     }
 }

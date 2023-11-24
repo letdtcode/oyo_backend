@@ -40,8 +40,8 @@ public class PublicCheckMailController {
     @PostMapping("/checkmail")
     public ResponseEntity<?> checkMailExist(@Valid @RequestBody CheckMailRequest checkMailRequest) {
         if (userRepository.existsByMail(checkMailRequest.getEmail())) {
-            return ResponseEntity.status(HttpStatus.FOUND).body(new MessageResponse("User exist !"));
+            return ResponseEntity.status(HttpStatus.FOUND).body(new MessageResponse("User exist !",true,302));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("User not exist !"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("User not exist !",false,404));
     }
 }

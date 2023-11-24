@@ -57,7 +57,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public MessageResponse addAccomPlace(AddAccomPlaceRequest request, String mail) {
+    public String addAccomPlace(AddAccomPlaceRequest request, String mail) {
         Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
         District district = districtRepository.findByDistrictCode(request.getDistrictCode())
@@ -100,7 +100,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .status(CommonStatusEnum.ACTIVE)
                 .build();
         accomPlaceRepository.save(accomPlace);
-        return new MessageResponse(AppContants.ADD_SUCCESS_MESSAGE("Accom Place"));
+        return AppContants.ADD_SUCCESS_MESSAGE("Accom Place");
     }
 
     @Override

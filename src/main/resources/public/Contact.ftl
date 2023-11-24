@@ -1,4 +1,4 @@
-<#import "./Default_Layout.ftl" as layout>
+<#import "../templates/Default_Layout.ftl" as layout>
 <@layout.myLayout>
     <div>
         <h3>${greeting}</h3>

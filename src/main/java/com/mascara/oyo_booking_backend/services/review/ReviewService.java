@@ -20,5 +20,5 @@ public interface ReviewService {
     List<GetReviewResponse> getReviewListOfAccomPlace(Long id);
 
     @Transactional
-    MessageResponse reviewAccomPlace(ReviewAccomPlaceRequest request, List<MultipartFile> imageReviewFiles);
+    String reviewAccomPlace(ReviewAccomPlaceRequest request, List<MultipartFile> imageReviewFiles);
 }
