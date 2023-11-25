@@ -6,13 +6,14 @@ import com.mascara.oyo_booking_backend.config.init_data.models.InitDbModel;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.entities.*;
+import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
-import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
 import com.mascara.oyo_booking_backend.services.user.UserService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -111,8 +112,6 @@ public class InitDataService implements CommandLineRunner {
                 for (RegisterRequest registerRequest : registerRequestList) {
                     String passwordEncoded = encoder.encode(registerRequest.getPassword());
                     userService.addUser(registerRequest, passwordEncoded);
-//                    user.setStatus(UserStatusEnum.ACTIVE);
-//                    userRepository.save(user);
                 }
             }
         } catch (Exception e) {
@@ -158,6 +157,7 @@ public class InitDataService implements CommandLineRunner {
                 InitDbModel<Province> initModel = mapper.readValue(file, new TypeReference<>() {
                 });
                 for (Province province : initModel.getData()) {
+                    province.setSlugs(SlugsUtils.toSlug(province.getProvinceName()));
                     province.setCreatedBy("dev");
                     province.setLastModifiedBy("dev");
                 }
@@ -260,6 +260,7 @@ public class InitDataService implements CommandLineRunner {
                 });
                 List<AccommodationCategories> accommodationCategoriesList = initModel.getData();
                 for (AccommodationCategories accomCate : accommodationCategoriesList) {
+                    accomCate.setStatus(CommonStatusEnum.ENABLE);
                     accomCate.setCreatedBy("dev");
                     accomCate.setLastModifiedBy("dev");
                 }
@@ -306,7 +307,7 @@ public class InitDataService implements CommandLineRunner {
                 });
                 List<AddAccomPlaceRequest> accomPlaceRequestList = initModel.getData();
                 for (AddAccomPlaceRequest accomPlace : accomPlaceRequestList) {
-                    accomPlaceService.addAccomPlace(accomPlace, "client1@gmail.com");
+                    accomPlaceService.addAccomPlace(accomPlace);
                 }
             }
         } catch (Exception e) {

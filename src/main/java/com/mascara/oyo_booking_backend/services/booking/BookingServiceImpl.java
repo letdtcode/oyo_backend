@@ -1,7 +1,6 @@
 package com.mascara.oyo_booking_backend.services.booking;
 
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.entities.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.Booking;
 import com.mascara.oyo_booking_backend.entities.BookingList;

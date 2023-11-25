@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
-import com.mascara.oyo_booking_backend.entities.base.Audit;
+import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +18,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "image_review")
-public class ImageReview extends Audit<String> {
+public class ImageReview extends BasePesistence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

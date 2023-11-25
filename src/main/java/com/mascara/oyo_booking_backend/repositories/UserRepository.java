@@ -1,8 +1,10 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.User;
-import com.mascara.oyo_booking_backend.entities.Ward;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -35,6 +37,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.* from users u join mail_confirm_token mct on u.id = mct.user_id where mct.id = :id", nativeQuery = true)
     Optional<User> findByMailConfirmTokenId(@Param("id") Long id);
 
-    @Query(value = "select u.* from users u where u.id = :id",nativeQuery = true)
+    @Query(value = "select u.* from users u where u.id = :id", nativeQuery = true)
     Optional<User> findByUserId(@Param("id") Long id);
+
+    @Query(value = "select u.* from users u",
+            countQuery = "select count(id) from users u",
+            nativeQuery = true)
+    Page<User> getAllWithPaging(Pageable pageable);
+
+    @Modifying
+    @Query(value = "update users u set u.status = :status where u.mail = :mail", nativeQuery = true)
+    void changeStatusUser(@Param("mail") String mail,@Param("status") String status) ;
 }

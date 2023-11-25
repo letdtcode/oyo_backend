@@ -3,8 +3,9 @@ package com.mascara.oyo_booking_backend.services.accom_place;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
+import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,14 +18,22 @@ import java.util.List;
  */
 public interface AccomPlaceService {
     @Transactional
-    String addAccomPlace(AddAccomPlaceRequest request, String mail);
+    String addAccomPlace(AddAccomPlaceRequest request);
+
+    String addImageAccomPlace(List<MultipartFile> files, Long id);
 
     @Transactional
-    List<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize);
+    BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum);
 
     @Transactional
-    List<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum, Integer pageSize);
+    BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum);
 
     @Transactional
     GetAccomPlaceResponse getAccomPlaceDetails(Long id);
+
+    @Transactional
+    String changeStatusAccomPlace(Long id, String status);
+
+    @Transactional
+    String deleteAccomPlace(Long id);
 }

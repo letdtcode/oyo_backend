@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
-import com.mascara.oyo_booking_backend.entities.base.Audit;
+import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "users")
-public class User extends Audit<String> {
+public class User extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

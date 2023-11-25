@@ -2,7 +2,8 @@ package com.mascara.oyo_booking_backend.controllers.general;
 
 import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
+import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.services.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,7 +38,7 @@ public class GeneralPersonalController {
 
     @Operation(summary = "Update info user", description = "General Api for update info user")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/update-info")
@@ -47,23 +48,23 @@ public class GeneralPersonalController {
 
     @Operation(summary = "Change password user", description = "General Api for change password user")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
-        return ResponseEntity.ok(userService.changePassword(changePasswordRequest));
+        String response = userService.changePassword(changePasswordRequest);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @Operation(summary = "Update avatar user", description = "General Api for update avatar")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/update_avatar")
     public ResponseEntity<?> updateAvatar(@RequestParam("file") MultipartFile file, @NotBlank @Email @RequestParam("mail") String mail) {
-        return ResponseEntity.ok(userService.updateAvatar(file, mail));
+        InfoUserResponse response = userService.updateAvatar(file, mail);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
-
-
 }

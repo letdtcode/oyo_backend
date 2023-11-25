@@ -19,4 +19,6 @@ import lombok.NoArgsConstructor;
 public class AddProvinceRequest {
     private String provinceName;
     private String thumbnailLink;
+    private String provinceCode;
+    private String divisionType;
 }

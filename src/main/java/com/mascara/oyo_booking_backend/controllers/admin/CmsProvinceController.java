@@ -2,13 +2,12 @@ package com.mascara.oyo_booking_backend.controllers.admin;
 
 import com.mascara.oyo_booking_backend.dtos.request.province.AddProvinceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.province.UpdateProvinceRequest;
-import com.mascara.oyo_booking_backend.entities.Role;
-import com.mascara.oyo_booking_backend.enums.RoleEnum;
+import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.response.location.UpdateProvinceResponse;
 import com.mascara.oyo_booking_backend.services.province.ProvinceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,27 +18,31 @@ import org.springframework.web.bind.annotation.*;
  * Time      : 7:24 CH
  * Filename  : CmsProvinceController
  */
-@Tag(name = "AuthController", description = "Authentication APIs")
+@Tag(name = "Cms Province", description = "Cms Province APIs")
 @RestController
-@RequestMapping("/api/v1/cms")
+@RequestMapping("/api/v1/cms/provinces")
 @RequiredArgsConstructor
 public class CmsProvinceController {
 
     @Autowired
     private ProvinceService provinceService;
 
-    @GetMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<?> addProvince(@RequestBody AddProvinceRequest request) {
-        return ResponseEntity.ok(provinceService.addProvince(request));
+        String response = provinceService.addProvince(request);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateProvince(@RequestBody UpdateProvinceRequest request, String provinceName) {
-        return ResponseEntity.ok(provinceService.updateProvince(request,provinceName));
+    @PutMapping("/{province-slug}")
+    public ResponseEntity<?> updateProvince(@RequestBody UpdateProvinceRequest request,
+                                            @PathVariable("province-slug") String provinceSlug) {
+        UpdateProvinceResponse response = provinceService.updateProvince(request, provinceSlug);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteProvince(@Param("provinceName") String provinceName) {
-        return ResponseEntity.ok(provinceService.deleteProvince(provinceName));
+    @DeleteMapping("/{province-slug}")
+    public ResponseEntity<?> deleteProvince(@RequestParam("provinceName") String provinceName) {
+        String response = provinceService.deleteProvince(provinceName);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

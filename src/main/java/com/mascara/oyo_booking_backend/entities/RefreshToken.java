@@ -1,12 +1,10 @@
 package com.mascara.oyo_booking_backend.entities;
 
-import com.mascara.oyo_booking_backend.entities.base.Audit;
+import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.NaturalId;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 /**
@@ -23,7 +21,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "refresh_token")
-public class RefreshToken extends Audit<String> {
+public class RefreshToken extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

@@ -3,9 +3,9 @@ package com.mascara.oyo_booking_backend.controllers.auth;
 import com.mascara.oyo_booking_backend.dtos.request.auth.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
+import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.auth.LoginResponse;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.User;
@@ -103,7 +103,7 @@ public class AuthController {
 
         User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         if (user.getStatus() == UserStatusEnum.PEDING) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new MessageResponse("User is peding",true,408));
+            return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new BaseResponse<>(true, 408, "User is peding"));
         }
         String accessToken = jwtUtils.generateAccessJwtToken(userMail);
         String refreshToken = jwtUtils.generateRefreshJwtToken(userMail);
@@ -130,23 +130,24 @@ public class AuthController {
         if (infoUser.getAvatarUrl() == null) {
             infoUser.setAvatarUrl(avatar_default);
         }
-        return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, roles, infoUser));
+        LoginResponse response = new LoginResponse(accessToken, refreshToken, roles, infoUser);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @Operation(summary = "Sign up", description = "Api for Sign up")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) throws MessagingException, TemplateException, IOException {
         if (userRepository.existsByMail(registerRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already exist!",false,400));
+            return ResponseEntity.badRequest().body(new BaseResponse(false, 400, "Error: Email is already exist!"));
         }
         String passwordEncoded = encoder.encode(registerRequest.getPassword());
         User user = userService.addUser(registerRequest, passwordEncoded);
         verifyTokenService.sendMailVerifyToken(user);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!",true,200));
+        return ResponseEntity.ok(new BaseResponse(true, 200, "User registered successfully!"));
     }
 
     @Operation(summary = "Refresh token", description = "Api for Refresh token")
@@ -156,12 +157,13 @@ public class AuthController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/refreshToken")
     public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest tokenRefreshRequest) {
-        return ResponseEntity.ok(userService.refreshJwtToken(tokenRefreshRequest));
+        TokenRefreshResponse response = userService.refreshJwtToken(tokenRefreshRequest);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @Operation(summary = "Verify Token", description = "Api for Verify Token")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = MessageResponse.class),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class),
                     mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
@@ -171,11 +173,11 @@ public class AuthController {
         String messageResponse = verifyTokenService.verifyMailUser(email, token);
         switch (messageResponse) {
             case AppContants.TOKEN_ACTIVE_MAIL_INVALID:
-                return ResponseEntity.status(HttpStatusCode.valueOf(407)).body(new MessageResponse(messageResponse,false,407));
+                return ResponseEntity.status(HttpStatusCode.valueOf(407)).body(new BaseResponse(false, 407, messageResponse));
             case AppContants.ACTIVE_USER_TOKEN_EXPIRED:
-                return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new MessageResponse(messageResponse,false,408));
+                return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new BaseResponse(false, 408, messageResponse));
         }
-        return ResponseEntity.ok(new MessageResponse(messageResponse,true,200));
+        return ResponseEntity.ok(new BaseResponse(true, 200, messageResponse));
     }
 }
 

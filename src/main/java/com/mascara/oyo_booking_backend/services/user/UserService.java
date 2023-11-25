@@ -4,8 +4,8 @@ import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
+import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.User;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,4 +31,12 @@ public interface UserService {
     InfoUserResponse updateAvatar(MultipartFile file, String mail);
 
     String changePassword(ChangePasswordRequest request);
+
+    BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber);
+
+    @Transactional
+    String changeStatusUser(String email, String status);
+
+    @Transactional
+    String deleteUser(String email);
 }

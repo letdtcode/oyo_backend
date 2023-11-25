@@ -1,10 +1,9 @@
 package com.mascara.oyo_booking_backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mascara.oyo_booking_backend.entities.base.Audit;
+import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 /**
  * Created by: IntelliJ IDEA
@@ -20,12 +19,12 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Entity
 @Table(name = "ward")
-public class Ward extends Audit<String> {
+public class Ward extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "ward_code",unique = true)
+    @Column(name = "ward_code", unique = true)
     private String wardCode;
 
     @Column(name = "ward_name")

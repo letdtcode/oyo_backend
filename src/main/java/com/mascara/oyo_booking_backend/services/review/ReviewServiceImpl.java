@@ -1,10 +1,9 @@
 package com.mascara.oyo_booking_backend.services.review;
 
 import com.mascara.oyo_booking_backend.dtos.request.review.ReviewAccomPlaceRequest;
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.dtos.response.review.GetReviewResponse;
 import com.mascara.oyo_booking_backend.entities.*;
-import com.mascara.oyo_booking_backend.enums.ReviewStatusEnum;
+import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinaryService;
@@ -75,7 +74,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @Transactional
     public String reviewAccomPlace(ReviewAccomPlaceRequest request,
-                                            List<MultipartFile> imageReviewFiles) {
+                                   List<MultipartFile> imageReviewFiles) {
         ReviewList reviewList = reviewListRepository.findByUserId(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomPlaceId())
@@ -83,7 +82,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = mapper.map(request, Review.class);
         review.setAccomPlace(accomPlace);
         review.setReviewList(reviewList);
-        review.setStatus(ReviewStatusEnum.ACTIVE);
+        review.setStatus(CommonStatusEnum.ENABLE);
         if (!imageReviewFiles.isEmpty()) {
             review.setHaveImage(true);
             review = reviewRepository.save(review);

@@ -4,13 +4,17 @@ import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceReq
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.InfoFacilityResponse;
+import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
+import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -56,17 +61,23 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private CloudinaryService cloudinaryService;
+
+    @Autowired
+    private ImageAccomRepository imageAccomRepository;
+
     @Override
     @Transactional
-    public String addAccomPlace(AddAccomPlaceRequest request, String mail) {
+    public String addAccomPlace(AddAccomPlaceRequest request) {
         Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
         District district = districtRepository.findByDistrictCode(request.getDistrictCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district")));
         Ward ward = wardRepository.findByWardCode(request.getWardCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("ward")));
-        User user = userRepository.findByMail(mail)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+
+
         AccommodationCategories accomCategories = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
 
@@ -75,15 +86,16 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             facilitySet.add(facilityRepository.findByFacilityName(facilityName)
                     .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility"))));
         }
-        String addressDetail = request.getNumHouseAndStreetName() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
+        String addressDetail = request.getNumHouseAndStreetName() + ", "
+                + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
+        String slugs = SlugsUtils.toSlug(request.getAccomName());
         AccomPlace accomPlace = AccomPlace.builder()
                 .accomName(request.getAccomName())
                 .description(request.getDescription())
                 .addressDetail(addressDetail)
                 .gradeRate(5F)
                 .numReview(0L)
-                .user(user)
-                .userId(user.getId())
+                .slugs(slugs)
                 .accommodationCategories(accomCategories)
                 .accomCateId(accomCategories.getId())
                 .province(province)
@@ -98,11 +110,18 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .numView(0)
                 .pricePerNight(request.getPricePerNight())
                 .facilitySet(facilitySet)
-                .status(CommonStatusEnum.ACTIVE)
+                .status(AccomStatusEnum.ENABLE)
                 .build();
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
+        if (authentication != null) {
+            User user = userRepository.findByMail(authentication.getName()).get();
+            accomPlace.setUser(user);
+            accomPlace.setUserId(user.getId());
+        } else {
+            User user = userRepository.findByMail("client1@gmail.com")
+                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+            accomPlace.setUser(user);
+            accomPlace.setUserId(user.getId());
             accomPlace.setCreatedBy("dev");
             accomPlace.setLastModifiedBy("dev");
         }
@@ -111,20 +130,42 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     }
 
     @Override
-    @Transactional
-    public List<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
-        List<AccomPlace> accomPlaceList = accomPlaceRepository.findAll(paging).toList();
-        return accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace,
-                        GetAccomPlaceResponse.class))
-                .collect(Collectors.toList());
+    public String addImageAccomPlace(List<MultipartFile> files, Long id) {
+        if (!files.isEmpty()) {
+            for (int i = 0; i < files.size(); i++) {
+                AccomPlace accomPlace = accomPlaceRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom Place")));
+                String pathImg = cloudinaryService.store(files.get(i));
+                ImageAccom imageAccom = ImageAccom.builder()
+                        .imgAccomLink(pathImg)
+                        .accomPlace(accomPlace)
+                        .accomPlaceId(accomPlace.getId())
+                        .build();
+                imageAccomRepository.save(imageAccom);
+            }
+            return AppContants.ADD_SUCCESS_MESSAGE("Images accom place");
+        }
+        throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
     }
 
     @Override
     @Transactional
-    public List<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter,
-                                                                     Integer pageNum,
-                                                                     Integer pageSize) {
+    public BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum) {
+        Pageable paging = PageRequest.of(pageNum, 10, Sort.by(Sort.Direction.DESC, "created_date"));
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging);
+        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
+        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace,
+                GetAccomPlaceResponse.class)).collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                accomPlacePage.getNumber(),
+                accomPlacePage.getSize(),
+                accomPlacePage.getTotalElements());
+    }
+
+    @Override
+    @Transactional
+    public BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter,
+                                                                               Integer pageNum) {
         int length = 0;
         if (filter.getFacilityName() != null) {
             length = filter.getFacilityName().size();
@@ -132,8 +173,8 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         if (filter.getFacilityName() == null || filter.getFacilityName().isEmpty()) {
             filter.setFacilityName(List.of(UUID.randomUUID().toString()));
         }
-        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
-        List<AccomPlace> accomPlaceList = accomPlaceRepository.getPageWithFullFilter(filter.getProvinceCode(),
+        Pageable paging = PageRequest.of(pageNum, 10, Sort.by(Sort.Direction.DESC, "created_date"));
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getPageWithFullFilter(filter.getProvinceCode(),
                 filter.getDistrictCode(),
                 filter.getWardCode(),
                 filter.getPriceFrom(),
@@ -143,10 +184,14 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 filter.getNumBathroom(),
                 filter.getNumPeople(),
                 filter.getNumBed(),
-                paging).toList();
-        return accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace,
-                        GetAccomPlaceResponse.class))
-                .collect(Collectors.toList());
+                paging);
+        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
+        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace,
+                GetAccomPlaceResponse.class)).collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                accomPlacePage.getNumber(),
+                accomPlacePage.getSize(),
+                accomPlacePage.getTotalElements());
     }
 
     @Override
@@ -175,5 +220,24 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlaceResponse.setImageAccomsUrls(imageAccom);
         accomPlaceResponse.setInfoFacilityResponseList(facilityResponseList);
         return accomPlaceResponse;
+    }
+
+    @Override
+    @Transactional
+    public String changeStatusAccomPlace(Long id, String status) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        accomPlaceRepository.changeStatusAccomPlace(id, status);
+        return AppContants.UPDATE_SUCCESS_MESSAGE("accom place");
+    }
+
+    @Override
+    @Transactional
+    public String deleteAccomPlace(Long id) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        accomPlace.setDeleted(true);
+        accomPlaceRepository.save(accomPlace);
+        return AppContants.UPDATE_SUCCESS_MESSAGE("accom place");
     }
 }

@@ -1,10 +1,9 @@
 package com.mascara.oyo_booking_backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mascara.oyo_booking_backend.entities.base.Audit;
+import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -17,7 +16,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "province")
-public class Province extends Audit<String> {
+public class Province extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -31,14 +30,16 @@ public class Province extends Audit<String> {
     @Column(name = "province_code", unique = true)
     private String provinceCode;
 
-    @Column(name = "division_type",columnDefinition = "varchar (255)")
+    @Column(name = "division_type", columnDefinition = "varchar (255)")
     private String divisionType;
 
-//    @JsonIgnore
+    @Column(name = "slugs", columnDefinition = "varchar (255)", unique = true)
+    private String slugs;
+
+    //    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "province")
     @Fetch(FetchMode.SUBSELECT)
     private Set<District> districtSet;
-
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "province")

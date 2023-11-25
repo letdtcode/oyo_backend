@@ -4,85 +4,85 @@
       "accomCateName": "Phòng",
       "description": "Phòng nhỏ căn hộ",
       "icon": "https://img.icons8.com/ios/25/room.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Nhà riêng",
       "description": "Nhà riêng cá nhân",
       "icon": "https://img.icons8.com/pastel-glyph/25/home.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Nhà chung cư",
       "description": "Nhà chung cư mini",
       "icon": "https://img.icons8.com/ios/25/apartment.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Nhà thuyền",
       "description": "Nhà thuyền du khách",
       "icon": "https://img.icons8.com/external-outline-black-m-oki-orlando/25/external-boat-house-types-of-houses-outline-outline-black-m-oki-orlando.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Khu cắm trại",
       "description": "Khu cắm trại xịn xò",
       "icon": "https://img.icons8.com/ios-filled/25/campsite.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Biệt thự",
       "description": "Biệt thự tỷ đô",
       "icon": "https://img.icons8.com/external-others-abderraouf-omara/25/external-villa-real-estate-and-houses-others-abderraouf-omara.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Homestay",
       "description": "Home stay",
       "icon": "https://img.icons8.com/quill/25/home.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Nhà trên núi",
       "description": "Phòng nhỏ căn hộ",
       "icon": "https://img.icons8.com/ios-filled/25/mountain.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Garden",
       "description": "Nhà vườn nông thôn",
       "icon": "https://img.icons8.com/ios/25/garden-sprinkler.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Bãi biển",
       "description": "Chỗ ở gần bãi biển",
       "icon": "https://img.icons8.com/ios/25/beach.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Cabin",
       "description": "Căn hộ cabin",
       "icon": "https://img.icons8.com/external-victoruler-outline-victoruler/25/external-cabin-christmas-victoruler-outline-victoruler.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Thuyền",
       "description": "Nhà thuyền cho thuê",
       "icon": "https://img.icons8.com/ios/25/sail-boat.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Nhà trên cây",
       "description": "Nhà trang trí trên cây",
       "icon": "https://img.icons8.com/external-outline-black-m-oki-orlando/25/external-tree-house-types-of-houses-outline-outline-black-m-oki-orlando.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     },
     {
       "accomCateName": "Nông trại",
       "description": "Nông trại gia đình",
       "icon": "https://img.icons8.com/dotty/25/farm-2.png",
-      "status": "ACTIVE"
+      "status": "ENABLE"
     }
   ]
 }

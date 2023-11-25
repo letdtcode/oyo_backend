@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
-import com.mascara.oyo_booking_backend.entities.base.Audit;
+import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "revenue")
-public class Revenue extends Audit<String> {
+public class Revenue extends BasePesistence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

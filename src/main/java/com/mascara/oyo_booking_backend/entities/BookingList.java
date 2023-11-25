@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
-import com.mascara.oyo_booking_backend.entities.base.Audit;
+import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -23,7 +23,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "booking_list")
-public class BookingList extends Audit<String> {
+public class BookingList extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

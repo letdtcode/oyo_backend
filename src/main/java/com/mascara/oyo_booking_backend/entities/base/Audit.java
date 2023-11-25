@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 @Setter
 @MappedSuperclass
 @SuperBuilder(toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Audit<U extends Serializable> implements Serializable {

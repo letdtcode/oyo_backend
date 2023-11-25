@@ -1,9 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.response.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -22,7 +20,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InfoUserResponse {
-    private Long Id;
     private String userName;
     private String firstName;
     private String lastName;
@@ -32,4 +29,6 @@ public class InfoUserResponse {
     private String address;
     private String phone;
     private String avatarUrl;
+    @Enumerated(EnumType.STRING)
+    private UserStatusEnum status;
 }

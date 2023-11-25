@@ -1,6 +1,5 @@
 package com.mascara.oyo_booking_backend.services.mail_verify_token;
 
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.entities.MailConfirmToken;
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
@@ -63,13 +62,13 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         if (!mailConfirmToken.getDateExpired().isBefore(LocalDateTime.now())) {
             if (user.getMail().equals(mail)) {
-                user.setStatus(UserStatusEnum.ACTIVE);
+                user.setStatus(UserStatusEnum.ENABLE);
                 userRepository.save(user);
                 return AppContants.ACTIVE_USER_SUCCESS;
             }
             return AppContants.TOKEN_ACTIVE_MAIL_INVALID;
         }
-        if (user.getStatus() == UserStatusEnum.ACTIVE) {
+        if (user.getStatus() == UserStatusEnum.ENABLE) {
             return AppContants.TOKEN_ACTIVE_MAIL_INVALID;
         }
         sendMailVerifyToken(user);

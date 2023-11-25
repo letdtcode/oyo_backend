@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.entities;
 
-import com.mascara.oyo_booking_backend.entities.base.Audit;
+import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +19,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "bed_room")
-public class BedRoom extends Audit<String> {
+public class BedRoom extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -51,8 +51,4 @@ public class BedRoom extends Audit<String> {
 
     @Column(name = "type_bed_code")
     private String typeBedCode;
-
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private CommonStatusEnum status;
 }

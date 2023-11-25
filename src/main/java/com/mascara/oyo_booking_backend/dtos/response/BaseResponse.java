@@ -1,7 +1,9 @@
 package com.mascara.oyo_booking_backend.dtos.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * Created by: IntelliJ IDEA
@@ -11,7 +13,15 @@ import lombok.Data;
  * Filename  : BaseResponse
  */
 @Data
-@AllArgsConstructor
-public class BaseResponse <T>{
+@NoArgsConstructor
+public class BaseResponse<T> implements Serializable {
+    private boolean success;
+    private int statusCode;
     private T data;
+
+    public BaseResponse(boolean success, int statusCode, T data) {
+        this.success = success;
+        this.statusCode = statusCode;
+        this.data = data;
+    }
 }

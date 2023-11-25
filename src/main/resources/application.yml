@@ -44,6 +44,10 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 3MB
 jwt:
   secret: qOevUET/5tgg91Awfv2LKufDRzfSeCcDobw3LlV+YoggfwJYyc6mCrBNd4nIDus7sBYB4Bs
 

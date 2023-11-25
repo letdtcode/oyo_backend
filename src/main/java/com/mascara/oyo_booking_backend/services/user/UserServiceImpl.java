@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
+import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
@@ -20,6 +21,10 @@ import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.PasswordValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,8 +34,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Created by: IntelliJ IDEA
@@ -128,10 +135,10 @@ public class UserServiceImpl implements UserService {
 
             user.setCreatedBy("dev");
             user.setLastModifiedBy("dev");
-            user.setStatus(UserStatusEnum.ACTIVE);
+            user.setStatus(UserStatusEnum.ENABLE);
             user.setAddress("Tp.HCM");
             user.setAvatarUrl("https://res.cloudinary.com/dyv5zrsgj/image/upload/v1698163058/oyo_booking/nqxq12lb5gazvph6rwf7.png");
-            user.setDateOfBirth(LocalDate.ofEpochDay(23/12/2002));
+            user.setDateOfBirth(LocalDate.ofEpochDay(23 / 12 / 2002));
         }
         user.setUserName("user-" + randomUsername);
         user.setRoleSet(roles);
@@ -188,6 +195,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public String changePassword(ChangePasswordRequest request) {
         User user = userRepository.findByMail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
@@ -202,5 +210,38 @@ public class UserServiceImpl implements UserService {
             return AppContants.NEW_PASSWORD_NOT_MATCH_PATTERN;
         }
         return AppContants.PASSWORD_INCORRECT;
+    }
+
+    @Override
+    @Transactional
+    public BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber) {
+        Pageable paging = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "created_date"));
+        Page<User> userPage = userRepository.getAllWithPaging(paging);
+        List<User> userList = userPage.stream().toList();
+        List<InfoUserResponse> responseList = userList.stream().map(user -> mapper.map(user,
+                InfoUserResponse.class)).collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                userPage.getNumber(),
+                userPage.getSize(),
+                userPage.getTotalElements());
+    }
+
+    @Override
+    @Transactional
+    public String changeStatusUser(String email, String status) {
+        User user = userRepository.findByMail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+        userRepository.changeStatusUser(email, status);
+        return AppContants.UPDATE_SUCCESS_MESSAGE("user");
+    }
+
+    @Override
+    @Transactional
+    public String deleteUser(String email) {
+        User user = userRepository.findByMail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+        user.setDeleted(true);
+        userRepository.save(user);
+        return AppContants.DELETE_SUCCESS_MESSAGE("user");
     }
 }

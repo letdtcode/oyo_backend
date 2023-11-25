@@ -1,6 +1,5 @@
 package com.mascara.oyo_booking_backend.external_modules.mail.service;
 
-import com.mascara.oyo_booking_backend.dtos.response.general.MessageResponse;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import freemarker.template.Template;
