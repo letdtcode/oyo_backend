@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "Cms Accom Place", description = "Cms Accom Place APIs")
 @RestController
-@RequestMapping("/api/v1/cms/accom")
+@RequestMapping("/api/v1/cms/accoms")
 @RequiredArgsConstructor
 public class CmsAccomPlaceController {
     @Autowired

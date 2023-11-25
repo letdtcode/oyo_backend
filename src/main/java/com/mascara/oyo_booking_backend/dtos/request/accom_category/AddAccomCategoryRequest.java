@@ -1,8 +1,8 @@
 package com.mascara.oyo_booking_backend.dtos.request.accom_category;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -24,4 +24,9 @@ public class AddAccomCategoryRequest {
     @NotNull
     @NotBlank
     private String description;
+
+    @NotNull
+    @NotBlank
+    @Pattern(regexp = "(?i)Enable|Disable", message = "Status must be 'Enable' or 'Disable'")
+    private String status;
 }

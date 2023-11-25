@@ -61,8 +61,8 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
     @Query(value = "select ap.* from accom_place ap limit 1", nativeQuery = true)
     List<AccomPlace> checkExistData();
 
-    @Query(value = "select ap.* from accom_place ap",
-            countQuery = "select count(id) from accom_place ap",
+    @Query(value = "select ap.* from accom_place ap where ap.deleted = false",
+            countQuery = "select count(id) from accom_place ap where ap.deleted = false",
             nativeQuery = true)
     Page<AccomPlace> getAllWithPaging(Pageable pageable);
 

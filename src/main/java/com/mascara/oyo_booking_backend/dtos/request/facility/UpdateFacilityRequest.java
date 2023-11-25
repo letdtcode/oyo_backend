@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.dtos.request.accom_category;
+package com.mascara.oyo_booking_backend.dtos.request.facility;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,21 +9,25 @@ import lombok.Data;
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
- * Date      : 25/10/2023
- * Time      : 4:40 CH
- * Filename  : UpdateAccomCategoryRequest
+ * Date      : 25/11/2023
+ * Time      : 6:57 CH
+ * Filename  : UpdateFacilityRequest
  */
 @Data
 @AllArgsConstructor
-public class UpdateAccomCategoryRequest {
+public class UpdateFacilityRequest {
 
     @NotNull
     @NotBlank
-    private String accomCateName;
+    private String facilityName;
 
     @NotNull
     @NotBlank
-    private String description;
+    private String facilityCateCode;
+
+    @NotNull
+    @NotBlank
+    private String imageUrl;
 
     @NotNull
     @NotBlank

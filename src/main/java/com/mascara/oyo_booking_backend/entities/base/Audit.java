@@ -48,7 +48,6 @@ public abstract class Audit<U extends Serializable> implements Serializable {
     @Builder.Default
     private LocalDateTime lastModifiedDate = getLocalDateTimeGMT7();
 
-
     public static LocalDateTime getLocalDateTimeGMT7() {
         DateTimeZone timeZone = DateTimeZone.forID("Asia/Ho_Chi_Minh");
         DateTime now = DateTime.now(timeZone);

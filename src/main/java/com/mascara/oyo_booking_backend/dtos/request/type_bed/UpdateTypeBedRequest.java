@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.dtos.request.accom_category;
+package com.mascara.oyo_booking_backend.dtos.request.type_bed;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,21 +9,16 @@ import lombok.Data;
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
- * Date      : 25/10/2023
- * Time      : 4:40 CH
- * Filename  : UpdateAccomCategoryRequest
+ * Date      : 25/11/2023
+ * Time      : 5:45 CH
+ * Filename  : UpdateTypeBedRequest
  */
 @Data
 @AllArgsConstructor
-public class UpdateAccomCategoryRequest {
-
+public class UpdateTypeBedRequest {
     @NotNull
     @NotBlank
-    private String accomCateName;
-
-    @NotNull
-    @NotBlank
-    private String description;
+    private String typeBedName;
 
     @NotNull
     @NotBlank

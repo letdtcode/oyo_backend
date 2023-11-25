@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,18 +28,21 @@ public class CmsUserController {
     private UserService userService;
 
     @GetMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllUserWithPaging(@RequestParam("pageNumber") Integer pageNumber) {
         BasePagingData<InfoUserResponse> response = userService.getAllUserWithPaging(pageNumber);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @PutMapping("/{mail}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusUser(@PathVariable("mail") String mail, @RequestParam("status") String status) {
         String messageReponse = userService.changeStatusUser(mail, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
     @DeleteMapping("/{mail}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable("mail") String mail) {
         String messageReponse = userService.deleteUser(mail);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));

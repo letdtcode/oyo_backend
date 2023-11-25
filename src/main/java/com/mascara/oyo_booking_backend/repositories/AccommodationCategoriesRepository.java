@@ -1,7 +1,10 @@
 package com.mascara.oyo_booking_backend.repositories;
 
+import com.mascara.oyo_booking_backend.entities.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
 import com.mascara.oyo_booking_backend.entities.Facility;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +28,9 @@ public interface AccommodationCategoriesRepository extends JpaRepository<Accommo
 
     @Query(value = "select ac.* from accommodation_categories ac where ac.accom_cate_name = :accomCateName",nativeQuery = true)
     Optional<AccommodationCategories> findByAccomCateName(@Param("accomCateName") String accomCateName);
+
+    @Query(value = "select ac.* from accommodation_categories ac where ac.deleted = false",
+            countQuery = "select count(id) from accommodation_categories ac where ac.deleted = false",
+            nativeQuery = true)
+    Page<AccommodationCategories> getAllWithPaging(Pageable pageable);
 }

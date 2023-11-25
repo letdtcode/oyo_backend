@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.controllers.publics;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.services.facility.FacilityService;
+import com.mascara.oyo_booking_backend.services.facility_category.FacilityCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,7 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PublicFacilityController {
     @Autowired
-    private FacilityService facilityService;
+    private FacilityCategoryService facilityCategoryService;
 
     @Operation(summary = "Check Mail Exist", description = "Public Api check mail exist for Sign Up")
     @ApiResponses({
@@ -40,7 +41,7 @@ public class PublicFacilityController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/get-all")
     public ResponseEntity<?> getAllDataFacility() {
-        List<GetFacilityCategoryResponse> response = facilityService.getAllDataFacility();
+        List<GetFacilityCategoryResponse> response = facilityCategoryService.getAllDataFacility();
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

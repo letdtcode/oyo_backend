@@ -2,6 +2,9 @@ package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.Facility;
 import com.mascara.oyo_booking_backend.entities.FacilityCategories;
+import com.mascara.oyo_booking_backend.entities.TypeBed;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,4 +27,9 @@ public interface FacilityCategoriesRepository extends JpaRepository<FacilityCate
 
     @Query(value = "select fac.* from facility_categories fac where fac.faci_cate_code = :facilitycatecode", nativeQuery = true)
     Optional<FacilityCategories> findByFaciCateCode(@Param("facilitycatecode") String facilityCateCode);
+
+    @Query(value = "select fac.* from facility_categories fac where fac.deleted = false",
+            countQuery = "select count(id) from facility_categories fac where fac.deleted = false",
+            nativeQuery = true)
+    Page<FacilityCategories> getAllWithPaging(Pageable pageable);
 }
