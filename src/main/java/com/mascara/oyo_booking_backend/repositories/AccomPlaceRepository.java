@@ -1,8 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.AccomPlace;
-import com.mascara.oyo_booking_backend.entities.District;
-import com.mascara.oyo_booking_backend.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

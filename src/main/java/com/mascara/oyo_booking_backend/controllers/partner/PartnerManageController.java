@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.controllers.partner;
 
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -43,7 +44,7 @@ public class PartnerManageController {
     @PostMapping("/add-accom-place")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> addAccomPlace(@RequestBody @Valid AddAccomPlaceRequest addAccomPlaceRequest) {
-        String response = accomPlaceService.addAccomPlace(addAccomPlaceRequest);
+        GetAccomPlaceResponse response = accomPlaceService.addAccomPlace(addAccomPlaceRequest);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

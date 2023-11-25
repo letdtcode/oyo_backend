@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface AccomPlaceService {
     @Transactional
-    String addAccomPlace(AddAccomPlaceRequest request);
+    GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request);
 
     String addImageAccomPlace(List<MultipartFile> files, Long id);
 
