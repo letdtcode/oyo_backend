@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.securities.service;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.User;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @NoArgsConstructor
+@Slf4j
 public class CustomUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
 
@@ -49,6 +51,7 @@ public class CustomUserDetails implements UserDetails {
         List<GrantedAuthority> authorities = user.getRoleSet().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
                 .collect(Collectors.toList());
+        log.error(authorities.toString());
         return new CustomUserDetails(
                 user.getId(),
                 user.getUserName(),
@@ -107,6 +110,8 @@ public class CustomUserDetails implements UserDetails {
         if (o == null || getClass() != o.getClass())
             return false;
         CustomUserDetails user = (CustomUserDetails) o;
+        log.error(id.toString());
+        log.error(user.id.toString());
         return Objects.equals(id, user.id);
     }
 }

@@ -17,6 +17,6 @@ import java.util.Optional;
  */
 @Repository
 public interface ReviewListRepository extends JpaRepository<ReviewList, Long> {
-    @Query(value = "select rl.* from review_list rl where rl.user_id = :userId",nativeQuery = true)
+    @Query(value = "select rl.* from review_list rl where rl.user_id = :userId and rl.deleted is false",nativeQuery = true)
     Optional<ReviewList> findByUserId(@Param("userId") Long id);
 }

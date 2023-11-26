@@ -13,11 +13,14 @@ public class AppContants {
     public static final String ACTIVE_USER_SUCCESS = "Active User thành công";
     public static final String TOKEN_ACTIVE_MAIL_INVALID = "Token không hợp lệ hoặc đã hết hạn";
     public static final String ACTIVE_USER_TOKEN_EXPIRED = "Token hết hạn";
-
     public static final String PASSWORD_INCORRECT = "Password is incorrect";
     public static final String CHANGE_PASSWORD_SUCCESS = "Change password success";
     public static final String NEW_PASSWORD_NOT_MATCH_PATTERN = "New password not match pattern";
     public static final String FILE_IS_NULL = "File is null";
+
+    public static final String FIELD_EXIST_WHEN_ADD_ENTITY(String entity, String field) {
+        return "Can not add " + entity + " because " + field + " is exist";
+    }
 
     public static final String DELETE_SUCCESS_MESSAGE(String entity) {
         return "Delete " + entity + " success";

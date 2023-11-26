@@ -3,6 +3,8 @@ package com.mascara.oyo_booking_backend.repositories;
 import com.mascara.oyo_booking_backend.entities.Role;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -16,5 +18,6 @@ import java.util.Optional;
  */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    Optional<Role> findByRoleName(RoleEnum name);
+    @Query(value = "SELECT r.* FROM role r WHERE r.role_name = :roleName and r.deleted is false", nativeQuery = true)
+    Optional<Role> findByRoleName(@Param("roleName") String name);
 }

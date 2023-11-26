@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.type_bed;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.type_bed.AddTypeBedRequest;
 import com.mascara.oyo_booking_backend.dtos.request.type_bed.UpdateTypeBedRequest;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
@@ -18,14 +19,14 @@ public interface TypeBedService {
     BasePagingData<GetTypeBedResponse> getAllTypeBedWithPaging(Integer pageNum, Integer pageSize);
 
     @Transactional
-    String addTypeBed(AddTypeBedRequest request);
+    BaseMessageData addTypeBed(AddTypeBedRequest request);
 
     @Transactional
-    String updateTypeBed(UpdateTypeBedRequest request, Long id);
+    BaseMessageData updateTypeBed(UpdateTypeBedRequest request, Long id);
 
     @Transactional
-    String changeStatusTypeBed(Long id, String status);
+    BaseMessageData changeStatusTypeBed(Long id, String status);
 
     @Transactional
-    String deletedTypeBed(Long id);
+    BaseMessageData deletedTypeBed(Long id);
 }

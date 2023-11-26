@@ -18,6 +18,6 @@ import java.util.Optional;
 @Repository
 public interface BookingListRepository extends JpaRepository<BookingList, Long> {
 
-    @Query(value = "select bl.* from booking_list bl where bl.user_id = :userId",nativeQuery = true)
+    @Query(value = "select bl.* from booking_list bl where bl.user_id = :userId and bl.deleted = false",nativeQuery = true)
     Optional<BookingList> findByUserId(@Param("userId") Long id);
 }

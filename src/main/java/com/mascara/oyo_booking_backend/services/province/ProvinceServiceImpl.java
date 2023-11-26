@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.province;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.province.AddProvinceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.province.UpdateProvinceRequest;
 import com.mascara.oyo_booking_backend.dtos.response.location.UpdateProvinceResponse;
@@ -48,7 +49,7 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     @Transactional
-    public String addProvince(AddProvinceRequest request) {
+    public BaseMessageData addProvince(AddProvinceRequest request) {
         Province province = Province.builder()
                 .provinceName(request.getProvinceName())
                 .thumbnail(request.getThumbnailLink())
@@ -57,7 +58,7 @@ public class ProvinceServiceImpl implements ProvinceService {
                 .slugs(SlugsUtils.toSlug(request.getProvinceName()))
                 .build();
         provinceRepository.save(province);
-        return "Add Province Success !";
+        return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("province"));
     }
 
     @Override
@@ -73,10 +74,10 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     @Transactional
-    public String deleteProvince(String provinceName) {
-        Province province = provinceRepository.findByProvinceName(provinceName)
+    public BaseMessageData deleteProvince(String provinceSlug) {
+        Province province = provinceRepository.findByProvinceSlugs(provinceSlug)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
         provinceRepository.delete(province);
-        return "Province Success !";
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Province"));
     }
 }

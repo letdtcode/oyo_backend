@@ -53,7 +53,6 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
@@ -91,6 +90,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/v1/verify/**").permitAll()
                                 .requestMatchers("/api/v1/public/**").permitAll()
                                 .requestMatchers("/api/v1/partner/**").permitAll()
+                                .requestMatchers("/api/v1/cms/**").permitAll()
                                 .requestMatchers("/api/v1/test/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()

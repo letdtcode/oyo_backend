@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.user;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
@@ -30,13 +31,13 @@ public interface UserService {
     @Transactional
     InfoUserResponse updateAvatar(MultipartFile file, String mail);
 
-    String changePassword(ChangePasswordRequest request);
+    BaseMessageData changePassword(ChangePasswordRequest request);
 
-    BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber);
-
-    @Transactional
-    String changeStatusUser(String email, String status);
+    BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber,Integer pageSize);
 
     @Transactional
-    String deleteUser(String email);
+    BaseMessageData changeStatusUser(String email, String status);
+
+    @Transactional
+    BaseMessageData deleteUser(String email);
 }

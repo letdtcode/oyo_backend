@@ -77,14 +77,14 @@ public class InitDataService implements CommandLineRunner {
     private UserService userService;
 
     public void initDataUser() {
-        Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN);
+        Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString());
         if (!roleAdmin.isPresent()) {
             Role admin = Role.builder().roleName(RoleEnum.ROLE_ADMIN).build();
             admin.setCreatedBy("dev");
             roleRepository.save(admin);
         }
 
-        Optional<Role> rolePartner = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER);
+        Optional<Role> rolePartner = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER.toString());
         if (!rolePartner.isPresent()) {
             Role partner = Role.builder().roleName(RoleEnum.ROLE_PARTNER).build();
             partner.setCreatedBy("dev");
@@ -92,7 +92,7 @@ public class InitDataService implements CommandLineRunner {
             roleRepository.save(partner);
         }
 
-        Optional<Role> roleClient = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT);
+        Optional<Role> roleClient = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT.toString());
         if (!roleClient.isPresent()) {
             Role client = Role.builder().roleName(RoleEnum.ROLE_CLIENT).build();
             client.setCreatedBy("dev");

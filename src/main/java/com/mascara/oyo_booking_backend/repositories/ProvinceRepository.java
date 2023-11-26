@@ -19,15 +19,15 @@ import java.util.Optional;
 @Repository
 public interface ProvinceRepository extends JpaRepository<Province, Long> {
 
-    @Query(value = "select p.* from province p where p.province_name = :provincename", nativeQuery = true)
+    @Query(value = "select p.* from province p where p.province_name = :provincename and p.deleted is false", nativeQuery = true)
     Optional<Province> findByProvinceName(@Param("provincename") String provinceName);
 
-    @Query(value = "select p.* from province p where p.slugs = :provinceslugs", nativeQuery = true)
+    @Query(value = "select p.* from province p where p.slugs = :provinceslugs and p.deleted is false", nativeQuery = true)
     Optional<Province> findByProvinceSlugs(@Param("provinceslugs") String provinceSlugs);
 
     @Query(value = "select p.* from province p limit 1", nativeQuery = true)
     List<Province> checkExistData();
 
-    @Query(value = "select p.* from province p where p.province_code = :provincecode", nativeQuery = true)
+    @Query(value = "select p.* from province p where p.province_code = :provincecode and p.deleted is false", nativeQuery = true)
     Optional<Province> findByProvinceCode(@Param("provincecode") String provinceCode);
 }

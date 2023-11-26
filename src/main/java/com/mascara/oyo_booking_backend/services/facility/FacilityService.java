@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.facility;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility.AddFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility.UpdateFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
@@ -18,14 +19,14 @@ import java.util.List;
 public interface FacilityService {
 
     @Transactional
-    String addFacility(AddFacilityRequest request);
+    BaseMessageData addFacility(AddFacilityRequest request);
 
     @Transactional
-    String updateFacility(UpdateFacilityRequest request, Long id);
+    BaseMessageData updateFacility(UpdateFacilityRequest request, Long id);
 
     @Transactional
-    String changeStatusFacility(Long id, String status);
+    BaseMessageData changeStatusFacility(Long id, String status);
 
     @Transactional
-    String deletedFacility(Long id);
+    BaseMessageData deletedFacility(Long id);
 }

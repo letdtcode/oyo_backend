@@ -1,15 +1,20 @@
 package com.mascara.oyo_booking_backend.controllers.admin;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility_category.AddFacilityCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility_category.UpdateFacilityCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.services.facility_category.FacilityCategoryService;
+import com.mascara.oyo_booking_backend.utils.validation.Status;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,37 +28,39 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/cms/facility-categories")
 @RequiredArgsConstructor
+@Validated
 public class CmsFacilityCategoryController {
 
     @Autowired
     private FacilityCategoryService facilityCategoryService;
 
-    @PostMapping("/")
+    @PostMapping("")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addFacilityCategory(@RequestBody @Valid AddFacilityCategoryRequest request) {
-        String response = facilityCategoryService.addFacilityCategory(request);
+        BaseMessageData response = facilityCategoryService.addFacilityCategory(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateFacilityCategory(@RequestBody UpdateFacilityCategoryRequest request,
-                                                    @PathVariable("id") Long id) {
-        String response = facilityCategoryService.updateFacilityCategory(request, id);
+    public ResponseEntity<?> updateFacilityCategory(@RequestBody @Valid UpdateFacilityCategoryRequest request,
+                                                    @PathVariable("id") @NotNull Long id) {
+        BaseMessageData response = facilityCategoryService.updateFacilityCategory(request, id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @PutMapping("/{id}/{status}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> changeStatusTypeBed(@PathVariable("id") Long id, @RequestParam("status") String status) {
-        String messageReponse = facilityCategoryService.changeStatusFacilityCategory(id, status);
+    public ResponseEntity<?> changeStatusFacilityCategory(@PathVariable("id") @NotNull Long id,
+                                                          @PathVariable("status") @NotBlank @Status String status) {
+        BaseMessageData messageReponse = facilityCategoryService.changeStatusFacilityCategory(id, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteTypeBed(@PathVariable("id") Long id) {
-        String messageReponse = facilityCategoryService.deletedFacilityCategory(id);
+    public ResponseEntity<?> deleteFacilityCategory(@PathVariable("id") @NotNull Long id) {
+        BaseMessageData messageReponse = facilityCategoryService.deletedFacilityCategory(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 }

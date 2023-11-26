@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.controllers.partner;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
@@ -56,7 +57,7 @@ public class PartnerManageController {
     @PostMapping("/add-images-accom")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> addImageAccomPlace(@RequestParam("files") List<MultipartFile> files, @RequestParam("id") Long id) {
-        String response = accomPlaceService.addImageAccomPlace(files, id);
+        BaseMessageData response = accomPlaceService.addImageAccomPlace(files, id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

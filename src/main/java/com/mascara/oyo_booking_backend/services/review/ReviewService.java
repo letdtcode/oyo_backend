@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.review;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.review.ReviewAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.response.review.GetReviewResponse;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,5 +20,5 @@ public interface ReviewService {
     List<GetReviewResponse> getReviewListOfAccomPlace(Long id);
 
     @Transactional
-    String reviewAccomPlace(ReviewAccomPlaceRequest request, List<MultipartFile> imageReviewFiles);
+    BaseMessageData reviewAccomPlace(ReviewAccomPlaceRequest request, List<MultipartFile> imageReviewFiles);
 }

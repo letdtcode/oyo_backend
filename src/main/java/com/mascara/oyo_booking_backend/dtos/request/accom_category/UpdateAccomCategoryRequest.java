@@ -17,13 +17,17 @@ import lombok.Data;
 @AllArgsConstructor
 public class UpdateAccomCategoryRequest {
 
-    @NotNull
-    @NotBlank
+    @NotNull (message = "Can not be null")
+    @NotBlank (message = "Can not be blank")
     private String accomCateName;
 
     @NotNull
     @NotBlank
     private String description;
+
+    @NotNull
+    @NotBlank
+    private String icon;
 
     @NotNull
     @NotBlank

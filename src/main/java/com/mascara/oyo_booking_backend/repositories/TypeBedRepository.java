@@ -22,8 +22,8 @@ public interface TypeBedRepository extends JpaRepository<TypeBed, Long> {
     @Query(value = "select tb.* from type_bed tb limit 1", nativeQuery = true)
     List<TypeBed> checkExistData();
 
-    @Query(value = "select tb.* from type_bed tb where tb.deleted = false",
-            countQuery = "select count(id) from type_bed tb where tb.deleted = false",
+    @Query(value = "select tb.* from type_bed tb where tb.deleted is false",
+            countQuery = "select count(id) from type_bed tb where tb.deleted is false",
             nativeQuery = true)
     Page<TypeBed> getAllWithPaging(Pageable pageable);
 }

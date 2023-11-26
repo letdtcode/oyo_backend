@@ -26,11 +26,20 @@ public interface AccommodationCategoriesRepository extends JpaRepository<Accommo
     @Query(value = "select ac.* from accommodation_categories ac limit 1", nativeQuery = true)
     List<AccommodationCategories> checkExistData();
 
-    @Query(value = "select ac.* from accommodation_categories ac where ac.accom_cate_name = :accomCateName",nativeQuery = true)
+    @Query(value = "select ac.* from accommodation_categories ac where ac.id = :id and ac.deleted = false",nativeQuery = true)
+    Optional<AccommodationCategories> findById(@Param("id") Long id);
+
+    @Query(value = "select ac.* from accommodation_categories ac where ac.accom_cate_name = :accomCateName and ac.deleted = false",nativeQuery = true)
     Optional<AccommodationCategories> findByAccomCateName(@Param("accomCateName") String accomCateName);
 
     @Query(value = "select ac.* from accommodation_categories ac where ac.deleted = false",
             countQuery = "select count(id) from accommodation_categories ac where ac.deleted = false",
             nativeQuery = true)
     Page<AccommodationCategories> getAllWithPaging(Pageable pageable);
+
+    @Query(value = "SELECT if(COUNT(*) >0,'true','false') FROM accommodation_categories ac WHERE ac.accom_cate_name = :accomCateName and ac.deleted is false", nativeQuery = true)
+    boolean existsByAccomCateName(@Param("accomCateName") String accomCateName);
+
+    @Query(value = "SELECT if(COUNT(*) >0,'true','false') FROM accommodation_categories ac WHERE ac.icon = :icon and ac.deleted is false", nativeQuery = true)
+    boolean existsByIcon(@Param("icon") String icon);
 }

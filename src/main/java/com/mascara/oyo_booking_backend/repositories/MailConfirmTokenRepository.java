@@ -19,11 +19,11 @@ import java.util.Optional;
  */
 @Repository
 public interface MailConfirmTokenRepository extends JpaRepository<MailConfirmToken, Long> {
-    @Query(value = "select mct.* from mail_confirm_token mct where mct.verify_token = :token", nativeQuery = true)
+    @Query(value = "select mct.* from mail_confirm_token mct where mct.verify_token = :token and mct.deleted is false", nativeQuery = true)
     Optional<MailConfirmToken> findByVerifyToken(@Param("token") String token);
 
     boolean existsByUserId(Long userId);
 
-    @Query(value = "select mct.* from mail_confirm_token mct where mct.user_id = :userid", nativeQuery = true)
+    @Query(value = "select mct.* from mail_confirm_token mct where mct.user_id = :userid and mct.deleted is false", nativeQuery = true)
     Optional<MailConfirmToken> findByUserId(@Param("userid") Long userId);
 }

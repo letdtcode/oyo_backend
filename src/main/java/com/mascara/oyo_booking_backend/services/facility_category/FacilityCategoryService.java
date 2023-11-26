@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.facility_category;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility_category.AddFacilityCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility_category.UpdateFacilityCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
@@ -23,14 +24,14 @@ public interface FacilityCategoryService {
     List<GetFacilityCategoryResponse> getAllDataFacility();
 
     @Transactional
-    String addFacilityCategory(AddFacilityCategoryRequest request);
+    BaseMessageData addFacilityCategory(AddFacilityCategoryRequest request);
 
     @Transactional
-    String updateFacilityCategory(UpdateFacilityCategoryRequest request, Long id);
+    BaseMessageData updateFacilityCategory(UpdateFacilityCategoryRequest request, Long id);
 
     @Transactional
-    String changeStatusFacilityCategory(Long id, String status);
+    BaseMessageData changeStatusFacilityCategory(Long id, String status);
 
     @Transactional
-    String deletedFacilityCategory(Long id);
+    BaseMessageData deletedFacilityCategory(Long id);
 }

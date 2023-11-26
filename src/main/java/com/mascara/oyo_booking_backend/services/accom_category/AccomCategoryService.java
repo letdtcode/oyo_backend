@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.accom_category;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.accom_category.AddAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.request.accom_category.UpdateAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.response.accom_category.GetAccomCategoryResponse;
@@ -23,13 +24,13 @@ public interface AccomCategoryService {
     @Transactional
     List<GetAccomCategoryResponse> getAllAccomCategory();
 
-    String addAccomCategory(AddAccomCategoryRequest request);
+    BaseMessageData addAccomCategory(AddAccomCategoryRequest request);
 
-    String updateAccomCategory(UpdateAccomCategoryRequest request, Long id);
-
-    @Transactional
-    String changeStatusAccomCategory(Long id, String status);
+    BaseMessageData updateAccomCategory(UpdateAccomCategoryRequest request, Long id);
 
     @Transactional
-    String deleteAccomCategory(Long id);
+    BaseMessageData changeStatusAccomCategory(Long id, String status);
+
+    @Transactional
+    BaseMessageData deleteAccomCategory(Long id);
 }

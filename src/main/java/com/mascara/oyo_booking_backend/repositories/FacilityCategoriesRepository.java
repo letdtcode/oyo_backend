@@ -25,10 +25,10 @@ public interface FacilityCategoriesRepository extends JpaRepository<FacilityCate
     @Query(value = "select fac.* from facility_categories fac limit 1", nativeQuery = true)
     List<FacilityCategories> checkExistData();
 
-    @Query(value = "select fac.* from facility_categories fac where fac.faci_cate_code = :facilitycatecode", nativeQuery = true)
+    @Query(value = "select fac.* from facility_categories fac where fac.faci_cate_code = :facilitycatecode and fac.deleted is false", nativeQuery = true)
     Optional<FacilityCategories> findByFaciCateCode(@Param("facilitycatecode") String facilityCateCode);
 
-    @Query(value = "select fac.* from facility_categories fac where fac.deleted = false",
+    @Query(value = "select fac.* from facility_categories fac where fac.deleted is false",
             countQuery = "select count(id) from facility_categories fac where fac.deleted = false",
             nativeQuery = true)
     Page<FacilityCategories> getAllWithPaging(Pageable pageable);

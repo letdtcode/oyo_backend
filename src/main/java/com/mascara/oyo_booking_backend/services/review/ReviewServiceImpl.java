@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.review;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.review.ReviewAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.response.review.GetReviewResponse;
 import com.mascara.oyo_booking_backend.entities.*;
@@ -73,8 +74,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public String reviewAccomPlace(ReviewAccomPlaceRequest request,
-                                   List<MultipartFile> imageReviewFiles) {
+    public BaseMessageData reviewAccomPlace(ReviewAccomPlaceRequest request,
+                                            List<MultipartFile> imageReviewFiles) {
         ReviewList reviewList = reviewListRepository.findByUserId(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomPlaceId())
@@ -99,6 +100,6 @@ public class ReviewServiceImpl implements ReviewService {
             review.setHaveImage(false);
             reviewRepository.save(review);
         }
-        return "Add review accom place success !";
+        return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("Review"));
     }
 }

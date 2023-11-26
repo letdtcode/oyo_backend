@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.mail_verify_token;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.entities.MailConfirmToken;
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
@@ -55,7 +56,7 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
     }
 
     @Override
-    public String verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException {
+    public BaseMessageData verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException {
         MailConfirmToken mailConfirmToken = mailConfirmTokenRepository.findByVerifyToken(token)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("confirm token")));
         User user = userRepository.findByMailConfirmTokenId(mailConfirmToken.getId())
@@ -64,15 +65,15 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
             if (user.getMail().equals(mail)) {
                 user.setStatus(UserStatusEnum.ENABLE);
                 userRepository.save(user);
-                return AppContants.ACTIVE_USER_SUCCESS;
+                return new BaseMessageData(AppContants.ACTIVE_USER_SUCCESS);
             }
-            return AppContants.TOKEN_ACTIVE_MAIL_INVALID;
+            return new BaseMessageData(AppContants.TOKEN_ACTIVE_MAIL_INVALID);
         }
         if (user.getStatus() == UserStatusEnum.ENABLE) {
-            return AppContants.TOKEN_ACTIVE_MAIL_INVALID;
+            return new BaseMessageData(AppContants.TOKEN_ACTIVE_MAIL_INVALID);
         }
         sendMailVerifyToken(user);
-        return AppContants.ACTIVE_USER_TOKEN_EXPIRED;
+        return new BaseMessageData(AppContants.ACTIVE_USER_TOKEN_EXPIRED);
     }
 
     @Override

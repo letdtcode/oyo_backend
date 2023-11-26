@@ -21,6 +21,6 @@ public interface WardRepository extends JpaRepository<Ward, Long> {
     @Query(value = "select w.* from ward w limit 1", nativeQuery = true)
     List<Ward> checkExistData();
 
-    @Query(value = "select w.* from ward w where w.ward_code = :wardcode", nativeQuery = true)
+    @Query(value = "select w.* from ward w where w.ward_code = :wardcode and w.deleted is false", nativeQuery = true)
     Optional<Ward> findByWardCode(@Param("wardcode") String wardCode);
 }

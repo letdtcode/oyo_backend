@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.booking;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
 import com.mascara.oyo_booking_backend.entities.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.Booking;
@@ -41,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public String bookingAccomPlace(BookingRequest request) {
+    public BaseMessageData bookingAccomPlace(BookingRequest request) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
         BookingList bookingList = bookingListRepository.findByUserId(request.getUserId())
@@ -55,6 +56,6 @@ public class BookingServiceImpl implements BookingService {
         booking.setBookingCode(bookingCode);
         booking.setBookingStatusEnum(BookingStatusEnum.AWAIT);
         bookingRepository.save(booking);
-        return "Booking succesful !";
+        return new BaseMessageData("Booking succesful !");
     }
 }

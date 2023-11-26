@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.controllers.auth;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.auth.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
@@ -170,8 +171,8 @@ public class AuthController {
     @GetMapping(value = "/verify")
     public ResponseEntity<?> verifyTokenMail(@RequestParam("email") String email,
                                              @RequestParam("token") String token) throws MessagingException, TemplateException, IOException {
-        String messageResponse = verifyTokenService.verifyMailUser(email, token);
-        switch (messageResponse) {
+        BaseMessageData<String> messageResponse = verifyTokenService.verifyMailUser(email, token);
+        switch (messageResponse.getMessage()) {
             case AppContants.TOKEN_ACTIVE_MAIL_INVALID:
                 return ResponseEntity.status(HttpStatusCode.valueOf(407)).body(new BaseResponse(false, 407, messageResponse));
             case AppContants.ACTIVE_USER_TOKEN_EXPIRED:

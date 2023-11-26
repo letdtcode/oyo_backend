@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
@@ -131,7 +132,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     }
 
     @Override
-    public String addImageAccomPlace(List<MultipartFile> files, Long id) {
+    public BaseMessageData addImageAccomPlace(List<MultipartFile> files, Long id) {
         if (!files.isEmpty()) {
             for (int i = 0; i < files.size(); i++) {
                 AccomPlace accomPlace = accomPlaceRepository.findById(id)
@@ -144,15 +145,15 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                         .build();
                 imageAccomRepository.save(imageAccom);
             }
-            return AppContants.ADD_SUCCESS_MESSAGE("Images accom place");
+            return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("Images accom place"));
         }
         throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
     }
 
     @Override
     @Transactional
-    public BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum) {
-        Pageable paging = PageRequest.of(pageNum, 10, Sort.by(Sort.Direction.DESC, "created_date"));
+    public BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum,Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
         Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> mapper.map(accomPlace,
@@ -225,20 +226,20 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public String changeStatusAccomPlace(Long id, String status) {
+    public BaseMessageData changeStatusAccomPlace(Long id, String status) {
         AccomPlace accomPlace = accomPlaceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
         accomPlaceRepository.changeStatusAccomPlace(id, status);
-        return AppContants.UPDATE_SUCCESS_MESSAGE("accom place");
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("accom place"));
     }
 
     @Override
     @Transactional
-    public String deleteAccomPlace(Long id) {
+    public BaseMessageData deleteAccomPlace(Long id) {
         AccomPlace accomPlace = accomPlaceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
         accomPlace.setDeleted(true);
         accomPlaceRepository.save(accomPlace);
-        return AppContants.UPDATE_SUCCESS_MESSAGE("accom place");
+        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("accom place"));
     }
 }

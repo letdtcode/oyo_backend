@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.mail_verify_token;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.entities.MailConfirmToken;
 import com.mascara.oyo_booking_backend.entities.User;
 import freemarker.template.TemplateException;
@@ -17,7 +18,7 @@ import java.io.IOException;
 public interface VerifyTokenService {
     MailConfirmToken generateTokenConfirmMail(String token, User user);
 
-    String verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException;
+    BaseMessageData verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException;
 
     void sendMailVerifyToken(User user) throws MessagingException, TemplateException, IOException;
 }

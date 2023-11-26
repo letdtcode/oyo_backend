@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.controllers.general;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
@@ -53,7 +54,7 @@ public class GeneralPersonalController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
-        String response = userService.changePassword(changePasswordRequest);
+        BaseMessageData response = userService.changePassword(changePasswordRequest);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

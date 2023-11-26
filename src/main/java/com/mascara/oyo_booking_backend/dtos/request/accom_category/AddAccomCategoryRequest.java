@@ -27,6 +27,10 @@ public class AddAccomCategoryRequest {
 
     @NotNull
     @NotBlank
+    private String icon;
+
+    @NotNull
+    @NotBlank
     @Pattern(regexp = "(?i)Enable|Disable", message = "Status must be 'Enable' or 'Disable'")
     private String status;
 }

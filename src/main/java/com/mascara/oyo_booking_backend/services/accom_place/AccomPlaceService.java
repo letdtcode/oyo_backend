@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
@@ -20,10 +21,10 @@ public interface AccomPlaceService {
     @Transactional
     GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request);
 
-    String addImageAccomPlace(List<MultipartFile> files, Long id);
+    BaseMessageData addImageAccomPlace(List<MultipartFile> files, Long id);
 
     @Transactional
-    BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum);
+    BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize);
 
     @Transactional
     BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum);
@@ -32,8 +33,8 @@ public interface AccomPlaceService {
     GetAccomPlaceResponse getAccomPlaceDetails(Long id);
 
     @Transactional
-    String changeStatusAccomPlace(Long id, String status);
+    BaseMessageData changeStatusAccomPlace(Long id, String status);
 
     @Transactional
-    String deleteAccomPlace(Long id);
+    BaseMessageData deleteAccomPlace(Long id);
 }

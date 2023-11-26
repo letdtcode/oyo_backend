@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.facility;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility.AddFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility.UpdateFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
@@ -45,7 +46,7 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Override
     @Transactional
-    public String addFacility(AddFacilityRequest request) {
+    public BaseMessageData addFacility(AddFacilityRequest request) {
         int count = (int) facilityRepository.count();
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
@@ -58,13 +59,13 @@ public class FacilityServiceImpl implements FacilityService {
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         facilityRepository.save(facility);
-        return AppContants.ADD_SUCCESS_MESSAGE("Facility");
+        return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("Facility"));
     }
 
 
     @Override
     @Transactional
-    public String updateFacility(UpdateFacilityRequest request, Long id) {
+    public BaseMessageData updateFacility(UpdateFacilityRequest request, Long id) {
         Facility facility = facilityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
@@ -75,26 +76,26 @@ public class FacilityServiceImpl implements FacilityService {
         facility.setImageUrl(request.getImageUrl());
         facility.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
         facilityRepository.save(facility);
-        return AppContants.UPDATE_SUCCESS_MESSAGE("Facility");
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Facility"));
     }
 
     @Override
     @Transactional
-    public String changeStatusFacility(Long id, String status) {
+    public BaseMessageData changeStatusFacility(Long id, String status) {
         Facility facility = facilityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
         facility.setStatus(CommonStatusEnum.valueOf(status));
         facilityRepository.save(facility);
-        return AppContants.UPDATE_SUCCESS_MESSAGE("Facility");
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Facility"));
     }
 
     @Override
     @Transactional
-    public String deletedFacility(Long id) {
+    public BaseMessageData deletedFacility(Long id) {
         Facility facility = facilityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
         facility.setDeleted(true);
         facilityRepository.save(facility);
-        return AppContants.DELETE_SUCCESS_MESSAGE("Facility");
+        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("Facility"));
     }
 }

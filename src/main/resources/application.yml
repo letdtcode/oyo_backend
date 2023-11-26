@@ -48,6 +48,13 @@ spring:
     multipart:
       max-file-size: 3MB
       max-request-size: 3MB
+
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
 jwt:
   secret: qOevUET/5tgg91Awfv2LKufDRzfSeCcDobw3LlV+YoggfwJYyc6mCrBNd4nIDus7sBYB4Bs
 

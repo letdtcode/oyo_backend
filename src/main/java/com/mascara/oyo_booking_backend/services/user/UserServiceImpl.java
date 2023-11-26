@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.user;
 
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
@@ -86,24 +87,24 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT)
+            Role userRole = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT.toString())
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "Admin":
-                        Role adminRole = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN)
+                        Role adminRole = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
                         break;
                     case "Partner":
-                        Role modRole = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER)
+                        Role modRole = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER.toString())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
                         break;
                     default:
-                        Role userRole = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT)
+                        Role userRole = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT.toString())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }
@@ -196,7 +197,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String changePassword(ChangePasswordRequest request) {
+    public BaseMessageData changePassword(ChangePasswordRequest request) {
         User user = userRepository.findByMail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String oldPassRequest = request.getOldPassword();
@@ -205,17 +206,17 @@ public class UserServiceImpl implements UserService {
                 String newPassEncoded = encoder.encode(request.getNewPassword());
                 user.setPassword(newPassEncoded);
                 userRepository.save(user);
-                return AppContants.CHANGE_PASSWORD_SUCCESS;
+                return new BaseMessageData(AppContants.CHANGE_PASSWORD_SUCCESS);
             }
-            return AppContants.NEW_PASSWORD_NOT_MATCH_PATTERN;
+            return new BaseMessageData(AppContants.NEW_PASSWORD_NOT_MATCH_PATTERN);
         }
-        return AppContants.PASSWORD_INCORRECT;
+        return new BaseMessageData(AppContants.PASSWORD_INCORRECT);
     }
 
     @Override
     @Transactional
-    public BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber) {
-        Pageable paging = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "created_date"));
+    public BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber,Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
         Page<User> userPage = userRepository.getAllWithPaging(paging);
         List<User> userList = userPage.stream().toList();
         List<InfoUserResponse> responseList = userList.stream().map(user -> mapper.map(user,
@@ -228,20 +229,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String changeStatusUser(String email, String status) {
+    public BaseMessageData changeStatusUser(String email, String status) {
         User user = userRepository.findByMail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
         userRepository.changeStatusUser(email, status);
-        return AppContants.UPDATE_SUCCESS_MESSAGE("user");
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("user"));
     }
 
     @Override
     @Transactional
-    public String deleteUser(String email) {
+    public BaseMessageData deleteUser(String email) {
         User user = userRepository.findByMail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
         user.setDeleted(true);
         userRepository.save(user);
-        return AppContants.DELETE_SUCCESS_MESSAGE("user");
+        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("user"));
     }
 }
