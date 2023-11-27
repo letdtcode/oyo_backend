@@ -215,8 +215,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber,Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
+    public BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber,
+                                                                 Integer pageSize,
+                                                                 String sortType,
+                                                                 String field) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
         Page<User> userPage = userRepository.getAllWithPaging(paging);
         List<User> userList = userPage.stream().toList();
         List<InfoUserResponse> responseList = userList.stream().map(user -> mapper.map(user,

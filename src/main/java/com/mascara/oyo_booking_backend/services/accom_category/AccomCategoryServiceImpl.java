@@ -41,8 +41,8 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
 
     @Override
     @Transactional
-    public BasePagingData<GetAccomCategoryResponse> getAllAccomCategoryWithPaging(Integer pageNum, Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
+    public BasePagingData<GetAccomCategoryResponse> getAllAccomCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
         Page<AccommodationCategories> accomCategoriesPage = accomCategoriesRepository.getAllWithPaging(paging);
         List<AccommodationCategories> accomCategoriesList = accomCategoriesPage.stream().toList();
         List<GetAccomCategoryResponse> responseList = accomCategoriesList.stream().map(accomCate -> mapper.map(accomCate,

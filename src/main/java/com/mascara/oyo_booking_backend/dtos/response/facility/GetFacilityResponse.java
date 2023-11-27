@@ -14,9 +14,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InfoFacilityResponse {
+public class GetFacilityResponse {
     private String facilityName;
     private String facilityCode;
     private String facilityCateCode;
     private String imageUrl;
+    private String status;
 }

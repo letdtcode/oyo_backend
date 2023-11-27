@@ -42,8 +42,8 @@ public class TypeBedServiceImpl implements TypeBedService {
 
     @Override
     @Transactional
-    public BasePagingData<GetTypeBedResponse> getAllTypeBedWithPaging(Integer pageNum, Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, "created_date"));
+    public BasePagingData<GetTypeBedResponse> getAllTypeBedWithPaging(Integer pageNum, Integer pageSize,String sortType,String field) {
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<TypeBed> typeBedPage = typeBedRepository.getAllWithPaging(paging);
         List<TypeBed> typeBedList = typeBedPage.stream().toList();
         List<GetTypeBedResponse> responseList = typeBedList.stream().map(typeBed -> mapper.map(typeBed,

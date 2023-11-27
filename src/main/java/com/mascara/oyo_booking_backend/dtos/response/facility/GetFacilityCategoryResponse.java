@@ -20,5 +20,6 @@ import java.util.List;
 public class GetFacilityCategoryResponse {
     private String faciCateName;
     private String faciCateCode;
-    private List<String> facilityListName;
+    private List<GetFacilityResponse> infoFacilityList;
+    private String status;
 }

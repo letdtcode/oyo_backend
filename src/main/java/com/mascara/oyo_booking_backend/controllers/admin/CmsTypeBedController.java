@@ -53,7 +53,9 @@ public class CmsTypeBedController {
                                                      @NotNull(message = "Page size must not be null")
                                                      @Min(value = 1, message = "Page size must greater or equal 1")
                                                      Integer pageSize) {
-        BasePagingData<GetTypeBedResponse> response = typeBedService.getAllTypeBedWithPaging(pageNumber, pageSize);
+        String sortType = "DESC";
+        String field = "created_date";
+        BasePagingData<GetTypeBedResponse> response = typeBedService.getAllTypeBedWithPaging(pageNumber, pageSize, sortType, field);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

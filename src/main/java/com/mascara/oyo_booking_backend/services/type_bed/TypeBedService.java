@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface TypeBedService {
     @Transactional
-    BasePagingData<GetTypeBedResponse> getAllTypeBedWithPaging(Integer pageNum, Integer pageSize);
+    BasePagingData<GetTypeBedResponse> getAllTypeBedWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
     BaseMessageData addTypeBed(AddTypeBedRequest request);

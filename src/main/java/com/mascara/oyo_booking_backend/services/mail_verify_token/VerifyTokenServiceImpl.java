@@ -69,7 +69,7 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
             }
             return new BaseMessageData(AppContants.TOKEN_ACTIVE_MAIL_INVALID);
         }
-        if (user.getStatus() == UserStatusEnum.ENABLE) {
+        if (user.getStatus().equals(UserStatusEnum.ENABLE)) {
             return new BaseMessageData(AppContants.TOKEN_ACTIVE_MAIL_INVALID);
         }
         sendMailVerifyToken(user);

@@ -45,7 +45,9 @@ public class CmsUserController {
                                                   @NotNull(message = "Page size must not be null")
                                                   @Min(value = 1, message = "Page size must greater or equal 1")
                                                   Integer pageSize) {
-        BasePagingData<InfoUserResponse> response = userService.getAllUserWithPaging(pageNumber, pageSize);
+        String field = "created_date";
+        String sortType = "DESC";
+        BasePagingData<InfoUserResponse> response = userService.getAllUserWithPaging(pageNumber, pageSize, sortType, field);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

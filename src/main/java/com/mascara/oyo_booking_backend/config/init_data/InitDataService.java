@@ -208,6 +208,7 @@ public class InitDataService implements CommandLineRunner {
                 InitDbModel<FacilityCategories> initModel = mapper.readValue(file, new TypeReference<>() {
                 });
                 for (FacilityCategories facilityCate : initModel.getData()) {
+                    facilityCate.setStatus(CommonStatusEnum.ENABLE);
                     facilityCate.setCreatedBy("dev");
                     facilityCate.setLastModifiedBy("dev");
                 }
@@ -236,6 +237,7 @@ public class InitDataService implements CommandLineRunner {
                     Facility facility = facilityList.get(i);
                     facility.setFacilityCategories(facilityCategoriesRepository.findByFaciCateCode(facility.getFacilityCateCode())
                             .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility category"))));
+                    facility.setStatus(CommonStatusEnum.ENABLE);
                     facility.setCreatedBy("dev");
                     facility.setLastModifiedBy("dev");
                     facilityList.set(i, facility);

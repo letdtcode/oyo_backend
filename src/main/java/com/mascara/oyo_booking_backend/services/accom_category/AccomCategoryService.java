@@ -19,7 +19,7 @@ import java.util.List;
 public interface AccomCategoryService {
 
     @Transactional
-    BasePagingData<GetAccomCategoryResponse> getAllAccomCategoryWithPaging(Integer pageNum,Integer pageSize);
+    BasePagingData<GetAccomCategoryResponse> getAllAccomCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
     List<GetAccomCategoryResponse> getAllAccomCategory();

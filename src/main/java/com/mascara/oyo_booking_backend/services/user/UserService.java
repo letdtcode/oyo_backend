@@ -5,8 +5,8 @@ import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
+import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.User;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +33,7 @@ public interface UserService {
 
     BaseMessageData changePassword(ChangePasswordRequest request);
 
-    BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber,Integer pageSize);
+    BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber, Integer pageSize, String sortType, String field);
 
     @Transactional
     BaseMessageData changeStatusUser(String email, String status);

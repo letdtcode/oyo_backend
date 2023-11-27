@@ -45,6 +45,8 @@ public class BookingServiceImpl implements BookingService {
     public BaseMessageData bookingAccomPlace(BookingRequest request) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+        accomPlace.setNumBooking(accomPlace.getNumBooking() + 1L);
+        accomPlaceRepository.save(accomPlace);
         BookingList bookingList = bookingListRepository.findByUserId(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String bookingCode = UUID.randomUUID().toString();

@@ -59,7 +59,9 @@ public class CmsAccomCategoryController {
                                                            @NotNull(message = "Page size must not be null")
                                                            @Min(value = 1, message = "Page size must greater or equal 1")
                                                            Integer pageSize) {
-        BasePagingData<GetAccomCategoryResponse> response = accomCategoryService.getAllAccomCategoryWithPaging(pageNumber, pageSize);
+        String sortType = "DESC";
+        String field = "created_date";
+        BasePagingData<GetAccomCategoryResponse> response = accomCategoryService.getAllAccomCategoryWithPaging(pageNumber, pageSize,sortType,field);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

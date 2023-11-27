@@ -3,7 +3,6 @@ package com.mascara.oyo_booking_backend.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -101,14 +100,17 @@ public class AccomPlace extends BasePesistence {
     @Column(name = "num_kitchen", nullable = false)
     private Integer numKitchen;
 
-    @Column(name = "num_view")
-    private Integer numView;
+    @Column(name = "num_view", nullable = false, columnDefinition = "bigint default 0")
+    private Long numView;
 
     @Column(name = "grade_rate")
     private Float gradeRate;
 
-    @Column(name = "num_review")
+    @Column(name = "num_review", nullable = false, columnDefinition = "bigint default 0")
     private Long numReview;
+
+    @Column(name = "num_booking", nullable = false, columnDefinition = "bigint default 0")
+    private Long numBooking;
 
     @Column(name = "price_per_night", nullable = false)
     private BigDecimal pricePerNight;

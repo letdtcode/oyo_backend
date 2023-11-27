@@ -1,18 +1,12 @@
 package com.mascara.oyo_booking_backend.dtos.response.accommodation;
 
-import com.mascara.oyo_booking_backend.dtos.response.facility.InfoFacilityResponse;
-import com.mascara.oyo_booking_backend.entities.*;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
-import jakarta.persistence.*;
+import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by: IntelliJ IDEA
@@ -30,17 +24,17 @@ public class GetAccomPlaceResponse {
     private String description;
     private String addressDetail;
     private Long userId;
-    private Long accomCateId;
+    private String accomCateName;
     private String addressGeneral;
     private List<String> imageAccomsUrls;
     private Float acreage;
     private Integer numPeople;
     private Integer numBathRoom;
-    private Integer numBed;
     private Integer numBedRoom;
     private Integer numView;
     private Float gradeRate;
     private Long numReview;
     private BigDecimal pricePerNight;
-    private List<InfoFacilityResponse> infoFacilityResponseList;
+    private List<GetFacilityCategoryResponse> facilityCategoryList;
+    private String status;
 }

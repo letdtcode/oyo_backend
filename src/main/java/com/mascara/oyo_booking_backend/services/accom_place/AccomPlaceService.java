@@ -24,13 +24,16 @@ public interface AccomPlaceService {
     BaseMessageData addImageAccomPlace(List<MultipartFile> files, Long id);
 
     @Transactional
-    BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize);
+    BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
-    BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum);
+    BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
     GetAccomPlaceResponse getAccomPlaceDetails(Long id);
+
+    @Transactional
+    BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
     BaseMessageData changeStatusAccomPlace(Long id, String status);

@@ -16,6 +16,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +66,12 @@ public class PublicAccomPlaceController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/filter")
     public ResponseEntity<?> getAllAccomCategoryInfo(@ParameterObject @Valid GetAccomPlaceFilterRequest filter,
-                                                     @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
-        BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getAccomPlaceFilterWithPaging(filter, pageNum);
-        return ResponseEntity.ok(new BaseResponse<>(true,200,response));
+                                                     @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
+                                                     @RequestParam(value = "pageNum", defaultValue = "0") Integer pageSize) {
+        String sortType = "DESC";
+        String field = "created_date";
+        BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getAccomPlaceFilterWithPaging(filter, pageNum, pageSize, sortType, field);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @Operation(summary = "Info Detail Accom Place", description = "Public Api detail of accom place")
@@ -88,6 +93,26 @@ public class PublicAccomPlaceController {
     @GetMapping("/reviews/{id}")
     public ResponseEntity<?> getReviewsAccomPlaceDetails(@PathVariable("id") Long id) {
         List<GetReviewResponse> response = reviewService.getReviewListOfAccomPlace(id);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Info top accom place by views", description = "Public Api get info top accom place by views")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/top")
+    public ResponseEntity<?> getTopAccomPlaceByViews(@RequestParam("pageNumber")
+                                                     @NotNull(message = "Page number must not be null")
+                                                     @Min(value = 0, message = "Page number must greater or equal 0")
+                                                     Integer pageNumber,
+                                                     @RequestParam("pageSize")
+                                                     @NotNull(message = "Page size must not be null")
+                                                     @Min(value = 1, message = "Page size must greater or equal 1")
+                                                     Integer pageSize) {
+        String sortType = "DESC";
+        String fieldSort = "num_view";
+        BasePagingData response = accomPlaceService.getTopAccomPlaceByField(pageNumber, pageSize, sortType, fieldSort);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

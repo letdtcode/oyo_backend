@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface FacilityCategoryService {
     @Transactional
-    BasePagingData<GetFacilityCategoryResponse> getAllFacilityCategoryWithPaging(Integer pageNum, Integer pageSize);
+    BasePagingData<GetFacilityCategoryResponse> getAllFacilityCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
     List<GetFacilityCategoryResponse> getAllDataFacility();

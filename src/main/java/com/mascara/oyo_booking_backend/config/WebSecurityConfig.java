@@ -89,6 +89,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/verify/**").permitAll()
                                 .requestMatchers("/api/v1/public/**").permitAll()
+                                .requestMatchers("/api/v1/client/**").permitAll()
                                 .requestMatchers("/api/v1/partner/**").permitAll()
                                 .requestMatchers("/api/v1/cms/**").permitAll()
                                 .requestMatchers("/api/v1/test/**").permitAll()
