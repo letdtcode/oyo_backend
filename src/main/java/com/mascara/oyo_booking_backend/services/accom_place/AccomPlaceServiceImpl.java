@@ -137,6 +137,10 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                     .typeBed(typeBedDefault)
                     .typeBedCode(typeBedDefault.getTypeBedCode())
                     .build();
+            if (authentication == null) {
+                bedRoom.setCreatedBy("dev");
+                bedRoom.setLastModifiedBy("dev");
+            }
             bedRooms.add(bedRoom);
         }
         bedRoomRepository.saveAll(bedRooms);

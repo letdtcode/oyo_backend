@@ -65,9 +65,9 @@ public class PublicAccomPlaceController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/filters")
-    public ResponseEntity<?> getAllAccomCategoryInfo(@ParameterObject @Valid GetAccomPlaceFilterRequest filter,
+    public ResponseEntity<?> getAccomPlaceFilterWithPaging(@ParameterObject @Valid GetAccomPlaceFilterRequest filter,
                                                      @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
-                                                     @RequestParam(value = "pageNum", defaultValue = "0") Integer pageSize) {
+                                                     @RequestParam(value = "pageSize", defaultValue = "0") Integer pageSize) {
         String sortType = "DESC";
         String field = "created_date";
         BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getAccomPlaceFilterWithPaging(filter, pageNum, pageSize, sortType, field);
