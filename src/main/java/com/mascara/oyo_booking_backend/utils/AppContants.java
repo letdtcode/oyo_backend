@@ -18,6 +18,8 @@ public class AppContants {
     public static final String NEW_PASSWORD_NOT_MATCH_PATTERN = "New password not match pattern";
     public static final String FILE_IS_NULL = "File is null";
 
+    public static final String BOOKING_SUCESSFUL = "Booking successful";
+
     public static final String FIELD_EXIST_WHEN_ADD_ENTITY(String entity, String field) {
         return "Can not add " + entity + " because " + field + " is exist";
     }

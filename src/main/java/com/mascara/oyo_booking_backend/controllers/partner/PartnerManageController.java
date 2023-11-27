@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Tag(name = "Partner Manage", description = "Partner Manage APIs")
 @RestController
-@RequestMapping("/api/v1/partner")
+@RequestMapping("/api/v1/partner/accoms")
 @RequiredArgsConstructor
 public class PartnerManageController {
 
@@ -42,7 +42,7 @@ public class PartnerManageController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/add-accom-place")
+    @PostMapping("/create")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> addAccomPlace(@RequestBody @Valid AddAccomPlaceRequest addAccomPlaceRequest) {
         GetAccomPlaceResponse response = accomPlaceService.addAccomPlace(addAccomPlaceRequest);
@@ -54,10 +54,10 @@ public class PartnerManageController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/add-images-accom")
+    @PostMapping("/{id}/images/create")
     @PreAuthorize("hasRole('PARTNER')")
-    public ResponseEntity<?> addImageAccomPlace(@RequestParam("files") List<MultipartFile> files, @RequestParam("id") Long id) {
-        BaseMessageData response = accomPlaceService.addImageAccomPlace(files, id);
+    public ResponseEntity<?> addImageAccomPlace(@RequestParam("files") List<MultipartFile> files, @PathVariable("id") Long id) {
+        GetAccomPlaceResponse response = accomPlaceService.addImageAccomPlace(files, id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

@@ -34,14 +34,14 @@ public class CmsFacilityCategoryController {
     @Autowired
     private FacilityCategoryService facilityCategoryService;
 
-    @PostMapping("")
+    @PostMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addFacilityCategory(@RequestBody @Valid AddFacilityCategoryRequest request) {
         BaseMessageData response = facilityCategoryService.addFacilityCategory(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateFacilityCategory(@RequestBody @Valid UpdateFacilityCategoryRequest request,
                                                     @PathVariable("id") @NotNull Long id) {
@@ -49,15 +49,15 @@ public class CmsFacilityCategoryController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{id}/{status}")
+    @PutMapping("/{id}/change-status")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusFacilityCategory(@PathVariable("id") @NotNull Long id,
-                                                          @PathVariable("status") @NotBlank @Status String status) {
+                                                          @RequestParam("status") @NotBlank @Status String status) {
         BaseMessageData messageReponse = facilityCategoryService.changeStatusFacilityCategory(id, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteFacilityCategory(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = facilityCategoryService.deletedFacilityCategory(id);

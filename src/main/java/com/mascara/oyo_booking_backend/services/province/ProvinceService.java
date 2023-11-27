@@ -3,7 +3,9 @@ package com.mascara.oyo_booking_backend.services.province;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.province.AddProvinceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.province.UpdateProvinceRequest;
+import com.mascara.oyo_booking_backend.dtos.response.location.GetProvinceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.location.UpdateProvinceResponse;
+import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.Province;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,4 +29,10 @@ public interface ProvinceService {
 
     @Transactional
     BaseMessageData deleteProvince(String provinceName);
+
+    @Transactional
+    BasePagingData<GetProvinceResponse> getTopProvinceByField(Integer pageNum,
+                                                              Integer pageSize,
+                                                              String sortType,
+                                                              String field);
 }

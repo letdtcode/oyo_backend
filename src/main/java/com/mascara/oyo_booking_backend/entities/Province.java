@@ -36,6 +36,9 @@ public class Province extends BasePesistence {
     @Column(name = "slugs", columnDefinition = "varchar (255)", unique = true)
     private String slugs;
 
+    @Column(name = "num_booking", nullable = false, columnDefinition = "bigint default 0")
+    private Long numBooking;
+
     //    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "province")
     @Fetch(FetchMode.SUBSELECT)

@@ -32,7 +32,7 @@ public class CmsAccomPlaceController {
     @Autowired
     private AccomPlaceService accomPlaceService;
 
-    @GetMapping("")
+    @GetMapping("/pages")
     public ResponseEntity<?> getAllAcommPlaceWithPaging(@RequestParam("pageNumber")
                                                         @NotNull(message = "Page number must not be null")
                                                         @Min(value = 0, message = "Page number must greater or equal 0")
@@ -47,14 +47,14 @@ public class CmsAccomPlaceController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{id}/{status}")
+    @PutMapping("/{id}/change-status")
     public ResponseEntity<?> changeStatusAccomPlace(@PathVariable("id") @NotNull Long id,
-                                                    @PathVariable("status") @NotBlank @Status String status) {
+                                                    @RequestParam("status") @NotBlank @Status String status) {
         BaseMessageData messageReponse = accomPlaceService.changeStatusAccomPlace(id, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<?> deleteAccomPlace(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = accomPlaceService.deleteAccomPlace(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));

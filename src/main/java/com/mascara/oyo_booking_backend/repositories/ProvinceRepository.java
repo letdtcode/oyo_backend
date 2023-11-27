@@ -1,6 +1,9 @@
 package com.mascara.oyo_booking_backend.repositories;
 
+import com.mascara.oyo_booking_backend.entities.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.Province;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,4 +33,9 @@ public interface ProvinceRepository extends JpaRepository<Province, Long> {
 
     @Query(value = "select p.* from province p where p.province_code = :provincecode and p.deleted is false", nativeQuery = true)
     Optional<Province> findByProvinceCode(@Param("provincecode") String provinceCode);
+
+    @Query(value = "select p.* from province p where p.deleted = false",
+            countQuery = "select count(id) from province p where p.deleted = false",
+            nativeQuery = true)
+    Page<Province> getAllWithPaging(Pageable pageable);
 }

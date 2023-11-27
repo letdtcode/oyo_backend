@@ -60,11 +60,14 @@ public class AccomPlaceMapper {
     //    Covert Image Accom
     private final Converter<Set<ImageAccom>, List<String>> imageAccomToImageAccomUrl = context -> {
         Set<ImageAccom> imageAccomSet = context.getSource();
-        List<String> imageAccomUrl = new ArrayList();
-        for (ImageAccom imgAccom : imageAccomSet) {
-            imageAccomUrl.add(imgAccom.getImgAccomLink());
+        if (imageAccomSet != null) {
+            List<String> imageAccomUrl = new ArrayList();
+            for (ImageAccom imgAccom : imageAccomSet) {
+                imageAccomUrl.add(imgAccom.getImgAccomLink());
+            }
+            return imageAccomUrl;
         }
-        return imageAccomSet != null ? imageAccomUrl : null;
+        return null;
     };
 
     //    Convert accom category
@@ -132,7 +135,7 @@ public class AccomPlaceMapper {
 
     }
 
-    public GetAccomPlaceResponse toDTO(AccomPlace accomPlace) {
+    public GetAccomPlaceResponse toGetAccomPlaceResponse(AccomPlace accomPlace) {
         GetAccomPlaceResponse accomPlaceResponse;
         accomPlaceResponse = mapper.map(accomPlace, GetAccomPlaceResponse.class);
         return accomPlaceResponse;

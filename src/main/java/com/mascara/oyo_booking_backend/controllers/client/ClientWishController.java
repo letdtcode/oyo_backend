@@ -14,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -41,8 +38,8 @@ public class ClientWishController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @GetMapping("/accom/{id}")
-    public ResponseEntity<?> checkAccomPlaceIsWishOfUser(@PathVariable("id") @NotNull Long id) {
+    @PostMapping("/check-accom-user")
+    public ResponseEntity<?> checkAccomPlaceIsWishOfUser(@RequestParam("accomId") @NotNull Long id) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
         BaseMessageData response = wishService.checkAccomPlaceIsWishOfUser(id, userMail);

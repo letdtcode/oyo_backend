@@ -22,5 +22,6 @@ public class ProvinceResponse {
     private String thumbnail;
     private String provinceCode;
     private String divisionType;
+    private String slugs;
     private List<DistrictResponse> districtResponseList;
 }

@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Tag(name = "Public Facility", description = "Public Facility APIs")
 @RestController
-@RequestMapping("/api/v1/public/facility")
+@RequestMapping("/api/v1/public/facilities")
 @RequiredArgsConstructor
 public class PublicFacilityController {
     @Autowired

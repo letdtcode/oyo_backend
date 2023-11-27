@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Tag(name = "Public Check Mail", description = "Authentication APIs")
 @RestController
-@RequestMapping("/api/v1/public/user")
+@RequestMapping("/api/v1/public/users")
 @RequiredArgsConstructor
 public class PublicCheckMailController {
 
@@ -40,7 +40,7 @@ public class PublicCheckMailController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/checkmail")
+    @PostMapping("/check-mail")
     public ResponseEntity<?> checkMailExist(@Valid @RequestBody CheckMailRequest checkMailRequest) {
         if (userRepository.existsByMail(checkMailRequest.getEmail())) {
             return ResponseEntity.status(HttpStatus.FOUND).body(new BaseResponse(true, 302, "User exist !"));

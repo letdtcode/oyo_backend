@@ -33,14 +33,14 @@ public class CmsFacilityController {
     @Autowired
     private FacilityService facilityService;
 
-    @PostMapping("")
+    @PostMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addFacility(@RequestBody @Valid AddFacilityRequest request) {
         BaseMessageData response = facilityService.addFacility(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateFacility(@RequestBody @Valid UpdateFacilityRequest request,
                                             @PathVariable("id") @NotNull Long id) {
@@ -48,15 +48,15 @@ public class CmsFacilityController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{id}/{status}")
+    @PutMapping("/{id}/change-status")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusFacility(@PathVariable("id") @NotNull Long id,
-                                                  @PathVariable("status") @NotBlank @Status String status) {
+                                                  @RequestParam("status") @NotBlank @Status String status) {
         BaseMessageData messageReponse = facilityService.changeStatusFacility(id, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteFacility(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = facilityService.deletedFacility(id);

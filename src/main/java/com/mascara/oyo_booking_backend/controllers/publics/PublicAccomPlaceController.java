@@ -35,7 +35,7 @@ import java.util.List;
  */
 @Tag(name = "Public AccomPlace Category Data", description = "Get Data Accom Category with Info")
 @RestController
-@RequestMapping("/api/v1/public/accom")
+@RequestMapping("/api/v1/public/accoms")
 @RequiredArgsConstructor
 public class PublicAccomPlaceController {
 
@@ -64,7 +64,7 @@ public class PublicAccomPlaceController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @GetMapping("/filter")
+    @GetMapping("/filters")
     public ResponseEntity<?> getAllAccomCategoryInfo(@ParameterObject @Valid GetAccomPlaceFilterRequest filter,
                                                      @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
                                                      @RequestParam(value = "pageNum", defaultValue = "0") Integer pageSize) {
@@ -79,7 +79,7 @@ public class PublicAccomPlaceController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @GetMapping("/detail/{id}")
+    @GetMapping("/{id}/detail")
     public ResponseEntity<?> getInfoAccomPlaceDetails(@PathVariable("id") Long id) {
         GetAccomPlaceResponse response = accomPlaceService.getAccomPlaceDetails(id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
@@ -90,7 +90,7 @@ public class PublicAccomPlaceController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @GetMapping("/reviews/{id}")
+    @GetMapping("/{id}/reviews")
     public ResponseEntity<?> getReviewsAccomPlaceDetails(@PathVariable("id") Long id) {
         List<GetReviewResponse> response = reviewService.getReviewListOfAccomPlace(id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));

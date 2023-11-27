@@ -159,6 +159,7 @@ public class InitDataService implements CommandLineRunner {
                 for (Province province : initModel.getData()) {
                     province.setSlugs(SlugsUtils.toSlug(province.getProvinceName()));
                     province.setCreatedBy("dev");
+                    province.setNumBooking(0L);
                     province.setLastModifiedBy("dev");
                 }
                 provinceRepository.saveAll(initModel.getData());
@@ -286,6 +287,7 @@ public class InitDataService implements CommandLineRunner {
                 });
                 List<TypeBed> typeBedList = initModel.getData();
                 for (TypeBed typeBed : typeBedList) {
+                    typeBed.setStatus(CommonStatusEnum.ENABLE);
                     typeBed.setCreatedBy("dev");
                     typeBed.setLastModifiedBy("dev");
                 }

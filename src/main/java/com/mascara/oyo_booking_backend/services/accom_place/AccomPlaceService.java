@@ -21,7 +21,7 @@ public interface AccomPlaceService {
     @Transactional
     GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request);
 
-    BaseMessageData addImageAccomPlace(List<MultipartFile> files, Long id);
+    GetAccomPlaceResponse addImageAccomPlace(List<MultipartFile> files, Long id);
 
     @Transactional
     BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
