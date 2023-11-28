@@ -131,12 +131,12 @@ public class PublicAccomPlaceController {
                     content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "410",
                     content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")})})
-    @PostMapping("/check")
+    @PostMapping("/check-booking")
     public ResponseEntity<?> checkBooking(@RequestBody @Valid CheckBookingRequest request) {
         boolean isBookingReady = bookingService.checkBookingReady(request);
         BaseMessageData<Boolean> response = new BaseMessageData<>(isBookingReady);
         if (!isBookingReady) {
-            return ResponseEntity.ok(new BaseResponse<>(true, 410, response));
+            return ResponseEntity.status(410).body(new BaseResponse<>(true, 410, response));
         }
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }

@@ -2,7 +2,6 @@ package com.mascara.oyo_booking_backend.controllers.client;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
-import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
@@ -60,6 +59,4 @@ public class ClientBookingController {
             return ResponseEntity.status(411).body(new BaseResponse<>(true, 410, response));
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
-
-
 }
