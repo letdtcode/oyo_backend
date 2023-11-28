@@ -2,6 +2,8 @@ package com.mascara.oyo_booking_backend.entities;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
+import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,37 +31,40 @@ public class Booking extends BasePesistence {
     @Column(name = "date_check_out", nullable = false)
     private LocalDate checkOut;
 
-    @Column(name = "mail_customer", nullable = false)
-    private String mailCustomer;
+    @Column(name = "name_customer", nullable = false)
+    private String nameCustomer;
 
-    @Column(name = "origin_pay")
+    @Column(name = "phone_number_customer", nullable = false)
+    private String phoneNumberCustomer;
+
+    @Column(name = "origin_pay", nullable = false)
     private BigDecimal originPay;
 
-    @Column(name = "surcharge")
+    @Column(name = "surcharge", nullable = false)
     private BigDecimal surcharge;
 
-    @Column(name = "total_bill")
+    @Column(name = "total_bill", nullable = false)
     private BigDecimal totalBill;
 
-    @Column(name = "total_transfer")
+    @Column(name = "total_transfer", nullable = false)
     private BigDecimal totalTransfer;
 
-    @Column(name = "payment_method")
-    private Integer paymentMethod;
+    @Column(name = "payment_policy", nullable = false)
+    private PaymentPolicyEnum paymentPolicy;
 
-    @Column(name = "payment_by")
-    private Integer paymentBy;
+    @Column(name = "payment_method", nullable = false)
+    private PaymentMethodEnum paymentMethod;
 
-    @Column(name = "num_adult")
+    @Column(name = "num_adult", nullable = false)
     private Integer numAdult;
 
-    @Column(name = "num_child")
+    @Column(name = "num_child", nullable = false)
     private Integer numChild;
 
-    @Column(name = "num_born_child")
+    @Column(name = "num_born_child", nullable = false)
     private Integer numBornChild;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private BookingStatusEnum bookingStatusEnum;
 
@@ -74,7 +79,7 @@ public class Booking extends BasePesistence {
     )
     private AccomPlace accomPlace;
 
-    @Column(name = "accom_id")
+    @Column(name = "accom_id", nullable = false)
     private Long accomId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -88,7 +93,7 @@ public class Booking extends BasePesistence {
     )
     private BookingList bookingList;
 
-    @Column(name = "booking_list_id")
+    @Column(name = "booking_list_id",nullable = false)
     private Long bookListId;
 
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

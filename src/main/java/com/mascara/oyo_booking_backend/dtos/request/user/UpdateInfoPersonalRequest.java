@@ -1,6 +1,8 @@
 package com.mascara.oyo_booking_backend.dtos.request.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,9 @@ public class UpdateInfoPersonalRequest {
     private String firstName;
     private String lastName;
     private Integer gender;
+
+    @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
     private String address;
     private String phone;

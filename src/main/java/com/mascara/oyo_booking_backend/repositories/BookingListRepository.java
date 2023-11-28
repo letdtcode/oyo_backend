@@ -20,4 +20,7 @@ public interface BookingListRepository extends JpaRepository<BookingList, Long> 
 
     @Query(value = "select bl.* from booking_list bl where bl.user_id = :userId and bl.deleted = false",nativeQuery = true)
     Optional<BookingList> findByUserId(@Param("userId") Long id);
+
+    @Query(value = "select bl.* from booking_list bl inner join users u on bl.user_id = u.id where u.mail = :user_mail and u.status = 'ENABLE' and u.deleted is false and bl.deleted is false",nativeQuery = true)
+    Optional<BookingList> findByUserMail(@Param("user_mail") String user_mail);
 }

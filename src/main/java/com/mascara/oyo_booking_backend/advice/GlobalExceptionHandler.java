@@ -6,6 +6,7 @@ import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -48,8 +49,8 @@ public class GlobalExceptionHandler {
                 .body(body);
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex) {
+    @ExceptionHandler({ConstraintViolationException.class, HttpMessageNotReadableException.class})
+    public ResponseEntity<Object> handleConstraintViolationException(Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", System.currentTimeMillis());
         body.put("status", HttpStatus.BAD_REQUEST.value());

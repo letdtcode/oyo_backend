@@ -1,7 +1,9 @@
 package com.mascara.oyo_booking_backend.dtos.response.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -24,6 +26,8 @@ public class InfoUserResponse {
     private String firstName;
     private String lastName;
     private Integer gender;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
     private String mail;
     private String address;

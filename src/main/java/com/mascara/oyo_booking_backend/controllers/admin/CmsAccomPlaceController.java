@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class CmsAccomPlaceController {
     private AccomPlaceService accomPlaceService;
 
     @GetMapping("/pages")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllAcommPlaceWithPaging(@RequestParam("pageNumber")
                                                         @NotNull(message = "Page number must not be null")
                                                         @Min(value = 0, message = "Page number must greater or equal 0")
@@ -48,6 +50,7 @@ public class CmsAccomPlaceController {
     }
 
     @PutMapping("/{id}/change-status")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusAccomPlace(@PathVariable("id") @NotNull Long id,
                                                     @RequestParam("status") @NotBlank @Status String status) {
         BaseMessageData messageReponse = accomPlaceService.changeStatusAccomPlace(id, status);
@@ -55,6 +58,7 @@ public class CmsAccomPlaceController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAccomPlace(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = accomPlaceService.deleteAccomPlace(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));

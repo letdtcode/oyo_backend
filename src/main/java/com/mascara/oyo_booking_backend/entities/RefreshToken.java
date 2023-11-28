@@ -32,7 +32,7 @@ public class RefreshToken extends BasePesistence {
 
 
     @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "refresh_count")

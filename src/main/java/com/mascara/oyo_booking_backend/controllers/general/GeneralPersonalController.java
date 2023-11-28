@@ -18,6 +18,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +44,7 @@ public class GeneralPersonalController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/update-info")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
     public ResponseEntity<?> updateInfoPersonal(@Valid @RequestBody UpdateInfoPersonalRequest updateInfoPersonalRequest, @Email @RequestParam("mail") String email) {
         return ResponseEntity.ok(userService.updateInfoPersonal(updateInfoPersonalRequest, email));
     }
@@ -53,6 +55,7 @@ public class GeneralPersonalController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/change-password")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
         BaseMessageData response = userService.changePassword(changePasswordRequest);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
@@ -64,6 +67,7 @@ public class GeneralPersonalController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/update_avatar")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
     public ResponseEntity<?> updateAvatar(@RequestParam("file") MultipartFile file, @NotBlank @Email @RequestParam("mail") String mail) {
         InfoUserResponse response = userService.updateAvatar(file, mail);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
