@@ -34,6 +34,7 @@ public class GetAccomPlaceResponse {
     private Integer numView;
     private Float gradeRate;
     private Long numReview;
+    private List<String> bedRooms;
     private BigDecimal pricePerNight;
     private List<GetFacilityCategoryResponse> facilityCategoryList;
     private String status;

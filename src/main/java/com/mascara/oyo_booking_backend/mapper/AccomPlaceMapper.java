@@ -5,10 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategor
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.repositories.AccomPlaceRepository;
-import com.mascara.oyo_booking_backend.repositories.DistrictRepository;
-import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
-import com.mascara.oyo_booking_backend.repositories.ProvinceRepository;
+import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.Converter;
@@ -44,6 +41,9 @@ public class AccomPlaceMapper {
 
     @Autowired
     private FacilityCategoriesRepository facilityCategoriesRepository;
+
+    @Autowired
+    private TypeBedRepository typeBedRepository;
 
     //    Covert Address General
     private final Converter<Long, String> idAccomPlaceToAddressGeneral = context -> {
@@ -117,6 +117,21 @@ public class AccomPlaceMapper {
         return null;
     };
 
+    //    Covert bed rooms
+    private final Converter<Set<BedRoom>, List<String>> setBedRoomToNameTypeBed = context -> {
+        Set<BedRoom> bedRoomSet = context.getSource();
+        if (bedRoomSet != null) {
+            List<String> bedNameList = new ArrayList<>();
+            for (BedRoom bedRoom : bedRoomSet) {
+                String typeBedCode = bedRoom.getTypeBedCode();
+                String bedName = typeBedRepository.findByTypeBedCode(typeBedCode).get().getTypeBedName();
+                bedNameList.add(bedName);
+            }
+            return bedNameList;
+        }
+        return null;
+    };
+
     @PostConstruct
     public void init() {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -131,8 +146,9 @@ public class AccomPlaceMapper {
                         .map(AccomPlace::getFacilitySet, GetAccomPlaceResponse::setFacilityCategoryList))
 
                 .addMappings(mapper -> mapper.using(accomCategoryToAccomCategoryName)
-                        .map(AccomPlace::getAccommodationCategories, GetAccomPlaceResponse::setAccomCateName));
-
+                        .map(AccomPlace::getAccommodationCategories, GetAccomPlaceResponse::setAccomCateName))
+                .addMappings(mapper -> mapper.using(setBedRoomToNameTypeBed)
+                        .map(AccomPlace::getBedRoomSet, GetAccomPlaceResponse::setBedRooms));
     }
 
     public GetAccomPlaceResponse toGetAccomPlaceResponse(AccomPlace accomPlace) {

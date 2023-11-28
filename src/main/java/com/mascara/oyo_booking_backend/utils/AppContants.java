@@ -20,9 +20,11 @@ public class AppContants {
 
     public static final String BOOKING_SUCESSFUL = "Booking successful";
 
-    public static final String BOOKING_NOT_AVAILABLE(Long accomId, String dateCheckIn, String dateCheckOut) {
+    public static final String BOOKING_NOT_AVAILABLE_TIME(Long accomId, String dateCheckIn, String dateCheckOut) {
         return "Booking not available for accom " + accomId + "from " + dateCheckIn + " to " + dateCheckOut;
     }
+
+    public static final String BOOKING_NOT_AVAILABLE_PEOPLE = "Num people over range of accom place";
 
     public static final String FIELD_EXIST_WHEN_ADD_ENTITY(String entity, String field) {
         return "Can not add " + entity + " because " + field + " is exist";

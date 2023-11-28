@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.services.booking;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
+import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.entities.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.Booking;
 import com.mascara.oyo_booking_backend.entities.BookingList;
@@ -57,11 +58,16 @@ public class BookingServiceImpl implements BookingService {
         boolean isAvailable = checkAvailableAccom(accomPlace.getId(), request.getCheckIn(), request.getCheckOut());
 
         if (!isAvailable) {
-            return new BaseMessageData(AppContants.BOOKING_NOT_AVAILABLE(
+            return new BaseMessageData(AppContants.BOOKING_NOT_AVAILABLE_TIME(
                     request.getAccomId(),
                     request.getCheckIn().toString(),
                     request.getCheckOut().toString()));
         }
+        int maxPeople = accomPlace.getNumPeople();
+        if (request.getNumAdult() > maxPeople) {
+            return new BaseMessageData(AppContants.BOOKING_NOT_AVAILABLE_PEOPLE);
+        }
+
         accomPlace.setNumBooking(accomPlace.getNumBooking() + 1L);
         Province province = provinceRepository.findByProvinceCode(accomPlace.getProvinceCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
@@ -90,5 +96,18 @@ public class BookingServiceImpl implements BookingService {
     public boolean checkAvailableAccom(Long accomId, LocalDate checkIn, LocalDate checkOut) {
         boolean isAvailable = bookingRepository.checkBookingAvailable(accomId, checkIn, checkOut);
         return isAvailable;
+    }
+
+    @Override
+    @Transactional
+    public boolean checkBookingReady(CheckBookingRequest request) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        int maxPeople = accomPlace.getNumPeople();
+        boolean accomAvailable = checkAvailableAccom(request.getAccomId(), request.getCheckIn(), request.getCheckOut());
+        if (!accomAvailable || request.getNumAdult() > maxPeople) {
+            return false;
+        }
+        return true;
     }
 }

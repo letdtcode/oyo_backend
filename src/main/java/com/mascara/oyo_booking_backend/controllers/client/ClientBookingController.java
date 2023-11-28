@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.controllers.client;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
+import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
@@ -50,11 +51,15 @@ public class ClientBookingController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
         BaseMessageData response = bookingService.createOrderBookingAccom(request, userMail);
-        if (response.getMessage().equals(AppContants.BOOKING_NOT_AVAILABLE(
+        if (response.getMessage().equals(AppContants.BOOKING_NOT_AVAILABLE_TIME(
                 request.getAccomId(),
                 request.getCheckIn().toString(),
                 request.getCheckOut().toString())))
             return ResponseEntity.status(410).body(new BaseResponse<>(true, 410, response));
+        if (response.getMessage().equals(AppContants.BOOKING_NOT_AVAILABLE_PEOPLE))
+            return ResponseEntity.status(411).body(new BaseResponse<>(true, 410, response));
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
+
+
 }

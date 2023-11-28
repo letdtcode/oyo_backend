@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.services.booking;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
+import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -14,4 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface BookingService {
     @Transactional
     BaseMessageData createOrderBookingAccom(BookingRequest request,String userMail);
+
+    @Transactional
+    boolean checkBookingReady(CheckBookingRequest request);
 }
