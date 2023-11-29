@@ -31,7 +31,7 @@ public interface UserService {
     @Transactional
     InfoUserResponse updateAvatar(MultipartFile file, String mail);
 
-    BaseMessageData changePassword(ChangePasswordRequest request);
+    BaseMessageData changePassword(ChangePasswordRequest request, String mailUser);
 
     BasePagingData<InfoUserResponse> getAllUserWithPaging(Integer pageNumber, Integer pageSize, String sortType, String field);
 
