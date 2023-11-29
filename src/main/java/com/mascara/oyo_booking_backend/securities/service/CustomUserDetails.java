@@ -51,7 +51,6 @@ public class CustomUserDetails implements UserDetails {
         List<GrantedAuthority> authorities = user.getRoleSet().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
                 .collect(Collectors.toList());
-        log.error(authorities.toString());
         return new CustomUserDetails(
                 user.getId(),
                 user.getUserName(),

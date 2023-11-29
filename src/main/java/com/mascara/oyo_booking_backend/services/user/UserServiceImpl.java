@@ -153,17 +153,24 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public TokenRefreshResponse refreshJwtToken(TokenRefreshRequest tokenRefreshRequest) {
-        String refreshToken = tokenRefreshRequest.getTokenRefresh();
+        String refreshToken = tokenRefreshRequest.getRefreshToken();
+        if (jwtUtils.isTokenExpired(refreshToken))
+            throw new TokenRefreshException("Refresh token is expired");
         RefreshToken token = refreshTokenRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("refresh token")));
-        if (jwtUtils.validateJwtToken(refreshToken)) {
-            User user = userRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new ResourceNotFoundException(AppContants.USER_NOT_FOUND_WITH_REFRESH_TOKEN + refreshToken));
-            token.incrementRefreshCount();
-            refreshTokenRepository.save(token);
-            String accessTokenNew = jwtUtils.generateAccessJwtToken(user.getMail());
-            return new TokenRefreshResponse(accessTokenNew);
-        }
-        throw new TokenRefreshException(refreshToken, "Missing refresh token in database. Please login again");
+        String emailUser = jwtUtils.getUsernameFromToken(refreshToken);
+        token.incrementRefreshCount();
+        refreshTokenRepository.save(token);
+
+        User user = userRepository.findByMail(emailUser)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+        Set<Role> rolesOfUser = user.getRoleSet();
+        Set<String> rolesName = rolesOfUser.stream().map(role -> role.getRoleName().toString())
+                .collect(Collectors.toSet());
+
+        String accessTokenNew = jwtUtils.generateAccessJwtToken(emailUser, rolesName);
+        return new TokenRefreshResponse(accessTokenNew);
+
     }
 
     @Override
