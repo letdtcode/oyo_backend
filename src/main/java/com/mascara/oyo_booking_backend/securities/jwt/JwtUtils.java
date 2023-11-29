@@ -34,7 +34,7 @@ public class JwtUtils {
     @Value("${jwt.secret}")
     private String secret;
     private final long JWT_EXPIRATION = 1 * 60 * 1000;
-    private final long REFRESH_JWT_EXPIRATION = 3 * 60 * 1000;
+    private final long REFRESH_JWT_EXPIRATION = 10 * 60 * 1000;
 
     public String generateAccessJwtToken(String email, Set<String> roles) {
         Map<String, Object> claims = new HashMap<>();

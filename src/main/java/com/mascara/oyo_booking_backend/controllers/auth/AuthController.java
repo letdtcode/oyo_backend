@@ -14,7 +14,6 @@ import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
-import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
 import com.mascara.oyo_booking_backend.securities.service.CustomUserDetails;
@@ -88,9 +87,6 @@ public class AuthController {
 
     @Value("${avatar.default}")
     private String avatar_default;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Operation(summary = "Sign in", description = "Api for Sign in")
     @ApiResponses({
