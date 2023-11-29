@@ -30,12 +30,21 @@ public class RefreshToken extends BasePesistence {
     @NaturalId(mutable = true)
     private String refreshToken;
 
-
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "user_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_refresh_token_user"),
+            nullable = false,
+            insertable = false,
+            updatable = false
+    )
     private User user;
 
-    @Column(name = "refresh_count")
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @Column(name = "refresh_count", nullable = false, columnDefinition = "bigint default 0")
     private Long refreshCount;
 
     @Column(name = "expired_date", nullable = false, columnDefinition = "TIMESTAMP")

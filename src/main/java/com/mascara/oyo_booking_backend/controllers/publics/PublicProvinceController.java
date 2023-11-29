@@ -33,7 +33,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/public/provinces")
 @RequiredArgsConstructor
-public class PublicInfoController {
+public class PublicProvinceController {
 
     @Autowired
     private ProvinceService provinceService;

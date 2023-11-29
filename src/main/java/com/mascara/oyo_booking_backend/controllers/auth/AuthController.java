@@ -9,6 +9,7 @@ import com.mascara.oyo_booking_backend.dtos.response.auth.LoginResponse;
 import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.RefreshToken;
+import com.mascara.oyo_booking_backend.entities.Role;
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
@@ -45,7 +46,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -55,7 +56,6 @@ import java.util.stream.Collectors;
  * Time      : 4:01 CH
  * Filename  : AuthController
  */
-//@CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "AuthController", description = "Authentication APIs")
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -106,24 +106,21 @@ public class AuthController {
         if (user.getStatus() == UserStatusEnum.PEDING) {
             return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new BaseResponse<>(true, 408, "User is peding"));
         }
-        String accessToken = jwtUtils.generateAccessJwtToken(userMail);
+        Set<Role> rolesOfUser = user.getRoleSet();
+        Set<String> rolesName = rolesOfUser.stream().map(role -> role.getRoleName().toString()).collect(Collectors.toSet());
+        String accessToken = jwtUtils.generateAccessJwtToken(userMail, rolesName);
         String refreshToken = jwtUtils.generateRefreshJwtToken(userMail);
 
-        Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByUserMail(userMail);
-        if (refreshTokenOptional.isPresent()) {
-            refreshTokenOptional.get().setRefreshToken(refreshToken);
-            refreshTokenRepository.save(refreshTokenOptional.get());
-        } else {
-            LocalDateTime expiredToken = jwtUtils.extractExpiration(refreshToken)
-                    .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            RefreshToken refreshOfUser = RefreshToken.builder()
-                    .refreshToken(refreshToken)
-                    .user(user)
-                    .refreshCount(0L)
-                    .expiryDate(expiredToken)
-                    .build();
-            refreshTokenRepository.save(refreshOfUser);
-        }
+        LocalDateTime expiredToken = jwtUtils.getExpirationDateFromToken(refreshToken)
+                .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        RefreshToken refreshTokenUser = RefreshToken.builder()
+                .refreshToken(refreshToken)
+                .user(user)
+                .userId(user.getId())
+                .refreshCount(0L)
+                .expiryDate(expiredToken)
+                .build();
+        refreshTokenRepository.save(refreshTokenUser);
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());

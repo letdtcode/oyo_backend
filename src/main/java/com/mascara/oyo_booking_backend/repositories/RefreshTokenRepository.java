@@ -21,7 +21,7 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
 
     @Query(value = "select * from refresh_token rt where rt.token =:refresh_token and rt.deleted is false",nativeQuery = true)
     Optional<RefreshToken> findByRefreshToken(@Param("refresh_token") String refreshToken);
-
-    @Query(value = "select rt.* from refresh_token rt join users u on rt.user_id = u.id where u.mail =:mail and rt.deleted is false", nativeQuery = true)
-    Optional<RefreshToken> findByUserMail(@Param("mail") String mail);
+//
+//    @Query(value = "select rt.* from refresh_token rt join users u on rt.user_id = u.id where u.mail =:mail and rt.deleted is false", nativeQuery = true)
+//    Optional<RefreshToken> findByUserMail(@Param("mail") String mail);
 }

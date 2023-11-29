@@ -3,6 +3,10 @@ package com.mascara.oyo_booking_backend.advice;
 import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +72,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(body);
     }
+
+    @ExceptionHandler({ExpiredJwtException.class, MalformedJwtException.class, UnsupportedJwtException.class})
+    public ResponseEntity<Object> handleValidationExceptions(JwtException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", System.currentTimeMillis());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("errors", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(body);
+    }
+
 
     @ExceptionHandler(TokenRefreshException.class)
     public ResponseEntity<Object> handleTokenRefreshException(TokenRefreshException ex) {

@@ -51,7 +51,7 @@ public class CmsAccomCategoryController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/pages")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getAllAcommCategoryWithPaging(@RequestParam("pageNumber")
+        public ResponseEntity<?> getAllAcommCategoryWithPaging(@RequestParam("pageNumber")
                                                            @NotNull(message = "Page number must not be null")
                                                            @Min(value = 0, message = "Page number must greater or equal 0")
                                                            Integer pageNumber,

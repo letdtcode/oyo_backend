@@ -46,7 +46,7 @@ public class GeneralPersonalController {
     @PutMapping("/update-info")
     @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
     public ResponseEntity<?> updateInfoPersonal(@Valid @RequestBody UpdateInfoPersonalRequest updateInfoPersonalRequest, @Email @RequestParam("mail") String email) {
-        return ResponseEntity.ok(userService.updateInfoPersonal(updateInfoPersonalRequest, email));
+        return ResponseEntity.ok(new BaseResponse<>(true,200,userService.updateInfoPersonal(updateInfoPersonalRequest, email)));
     }
 
     @Operation(summary = "Change password user", description = "General Api for change password user")

@@ -53,9 +53,9 @@ public class User extends BasePesistence {
     @Column(name = "avatar_url")
     private String avatarUrl;
 
-
-    @OneToOne(optional = true, mappedBy = "user")
-    private RefreshToken refreshToken;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<RefreshToken> refreshTokenSet;
 
 
     @Column(name = "status")
