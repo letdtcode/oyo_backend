@@ -156,7 +156,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = TokenRefreshResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/refreshToken")
+    @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest tokenRefreshRequest) {
         TokenRefreshResponse response = userService.refreshJwtToken(tokenRefreshRequest);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));

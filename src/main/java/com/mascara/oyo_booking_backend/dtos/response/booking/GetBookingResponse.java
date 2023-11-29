@@ -1,12 +1,12 @@
 package com.mascara.oyo_booking_backend.dtos.response.booking;
 
-import com.mascara.oyo_booking_backend.entities.AccomPlace;
-import com.mascara.oyo_booking_backend.entities.BookingList;
 import com.mascara.oyo_booking_backend.entities.Revenue;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
