@@ -1,5 +1,8 @@
 package com.mascara.oyo_booking_backend.dtos.request.user;
 
+import com.mascara.oyo_booking_backend.utils.validation.Password;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +18,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChangePasswordRequest {
+    @NotNull
+    @Email(message = "Invalid email")
     private String email;
+
+    @NotNull
     private String oldPassword;
+
+    @Password(message = "Password must be at least 8 characters long, " +
+            "with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character")
     private String newPassword;
 }

@@ -19,7 +19,6 @@ import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
 import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import com.mascara.oyo_booking_backend.utils.PasswordValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -204,18 +203,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public BaseMessageData changePassword(ChangePasswordRequest request) {
+    public BaseMessageData changePassword(ChangePasswordRequest request, String mailUser) {
+        if (!request.getEmail().equals(mailUser)) {
+            return new BaseMessageData(AppContants.NOT_PERMI_CHANGE_PASSWORD);
+        }
         User user = userRepository.findByMail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String oldPassRequest = request.getOldPassword();
         if (encoder.matches(oldPassRequest, user.getPassword())) {
-            if (PasswordValidator.isValid(request.getNewPassword())) {
-                String newPassEncoded = encoder.encode(request.getNewPassword());
-                user.setPassword(newPassEncoded);
-                userRepository.save(user);
-                return new BaseMessageData(AppContants.CHANGE_PASSWORD_SUCCESS);
-            }
-            return new BaseMessageData(AppContants.NEW_PASSWORD_NOT_MATCH_PATTERN);
+            String newPassEncoded = encoder.encode(request.getNewPassword());
+            user.setPassword(newPassEncoded);
+            userRepository.save(user);
+            return new BaseMessageData(AppContants.CHANGE_PASSWORD_SUCCESS);
         }
         return new BaseMessageData(AppContants.PASSWORD_INCORRECT);
     }

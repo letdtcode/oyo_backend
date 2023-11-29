@@ -1,9 +1,13 @@
 package com.mascara.oyo_booking_backend.dtos.request.auth;
 
+import com.mascara.oyo_booking_backend.utils.validation.Password;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
@@ -31,9 +35,10 @@ public class RegisterRequest {
     @Email
     private String email;
 
+    @NotEmpty
     private Set<String> role;
 
-    @NotBlank
-    @Size(min = 6, max = 40)
+    @Password(message = "Password must be at least 8 characters long, " +
+            "with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character")
     private String password;
 }

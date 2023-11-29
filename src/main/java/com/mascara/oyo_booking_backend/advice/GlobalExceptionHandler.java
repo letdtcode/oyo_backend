@@ -37,9 +37,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleSQLExcuteException(Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(body);
     }
 
@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleValidationExceptions(JwtException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("status", HttpStatus.UNAUTHORIZED.value());
         body.put("errors", ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(body);
@@ -88,19 +88,29 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleTokenRefreshException(TokenRefreshException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.EXPECTATION_FAILED.value());
+        body.put("status", HttpStatus.UNAUTHORIZED.value());
         body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(body);
     }
 
-    @ExceptionHandler({ResourceNotFoundException.class, ResourceExistException.class})
-    public ResponseEntity<Object> handleResourceNotFoundException(RuntimeException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.EXPECTATION_FAILED.value());
+        body.put("status", HttpStatus.NOT_FOUND.value());
         body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(body);
+    }
+
+    @ExceptionHandler(ResourceExistException.class)
+    public ResponseEntity<Object> handleResourceExistWhenCreateException(ResourceExistException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", System.currentTimeMillis());
+        body.put("status", HttpStatus.CONFLICT.value());
+        body.put("errors", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(body);
     }
 }
