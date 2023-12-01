@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.mapper;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
+import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
@@ -48,6 +49,12 @@ public class AccomPlaceMapper {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private SurchargeCategoryRepository surchargeCategoryRepository;
+
+    @Autowired
+    private SurchargeOfAccomRepository surchargeOfAccomRepository;
+
     //    Covert Address General
     private final Converter<Long, String> idAccomPlaceToAddressGeneral = context -> {
         Long id = context.getSource();
@@ -59,6 +66,25 @@ public class AccomPlaceMapper {
         String addressGeneral = district.getDistrictName() + ", " + province.getProvinceName();
         return id != null ? addressGeneral : null;
     };
+
+    private final Converter<Long, List<GetSurchargeOfAccomResponse>> idAccomPlaceToSurchargeList = context -> {
+        Long accomId = context.getSource();
+        if (accomId != null) {
+            List<GetSurchargeOfAccomResponse> surchargeList = new ArrayList<>();
+            List<SurchargeOfAccom> surchargeOfAccomList = surchargeOfAccomRepository.findByAccomPlaceId(accomId);
+            if (surchargeOfAccomList != null && !surchargeOfAccomList.isEmpty()) {
+                for (SurchargeOfAccom surcharge : surchargeOfAccomList) {
+                    String surcharCateName = surchargeCategoryRepository.getSurchargeCateNameById(surcharge.getId());
+                    if (surcharCateName != null) {
+                        surchargeList.add(new GetSurchargeOfAccomResponse(surcharge.getCost(), surcharCateName));
+                    }
+                }
+            }
+            return surchargeList;
+        }
+        return null;
+    };
+
 
     //    Covert Image Accom
     private final Converter<Set<ImageAccom>, List<String>> imageAccomToImageAccomUrl = context -> {

@@ -130,6 +130,10 @@ public class AccomPlace extends BasePesistence {
     @Fetch(FetchMode.SUBSELECT)
     private Set<Booking> bookingSet;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<SurchargeOfAccom> surchargeOfAccomSet;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "facility_accom",

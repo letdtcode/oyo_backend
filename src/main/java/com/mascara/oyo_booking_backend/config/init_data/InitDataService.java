@@ -76,6 +76,9 @@ public class InitDataService implements CommandLineRunner {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SurchargeCategoryRepository surchargeCategoryRepository;
+
     public void initDataUser() {
         Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString());
         if (!roleAdmin.isPresent()) {
@@ -319,6 +322,33 @@ public class InitDataService implements CommandLineRunner {
         }
     }
 
+    public void implementInitDataMenuActionSurcharge() {
+        List<SurchargeCategory> checkList = surchargeCategoryRepository.checkExistData();
+        try {
+            if (checkList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbSurcharge.json")).getFile()
+                );
+
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<SurchargeCategory> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+
+                List<SurchargeCategory> surchargeCategoryList = initModel.getData();
+                for (int i = 0; i < surchargeCategoryList.size(); i++) {
+                    SurchargeCategory surchargeCategory = surchargeCategoryList.get(i);
+                    surchargeCategory.setStatus(CommonStatusEnum.ENABLE);
+                    surchargeCategory.setCreatedBy("dev");
+                    surchargeCategory.setLastModifiedBy("dev");
+                    surchargeCategoryList.set(i, surchargeCategory);
+                }
+                surchargeCategoryRepository.saveAll(surchargeCategoryList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run(String... args) throws Exception {
         initDataUser();
@@ -330,5 +360,6 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionAccomCategory();
         implementInitDataMenuActionTypeBed();
         implementInitDataAccomPlace();
+        implementInitDataMenuActionSurcharge();
     }
 }

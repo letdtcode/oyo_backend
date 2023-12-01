@@ -1,6 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.response.accommodation;
 
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,5 +38,6 @@ public class GetAccomPlaceResponse {
     private List<String> bedRooms;
     private Double pricePerNight;
     private List<GetFacilityCategoryResponse> facilityCategoryList;
+    private List<GetSurchargeOfAccomResponse> surchargeList;
     private String status;
 }
