@@ -77,7 +77,6 @@ public class User extends BasePesistence {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ReviewList reviewList;
 
-
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RevenueList revenueList;
 

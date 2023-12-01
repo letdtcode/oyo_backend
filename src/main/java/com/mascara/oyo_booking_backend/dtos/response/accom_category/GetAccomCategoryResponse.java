@@ -19,4 +19,5 @@ public class GetAccomCategoryResponse {
     private String accomCateName;
     private String description;
     private String icon;
+    private String status;
 }
