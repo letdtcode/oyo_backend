@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -24,6 +23,7 @@ public class GetAccomPlaceResponse {
     private String description;
     private String addressDetail;
     private Long userId;
+    private String nameHost;
     private String accomCateName;
     private String addressGeneral;
     private List<String> imageAccomsUrls;
@@ -35,7 +35,7 @@ public class GetAccomPlaceResponse {
     private Float gradeRate;
     private Long numReview;
     private List<String> bedRooms;
-    private BigDecimal pricePerNight;
+    private Double pricePerNight;
     private List<GetFacilityCategoryResponse> facilityCategoryList;
     private String status;
 }

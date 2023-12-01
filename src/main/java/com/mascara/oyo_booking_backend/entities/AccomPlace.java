@@ -8,7 +8,6 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import java.math.BigDecimal;
 import java.util.Set;
 
 @Builder
@@ -113,7 +112,7 @@ public class AccomPlace extends BasePesistence {
     private Long numBooking;
 
     @Column(name = "price_per_night", nullable = false)
-    private BigDecimal pricePerNight;
+    private Double pricePerNight;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

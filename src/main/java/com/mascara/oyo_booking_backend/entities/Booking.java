@@ -7,7 +7,6 @@ import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Builder
@@ -38,16 +37,16 @@ public class Booking extends BasePesistence {
     private String phoneNumberCustomer;
 
     @Column(name = "origin_pay", nullable = false)
-    private BigDecimal originPay;
+    private Double originPay;
 
     @Column(name = "surcharge", nullable = false)
-    private BigDecimal surcharge;
+    private Double surcharge;
 
     @Column(name = "total_bill", nullable = false)
-    private BigDecimal totalBill;
+    private Double totalBill;
 
     @Column(name = "total_transfer", nullable = false)
-    private BigDecimal totalTransfer;
+    private Double totalTransfer;
 
     @Column(name = "payment_policy", nullable = false)
     private PaymentPolicyEnum paymentPolicy;

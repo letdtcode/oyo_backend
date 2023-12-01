@@ -1,17 +1,11 @@
 package com.mascara.oyo_booking_backend.dtos.request.booking;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
-import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
-import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -54,15 +48,15 @@ public class BookingRequest {
 
     @NotNull
     @Min(0)
-    private BigDecimal originPay;
+    private Double originPay;
 
     @NotNull
     @Min(0)
-    private BigDecimal surcharge;
+    private Double surcharge;
 
     @NotNull
     @Min(0)
-    private BigDecimal totalTransfer;
+    private Double totalTransfer;
 
     @NotNull
     @Pattern(regexp = "PAYMENT_FULL|PAYMENT_HALF", message = "Payment policy must be 'PAYMENT_FULL' or 'PAYMENT_HALF'")

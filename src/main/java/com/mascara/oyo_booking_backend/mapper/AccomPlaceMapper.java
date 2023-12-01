@@ -45,6 +45,9 @@ public class AccomPlaceMapper {
     @Autowired
     private TypeBedRepository typeBedRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     //    Covert Address General
     private final Converter<Long, String> idAccomPlaceToAddressGeneral = context -> {
         Long id = context.getSource();
@@ -74,6 +77,17 @@ public class AccomPlaceMapper {
     private final Converter<AccommodationCategories, String> accomCategoryToAccomCategoryName = context -> {
         AccommodationCategories accommodationCategories = context.getSource();
         return accommodationCategories != null ? accommodationCategories.getAccomCateName() : null;
+    };
+
+    //    Convert user id to host name
+    private final Converter<Long, String> userIdToNameHost = context -> {
+        Long userId = context.getSource();
+        if (userId != null) {
+            User host = userRepository.findByUserId(userId)
+                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+            return host.getFirstName() + " " + host.getLastName();
+        }
+        return null;
     };
 
     //    Convert Set Facility
@@ -147,8 +161,13 @@ public class AccomPlaceMapper {
 
                 .addMappings(mapper -> mapper.using(accomCategoryToAccomCategoryName)
                         .map(AccomPlace::getAccommodationCategories, GetAccomPlaceResponse::setAccomCateName))
+
+                .addMappings(mapper -> mapper.using(userIdToNameHost)
+                        .map(AccomPlace::getUserId, GetAccomPlaceResponse::setNameHost))
+
                 .addMappings(mapper -> mapper.using(setBedRoomToNameTypeBed)
                         .map(AccomPlace::getBedRoomSet, GetAccomPlaceResponse::setBedRooms));
+
     }
 
     public GetAccomPlaceResponse toGetAccomPlaceResponse(AccomPlace accomPlace) {

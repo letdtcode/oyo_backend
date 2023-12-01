@@ -5,12 +5,8 @@ import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.services.user.UserService;
-import com.mascara.oyo_booking_backend.utils.validation.Status;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +54,9 @@ public class CmsUserController {
                                               @RequestParam("status")
                                               @NotNull
                                               @NotBlank
-                                              @Status String status) {
+                                              @Pattern(regexp = "ENABLE|PEDING|BANNED",
+                                                      message = "Status must be ENABLE|PEDING|BANNED")
+                                              String status) {
         BaseMessageData messageReponse = userService.changeStatusUser(mail, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }

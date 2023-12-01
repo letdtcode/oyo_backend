@@ -36,6 +36,9 @@ public interface AccomPlaceService {
     BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
+    BasePagingData<GetAccomPlaceResponse> getListAccomPlaceOfPartner(String hostMail, Integer pageNum, Integer pageSize, String sortType, String field);
+
+    @Transactional
     BaseMessageData changeStatusAccomPlace(Long id, String status);
 
     @Transactional

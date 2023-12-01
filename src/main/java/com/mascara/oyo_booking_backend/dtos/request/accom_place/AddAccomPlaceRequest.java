@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -70,7 +69,7 @@ public class AddAccomPlaceRequest {
 
     @NotNull
     @Min(value = 0, message = "Price per night should not be less than 0")
-    private BigDecimal pricePerNight;
+    private Double pricePerNight;
 
     @NotNull
     private List<String> facilityNameList;

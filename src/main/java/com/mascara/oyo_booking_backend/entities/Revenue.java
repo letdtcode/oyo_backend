@@ -4,7 +4,6 @@ import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 
 /**
  * Created by: IntelliJ IDEA
@@ -39,13 +38,13 @@ public class Revenue extends BasePesistence {
     private String bookingCode;
 
     @Column(name = "comm_pay", nullable = false)
-    private BigDecimal commPay;
+    private Double commPay;
 
     @Column(name = "total_revenue", nullable = false)
-    private BigDecimal totalRevenue;
+    private Double totalRevenue;
 
     @Column(name = "total_bill", nullable = false)
-    private BigDecimal totalBill;
+    private Double totalBill;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

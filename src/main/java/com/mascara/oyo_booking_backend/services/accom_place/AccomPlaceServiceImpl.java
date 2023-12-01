@@ -213,6 +213,21 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
+    public BasePagingData<GetAccomPlaceResponse> getListAccomPlaceOfPartner(String hostMail, Integer pageNum, Integer pageSize, String sortType, String field) {
+        User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(),paging);
+        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
+        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream()
+                .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace)).collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                accomPlacePage.getNumber(),
+                accomPlacePage.getSize(),
+                accomPlacePage.getTotalElements());
+    }
+
+    @Override
+    @Transactional
     public BaseMessageData changeStatusAccomPlace(Long id, String status) {
         AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
         accomPlaceRepository.changeStatusAccomPlace(id, status);

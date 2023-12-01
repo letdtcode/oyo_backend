@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -24,10 +23,10 @@ public class GetAccomPlaceFilterRequest {
     private String wardCode;
 
     @Min(0L)
-    private BigDecimal priceFrom;
+    private Double priceFrom;
 
     @Min(0L)
-    private BigDecimal priceTo;
+    private Double priceTo;
     private List<String> facilityName;
 
     @Min(0)

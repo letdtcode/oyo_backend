@@ -1,6 +1,8 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.Booking;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +25,13 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     boolean checkBookingAvailable(@Param("accom_id") Long accomId,
                                   @Param("date_check_in") LocalDate checkIn,
                                   @Param("date_check_out") LocalDate checkOut);
+
+
+    @Query(value = "select b.* from accom_place ap join booking b where ap.id = b.accom_id and ap.user_id = :host_id and " +
+            "(b.status = :status or :status is null) and ap.deleted is false and b.deleted is false",
+            countQuery = "select count(id) from accom_place ap join booking b where ap.id = b.accom_id and " +
+                    "ap.user_id = :host_id and (b.status = :status or :status is null) and ap.deleted is false and b.deleted is false",
+            nativeQuery = true)
+    Page<Booking> getBookingOfPartnerByStatus(@Param("host_id") Long hostId, @Param("status") String status, Pageable pageable);
+
 }

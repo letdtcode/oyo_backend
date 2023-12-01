@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +45,8 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
     Page<AccomPlace> getPageWithFullFilter(@Param("provinceCode") String provinceCode,
                                            @Param("districtCode") String districtCode,
                                            @Param("wardCode") String wardCode,
-                                           @Param("priceFrom") BigDecimal priceFrom,
-                                           @Param("priceTo") BigDecimal priceTo,
+                                           @Param("priceFrom") Double priceFrom,
+                                           @Param("priceTo") Double priceTo,
                                            @Param("facilityName") List<String> facilityName,
                                            @Param("size") Integer size,
                                            @Param("numBathroom") Integer numBathroom,
@@ -65,6 +64,11 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
             countQuery = "select count(id) from accom_place ap where ap.deleted = false",
             nativeQuery = true)
     Page<AccomPlace> getAllWithPaging(Pageable pageable);
+
+    @Query(value = "select ap.* from accom_place ap where ap.user_id = :host_id and ap.deleted = false",
+            countQuery = "select count(id) from accom_place ap where ap.user_id = :host_id and ap.deleted = false",
+            nativeQuery = true)
+    Page<AccomPlace> getListAccomPlaceOfPartner(@Param("host_id") Long hostId, Pageable pageable);
 
     @Modifying
     @Query(value = "update accom_place ap set ap.status = :status where ap.id = :id", nativeQuery = true)
