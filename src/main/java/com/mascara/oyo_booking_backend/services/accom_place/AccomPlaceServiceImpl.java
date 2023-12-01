@@ -7,6 +7,7 @@ import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlace
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
+import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mapper.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
@@ -14,6 +15,7 @@ import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinarySer
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -149,13 +151,20 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     }
 
     @Override
-    public GetAccomPlaceResponse addImageAccomPlace(List<MultipartFile> files, Long id) {
+    public GetAccomPlaceResponse addImageAccomPlace(List<MultipartFile> files, Long id, String hostMail) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom Place")));
+        User host = userRepository.findByUserId(accomPlace.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+        host = (User) Hibernate.unproxy(host);
+        if (!host.getMail().equals(hostMail)) {
+            throw new NotCredentialException("Not permit to edit image for accom place");
+        }
         if (!files.isEmpty()) {
-            AccomPlace accomPlace = accomPlaceRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom Place")));
             for (int i = 0; i < files.size(); i++) {
                 String pathImg = cloudinaryService.store(files.get(i));
-                ImageAccom imageAccom = ImageAccom.builder().imgAccomLink(pathImg).accomPlace(accomPlace).accomPlaceId(accomPlace.getId()).build();
+                ImageAccom imageAccom = ImageAccom.builder().imgAccomLink(pathImg)
+                        .accomPlace(accomPlace).accomPlaceId(accomPlace.getId()).build();
                 imageAccomRepository.save(imageAccom);
             }
             GetAccomPlaceResponse response = accomPlaceMapper.toGetAccomPlaceResponse(accomPlace);
@@ -216,7 +225,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     public BasePagingData<GetAccomPlaceResponse> getListAccomPlaceOfPartner(String hostMail, Integer pageNum, Integer pageSize, String sortType, String field) {
         User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
-        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(),paging);
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream()
                 .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace)).collect(Collectors.toList());

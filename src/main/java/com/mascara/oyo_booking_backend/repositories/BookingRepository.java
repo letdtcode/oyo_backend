@@ -33,5 +33,4 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                     "ap.user_id = :host_id and (b.status = :status or :status is null) and ap.deleted is false and b.deleted is false",
             nativeQuery = true)
     Page<Booking> getBookingOfPartnerByStatus(@Param("host_id") Long hostId, @Param("status") String status, Pageable pageable);
-
 }

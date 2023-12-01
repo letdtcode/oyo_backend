@@ -61,7 +61,9 @@ public class PartnerManageController {
     @PostMapping("/{id}/images/create")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> addImageAccomPlace(@RequestParam("files") List<MultipartFile> files, @PathVariable("id") Long id) {
-        GetAccomPlaceResponse response = accomPlaceService.addImageAccomPlace(files, id);
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String hostMail = principal.getName();
+        GetAccomPlaceResponse response = accomPlaceService.addImageAccomPlace(files, id,hostMail);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

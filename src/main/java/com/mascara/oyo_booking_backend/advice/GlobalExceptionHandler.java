@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.advice;
 
+import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
@@ -32,6 +33,15 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(NotCredentialException.class)
+    public ResponseEntity<Object> handleNotPermission(NotCredentialException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", System.currentTimeMillis());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("errors", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(body);
+    }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<Object> handleSQLExcuteException(Exception ex) {
