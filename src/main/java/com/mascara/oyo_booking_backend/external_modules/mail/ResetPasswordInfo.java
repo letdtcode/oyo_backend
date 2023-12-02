@@ -4,22 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
- * Date      : 18/10/2023
- * Time      : 8:42 CH
- * Filename  : EmailDetails
+ * Date      : 03/12/2023
+ * Time      : 4:06 SA
+ * Filename  : UserBasicInfo
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmailDetails<T> {
-    private String recipient;
-    private T msgBody;
-    private String subject;
-    private String attachment;
+public class ResetPasswordInfo {
+    private String fullName;
+    private String newPassword;
 }

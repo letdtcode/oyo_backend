@@ -1,11 +1,11 @@
 package com.mascara.oyo_booking_backend.controllers.publics;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accom_category.GetAccomCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.review.GetReviewResponse;
 import com.mascara.oyo_booking_backend.services.accom_category.AccomCategoryService;
@@ -132,12 +132,11 @@ public class PublicAccomPlaceController {
             @ApiResponse(responseCode = "410",
                     content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")})})
     @PostMapping("/check-booking")
-    public ResponseEntity<?> checkBooking(@RequestBody @Valid CheckBookingRequest request) {
-        boolean isBookingReady = bookingService.checkBookingReady(request);
-        BaseMessageData<Boolean> response = new BaseMessageData<>(isBookingReady);
-        if (!isBookingReady) {
-            return ResponseEntity.status(410).body(new BaseResponse<>(true, 410, response));
+    public ResponseEntity<?> checkBookingToGetPrice(@RequestBody @Valid CheckBookingRequest request) {
+        CheckBookingResponse checkBookingResponse = bookingService.checkBookingToGetPrice(request);
+        if (!checkBookingResponse.isCanBooking()) {
+            return ResponseEntity.status(210).body(new BaseResponse<>(true, 210, checkBookingResponse));
         }
-        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, checkBookingResponse));
     }
 }

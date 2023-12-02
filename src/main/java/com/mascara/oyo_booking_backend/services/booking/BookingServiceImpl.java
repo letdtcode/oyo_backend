@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.services.booking;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
+import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -63,6 +65,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SurchargeOfAccomRepository surchargeOfAccomRepository;
 
     @Override
     @Transactional
@@ -128,25 +133,47 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public boolean checkBookingReady(CheckBookingRequest request) {
+    public CheckBookingResponse checkBookingToGetPrice(CheckBookingRequest request) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        int maxPeople = accomPlace.getNumPeople();
-        boolean accomAvailable = checkAvailableAccom(request.getAccomId(), request.getCheckIn(), request.getCheckOut());
-        if (!accomAvailable || request.getNumAdult() > maxPeople) {
-            return false;
+        Double costSurcharge = 0D;
+        List<SurchargeOfAccom> surchargeOfAccomList = surchargeOfAccomRepository.findByAccomPlaceId(request.getAccomId());
+        if (surchargeOfAccomList != null && !surchargeOfAccomList.isEmpty()) {
+            for (SurchargeOfAccom surcharge : surchargeOfAccomList) {
+                costSurcharge = costSurcharge + surcharge.getCost();
+            }
         }
-        return true;
+        Period p = Period.between(request.getCheckIn(), request.getCheckOut());
+        int numNight = p.getDays();
+        Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
+        Double totalBill = totalCostAccom + costSurcharge;
+
+        int maxPeople = accomPlace.getNumPeople();
+        boolean isCanBooking = true;
+        String message = "Booking is ready";
+        boolean accomAvailable = checkAvailableAccom(request.getAccomId(), request.getCheckIn(), request.getCheckOut());
+        if (!accomAvailable) {
+            isCanBooking = false;
+            message = "Booking is not available in range time";
+            if (request.getNumAdult() > maxPeople) {
+                message = message + "\nNum people is out max num people allow";
+            }
+        }
+        if (isCanBooking && request.getNumAdult() > maxPeople) {
+            isCanBooking = false;
+            message = "Num people is out max num people allow";
+        }
+        return new CheckBookingResponse(isCanBooking, totalCostAccom, costSurcharge, totalBill, message);
     }
 
     @Override
     @Transactional
     public BasePagingData<GetBookingResponse> getBookingOfPartnerByStatus(String hostMail,
-                                                                     String status,
-                                                                     Integer pageNum,
-                                                                     Integer pageSize,
-                                                                     String sortType,
-                                                                     String field) {
+                                                                          String status,
+                                                                          Integer pageNum,
+                                                                          Integer pageSize,
+                                                                          String sortType,
+                                                                          String field) {
         User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
         Page<Booking> bookingPage = bookingRepository.getBookingOfPartnerByStatus(user.getId(), status, paging);

@@ -38,7 +38,7 @@ public class EmailServiceImpl implements EmailService {
     private String sender;
 
     @Override
-    public String sendSimpleMessage(EmailDetails emailDetails) {
+    public String sendSimpleMessage(EmailDetails<String> emailDetails) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(sender);
         message.setTo(emailDetails.getRecipient());
@@ -49,13 +49,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendMailWithTemplate(EmailDetails emailDetails) {
+    public void sendMailWithTemplate(EmailDetails emailDetails,String template) {
         MimeMessage message = emailSender.createMimeMessage();
         try {
             Map<String, Object> templateModel = new HashMap<>();
             templateModel.put("model", emailDetails);
             Template freemarkerTemplate = freemarkerConfigurer.getConfiguration()
-                    .getTemplate("Email_Active_Account.ftl");
+                    .getTemplate(template);
             String htmlBody = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerTemplate, templateModel);
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(emailDetails.getRecipient());

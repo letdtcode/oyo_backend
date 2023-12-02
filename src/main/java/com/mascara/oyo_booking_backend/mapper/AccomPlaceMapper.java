@@ -191,6 +191,9 @@ public class AccomPlaceMapper {
                 .addMappings(mapper -> mapper.using(userIdToNameHost)
                         .map(AccomPlace::getUserId, GetAccomPlaceResponse::setNameHost))
 
+                .addMappings(mapper -> mapper.using(idAccomPlaceToSurchargeList)
+                        .map(AccomPlace::getId, GetAccomPlaceResponse::setSurchargeList))
+
                 .addMappings(mapper -> mapper.using(setBedRoomToNameTypeBed)
                         .map(AccomPlace::getBedRoomSet, GetAccomPlaceResponse::setBedRooms));
 

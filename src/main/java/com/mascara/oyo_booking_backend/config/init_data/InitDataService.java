@@ -359,7 +359,7 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionFacility();
         implementInitDataMenuActionAccomCategory();
         implementInitDataMenuActionTypeBed();
-        implementInitDataAccomPlace();
         implementInitDataMenuActionSurcharge();
+        implementInitDataAccomPlace();
     }
 }

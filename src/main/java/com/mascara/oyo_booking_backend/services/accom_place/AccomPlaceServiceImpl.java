@@ -11,7 +11,7 @@ import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mapper.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
-import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinaryService;
+import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -76,6 +76,12 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Autowired
     private BedRoomRepository bedRoomRepository;
+
+    @Autowired
+    private SurchargeOfAccomRepository surchargeOfAccomRepository;
+
+    @Autowired
+    private SurchargeCategoryRepository surchargeCategoryRepository;
 
     @Override
     @Transactional
@@ -146,6 +152,22 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             bedRooms.add(bedRoom);
         }
         bedRoomRepository.saveAll(bedRooms);
+
+        if (authentication == null) {
+            List<SurchargeCategory> surchargeCategoryList = surchargeCategoryRepository.findAll();
+            for (SurchargeCategory surchargeCategory : surchargeCategoryList) {
+                SurchargeOfAccom surcharge = SurchargeOfAccom.builder()
+                        .cost(20000D)
+                        .accomPlace(accomPlace)
+                        .accomPlaceId(accomPlace.getId())
+                        .surchargeCategory(surchargeCategory)
+                        .surchargeCateId(surchargeCategory.getId())
+                        .createdBy("dev")
+                        .lastModifiedBy("dev")
+                        .build();
+                surchargeOfAccomRepository.save(surcharge);
+            }
+        }
         GetAccomPlaceResponse response = accomPlaceMapper.toGetAccomPlaceResponse(accomPlace);
         return response;
     }

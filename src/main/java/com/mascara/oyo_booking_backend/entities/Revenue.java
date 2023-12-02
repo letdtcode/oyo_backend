@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.entities;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 /**
@@ -12,7 +13,7 @@ import lombok.*;
  * Time      : 10:34 CH
  * Filename  : Commision
  */
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

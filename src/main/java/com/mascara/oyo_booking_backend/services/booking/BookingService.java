@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.services.booking;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
+import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ public interface BookingService {
     BaseMessageData createOrderBookingAccom(BookingRequest request, String userMail);
 
     @Transactional
-    boolean checkBookingReady(CheckBookingRequest request);
+    CheckBookingResponse checkBookingToGetPrice(CheckBookingRequest request);
 
     @Transactional
     BasePagingData<GetBookingResponse> getBookingOfPartnerByStatus(String hostMail,

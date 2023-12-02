@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.services.storage.cloudinary;
+package com.mascara.oyo_booking_backend.external_modules.storage.cloudinary;
 
 import org.springframework.web.multipart.MultipartFile;
 

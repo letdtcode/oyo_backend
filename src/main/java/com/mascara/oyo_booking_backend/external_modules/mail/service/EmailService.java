@@ -14,7 +14,7 @@ import java.io.IOException;
  * Filename  : EmailService
  */
 public interface EmailService {
-    String sendSimpleMessage(EmailDetails emailDetails);
+    String sendSimpleMessage(EmailDetails<String> emailDetails);
 
-    void sendMailWithTemplate(EmailDetails emailDetails) throws MessagingException, IOException, TemplateException;
+    void sendMailWithTemplate(EmailDetails emailDetails,String template) throws MessagingException, IOException, TemplateException;
 }

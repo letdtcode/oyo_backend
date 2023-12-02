@@ -4,6 +4,7 @@ import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Created by: IntelliJ IDEA
@@ -12,7 +13,7 @@ import lombok.*;
  * Time      : 10:50 CH
  * Filename  : BedRoom
  */
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

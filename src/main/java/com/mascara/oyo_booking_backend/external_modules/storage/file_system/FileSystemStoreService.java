@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.services.storage.file_system;
+package com.mascara.oyo_booking_backend.external_modules.storage.file_system;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

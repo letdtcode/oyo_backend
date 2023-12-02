@@ -13,12 +13,18 @@ import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
+import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
+import com.mascara.oyo_booking_backend.external_modules.mail.ResetPasswordInfo;
+import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
+import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
-import com.mascara.oyo_booking_backend.services.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import com.mascara.oyo_booking_backend.utils.RandomStringUtils;
+import freemarker.template.TemplateException;
+import jakarta.mail.MessagingException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -69,6 +76,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CloudinaryService cloudinaryService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     @Transactional
@@ -243,6 +253,28 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
         userRepository.changeStatusUser(email, status);
         return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("user"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData<String> resetPasswordUser(String mail) throws MessagingException, TemplateException, IOException {
+        User user = userRepository.findByMail(mail)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+        String newPassword = RandomStringUtils.generateRandomString();
+        String hasedPassword = encoder.encode(newPassword);
+        user.setPassword(hasedPassword);
+        userRepository.save(user);
+
+        ResetPasswordInfo info = ResetPasswordInfo.builder()
+                .fullName(user.getFirstName() + " " + user.getLastName())
+                .newPassword(newPassword)
+                .build();
+        EmailDetails<Object> emailDetails = EmailDetails.builder()
+                .recipient(mail)
+                .subject("Khôi phục mật khẩu")
+                .msgBody(info).build();
+        emailService.sendMailWithTemplate(emailDetails, "Email_Reset_Password.ftl");
+        return new BaseMessageData(AppContants.RESET_PASSWORD_SUCESS);
     }
 
     @Override

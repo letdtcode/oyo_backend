@@ -9,8 +9,12 @@ import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.User;
+import freemarker.template.TemplateException;
+import jakarta.mail.MessagingException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * Created by: IntelliJ IDEA
@@ -37,6 +41,9 @@ public interface UserService {
 
     @Transactional
     BaseMessageData changeStatusUser(String email, String status);
+
+    @Transactional
+    BaseMessageData resetPasswordUser(String mail) throws MessagingException, TemplateException, IOException;
 
     @Transactional
     BaseMessageData deleteUser(String email);

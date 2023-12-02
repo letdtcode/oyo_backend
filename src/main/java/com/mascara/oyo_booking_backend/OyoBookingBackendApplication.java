@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend;
 
 import com.mascara.oyo_booking_backend.config.StorageProperties;
-import com.mascara.oyo_booking_backend.services.storage.file_system.FileSystemStoreService;
+import com.mascara.oyo_booking_backend.external_modules.storage.file_system.FileSystemStoreService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

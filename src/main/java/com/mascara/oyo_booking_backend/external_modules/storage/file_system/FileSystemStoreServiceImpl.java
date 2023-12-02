@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.services.storage.file_system;
+package com.mascara.oyo_booking_backend.external_modules.storage.file_system;
 
 import com.mascara.oyo_booking_backend.config.StorageProperties;
 import com.mascara.oyo_booking_backend.exceptions.StorageException;

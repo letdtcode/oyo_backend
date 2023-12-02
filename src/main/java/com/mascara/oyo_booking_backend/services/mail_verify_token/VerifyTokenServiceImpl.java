@@ -87,7 +87,7 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
                 .recipient(user.getMail())
                 .subject("Xác nhận đăng kí")
                 .msgBody(message).build();
-        emailService.sendMailWithTemplate(emailDetails);
+        emailService.sendMailWithTemplate(emailDetails,"Email_Active_Account.ftl");
     }
 
     public static String getRandomNumberString() {
