@@ -32,7 +32,7 @@ import java.security.Principal;
  * Time      : 3:07 SA
  * Filename  : GeneralPersonalController
  */
-@Tag(name = "Public Check Mail", description = "Authentication APIs")
+@Tag(name = "General Personal", description = "General Personal APIs")
 @RestController
 @RequestMapping("/api/v1/general")
 @RequiredArgsConstructor

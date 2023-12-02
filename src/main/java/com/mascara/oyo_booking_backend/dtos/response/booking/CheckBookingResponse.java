@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CheckBookingResponse {
     private String message;
-    private Double priceAccom;
-//    private Double
+    private Double totalCostAccom;
+    private Double totalCostWithSurcharge;
+    private Double totalBill;
 }

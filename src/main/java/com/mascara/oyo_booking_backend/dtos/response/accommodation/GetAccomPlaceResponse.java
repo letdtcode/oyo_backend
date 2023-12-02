@@ -39,5 +39,6 @@ public class GetAccomPlaceResponse {
     private Double pricePerNight;
     private List<GetFacilityCategoryResponse> facilityCategoryList;
     private List<GetSurchargeOfAccomResponse> surchargeList;
+    private String lastModifiedDate;
     private String status;
 }
