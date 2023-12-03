@@ -55,10 +55,6 @@ public class BookingRequest {
     private Double surcharge;
 
     @NotNull
-    @Min(0)
-    private Double totalTransfer;
-
-    @NotNull
     @Pattern(regexp = "PAYMENT_FULL|PAYMENT_HALF", message = "Payment policy must be 'PAYMENT_FULL' or 'PAYMENT_HALF'")
     private String paymentPolicy;
 

@@ -203,7 +203,7 @@ public class UserServiceImpl implements UserService {
     public InfoUserResponse updateAvatar(MultipartFile file, String mail) {
         if (!file.isEmpty()) {
             User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
-            String pathImg = cloudinaryService.store(file);
+            String pathImg = cloudinaryService.store(file).getImageUrl();
             user.setAvatarUrl(pathImg);
             userRepository.save(user);
             return mapper.map(user, InfoUserResponse.class);

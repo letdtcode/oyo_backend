@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.response.booking.GetHistoryBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,4 +30,11 @@ public interface BookingService {
                                                               Integer pageSize,
                                                               String sortType,
                                                               String field);
+
+    @Transactional
+    BasePagingData<GetHistoryBookingResponse> getHistoryBookingUser(String userMail,
+                                                                    Integer pageNum,
+                                                                    Integer pageSize,
+                                                                    String sortType,
+                                                                    String field);
 }

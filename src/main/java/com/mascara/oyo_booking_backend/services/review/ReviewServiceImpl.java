@@ -1,19 +1,18 @@
 package com.mascara.oyo_booking_backend.services.review;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.review.ReviewAccomPlaceRequest;
+import com.mascara.oyo_booking_backend.dtos.request.review.ReviewBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.review.GetReviewResponse;
 import com.mascara.oyo_booking_backend.entities.*;
+import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
-import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
     private ImageReviewRepository imageReviewRepository;
 
     @Autowired
-    private CloudinaryService cloudinaryService;
+    private BookingRepository bookingRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -74,23 +73,28 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public BaseMessageData reviewAccomPlace(ReviewAccomPlaceRequest request,
-                                            List<MultipartFile> imageReviewFiles) {
-        ReviewList reviewList = reviewListRepository.findByUserId(request.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
-        AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomPlaceId())
+    public BaseMessageData createReviewForBooking(ReviewBookingRequest request, String userMail) {
+        User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException("User"));
+        ReviewList reviewList = reviewListRepository.findByUserId(user.getId()).get();
+        Booking booking = bookingRepository.findBookingByCode(request.getBookingCode())
+                .orElseThrow(() -> new ResourceNotFoundException("Booking code"));
+        if(!booking.getStatus().equals(BookingStatusEnum.CHECK_OUT)) {
+            return new BaseMessageData(AppContants.REVIEW_IS_NOT_AVAILABLE);
+        }
+        AccomPlace accomPlace = accomPlaceRepository.findById(booking.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
         Review review = mapper.map(request, Review.class);
         review.setAccomPlace(accomPlace);
         review.setReviewList(reviewList);
+        review.setBooking(booking);
+        review.setReviewListId(reviewList.getId());
         review.setStatus(CommonStatusEnum.ENABLE);
-        if (!imageReviewFiles.isEmpty()) {
+        if (!request.getImagesUrls().isEmpty() && request.getImagesUrls() != null) {
             review.setHaveImage(true);
             review = reviewRepository.save(review);
-            for (MultipartFile file : imageReviewFiles) {
-                String pathImg = cloudinaryService.store(file);
+            for (String imageUrl : request.getImagesUrls()) {
                 ImageReview imageReview = ImageReview.builder()
-                        .imageUrl(pathImg)
+                        .imageUrl(imageUrl)
                         .review(review)
                         .reviewId(review.getId())
                         .build();

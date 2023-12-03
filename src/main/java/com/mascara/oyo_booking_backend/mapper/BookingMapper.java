@@ -1,12 +1,13 @@
 package com.mascara.oyo_booking_backend.mapper;
 
 import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.response.booking.GetHistoryBookingResponse;
 import com.mascara.oyo_booking_backend.entities.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.Booking;
 import com.mascara.oyo_booking_backend.entities.Revenue;
-import com.mascara.oyo_booking_backend.repositories.AccomPlaceRepository;
-import com.mascara.oyo_booking_backend.repositories.BookingRepository;
-import com.mascara.oyo_booking_backend.repositories.RevenueRepository;
+import com.mascara.oyo_booking_backend.entities.User;
+import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.repositories.*;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -30,10 +31,16 @@ public class BookingMapper {
     private AccomPlaceRepository accomPlaceRepository;
 
     @Autowired
-    private BookingRepository bookingRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private RevenueRepository revenueRepository;
+
+    @Autowired
+    private DistrictRepository districtRepository;
+
+    @Autowired
+    private ProvinceRepository provinceRepository;
 
     //    Covert id accom place to name accom place
     private final Converter<Long, String> idAccomPlaceToNameAccom = context -> {
@@ -65,6 +72,44 @@ public class BookingMapper {
         return null;
     };
 
+    //    Covert booking code to total revenue
+    private final Converter<Long, String> idAccomToFullNameHost = context -> {
+        Long accomId = context.getSource();
+        if (accomId != null) {
+            Long hostId = accomPlaceRepository.findById(accomId).get().getUserId();
+            User host = userRepository.findByUserId(hostId).get();
+            return host.getFirstName() + " " + host.getLastName();
+        }
+        return null;
+    };
+
+    //    Covert booking code to total revenue
+    private final Converter<Long, String> idAccomToGeneralAddress = context -> {
+        Long accomId = context.getSource();
+        if (accomId != null) {
+            AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Accom place"));
+            String districtCode = accomPlace.getDistrictCode();
+            String provinceCode = accomPlace.getProvinceCode();
+            String districtName = districtRepository.findByDistrictCode(districtCode).get().getDistrictName();
+            String provinceName = provinceRepository.findByProvinceCode(provinceCode).get().getProvinceName();
+            return districtName + ", " + provinceName;
+        }
+        return null;
+    };
+
+    //    Covert booking code to total revenue
+    private final Converter<Long, Double> idAccomToPricePerNight = context -> {
+        Long accomId = context.getSource();
+        if (accomId != null) {
+            AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Accom place"));
+            return accomPlace.getPricePerNight();
+        }
+        return null;
+    };
+
+
     @PostConstruct
     public void init() {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -75,6 +120,16 @@ public class BookingMapper {
                         .map(Booking::getBookingCode, GetBookingResponse::setCommisionMoney))
                 .addMappings(mapper -> mapper.using(bookingCodeToTotalRevenue)
                         .map(Booking::getBookingCode, GetBookingResponse::setTotalRevenue));
+
+        mapper.createTypeMap(Booking.class, GetHistoryBookingResponse.class)
+                .addMappings(mapper -> mapper.using(idAccomToFullNameHost)
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setFullNameHost))
+                .addMappings(mapper -> mapper.using(idAccomPlaceToNameAccom)
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setNameAccom))
+                .addMappings(mapper -> mapper.using(idAccomToGeneralAddress)
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setGeneralAddress))
+                .addMappings(mapper -> mapper.using(idAccomToPricePerNight)
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setPricePerNight));
     }
 
     public GetBookingResponse toGetBookingResponse(Booking booking) {
@@ -83,4 +138,9 @@ public class BookingMapper {
         return getBookingResponse;
     }
 
+    public GetHistoryBookingResponse toGetHistoryBookingResponse(Booking booking) {
+        GetHistoryBookingResponse getHistoryBookingResponset;
+        getHistoryBookingResponset = mapper.map(booking, GetHistoryBookingResponse.class);
+        return getHistoryBookingResponset;
+    }
 }

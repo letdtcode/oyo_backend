@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.dtos.response.booking;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
@@ -21,7 +22,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class GetBookingResponse {
     private String bookingCode;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkIn;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkOut;
     private String nameCustomer;
     private String phoneNumberCustomer;

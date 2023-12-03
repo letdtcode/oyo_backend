@@ -50,9 +50,11 @@ public class Booking extends BasePesistence {
     private Double totalTransfer;
 
     @Column(name = "payment_policy", nullable = false)
+    @Enumerated(EnumType.STRING)
     private PaymentPolicyEnum paymentPolicy;
 
     @Column(name = "payment_method", nullable = false)
+    @Enumerated(EnumType.STRING)
     private PaymentMethodEnum paymentMethod;
 
     @Column(name = "num_adult", nullable = false)
@@ -66,7 +68,7 @@ public class Booking extends BasePesistence {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private BookingStatusEnum bookingStatusEnum;
+    private BookingStatusEnum status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -98,4 +100,7 @@ public class Booking extends BasePesistence {
 
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Revenue revenue;
+
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Review review;
 }

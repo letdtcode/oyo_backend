@@ -1,6 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.request.review;
 
-import com.mascara.oyo_booking_backend.entities.ImageReview;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,17 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewAccomPlaceRequest {
+public class ReviewBookingRequest {
+
+    @NotNull
+    @NotBlank
     private String title;
+    @NotNull
+    @NotBlank
     private String content;
+    @NotNull
     private Float rateStar;
-    private Boolean haveImage;
-    private Long accomPlaceId;
-    private Long userId;
+    private List<String> imagesUrls;
+    @NotNull
+    private String bookingCode;
 }

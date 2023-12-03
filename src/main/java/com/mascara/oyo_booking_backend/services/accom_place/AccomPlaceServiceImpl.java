@@ -184,7 +184,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         }
         if (!files.isEmpty()) {
             for (int i = 0; i < files.size(); i++) {
-                String pathImg = cloudinaryService.store(files.get(i));
+                String pathImg = cloudinaryService.store(files.get(i)).getImageUrl();
                 ImageAccom imageAccom = ImageAccom.builder().imgAccomLink(pathImg)
                         .accomPlace(accomPlace).accomPlaceId(accomPlace.getId()).build();
                 imageAccomRepository.save(imageAccom);

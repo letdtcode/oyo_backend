@@ -56,6 +56,10 @@ public class Review extends BasePesistence {
     @Column(name = "accom_id")
     private Long accomPlaceId;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "review_list_id",

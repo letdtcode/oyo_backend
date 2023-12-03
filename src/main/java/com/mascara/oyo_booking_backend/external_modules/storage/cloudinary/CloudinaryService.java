@@ -2,6 +2,8 @@ package com.mascara.oyo_booking_backend.external_modules.storage.cloudinary;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -10,5 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  * Filename  : CloudinaryService
  */
 public interface CloudinaryService {
-    String store(MultipartFile file);
+    CloudUploader store(MultipartFile file);
+
+    List<CloudUploader> storeMultiple(List<MultipartFile> files);
 }

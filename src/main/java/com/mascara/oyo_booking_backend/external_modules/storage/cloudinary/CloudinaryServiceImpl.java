@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,14 +27,43 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     private Cloudinary cloudinary;
 
     @Override
-    public String store(MultipartFile file) {
+    public CloudUploader store(MultipartFile file) {
         try {
             Map r = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto",
                     "folder", "oyo_booking"));
             String imgUrl = (String) r.get("secure_url");
-            return imgUrl;
+            String createdDateString = (String) r.get("created_at");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            LocalDateTime createAt = LocalDateTime.parse(createdDateString, formatter);
+            return CloudUploader.builder()
+                    .imageUrl(imgUrl)
+                    .createDate(createAt)
+                    .build();
         } catch (IOException exception) {
             throw new StorageException("Failed to store file: ", exception);
         }
+    }
+
+    @Override
+    public List<CloudUploader> storeMultiple(List<MultipartFile> files) {
+        List<CloudUploader> cloudUploaders = new ArrayList<>();
+        try {
+            for (MultipartFile file : files) {
+                Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto", "folder", "oyo_booking"));
+                String imageUrl = (String) uploadResult.get("secure_url");
+                String createdDateString = (String) uploadResult.get("created_at");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                LocalDateTime createAt = LocalDateTime.parse(createdDateString, formatter);
+                CloudUploader cloudUploader = CloudUploader.builder()
+                        .imageUrl(imageUrl)
+                        .createDate(createAt)
+                        .build();
+                cloudUploaders.add(cloudUploader);
+            }
+        } catch (IOException exception) {
+            throw new StorageException("Failed to store files: ", exception);
+        }
+        return cloudUploaders;
     }
 }

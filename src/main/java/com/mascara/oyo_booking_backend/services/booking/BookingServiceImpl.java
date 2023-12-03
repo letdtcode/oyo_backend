@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.response.booking.GetHistoryBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
@@ -99,14 +100,25 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String bookingCode = UUID.randomUUID().toString();
         Double totalBill = request.getOriginPay() + request.getSurcharge();
+        Double totalTrasfer = 0D;
+        switch (PaymentMethodEnum.valueOf(request.getPaymentMethod())) {
+            case PAYPAL -> totalBill = (totalBill * PaymentMethodEnum.PAYPAL.getPercent()) / 100;
+            default -> totalBill = (totalBill * PaymentMethodEnum.DIRECT.getPercent()) / 100;
+        }
+        switch (PaymentPolicyEnum.valueOf(request.getPaymentPolicy())) {
+            case PAYMENT_HALF -> totalTrasfer = (totalBill * 50) / 100;
+            default -> totalTrasfer = totalBill;
+        }
+
         Booking booking = mapper.map(request, Booking.class);
         booking.setAccomPlace(accomPlace);
         booking.setAccomId(accomPlace.getId());
         booking.setTotalBill(totalBill);
+        booking.setTotalTransfer(totalTrasfer);
         booking.setBookingList(bookingList);
         booking.setBookListId(bookingList.getId());
         booking.setBookingCode(bookingCode);
-        booking.setBookingStatusEnum(BookingStatusEnum.WAITING);
+        booking.setStatus(BookingStatusEnum.WAITING);
         booking.setPaymentPolicy(PaymentPolicyEnum.valueOf(request.getPaymentPolicy()));
         booking.setPaymentMethod(PaymentMethodEnum.valueOf(request.getPaymentMethod()));
         booking = bookingRepository.save(booking);
@@ -185,4 +197,42 @@ public class BookingServiceImpl implements BookingService {
                 bookingPage.getSize(),
                 bookingPage.getTotalElements());
     }
+
+    @Override
+    @Transactional
+    public BasePagingData<GetHistoryBookingResponse> getHistoryBookingUser(String userMail,
+                                                                           Integer pageNum,
+                                                                           Integer pageSize,
+                                                                           String sortType,
+                                                                           String field) {
+        User user = userRepository.findByMail(userMail).get();
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
+        Page<Booking> bookingPage = bookingRepository.getHistoryBookingUser(user.getId(), paging);
+        List<Booking> bookingList = bookingPage.stream().toList();
+        List<GetHistoryBookingResponse> responseList = bookingList.stream().map(booking -> bookingMapper.toGetHistoryBookingResponse(booking))
+                .collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                bookingPage.getNumber(),
+                bookingPage.getSize(),
+                bookingPage.getTotalElements());
+    }
+
+//    @Override
+//    @Transactional
+//    public BasePagingData<GetHistoryBookingResponse> getHistoryTransactionOfPartner(String userMail,
+//                                                                           Integer pageNum,
+//                                                                           Integer pageSize,
+//                                                                           String sortType,
+//                                                                           String field) {
+//        User user = userRepository.findByMail(userMail).get();
+//        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
+//        Page<Booking> bookingPage = bookingRepository.getHistoryBookingUser(user.getId(), paging);
+//        List<Booking> bookingList = bookingPage.stream().toList();
+//        List<GetHistoryBookingResponse> responseList = bookingList.stream().map(booking -> bookingMapper.toGetHistoryBookingResponse(booking))
+//                .collect(Collectors.toList());
+//        return new BasePagingData<>(responseList,
+//                bookingPage.getNumber(),
+//                bookingPage.getSize(),
+//                bookingPage.getTotalElements());
+//    }
 }
