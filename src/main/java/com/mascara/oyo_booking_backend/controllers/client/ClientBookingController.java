@@ -54,9 +54,9 @@ public class ClientBookingController {
                 request.getAccomId(),
                 request.getCheckIn().toString(),
                 request.getCheckOut().toString())))
-            return ResponseEntity.status(410).body(new BaseResponse<>(true, 410, response));
+            return ResponseEntity.status(210).body(new BaseResponse<>(true, 210, response));
         if (response.getMessage().equals(AppContants.BOOKING_NOT_AVAILABLE_PEOPLE))
-            return ResponseEntity.status(411).body(new BaseResponse<>(true, 410, response));
+            return ResponseEntity.status(211).body(new BaseResponse<>(true, 211, response));
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -67,7 +67,7 @@ public class ClientBookingController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/history")
     @PreAuthorize("hasRole('CLIENT')")
-    public ResponseEntity<?> showHistoryBooking(@RequestParam("pageNumber")
+        public ResponseEntity<?> showHistoryBooking(@RequestParam("pageNumber")
                                                 @NotNull(message = "Page number must not be null")
                                                 @Min(value = 0, message = "Page number must greater or equal 0")
                                                 Integer pageNumber,

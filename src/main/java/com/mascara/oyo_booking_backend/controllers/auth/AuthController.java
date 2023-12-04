@@ -31,14 +31,12 @@ import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -46,10 +44,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -112,7 +108,8 @@ public class AuthController {
 
         User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         if (user.getStatus() == UserStatusEnum.PEDING) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new BaseResponse<>(true, 408, "User is peding"));
+            BaseMessageData response = new BaseMessageData("User is peding");
+            return ResponseEntity.status(HttpStatusCode.valueOf(202)).body(new BaseResponse<>(true, 202, response));
         }
         Set<Role> rolesOfUser = user.getRoleSet();
         Set<String> rolesName = rolesOfUser.stream().map(role -> role.getRoleName().toString()).collect(Collectors.toSet());
@@ -153,7 +150,8 @@ public class AuthController {
         String passwordEncoded = encoder.encode(registerRequest.getPassword());
         User user = userService.addUser(registerRequest, passwordEncoded);
         verifyTokenService.sendMailVerifyToken(user);
-        return ResponseEntity.ok(new BaseResponse(true, 200, "User registered successfully!"));
+        BaseMessageData response = new BaseMessageData("User registered successfully!");
+        return ResponseEntity.ok(new BaseResponse(true, 200, response));
     }
 
     @Operation(summary = "Refresh token", description = "Api for Refresh token")
