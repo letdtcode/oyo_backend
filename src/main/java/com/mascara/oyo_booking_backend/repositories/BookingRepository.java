@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,4 +42,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query(value = "select b.* from booking b where b.booking_code = :booking_code and b.deleted is false", nativeQuery = true)
     Optional<Booking> findBookingByCode(@Param("booking_code") String bookingCode);
+
+    @Query(value = "select b.* from booking b where (b.date_check_in >= :start_date or b.date_check_out >= :start_date) and b.accom_id = :accom_id and b.deleted is false ORDER BY b.created_date DESC", nativeQuery = true)
+    List<Booking> findBookingByRangeDateStartFromCurrent(@Param("accom_id") Long accomId, @Param("start_date") LocalDate startDate);
 }

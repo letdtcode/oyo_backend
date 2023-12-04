@@ -9,9 +9,9 @@ import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.mapper.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
-import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -82,6 +83,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Autowired
     private SurchargeCategoryRepository surchargeCategoryRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Override
     @Transactional
@@ -225,7 +229,20 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Override
     @Transactional
     public GetAccomPlaceResponse getAccomPlaceDetails(Long id) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+        LocalDate dateNow = LocalDate.now();
+        List<Booking> bookingOfRangeDate = bookingRepository.findBookingByRangeDateStartFromCurrent(accomPlace.getId(), dateNow);
+        List<LocalDate> datesBooked = new ArrayList<>();
+        if (!bookingOfRangeDate.isEmpty() && bookingOfRangeDate != null) {
+            for (Booking booking : bookingOfRangeDate) {
+                LocalDate currentDate = booking.getCheckIn();
+                while (!currentDate.isAfter(booking.getCheckOut()) && !datesBooked.contains(currentDate)) {
+                    datesBooked.add(currentDate);
+                    currentDate = currentDate.plusDays(1);
+                }
+            }
+        }
         return accomPlaceMapper.toGetAccomPlaceResponse(accomPlace);
     }
 

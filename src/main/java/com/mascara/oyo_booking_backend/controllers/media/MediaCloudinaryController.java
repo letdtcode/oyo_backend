@@ -60,7 +60,7 @@ public class MediaCloudinaryController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/upload-multil")
     @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
-    public ResponseEntity<?> uploadFile(@RequestParam("files") List<MultipartFile> files) {
+    public ResponseEntity<?> uploadMultipleFile(@RequestParam("files") List<MultipartFile> files) {
         if (files.isEmpty()) {
             throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
         }

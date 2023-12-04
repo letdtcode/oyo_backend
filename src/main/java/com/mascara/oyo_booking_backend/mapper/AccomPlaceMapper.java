@@ -15,6 +15,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +56,9 @@ public class AccomPlaceMapper {
     @Autowired
     private SurchargeOfAccomRepository surchargeOfAccomRepository;
 
+    @Autowired
+    private BookingRepository bookingRepository;
+
     //    Covert Address General
     private final Converter<Long, String> idAccomPlaceToAddressGeneral = context -> {
         Long id = context.getSource();
@@ -65,6 +69,27 @@ public class AccomPlaceMapper {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district")));
         String addressGeneral = district.getDistrictName() + ", " + province.getProvinceName();
         return id != null ? addressGeneral : null;
+    };
+
+    //    Covert Address General
+    private final Converter<Long, List<LocalDate>> idAccomPlaceToListOfBookedDates = context -> {
+        Long accomId = context.getSource();
+        if (accomId != null) {
+            LocalDate dateNow = LocalDate.now();
+            List<Booking> bookingOfRangeDate = bookingRepository.findBookingByRangeDateStartFromCurrent(accomId, dateNow);
+            List<LocalDate> datesBooked = new ArrayList<>();
+            if (!bookingOfRangeDate.isEmpty() && bookingOfRangeDate != null) {
+                for (Booking booking : bookingOfRangeDate) {
+                    LocalDate currentDate = booking.getCheckIn();
+                    while (!currentDate.isAfter(booking.getCheckOut()) && !datesBooked.contains(currentDate)) {
+                        datesBooked.add(currentDate);
+                        currentDate = currentDate.plusDays(1);
+                    }
+                }
+            }
+            return datesBooked;
+        }
+        return null;
     };
 
     private final Converter<Long, List<GetSurchargeOfAccomResponse>> idAccomPlaceToSurchargeList = context -> {
@@ -195,8 +220,10 @@ public class AccomPlaceMapper {
                         .map(AccomPlace::getId, GetAccomPlaceResponse::setSurchargeList))
 
                 .addMappings(mapper -> mapper.using(setBedRoomToNameTypeBed)
-                        .map(AccomPlace::getBedRoomSet, GetAccomPlaceResponse::setBedRooms));
+                        .map(AccomPlace::getBedRoomSet, GetAccomPlaceResponse::setBedRooms))
 
+                .addMappings(mapper -> mapper.using(idAccomPlaceToListOfBookedDates)
+                        .map(AccomPlace::getId, GetAccomPlaceResponse::setBookedDates));
     }
 
     public GetAccomPlaceResponse toGetAccomPlaceResponse(AccomPlace accomPlace) {
