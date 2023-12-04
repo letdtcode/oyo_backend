@@ -65,7 +65,7 @@ public class GeneralPersonalController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
         BaseMessageData response = userService.changePassword(changePasswordRequest, userMail);
-        if (response.getMessage().equals(AppContants.NOT_PERMI_CHANGE_PASSWORD)) {
+        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
             return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));

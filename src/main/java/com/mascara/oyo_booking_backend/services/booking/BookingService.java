@@ -24,7 +24,7 @@ public interface BookingService {
     CheckBookingResponse checkBookingToGetPrice(CheckBookingRequest request);
 
     @Transactional
-    BasePagingData<GetBookingResponse> getBookingOfPartnerByStatus(String hostMail,
+    BasePagingData<GetBookingResponse> getListBookingOfPartner(String hostMail,
                                                               String status,
                                                               Integer pageNum,
                                                               Integer pageSize,
@@ -37,4 +37,7 @@ public interface BookingService {
                                                                     Integer pageSize,
                                                                     String sortType,
                                                                     String field);
+
+    @Transactional
+    BaseMessageData changeStatusBooking(String hostMail, String bookingCode, String status);
 }

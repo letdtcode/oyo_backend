@@ -215,7 +215,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public BaseMessageData changePassword(ChangePasswordRequest request, String mailUser) {
         if (!request.getEmail().equals(mailUser)) {
-            return new BaseMessageData(AppContants.NOT_PERMI_CHANGE_PASSWORD);
+            return new BaseMessageData(AppContants.NOT_PERMIT);
         }
         User user = userRepository.findByMail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));

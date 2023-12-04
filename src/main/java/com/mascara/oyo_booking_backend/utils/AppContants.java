@@ -17,9 +17,10 @@ public class AppContants {
     public static final String FILE_IS_NULL = "File is null";
 
     public static final String BOOKING_SUCESSFUL = "Booking successful";
-    public static final String NOT_PERMI_CHANGE_PASSWORD = "Not permit change password";
+    public static final String NOT_PERMIT = "Not permit do this";
     public static final String RESET_PASSWORD_SUCESS = "Reset password sucess";
     public static final Object REVIEW_IS_NOT_AVAILABLE = "Review is not available";
+    public static final Object CHANGE_STATUS_BOOKING_SUCCESS = "Change status booking success";
 
     public static final String BOOKING_NOT_AVAILABLE_TIME(Long accomId, String dateCheckIn, String dateCheckOut) {
         return "Booking not available for accom " + accomId + "from " + dateCheckIn + " to " + dateCheckOut;

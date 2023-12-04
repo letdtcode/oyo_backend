@@ -180,15 +180,15 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public BasePagingData<GetBookingResponse> getBookingOfPartnerByStatus(String hostMail,
-                                                                          String status,
-                                                                          Integer pageNum,
-                                                                          Integer pageSize,
-                                                                          String sortType,
-                                                                          String field) {
+    public BasePagingData<GetBookingResponse> getListBookingOfPartner(String hostMail,
+                                                                      String status,
+                                                                      Integer pageNum,
+                                                                      Integer pageSize,
+                                                                      String sortType,
+                                                                      String field) {
         User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
-        Page<Booking> bookingPage = bookingRepository.getBookingOfPartnerByStatus(user.getId(), status, paging);
+        Page<Booking> bookingPage = bookingRepository.getListBookingOfPartner(user.getId(), status, paging);
         List<Booking> bookingList = bookingPage.stream().toList();
         List<GetBookingResponse> responseList = bookingList.stream().map(booking -> bookingMapper.toGetBookingResponse(booking))
                 .collect(Collectors.toList());
@@ -217,22 +217,14 @@ public class BookingServiceImpl implements BookingService {
                 bookingPage.getTotalElements());
     }
 
-//    @Override
-//    @Transactional
-//    public BasePagingData<GetHistoryBookingResponse> getHistoryTransactionOfPartner(String userMail,
-//                                                                           Integer pageNum,
-//                                                                           Integer pageSize,
-//                                                                           String sortType,
-//                                                                           String field) {
-//        User user = userRepository.findByMail(userMail).get();
-//        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
-//        Page<Booking> bookingPage = bookingRepository.getHistoryBookingUser(user.getId(), paging);
-//        List<Booking> bookingList = bookingPage.stream().toList();
-//        List<GetHistoryBookingResponse> responseList = bookingList.stream().map(booking -> bookingMapper.toGetHistoryBookingResponse(booking))
-//                .collect(Collectors.toList());
-//        return new BasePagingData<>(responseList,
-//                bookingPage.getNumber(),
-//                bookingPage.getSize(),
-//                bookingPage.getTotalElements());
-//    }
+    @Override
+    @Transactional
+    public BaseMessageData changeStatusBooking(String hostMail, String bookingCode, String status) {
+        User host = userRepository.findHostOfAccomByBookingCode(bookingCode).get();
+        if (!host.getMail().equals(hostMail)) {
+            return new BaseMessageData(AppContants.NOT_PERMIT);
+        }
+        bookingRepository.changeStatusBooking(bookingCode, status);
+        return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
+    }
 }

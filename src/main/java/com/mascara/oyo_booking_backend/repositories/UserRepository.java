@@ -47,5 +47,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Query(value = "update users u set u.status = :status where u.mail = :mail and u.deleted is false", nativeQuery = true)
-    void changeStatusUser(@Param("mail") String mail,@Param("status") String status) ;
+    void changeStatusUser(@Param("mail") String mail, @Param("status") String status);
+
+    @Query(value = "select u.* from users u join accom_place ap on u.id = ap.user_id join booking b on b.accom_id = ap.id where b.booking_code = :booking_code and b.deleted is false", nativeQuery = true)
+    Optional<User> findHostOfAccomByBookingCode(@Param("booking_code") String bookingCode);
 }

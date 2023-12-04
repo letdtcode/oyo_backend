@@ -26,6 +26,7 @@ public class GetHistoryBookingResponse {
     private LocalDate checkIn;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkOut;
+    private String imageUrl;
     private Integer numAdult;
     private Integer numChild;
     private Integer numBornChild;
@@ -36,5 +37,6 @@ public class GetHistoryBookingResponse {
     private Double pricePerNight;
     private String paymentPolicy;
     private String paymentMethod;
+    private boolean isReviewed;
     private String status;
 }
