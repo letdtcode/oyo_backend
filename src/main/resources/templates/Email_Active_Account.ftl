@@ -262,7 +262,7 @@
                                                     style="border-radius: 6px"
                                             >
                                                 <a
-                                                        href="${model.msgBody}"
+                                                        href="${link_active_user}"
                                                         target="_blank"
                                                         style="
                                 display: inline-block;

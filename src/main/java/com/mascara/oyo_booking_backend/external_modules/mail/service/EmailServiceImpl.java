@@ -6,6 +6,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -16,7 +17,6 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,6 +27,7 @@ import java.util.Map;
  * Filename  : EmailServiceImpl
  */
 @Service
+@Slf4j
 public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender emailSender;
@@ -49,11 +50,9 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendMailWithTemplate(EmailDetails emailDetails,String template) {
+    public void sendMailWithTemplate(EmailDetails emailDetails, String template, Map<String, Object> templateModel) {
         MimeMessage message = emailSender.createMimeMessage();
         try {
-            Map<String, Object> templateModel = new HashMap<>();
-            templateModel.put("model", emailDetails);
             Template freemarkerTemplate = freemarkerConfigurer.getConfiguration()
                     .getTemplate(template);
             String htmlBody = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerTemplate, templateModel);
@@ -65,6 +64,7 @@ public class EmailServiceImpl implements EmailService {
             emailSender.send(message);
         } catch (MessagingException | IOException | TemplateException e) {
             e.printStackTrace();
+            log.error("ERROR SEND EMAIL SUCCESS BOOKING: {}  -- {}", e.getClass(), e.getMessage());
         }
     }
 }

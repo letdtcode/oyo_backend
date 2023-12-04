@@ -58,7 +58,8 @@ public class ReviewServiceImpl implements ReviewService {
             User user = userRepository.findByUserId(review.getReviewListId())
                     .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
             reviewResponse.setAvatarUserUrl(user.getAvatarUrl());
-            reviewResponse.setFirstNameUser(user.getFirstName());
+            reviewResponse.setFirstName(user.getFirstName());
+            reviewResponse.setLastName(user.getLastName());
             if (review.getHaveImage()) {
                 List<String> imageReviewUrls = new ArrayList<>();
                 for (ImageReview imgReview : review.getImageReviewSet()) {
@@ -85,6 +86,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
         Review review = mapper.map(request, Review.class);
         review.setAccomPlace(accomPlace);
+        review.setAccomPlaceId(accomPlace.getId());
         review.setReviewList(reviewList);
         review.setBooking(booking);
         review.setReviewListId(reviewList.getId());

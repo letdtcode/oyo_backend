@@ -141,7 +141,7 @@
                                     style="font-size:0px;padding:10px 25px;padding-bottom:40px;word-break:break-word;">
 
                                     <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:28px;font-weight:bold;line-height:1;text-align:center;color:#555;">
-                                        OYO BOOKING XIN CHÀO BẠN
+                                        XIN CHÀO BẠN
                                     </div>
 
                                 </td>
@@ -151,10 +151,78 @@
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
 
                                     <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:left;color:#555;">
-                                        Xin chào ${fullName}!<br></br>
-                                        Chúng tôi thật sự hạnh phúc khi đồng hành cùng bạn!<br><br> Sau đây là mật khẩu mới đã được kích hoạt của bạn:
-                                        <span style="color: red;">${newPassword}</span>
-                                        <br><br>Bạn vui lòng đổi mật khẩu sau khi đăng nhập thành công !
+                                        Xin chào ${fullNameCustomer}!<br></br>
+                                        Cảm ơn bạn đã sử dụng dịch vụ của OYO Booking. Chúng tôi thật sự hạnh phúc
+                                        khi có bạn đồng hành!<br><br> Chúc bạn có một trải nghiệm tuyệt vời. Dưới đây là
+                                        thông tin đặt phòng của bạn:
+                                    </div>
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <!-- <div style="width:400px;margin:auto; height:100px;background:#e0e0e0;"></div> -->
+                                <td align="center"
+                                    style="font-size:0px;padding:10px 25px;padding-top:10px;padding-bottom:20px;word-break:break-word;">
+
+                                    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                           style="border-collapse:separate;line-height:100%;">
+                                        <tr>
+                                            <td align="left" bgcolor="#2F67F6" role="presentation"
+                                                style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:15px 25px;width:400px;margin:auto; height:100px;background:#eeeeee;"
+                                                valign="middle">
+                                                <div style="background:#eeeeee;color:black;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
+                                                    <div>
+                                                        <div style="display: flex;">
+                                                            <div>
+                                                                <p style="margin:5px">Tên nhà thuê</p>
+                                                                <p style="margin:5px">Chủ nhà</p>
+                                                                <p style="margin:5px">Ngày đặt phòng</p>
+                                                                <p style="margin:5px">Ngày trả phòng</p>
+                                                                <p style="margin:5px">Giá nhà cơ bản</p>
+                                                                <p style="margin:5px">Giá phụ phí (nếu có)</p>
+                                                                <p style="margin:5px">Tổng tiền thanh toán</p>
+                                                                <p style="margin:5px">Số tiền đã thanh toán</p>
+                                                            </div>
+                                                            <div style="margin-left:10px">
+                                                                <p style="margin:5px">: ${homeName}</p>
+                                                                <p style="margin:5px">: ${ownerName}</p>
+                                                                <p style="margin:5px">: ${dateStart}</p>
+                                                                <p style="margin:5px">: ${dateEnd}</p>
+                                                                <p style="margin:5px">: ${baseCost} đ</p>
+                                                                <p style="margin:5px">: ${surchargeCost} đ</p>
+                                                                    %</p>
+                                                                <p style="margin:5px;font-weight: bold;color:red">
+                                                                    : ${totalCost} đ</p>
+                                                                <p style="margin:5px;font-weight: bold;color:blue">
+                                                                    : ${moneyPay} đ</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:5px 25px;word-break:break-word;">
+
+                                    <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:left;color:#555;">
+                                        Mã hóa đơn: ${billId}
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:5px 25px;word-break:break-word;">
+
+                                    <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:left;color:#555;">
+                                        Ngày in hóa đơn: ${createdDate}
                                     </div>
 
                                 </td>
@@ -203,7 +271,7 @@
                                             <td align="center" style="font-size:0px;padding:0;word-break:break-word;">
 
                                                 <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;font-weight:300;line-height:1;text-align:center;color:#575757;">
-                                                    Thu Duc, 01 Street. City Ho Chi Minh, Viet Nam
+                                                    Some Firm Ltd, 35 Avenue. City 10115, USA
                                                 </div>
 
                                             </td>

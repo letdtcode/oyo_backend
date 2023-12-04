@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.external_modules.mail;
+package com.mascara.oyo_booking_backend.external_modules.mail.model_mail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -86,8 +86,9 @@ public class PartnerBookingController {
         String status = BookingStatusEnum.CHECK_IN.toString();
         BaseMessageData response = bookingService.changeStatusBooking(hostMail, bookingCode, status);
         if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(true, 403, response));
+            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }
+        response.setMessage("Check in booking sucessful");
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -106,8 +107,9 @@ public class PartnerBookingController {
         String status = BookingStatusEnum.CHECK_OUT.toString();
         BaseMessageData response = bookingService.changeStatusBooking(hostMail, bookingCode, status);
         if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(true, 403, response));
+            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }
+        response.setMessage("Check out booking sucessful");
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

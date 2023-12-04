@@ -1,10 +1,8 @@
 package com.mascara.oyo_booking_backend.external_modules.mail.service;
 
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
-import freemarker.template.TemplateException;
-import jakarta.mail.MessagingException;
 
-import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by: IntelliJ IDEA
@@ -16,5 +14,5 @@ import java.io.IOException;
 public interface EmailService {
     String sendSimpleMessage(EmailDetails<String> emailDetails);
 
-    void sendMailWithTemplate(EmailDetails emailDetails,String template) throws MessagingException, IOException, TemplateException;
+    void sendMailWithTemplate(EmailDetails emailDetails, String template, Map<String, Object> templateModel);
 }

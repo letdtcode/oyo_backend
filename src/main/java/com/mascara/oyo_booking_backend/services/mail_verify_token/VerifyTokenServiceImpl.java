@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -77,17 +79,18 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
     }
 
     @Override
-    public void sendMailVerifyToken(User user) throws MessagingException, TemplateException, IOException {
+    public void sendMailVerifyToken(User user) {
         String codeConfirm = getRandomNumberString();
         generateTokenConfirmMail(codeConfirm, user);
         String objectSend = "email=" + user.getMail() + "&token=" + codeConfirm;
         String baseURL = "http://localhost:8080/api/v1/auth/verify?";
         String message = baseURL + objectSend;
+        Map<String, Object> mesage = new HashMap<>();
+        mesage.put("link_active_user", message);
         EmailDetails emailDetails = EmailDetails.builder()
                 .recipient(user.getMail())
-                .subject("Xác nhận đăng kí")
-                .msgBody(message).build();
-        emailService.sendMailWithTemplate(emailDetails,"Email_Active_Account.ftl");
+                .subject("Xác nhận đăng kí").build();
+        emailService.sendMailWithTemplate(emailDetails, "Email_Active_Account.ftl", mesage);
     }
 
     public static String getRandomNumberString() {

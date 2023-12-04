@@ -12,6 +12,8 @@ import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
+import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.mapper.BookingMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
@@ -26,7 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -69,6 +73,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private SurchargeOfAccomRepository surchargeOfAccomRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     @Transactional
@@ -135,6 +142,26 @@ public class BookingServiceImpl implements BookingService {
                 .revenueListId(revenueListUser.getId())
                 .build();
         revenueRepository.save(revenue);
+        //        Send mail booking success
+        Long hostId = accomPlace.getUserId();
+        User host = userRepository.findByUserId(hostId).get();
+        String fullHostName = host.getFirstName() + " " + host.getLastName();
+        Map<String, Object> model = new HashMap<>();
+        model.put("billId", bookingCode);
+        model.put("homeName", accomPlace.getAccomName());
+        model.put("ownerName", fullHostName);
+        model.put("dateStart", request.getCheckIn());
+        model.put("dateEnd", request.getCheckOut());
+        model.put("baseCost", request.getOriginPay());
+        model.put("surchargeCost", request.getSurcharge());
+        model.put("totalCost", totalBill);
+        model.put("moneyPay", totalTrasfer);
+        model.put("createdDate", booking.getCreatedDate());
+        model.put("fullNameCustomer", booking.getNameCustomer());
+        EmailDetails emailDetails = EmailDetails.builder()
+                .recipient(mailUser)
+                .subject("Đặt phòng thành công").build();
+        emailService.sendMailWithTemplate(emailDetails, "Email_Booking_Success.ftl", model);
         return new BaseMessageData(AppContants.BOOKING_SUCESSFUL);
     }
 

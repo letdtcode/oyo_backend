@@ -14,7 +14,7 @@ import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
-import com.mascara.oyo_booking_backend.external_modules.mail.ResetPasswordInfo;
+import com.mascara.oyo_booking_backend.external_modules.mail.model_mail.ResetPasswordInfo;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
@@ -40,10 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -269,11 +266,14 @@ public class UserServiceImpl implements UserService {
                 .fullName(user.getFirstName() + " " + user.getLastName())
                 .newPassword(newPassword)
                 .build();
+        Map<String, Object> model = new HashMap<>();
+        model.put("fullName", info.getFullName());
+        model.put("newPassword", info.getNewPassword());
         EmailDetails<Object> emailDetails = EmailDetails.builder()
                 .recipient(mail)
                 .subject("Khôi phục mật khẩu")
-                .msgBody(info).build();
-        emailService.sendMailWithTemplate(emailDetails, "Email_Reset_Password.ftl");
+                .build();
+        emailService.sendMailWithTemplate(emailDetails, "Email_Reset_Password.ftl", model);
         return new BaseMessageData(AppContants.RESET_PASSWORD_SUCESS);
     }
 

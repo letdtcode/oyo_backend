@@ -26,7 +26,8 @@ public class GetReviewResponse {
     private List<String> imageReviewUrls;
     private Long accomPlaceId;
     private Long reviewListId;
-    private String firstNameUser;
+    private String firstName;
+    private String lastName;
     private String avatarUserUrl;
     private LocalDateTime createdDate;
 }
