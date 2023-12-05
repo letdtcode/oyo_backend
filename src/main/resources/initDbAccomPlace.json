@@ -14,6 +14,8 @@
       "numBathRoom": 5,
       "numBedRoom": 3,
       "pricePerNight": 500000,
+      "guide": "Đến là đón",
+      "refundPolicy": "Trả trước 7 ngày",
       "facilityNameList": [
         "Bàn ủi (bàn là)",
         "Internet miễn phí",
@@ -35,6 +37,8 @@
       "numBathRoom": 2,
       "numBedRoom": 2,
       "pricePerNight": 300000,
+      "guide": "Đến là đón",
+      "refundPolicy": "Trả trước 7 ngày",
       "facilityNameList": [
         "Máy pha cà phê/trà",
         "Nhà bếp",

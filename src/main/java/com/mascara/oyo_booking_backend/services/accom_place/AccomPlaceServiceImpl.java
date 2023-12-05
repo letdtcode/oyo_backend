@@ -134,8 +134,6 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         } else {
             User user = userRepository.findByMail("client1@gmail.com")
                     .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
-            accomPlace.setGuide("Đến là đón");
-            accomPlace.setRefundPolicy("Trả trước 7 ngày");
             accomPlace.setUser(user);
             accomPlace.setUserId(user.getId());
             accomPlace.setCreatedBy("dev");

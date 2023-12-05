@@ -79,6 +79,9 @@ public class InitDataService implements CommandLineRunner {
     @Autowired
     private SurchargeCategoryRepository surchargeCategoryRepository;
 
+    @Autowired
+    private ImageAccomRepository imageAccomRepository;
+
     public void initDataUser() {
         Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString());
         if (!roleAdmin.isPresent()) {
@@ -349,6 +352,35 @@ public class InitDataService implements CommandLineRunner {
         }
     }
 
+    public void implementInitDataMenuActionImageAccom() {
+        List<ImageAccom> checkList = imageAccomRepository.checkExistData();
+        try {
+            if (checkList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbImageAccom.json")).getFile()
+                );
+
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<ImageAccom> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+
+                List<ImageAccom> imageAccomList = initModel.getData();
+                for (int i = 0; i < imageAccomList.size(); i++) {
+                    Long accomId = imageAccomList.get(i).getAccomPlaceId();
+                    AccomPlace accomPlace = accomPlaceRepository.findById(accomId).get();
+                    ImageAccom imageAccom = imageAccomList.get(i);
+                    imageAccom.setAccomPlace(accomPlace);
+                    imageAccom.setCreatedBy("dev");
+                    imageAccom.setLastModifiedBy("dev");
+                    imageAccomList.set(i, imageAccom);
+                }
+                imageAccomRepository.saveAll(imageAccomList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run(String... args) throws Exception {
         initDataUser();
@@ -361,5 +393,6 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionTypeBed();
         implementInitDataMenuActionSurcharge();
         implementInitDataAccomPlace();
+        implementInitDataMenuActionImageAccom();
     }
 }
