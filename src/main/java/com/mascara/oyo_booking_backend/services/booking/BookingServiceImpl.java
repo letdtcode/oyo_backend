@@ -246,9 +246,20 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public BaseMessageData changeStatusBooking(String hostMail, String bookingCode, String status) {
+    public BaseMessageData changeStatusBookingByHost(String hostMail, String bookingCode, String status) {
         User host = userRepository.findHostOfAccomByBookingCode(bookingCode).get();
         if (!host.getMail().equals(hostMail)) {
+            return new BaseMessageData(AppContants.NOT_PERMIT);
+        }
+        bookingRepository.changeStatusBooking(bookingCode, status);
+        return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status) {
+        User user = userRepository.findUserByBookingCode(bookingCode).get();
+        if (!user.getMail().equals(userMail)) {
             return new BaseMessageData(AppContants.NOT_PERMIT);
         }
         bookingRepository.changeStatusBooking(bookingCode, status);

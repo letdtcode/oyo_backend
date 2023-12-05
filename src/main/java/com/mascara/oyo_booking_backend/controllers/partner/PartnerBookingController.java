@@ -76,7 +76,7 @@ public class PartnerBookingController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/check-in")
+    @PutMapping("/check-in")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> checkInBooking(@RequestParam("bookingCode")
                                             @NotNull(message = "Booking code must not null")
@@ -84,7 +84,7 @@ public class PartnerBookingController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String hostMail = principal.getName();
         String status = BookingStatusEnum.CHECK_IN.toString();
-        BaseMessageData response = bookingService.changeStatusBooking(hostMail, bookingCode, status);
+        BaseMessageData response = bookingService.changeStatusBookingByHost(hostMail, bookingCode, status);
         if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
             return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }
@@ -97,7 +97,7 @@ public class PartnerBookingController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/check-out")
+    @PutMapping("/check-out")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> checkOutBooking(@RequestParam("bookingCode")
                                             @NotNull(message = "Booking code must not null")
@@ -105,7 +105,7 @@ public class PartnerBookingController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String hostMail = principal.getName();
         String status = BookingStatusEnum.CHECK_OUT.toString();
-        BaseMessageData response = bookingService.changeStatusBooking(hostMail, bookingCode, status);
+        BaseMessageData response = bookingService.changeStatusBookingByHost(hostMail, bookingCode, status);
         if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
             return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }

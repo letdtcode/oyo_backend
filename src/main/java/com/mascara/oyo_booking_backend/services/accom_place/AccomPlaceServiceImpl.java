@@ -243,6 +243,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 }
             }
         }
+        Long numView = accomPlace.getNumView();
+        accomPlace.setNumView(numView + 1);
+        accomPlace = accomPlaceRepository.save(accomPlace);
         return accomPlaceMapper.toGetAccomPlaceResponse(accomPlace);
     }
 

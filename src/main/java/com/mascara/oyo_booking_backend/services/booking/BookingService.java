@@ -39,5 +39,8 @@ public interface BookingService {
                                                                     String field);
 
     @Transactional
-    BaseMessageData changeStatusBooking(String hostMail, String bookingCode, String status);
+    BaseMessageData changeStatusBookingByHost(String hostMail, String bookingCode, String status);
+
+    @Transactional
+    BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status);
 }
