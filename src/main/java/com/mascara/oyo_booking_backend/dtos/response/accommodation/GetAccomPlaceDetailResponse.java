@@ -34,11 +34,14 @@ public class GetAccomPlaceDetailResponse {
     private Integer numPeople;
     private Integer numBathRoom;
     private Integer numBedRoom;
+    private Integer numKitchen;
     private Integer numView;
     private Float gradeRate;
     private Long numReview;
     private List<String> bedRooms;
     private Double pricePerNight;
+    private String guide;
+    private String refundPolicy;
     private List<GetFacilityCategoryResponse> facilityCategoryList;
     private List<GetSurchargeOfAccomResponse> surchargeList;
     private String lastModifiedDate;
