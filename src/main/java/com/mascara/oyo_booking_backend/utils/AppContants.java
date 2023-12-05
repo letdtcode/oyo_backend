@@ -21,6 +21,8 @@ public class AppContants {
     public static final String RESET_PASSWORD_SUCESS = "Reset password sucess";
     public static final Object REVIEW_IS_NOT_AVAILABLE = "Review is not available";
     public static final Object CHANGE_STATUS_BOOKING_SUCCESS = "Change status booking success";
+    public static final String ADD_WISH_ITEM_SUCCESS = "Add wish item success";
+    public static final String REMOVE_WISH_ITEM_SUCCESS = "Remove wish item success";
 
     public static final String BOOKING_NOT_AVAILABLE_TIME(Long accomId, String dateCheckIn, String dateCheckOut) {
         return "Booking not available for accom " + accomId + "from " + dateCheckIn + " to " + dateCheckOut;

@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.services.accom_place;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
+import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
@@ -131,7 +132,10 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             accomPlace.setUser(user);
             accomPlace.setUserId(user.getId());
         } else {
-            User user = userRepository.findByMail("client1@gmail.com").orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+            User user = userRepository.findByMail("client1@gmail.com")
+                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+            accomPlace.setGuide("Đến là đón");
+            accomPlace.setRefundPolicy("Trả trước 7 ngày");
             accomPlace.setUser(user);
             accomPlace.setUserId(user.getId());
             accomPlace.setCreatedBy("dev");
@@ -228,7 +232,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public GetAccomPlaceResponse getAccomPlaceDetails(Long id) {
+    public GetAccomPlaceDetailResponse getAccomPlaceDetails(Long id) {
         AccomPlace accomPlace = accomPlaceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
         LocalDate dateNow = LocalDate.now();
@@ -246,7 +250,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         Long numView = accomPlace.getNumView();
         accomPlace.setNumView(numView + 1);
         accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceResponse(accomPlace);
+        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }
 
     @Override

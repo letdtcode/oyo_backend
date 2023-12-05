@@ -4,6 +4,7 @@ import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFil
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accom_category.GetAccomCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
@@ -87,7 +88,7 @@ public class PublicAccomPlaceController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/{id}/detail")
     public ResponseEntity<?> getInfoAccomPlaceDetails(@PathVariable("id") Long id) {
-        GetAccomPlaceResponse response = accomPlaceService.getAccomPlaceDetails(id);
+        GetAccomPlaceDetailResponse response = accomPlaceService.getAccomPlaceDetails(id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -114,6 +117,12 @@ public class AccomPlace extends BasePesistence {
 
     @Column(name = "price_per_night", nullable = false)
     private Double pricePerNight;
+
+    @Column(name = "guide", columnDefinition = "NVARCHAR(255)")
+    private String guide;
+
+    @Column(name = "refund_policy", columnDefinition = "NVARCHAR(255)")
+    private String refundPolicy;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

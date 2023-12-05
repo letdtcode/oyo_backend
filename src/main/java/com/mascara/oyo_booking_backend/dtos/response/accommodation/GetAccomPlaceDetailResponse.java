@@ -13,14 +13,14 @@ import java.util.List;
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
- * Date      : 29/10/2023
- * Time      : 5:12 CH
- * Filename  : GetAccomPlaceResponse
+ * Date      : 05/12/2023
+ * Time      : 5:47 CH
+ * Filename  : GetAccomPlaceDetailResponse
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAccomPlaceResponse {
+public class GetAccomPlaceDetailResponse {
     private Long Id;
     private String accomName;
     private String description;
@@ -37,12 +37,12 @@ public class GetAccomPlaceResponse {
     private Integer numView;
     private Float gradeRate;
     private Long numReview;
-//    private List<String> bedRooms;
+    private List<String> bedRooms;
     private Double pricePerNight;
-//    private List<GetFacilityCategoryResponse> facilityCategoryList;
-//    private List<GetSurchargeOfAccomResponse> surchargeList;
+    private List<GetFacilityCategoryResponse> facilityCategoryList;
+    private List<GetSurchargeOfAccomResponse> surchargeList;
     private String lastModifiedDate;
-//    @JsonFormat(pattern = "dd/MM/yyyy")
-//    private List<LocalDate> bookedDates;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private List<LocalDate> bookedDates;
     private String status;
 }

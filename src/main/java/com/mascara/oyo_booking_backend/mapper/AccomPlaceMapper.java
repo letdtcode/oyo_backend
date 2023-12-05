@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.mapper;
 
+import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
@@ -207,28 +208,59 @@ public class AccomPlaceMapper {
                 .addMappings(mapper -> mapper.using(imageAccomToImageAccomUrl)
                         .map(AccomPlace::getImageAccoms, GetAccomPlaceResponse::setImageAccomsUrls))
 
-                .addMappings(mapper -> mapper.using(setFacilityToFacilityCateDetails)
-                        .map(AccomPlace::getFacilitySet, GetAccomPlaceResponse::setFacilityCategoryList))
+//                .addMappings(mapper -> mapper.using(setFacilityToFacilityCateDetails)
+//                        .map(AccomPlace::getFacilitySet, GetAccomPlaceResponse::setFacilityCategoryList))
 
                 .addMappings(mapper -> mapper.using(accomCategoryToAccomCategoryName)
                         .map(AccomPlace::getAccommodationCategories, GetAccomPlaceResponse::setAccomCateName))
 
                 .addMappings(mapper -> mapper.using(userIdToNameHost)
-                        .map(AccomPlace::getUserId, GetAccomPlaceResponse::setNameHost))
+                        .map(AccomPlace::getUserId, GetAccomPlaceResponse::setNameHost));
+
+//                .addMappings(mapper -> mapper.using(idAccomPlaceToSurchargeList)
+//                        .map(AccomPlace::getId, GetAccomPlaceResponse::setSurchargeList))
+
+//                .addMappings(mapper -> mapper.using(setBedRoomToNameTypeBed)
+//                        .map(AccomPlace::getBedRoomSet, GetAccomPlaceResponse::setBedRooms))
+//
+//                .addMappings(mapper -> mapper.using(idAccomPlaceToListOfBookedDates)
+//                        .map(AccomPlace::getId, GetAccomPlaceResponse::setBookedDates));
+
+        mapper.createTypeMap(AccomPlace.class, GetAccomPlaceDetailResponse.class)
+                .addMappings(mapper -> mapper.using(idAccomPlaceToAddressGeneral)
+                        .map(AccomPlace::getId, GetAccomPlaceDetailResponse::setAddressGeneral))
+
+                .addMappings(mapper -> mapper.using(imageAccomToImageAccomUrl)
+                        .map(AccomPlace::getImageAccoms, GetAccomPlaceDetailResponse::setImageAccomsUrls))
+
+                .addMappings(mapper -> mapper.using(setFacilityToFacilityCateDetails)
+                        .map(AccomPlace::getFacilitySet, GetAccomPlaceDetailResponse::setFacilityCategoryList))
+
+                .addMappings(mapper -> mapper.using(accomCategoryToAccomCategoryName)
+                        .map(AccomPlace::getAccommodationCategories, GetAccomPlaceDetailResponse::setAccomCateName))
+
+                .addMappings(mapper -> mapper.using(userIdToNameHost)
+                        .map(AccomPlace::getUserId, GetAccomPlaceDetailResponse::setNameHost))
 
                 .addMappings(mapper -> mapper.using(idAccomPlaceToSurchargeList)
-                        .map(AccomPlace::getId, GetAccomPlaceResponse::setSurchargeList))
+                        .map(AccomPlace::getId, GetAccomPlaceDetailResponse::setSurchargeList))
 
                 .addMappings(mapper -> mapper.using(setBedRoomToNameTypeBed)
-                        .map(AccomPlace::getBedRoomSet, GetAccomPlaceResponse::setBedRooms))
+                        .map(AccomPlace::getBedRoomSet, GetAccomPlaceDetailResponse::setBedRooms))
 
                 .addMappings(mapper -> mapper.using(idAccomPlaceToListOfBookedDates)
-                        .map(AccomPlace::getId, GetAccomPlaceResponse::setBookedDates));
+                        .map(AccomPlace::getId, GetAccomPlaceDetailResponse::setBookedDates));
     }
 
     public GetAccomPlaceResponse toGetAccomPlaceResponse(AccomPlace accomPlace) {
         GetAccomPlaceResponse accomPlaceResponse;
         accomPlaceResponse = mapper.map(accomPlace, GetAccomPlaceResponse.class);
         return accomPlaceResponse;
+    }
+
+    public GetAccomPlaceDetailResponse toGetAccomPlaceDetailResponse(AccomPlace accomPlace) {
+        GetAccomPlaceDetailResponse accomPlaceDetailResponse;
+        accomPlaceDetailResponse = mapper.map(accomPlace, GetAccomPlaceDetailResponse.class);
+        return accomPlaceDetailResponse;
     }
 }

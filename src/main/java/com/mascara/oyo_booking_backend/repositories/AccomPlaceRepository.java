@@ -70,6 +70,12 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
             nativeQuery = true)
     Page<AccomPlace> getListAccomPlaceOfPartner(@Param("host_id") Long hostId, Pageable pageable);
 
+
+    @Query(value = "select ap.* from accom_place ap join wish_item wi on ap.id = wi.accom_id where wi.wish_id = :wish_id and wi.deleted is false",
+            countQuery = "select count(id) from accom_place ap join wish_item wi on ap.id = wi.accom_id where wi.wish_id = :wish_id and wi.deleted is false",
+            nativeQuery = true)
+    Page<AccomPlace> getListAccomPlaceOfWishListUser(@Param("wish_id") Long wishListId, Pageable pageable);
+
     @Modifying
     @Query(value = "update accom_place ap set ap.status = :status where ap.id = :id", nativeQuery = true)
     void changeStatusAccomPlace(@Param("id") Long id, @Param("status") String status);
