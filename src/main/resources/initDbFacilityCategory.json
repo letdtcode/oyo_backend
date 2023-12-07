@@ -2,42 +2,52 @@
   "data": [
     {
       "faciCateName": "Tiêu chuẩn",
+      "description": "Đây là các tiện nghi tiêu chuẩn của tổ chức OYO",
       "faciCateCode": "FACI_CATE_01"
     },
     {
       "faciCateName": "Lối vào",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_02"
     },
     {
       "faciCateName": "Bếp",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_03"
     },
     {
       "faciCateName": "Phòng tắm",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_04"
     },
     {
       "faciCateName": "Ngoài trời",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_05"
     },
     {
       "faciCateName": "Giải trí",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_06"
     },
     {
       "faciCateName": "Gia đình",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_07"
     },
     {
       "faciCateName": "Độ an toàn và sạch sẽ",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_08"
     },
     {
       "faciCateName": "Đi lại",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_09"
     },
     {
       "faciCateName": "Khác",
+      "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
       "faciCateCode": "FACI_CATE_10"
     }
   ]

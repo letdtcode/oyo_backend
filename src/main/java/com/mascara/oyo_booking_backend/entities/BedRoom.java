@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 
 /**
  * Created by: IntelliJ IDEA
@@ -19,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "bed_room")
 public class BedRoom extends BasePesistence {
     @Id

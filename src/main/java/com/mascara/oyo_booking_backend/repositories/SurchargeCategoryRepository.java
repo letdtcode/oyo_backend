@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by: IntelliJ IDEA
@@ -24,4 +25,7 @@ public interface SurchargeCategoryRepository extends JpaRepository<SurchargeCate
 
     @Query(value = "select sc.surcharge_cate_name from surcharge_category sc where sc.id = :surcharge_id and sc.deleted is false",nativeQuery = true)
     String getSurchargeCateNameById(@Param("surcharge_id") Long surchargeId);
+
+    @Query(value = "select sc.* from surcharge_category sc where sc.surcharge_code = :surcharge_code and sc.deleted is false",nativeQuery = true)
+    Optional<SurchargeCategory> findSurchargeCategoryByCode (@Param("surcharge_code") String surchargeCode);
 }

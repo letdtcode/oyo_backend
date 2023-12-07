@@ -24,6 +24,9 @@ public interface FacilityRepository extends JpaRepository<Facility, Long> {
     @Query(value = "select f.* from facility f where f.facility_name = :facilityName and f.deleted is false", nativeQuery = true)
     Optional<Facility> findByFacilityName(@Param("facilityName") String facilityName);
 
+    @Query(value = "select f.* from facility f where f.faci_code = :facilityCode and f.deleted is false", nativeQuery = true)
+    Optional<Facility> findByFacilityCode(@Param("facilityCode") String facilityCode);
+
     @Query(value = "select f.* from facility f where f.facility_name in :listFacilityName and f.deleted is false",nativeQuery = true)
     List<Facility> findByListFacilityName(@Param("listFacilityName") List<String> listFacilityName);
 

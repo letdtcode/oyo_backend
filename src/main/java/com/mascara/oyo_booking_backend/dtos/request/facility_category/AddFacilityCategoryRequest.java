@@ -22,6 +22,11 @@ public class AddFacilityCategoryRequest {
     @NotNull
     @NotBlank
     private String faciCateCode;
+
+    @NotNull
+    @NotBlank
+    private String description;
+
     @NotNull
     @NotBlank
     @Pattern(regexp = "(?i)Enable|Disable", message = "Status must be 'Enable' or 'Disable'")

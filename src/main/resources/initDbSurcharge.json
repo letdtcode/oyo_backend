@@ -1,13 +1,16 @@
 {
   "data": [
     {
-      "surchargeCateName": "Phí môi trường"
+      "surchargeCateName": "Phí môi trường",
+      "surchargeCode": "SUR_01"
     },
     {
-      "surchargeCateName": "Phí vệ sinh"
+      "surchargeCateName": "Phí vệ sinh",
+      "surchargeCode": "SUR_02"
     },
     {
-      "surchargeCateName": "Phí sử dụng tiện ích"
+      "surchargeCateName": "Phí sử dụng tiện ích",
+      "surchargeCode": "SUR_03"
     }
   ]
 }

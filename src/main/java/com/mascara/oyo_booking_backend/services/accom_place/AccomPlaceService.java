@@ -1,8 +1,7 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
-import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
+import com.mascara.oyo_booking_backend.dtos.request.accom_place.*;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
@@ -44,4 +43,28 @@ public interface AccomPlaceService {
 
     @Transactional
     BaseMessageData deleteAccomPlace(Long id);
+
+    @Transactional
+    BaseMessageData updateTitleAccom(UpdateTitleAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateFacilityAccom(UpdateFacilityAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateRoomAccom(UpdateRoomAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateImageAccom(UpdateImageAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateAddressAccom(UpdateAddressAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateSurchargeAccom(UpdateSurchargeAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData changePriceAccom(Double pricePerNight, Long accomId);
+
+    @Transactional
+    BaseMessageData updateDiscountAccom(Double discountPercent, Long accomId);
 }

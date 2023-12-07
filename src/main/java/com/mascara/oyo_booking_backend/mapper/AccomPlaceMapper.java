@@ -100,7 +100,7 @@ public class AccomPlaceMapper {
             List<SurchargeOfAccom> surchargeOfAccomList = surchargeOfAccomRepository.findByAccomPlaceId(accomId);
             if (surchargeOfAccomList != null && !surchargeOfAccomList.isEmpty()) {
                 for (SurchargeOfAccom surcharge : surchargeOfAccomList) {
-                    String surcharCateName = surchargeCategoryRepository.getSurchargeCateNameById(surcharge.getId());
+                    String surcharCateName = surchargeCategoryRepository.getSurchargeCateNameById(surcharge.getSurchargeCateId());
                     if (surcharCateName != null) {
                         surchargeList.add(new GetSurchargeOfAccomResponse(surcharge.getCost(), surcharCateName));
                     }

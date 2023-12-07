@@ -39,7 +39,7 @@ import java.security.Principal;
 @RequestMapping("/api/v1/partner/booking")
 @RequiredArgsConstructor
 @Validated
-public class PartnerBookingController {
+public class PartnerManageBookingController {
 
     @Autowired
     private BookingService bookingService;

@@ -3,8 +3,12 @@ package com.mascara.oyo_booking_backend.entities;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -23,6 +27,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "surcharge_category")
 public class SurchargeCategory extends BasePesistence {
     @Id
@@ -35,6 +40,9 @@ public class SurchargeCategory extends BasePesistence {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "surchargeCategory")
     @Fetch(FetchMode.SUBSELECT)
     private Set<SurchargeOfAccom> surchargeOfAccomSet;
+
+    @Column(name = "surcharge_code", unique = true)
+    private String surchargeCode;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

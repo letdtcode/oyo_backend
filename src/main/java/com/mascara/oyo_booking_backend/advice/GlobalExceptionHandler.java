@@ -10,8 +10,10 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -83,8 +85,8 @@ public class GlobalExceptionHandler {
                 .body(body);
     }
 
-    @ExceptionHandler({ExpiredJwtException.class, MalformedJwtException.class, UnsupportedJwtException.class})
-    public ResponseEntity<Object> handleValidationExceptions(JwtException ex) {
+    @ExceptionHandler({ExpiredJwtException.class, MalformedJwtException.class, UnsupportedJwtException.class, AuthenticationException.class})
+    public ResponseEntity<Object> handleSecurityExceptions(Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", System.currentTimeMillis());
         body.put("status", HttpStatus.UNAUTHORIZED.value());
@@ -92,7 +94,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(body);
     }
-
 
     @ExceptionHandler(TokenRefreshException.class)
     public ResponseEntity<Object> handleTokenRefreshException(TokenRefreshException ex) {

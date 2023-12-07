@@ -72,13 +72,5 @@ public class AddAccomPlaceRequest {
     private Double pricePerNight;
 
     @NotNull
-    @NotBlank
-    private String guide;
-
-    @NotNull
-    @NotBlank
-    private String refundPolicy;
-
-    @NotNull
     private List<String> facilityNameList;
 }

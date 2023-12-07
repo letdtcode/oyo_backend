@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.util.Set;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "facility")
 public class Facility extends BasePesistence {
     @Id

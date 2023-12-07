@@ -86,6 +86,7 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
         FacilityCategories facilityCategories = FacilityCategories.builder()
                 .faciCateName(request.getFaciCateName())
                 .faciCateCode(GenerateCodeUtils.generateCode(AliasUtils.FACILITY_CATEGORY, count))
+                .description(request.getDescription())
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         facilityCategoriesRepository.save(facilityCategories);
@@ -100,6 +101,7 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
         facilityCategories.setFaciCateName(request.getFaciCateName());
         facilityCategories.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
+        facilityCategories.setDescription(request.getDescription());
         facilityCategoriesRepository.save(facilityCategories);
         return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Facility category"));
     }

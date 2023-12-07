@@ -122,7 +122,6 @@ public class AuthController {
                 .refreshToken(refreshToken)
                 .user(user)
                 .userId(user.getId())
-                .refreshCount(0L)
                 .expiryDate(expiredToken)
                 .build();
         refreshTokenRepository.save(refreshTokenUser);

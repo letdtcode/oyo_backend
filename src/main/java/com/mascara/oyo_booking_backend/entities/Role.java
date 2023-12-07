@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.util.Set;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "role")
 public class Role extends BasePesistence {
     @Id

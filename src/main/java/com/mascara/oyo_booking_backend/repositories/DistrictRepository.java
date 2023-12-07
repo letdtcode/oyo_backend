@@ -24,4 +24,7 @@ public interface DistrictRepository extends JpaRepository<District, Long> {
 
     @Query(value = "select d.* from district d where d.district_code = :districtcode and d.deleted is false", nativeQuery = true)
     Optional<District> findByDistrictCode(@Param("districtcode") String districtcode);
+
+    @Query(value = "SELECT if(COUNT(*) >0,'true','false') FROM district d WHERE d.district_code = :districtCode and d.deleted is false", nativeQuery = true)
+    boolean existsByDistrictCode(@Param("districtCode") String districtCode);
 }

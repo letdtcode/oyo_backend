@@ -7,6 +7,7 @@ import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDate;
 
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "booking")
 public class Booking extends BasePesistence {
     @Id

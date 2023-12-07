@@ -62,7 +62,6 @@ public class ProvinceServiceImpl implements ProvinceService {
                 .thumbnail(request.getThumbnailLink())
                 .provinceCode(request.getProvinceCode())
                 .divisionType(request.getDivisionType())
-                .numBooking(0L)
                 .slugs(SlugsUtils.toSlug(request.getProvinceName()))
                 .build();
         provinceRepository.save(province);

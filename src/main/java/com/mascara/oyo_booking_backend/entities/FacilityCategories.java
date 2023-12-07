@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "facility_categories")
 public class FacilityCategories extends BasePesistence {
     @Id
@@ -24,6 +26,9 @@ public class FacilityCategories extends BasePesistence {
 
     @Column(name = "faci_cate_name")
     private String faciCateName;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "faci_cate_code", unique = true)
     private String faciCateCode;

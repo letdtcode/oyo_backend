@@ -4,6 +4,7 @@ import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -22,6 +23,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "revenue_list")
 public class RevenueList extends BasePesistence {
 

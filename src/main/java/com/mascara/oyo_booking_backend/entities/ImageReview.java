@@ -4,6 +4,7 @@ import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 
 /**
  * Created by: IntelliJ IDEA
@@ -18,6 +19,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "image_review")
 public class ImageReview extends BasePesistence {
 

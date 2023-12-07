@@ -1,8 +1,7 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
-import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
+import com.mascara.oyo_booking_backend.dtos.request.accom_place.*;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
@@ -107,8 +106,6 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .accomName(request.getAccomName())
                 .description(request.getDescription())
                 .addressDetail(addressDetail)
-                .gradeRate(5F)
-                .numReview(0L)
                 .slugs(slugs)
                 .accommodationCategories(accomCategories)
                 .accomCateId(accomCategories.getId())
@@ -121,7 +118,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .numBathRoom(request.getNumBathRoom())
                 .numBedRoom(request.getNumBedRoom())
                 .numKitchen(request.getNumKitchen())
-                .numView(0L)
+                .refundPolicy("Trả trước 7 ngày")
                 .pricePerNight(request.getPricePerNight())
                 .facilitySet(facilitySet)
                 .status(AccomStatusEnum.ENABLE).build();
@@ -139,7 +136,6 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             accomPlace.setCreatedBy("dev");
             accomPlace.setLastModifiedBy("dev");
         }
-        accomPlace.setNumBooking(0L);
         accomPlace = accomPlaceRepository.save(accomPlace);
         TypeBed typeBedDefault = typeBedRepository.findByTypeBedCode("TYPE_BED_003")
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
@@ -290,9 +286,166 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Override
     @Transactional
     public BaseMessageData deleteAccomPlace(Long id) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
         accomPlace.setDeleted(true);
         accomPlaceRepository.save(accomPlace);
         return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("accom place"));
+    }
+
+
+    @Override
+    @Transactional
+    public BaseMessageData updateTitleAccom(UpdateTitleAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        accomPlace.setAccomName(request.getNameAccom());
+        accomPlace.setDescription(request.getDescription());
+        accomPlace.setGuide(request.getGuide());
+        accomPlace.setRefundPolicy(request.getRefundPolicy());
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("title accom"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateFacilityAccom(UpdateFacilityAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        Set<Facility> facilitySet = new HashSet<>();
+        for (String facilityCode : request.getFacilityCodes()) {
+            Facility facility = facilityRepository.findByFacilityCode(facilityCode).get();
+            facilitySet.add(facility);
+        }
+        accomPlace.setFacilitySet(facilitySet);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("facility accom"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateRoomAccom(UpdateRoomAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        AccommodationCategories accomCate = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom category")));
+
+        accomPlace.setNumBathRoom(request.getNumBathRoom());
+        accomPlace.setNumKitchen(request.getNumKitchen());
+        accomPlace.setAccommodationCategories(accomCate);
+        accomPlace.setAccomCateId(accomCate.getId());
+
+        bedRoomRepository.deleteByAccomId(accomPlace.getId());
+        Set<BedRoom> bedRoomSet = new HashSet<>();
+        for (String bedCode : request.getTypeBedCodes()) {
+            TypeBed typeBed = typeBedRepository.findByTypeBedCode(bedCode).get();
+            BedRoom bedRoom = BedRoom.builder()
+                    .accomPlace(accomPlace)
+                    .accomId(accomPlace.getId())
+                    .typeBed(typeBed)
+                    .typeBedCode(typeBed.getTypeBedCode())
+                    .build();
+            bedRoomRepository.save(bedRoom);
+            bedRoomSet.add(bedRoom);
+        }
+        accomPlace.setBedRoomSet(bedRoomSet);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("room of accom"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateImageAccom(UpdateImageAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+
+        imageAccomRepository.deleteByAccomId(accomPlace.getId());
+        Set<ImageAccom> imageAccomSet = new HashSet<>();
+        for (String imageUrl : request.getImageAccomUrls()) {
+            ImageAccom imageAccom = ImageAccom.builder()
+                    .imgAccomLink(imageUrl)
+                    .accomPlace(accomPlace)
+                    .accomPlaceId(accomPlace.getId()).build();
+            imageAccomRepository.save(imageAccom);
+            imageAccomSet.add(imageAccom);
+        }
+        accomPlace.setImageAccoms(imageAccomSet);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("images of accom"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateAddressAccom(UpdateAddressAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+
+        Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
+        boolean districtExist = districtRepository.existsByDistrictCode(request.getDistrictCode());
+        boolean wardExist = wardRepository.existsByWardCode(request.getWardCode());
+
+        District district = districtRepository.findByDistrictCode(request.getDistrictCode()).get();
+        Ward ward = wardRepository.findByWardCode(request.getWardCode()).get();
+
+        if (!districtExist || !wardExist) {
+            throw new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district or ward"));
+        }
+        String addressDetail = request.getAddressDetail() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
+        accomPlace.setDistrictCode(request.getDistrictCode());
+        accomPlace.setWardCode(request.getWardCode());
+        accomPlace.setProvince(province);
+        accomPlace.setProvinceCode(request.getProvinceCode());
+        accomPlace.setAddressDetail(addressDetail);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("address of accom"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateSurchargeAccom(UpdateSurchargeAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+
+        surchargeOfAccomRepository.deleteByAccomId(accomPlace.getId());
+
+        Set<SurchargeOfAccom> surchargeOfAccomSet = new HashSet<>();
+        for (ItemSurcharge itemSurcharge : request.getSurchargeList()) {
+            String surchargeCode = itemSurcharge.getSurchargeCode();
+            Double cost = itemSurcharge.getCost();
+            SurchargeCategory surchargeCategory = surchargeCategoryRepository.findSurchargeCategoryByCode(surchargeCode)
+                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge code")));
+            SurchargeOfAccom surcharge = SurchargeOfAccom.builder()
+                    .accomPlace(accomPlace)
+                    .accomPlaceId(accomPlace.getId())
+                    .surchargeCategory(surchargeCategory)
+                    .surchargeCateId(surchargeCategory.getId())
+                    .cost(cost).build();
+            surchargeOfAccomRepository.save(surcharge);
+            surchargeOfAccomSet.add(surcharge);
+        }
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("surcharge of accom"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData changePriceAccom(Double pricePerNight, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        accomPlace.setPricePerNight(pricePerNight);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("price of accom"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateDiscountAccom(Double discountPercent, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        Double newPrice = accomPlace.getPricePerNight() - ((accomPlace.getPricePerNight() * discountPercent) / 100);
+        accomPlace.setDiscount(discountPercent);
+        accomPlace.setPricePerNight(newPrice);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("discount accom"));
     }
 }
