@@ -127,6 +127,8 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         if (authentication != null) {
             User user = userRepository.findByMail(authentication.getName()).get();
             accomPlace.setUser(user);
+            accomPlace.setGuide("Đến là đón");
+            accomPlace.setRefundPolicy("Trả trước 7 ngày");
             accomPlace.setUserId(user.getId());
         } else {
             User user = userRepository.findByMail("client1@gmail.com")
