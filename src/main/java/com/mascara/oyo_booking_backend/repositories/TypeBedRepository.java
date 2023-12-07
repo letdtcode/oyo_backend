@@ -1,7 +1,5 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
-import com.mascara.oyo_booking_backend.entities.Province;
 import com.mascara.oyo_booking_backend.entities.TypeBed;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,4 +30,9 @@ public interface TypeBedRepository extends JpaRepository<TypeBed, Long> {
             countQuery = "select count(id) from type_bed tb where tb.deleted is false",
             nativeQuery = true)
     Page<TypeBed> getAllWithPaging(Pageable pageable);
+
+    @Query(value = "select tb.* from type_bed tb where tb.status = :status and tb.deleted is false",
+            countQuery = "select count(id) from type_bed tb where tb.status = :status and tb.deleted is false",
+            nativeQuery = true)
+    Page<TypeBed> getAllWithPagingByStatus(@Param("status") String status, Pageable pageable);
 }

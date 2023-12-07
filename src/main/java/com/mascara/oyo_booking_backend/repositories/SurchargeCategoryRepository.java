@@ -1,8 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.SurchargeCategory;
-import com.mascara.oyo_booking_backend.entities.TypeBed;
-import com.mascara.oyo_booking_backend.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,9 +21,15 @@ public interface SurchargeCategoryRepository extends JpaRepository<SurchargeCate
     @Query(value = "select sc.* from surcharge_category sc limit 1", nativeQuery = true)
     List<SurchargeCategory> checkExistData();
 
-    @Query(value = "select sc.surcharge_cate_name from surcharge_category sc where sc.id = :surcharge_id and sc.deleted is false",nativeQuery = true)
+    @Query(value = "select sc.surcharge_cate_name from surcharge_category sc where sc.id = :surcharge_id and sc.deleted is false", nativeQuery = true)
     String getSurchargeCateNameById(@Param("surcharge_id") Long surchargeId);
 
-    @Query(value = "select sc.* from surcharge_category sc where sc.surcharge_code = :surcharge_code and sc.deleted is false",nativeQuery = true)
-    Optional<SurchargeCategory> findSurchargeCategoryByCode (@Param("surcharge_code") String surchargeCode);
+    @Query(value = "select sc.* from surcharge_category sc where sc.surcharge_code = :surcharge_code and sc.deleted is false", nativeQuery = true)
+    Optional<SurchargeCategory> findSurchargeCategoryByCode(@Param("surcharge_code") String surchargeCode);
+
+    @Query(value = "select sc.* from surcharge_category sc where sc.id = :id and sc.deleted is false", nativeQuery = true)
+    Optional<SurchargeCategory> findSurchargeCategoryById(@Param("id") Long id);
+
+    @Query(value = "select sc.* from surcharge_category sc where sc.status = :status and sc.deleted is false", nativeQuery = true)
+    List<SurchargeCategory> findAllByStatus(@Param("status") String status);
 }

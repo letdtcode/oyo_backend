@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.dtos.response.accommodation;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
+import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,7 +39,7 @@ public class GetAccomPlaceDetailResponse {
     private Integer numView;
     private Float gradeRate;
     private Long numReview;
-    private List<String> bedRooms;
+    private List<GetTypeBedResponse> bedRooms;
     private Double pricePerNight;
     private String guide;
     private String refundPolicy;

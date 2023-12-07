@@ -19,6 +19,9 @@ public interface TypeBedService {
     BasePagingData<GetTypeBedResponse> getAllTypeBedWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
+    BasePagingData<GetTypeBedResponse> getAllTypeBedWithPagingByStatus(String status, Integer pageNum, Integer pageSize, String sortType, String field);
+
+    @Transactional
     BaseMessageData addTypeBed(AddTypeBedRequest request);
 
     @Transactional

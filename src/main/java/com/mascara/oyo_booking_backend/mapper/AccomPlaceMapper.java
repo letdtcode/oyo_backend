@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlace
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
+import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
@@ -100,10 +101,10 @@ public class AccomPlaceMapper {
             List<SurchargeOfAccom> surchargeOfAccomList = surchargeOfAccomRepository.findByAccomPlaceId(accomId);
             if (surchargeOfAccomList != null && !surchargeOfAccomList.isEmpty()) {
                 for (SurchargeOfAccom surcharge : surchargeOfAccomList) {
-                    String surcharCateName = surchargeCategoryRepository.getSurchargeCateNameById(surcharge.getSurchargeCateId());
-                    if (surcharCateName != null) {
-                        surchargeList.add(new GetSurchargeOfAccomResponse(surcharge.getCost(), surcharCateName));
-                    }
+                    SurchargeCategory surchargeCate = surchargeCategoryRepository.findSurchargeCategoryById(surcharge.getSurchargeCateId()).get();
+                    surchargeList.add(new GetSurchargeOfAccomResponse(surcharge.getCost(),
+                            surchargeCate.getSurchargeCateName(),
+                            surchargeCate.getSurchargeCode()));
                 }
             }
             return surchargeList;
@@ -184,13 +185,14 @@ public class AccomPlaceMapper {
     };
 
     //    Covert bed rooms
-    private final Converter<Set<BedRoom>, List<String>> setBedRoomToNameTypeBed = context -> {
+    private final Converter<Set<BedRoom>, List<GetTypeBedResponse>> setBedRoomToNameTypeBed = context -> {
         Set<BedRoom> bedRoomSet = context.getSource();
         if (bedRoomSet != null) {
-            List<String> bedNameList = new ArrayList<>();
+            List<GetTypeBedResponse> bedNameList = new ArrayList<>();
             for (BedRoom bedRoom : bedRoomSet) {
                 String typeBedCode = bedRoom.getTypeBedCode();
-                String bedName = typeBedRepository.findByTypeBedCode(typeBedCode).get().getTypeBedName();
+                TypeBed typeBed = typeBedRepository.findByTypeBedCode(typeBedCode).get();
+                GetTypeBedResponse bedName = mapper.map(typeBed, GetTypeBedResponse.class);
                 bedNameList.add(bedName);
             }
             return bedNameList;

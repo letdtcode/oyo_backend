@@ -42,9 +42,23 @@ public class TypeBedServiceImpl implements TypeBedService {
 
     @Override
     @Transactional
-    public BasePagingData<GetTypeBedResponse> getAllTypeBedWithPaging(Integer pageNum, Integer pageSize,String sortType,String field) {
+    public BasePagingData<GetTypeBedResponse> getAllTypeBedWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<TypeBed> typeBedPage = typeBedRepository.getAllWithPaging(paging);
+        List<TypeBed> typeBedList = typeBedPage.stream().toList();
+        List<GetTypeBedResponse> responseList = typeBedList.stream().map(typeBed -> mapper.map(typeBed,
+                GetTypeBedResponse.class)).collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                typeBedPage.getNumber(),
+                typeBedPage.getSize(),
+                typeBedPage.getTotalElements());
+    }
+
+    @Override
+    @Transactional
+    public BasePagingData<GetTypeBedResponse> getAllTypeBedWithPagingByStatus(String status, Integer pageNum, Integer pageSize, String sortType, String field) {
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+        Page<TypeBed> typeBedPage = typeBedRepository.getAllWithPagingByStatus(status, paging);
         List<TypeBed> typeBedList = typeBedPage.stream().toList();
         List<GetTypeBedResponse> responseList = typeBedList.stream().map(typeBed -> mapper.map(typeBed,
                 GetTypeBedResponse.class)).collect(Collectors.toList());
@@ -60,7 +74,7 @@ public class TypeBedServiceImpl implements TypeBedService {
         int count = (int) typeBedRepository.count();
         TypeBed typeBed = TypeBed.builder()
                 .typeBedName(request.getTypeBedName())
-                .typeBedCode(GenerateCodeUtils.generateCode(AliasUtils.TYPE_BED,count))
+                .typeBedCode(GenerateCodeUtils.generateCode(AliasUtils.TYPE_BED, count))
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         typeBedRepository.save(typeBed);

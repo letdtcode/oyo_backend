@@ -17,4 +17,5 @@ import lombok.NoArgsConstructor;
 public class GetSurchargeOfAccomResponse {
     private Double cost;
     private String surchargeName;
+    private String surchargeCode;
 }
