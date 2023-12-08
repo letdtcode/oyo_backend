@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.response.accommodation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
 import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;
 import lombok.AllArgsConstructor;

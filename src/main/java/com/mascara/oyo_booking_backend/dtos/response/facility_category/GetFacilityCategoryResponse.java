@@ -1,5 +1,6 @@
-package com.mascara.oyo_booking_backend.dtos.response.facility;
+package com.mascara.oyo_booking_backend.dtos.response.facility_category;
 
+import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,13 +1,9 @@
 package com.mascara.oyo_booking_backend.dtos.response.accommodation;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
-import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**

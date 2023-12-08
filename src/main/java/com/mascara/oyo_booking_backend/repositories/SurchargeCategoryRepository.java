@@ -1,6 +1,9 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.SurchargeCategory;
+import com.mascara.oyo_booking_backend.entities.TypeBed;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,4 +35,9 @@ public interface SurchargeCategoryRepository extends JpaRepository<SurchargeCate
 
     @Query(value = "select sc.* from surcharge_category sc where sc.status = :status and sc.deleted is false", nativeQuery = true)
     List<SurchargeCategory> findAllByStatus(@Param("status") String status);
+
+    @Query(value = "select sc.* from surcharge_category sc where sc.deleted is false",
+            countQuery = "select count(id) from surcharge_category sc where sc.deleted is false",
+            nativeQuery = true)
+    Page<SurchargeCategory> getAllWithPaging(Pageable pageable);
 }

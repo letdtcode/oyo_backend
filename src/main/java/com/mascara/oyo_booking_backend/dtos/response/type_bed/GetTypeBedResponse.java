@@ -24,5 +24,5 @@ import java.util.Set;
 public class GetTypeBedResponse {
     private String typeBedName;
     private String typeBedCode;
-    private CommonStatusEnum status;
+    private String status;
 }

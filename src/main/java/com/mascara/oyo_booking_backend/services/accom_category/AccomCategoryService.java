@@ -24,9 +24,9 @@ public interface AccomCategoryService {
     @Transactional
     List<GetAccomCategoryResponse> getAllAccomCategory();
 
-    BaseMessageData addAccomCategory(AddAccomCategoryRequest request);
+    GetAccomCategoryResponse addAccomCategory(AddAccomCategoryRequest request);
 
-    BaseMessageData updateAccomCategory(UpdateAccomCategoryRequest request, Long id);
+    GetAccomCategoryResponse updateAccomCategory(UpdateAccomCategoryRequest request, Long id);
 
     @Transactional
     BaseMessageData changeStatusAccomCategory(Long id, String status);

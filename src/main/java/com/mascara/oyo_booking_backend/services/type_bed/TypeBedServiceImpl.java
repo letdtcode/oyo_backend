@@ -70,32 +70,32 @@ public class TypeBedServiceImpl implements TypeBedService {
 
     @Override
     @Transactional
-    public BaseMessageData addTypeBed(AddTypeBedRequest request) {
+    public GetTypeBedResponse addTypeBed(AddTypeBedRequest request) {
         int count = (int) typeBedRepository.count();
         TypeBed typeBed = TypeBed.builder()
                 .typeBedName(request.getTypeBedName())
                 .typeBedCode(GenerateCodeUtils.generateCode(AliasUtils.TYPE_BED, count))
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
-        typeBedRepository.save(typeBed);
-        return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("Type bed"));
+        typeBed = typeBedRepository.save(typeBed);
+        return mapper.map(typeBed, GetTypeBedResponse.class);
     }
 
     @Override
     @Transactional
-    public BaseMessageData updateTypeBed(UpdateTypeBedRequest request, Long id) {
-        TypeBed typeBed = typeBedRepository.findById(id)
+    public GetTypeBedResponse updateTypeBed(UpdateTypeBedRequest request, String typeBedCode) {
+        TypeBed typeBed = typeBedRepository.findByTypeBedCode(typeBedCode)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
         typeBed.setTypeBedName(request.getTypeBedName());
         typeBed.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
-        typeBedRepository.save(typeBed);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Type bed"));
+        typeBed = typeBedRepository.save(typeBed);
+        return mapper.map(typeBed, GetTypeBedResponse.class);
     }
 
     @Override
     @Transactional
-    public BaseMessageData changeStatusTypeBed(Long id, String status) {
-        TypeBed typeBed = typeBedRepository.findById(id)
+    public BaseMessageData changeStatusTypeBed(String typeBedCode, String status) {
+        TypeBed typeBed = typeBedRepository.findByTypeBedCode(typeBedCode)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
         typeBed.setStatus(CommonStatusEnum.valueOf(status));
         typeBedRepository.save(typeBed);
@@ -104,8 +104,8 @@ public class TypeBedServiceImpl implements TypeBedService {
 
     @Override
     @Transactional
-    public BaseMessageData deletedTypeBed(Long id) {
-        TypeBed typeBed = typeBedRepository.findById(id)
+    public BaseMessageData deletedTypeBed(String typeBedCode) {
+        TypeBed typeBed = typeBedRepository.findByTypeBedCode(typeBedCode)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
         typeBed.setDeleted(true);
         typeBedRepository.save(typeBed);

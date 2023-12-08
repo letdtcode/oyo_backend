@@ -3,28 +3,20 @@ package com.mascara.oyo_booking_backend.services.facility;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility.AddFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility.UpdateFacilityRequest;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.entities.Facility;
 import com.mascara.oyo_booking_backend.entities.FacilityCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.mapper.FacilityMapper;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
 import com.mascara.oyo_booking_backend.repositories.FacilityRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.GenerateCodeUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by: IntelliJ IDEA
@@ -42,11 +34,11 @@ public class FacilityServiceImpl implements FacilityService {
     private FacilityCategoriesRepository facilityCategoriesRepository;
 
     @Autowired
-    private ModelMapper mapper;
+    private FacilityMapper facilityMapper;
 
     @Override
     @Transactional
-    public BaseMessageData addFacility(AddFacilityRequest request) {
+    public GetFacilityResponse addFacility(AddFacilityRequest request) {
         int count = (int) facilityRepository.count();
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
@@ -58,15 +50,15 @@ public class FacilityServiceImpl implements FacilityService {
                 .imageUrl(request.getImageUrl())
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
-        facilityRepository.save(facility);
-        return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("Facility"));
+        facility = facilityRepository.save(facility);
+        return facilityMapper.toGetFacilityResponse(facility);
     }
 
 
     @Override
     @Transactional
-    public BaseMessageData updateFacility(UpdateFacilityRequest request, Long id) {
-        Facility facility = facilityRepository.findById(id)
+    public GetFacilityResponse updateFacility(UpdateFacilityRequest request, String facilityCode) {
+        Facility facility = facilityRepository.findByFacilityCode(facilityCode)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
@@ -75,14 +67,14 @@ public class FacilityServiceImpl implements FacilityService {
         facility.setFacilityCategories(facilityCategories);
         facility.setImageUrl(request.getImageUrl());
         facility.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
-        facilityRepository.save(facility);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Facility"));
+        facility = facilityRepository.save(facility);
+        return facilityMapper.toGetFacilityResponse(facility);
     }
 
     @Override
     @Transactional
-    public BaseMessageData changeStatusFacility(Long id, String status) {
-        Facility facility = facilityRepository.findById(id)
+    public BaseMessageData changeStatusFacility(String facilityCode, String status) {
+        Facility facility = facilityRepository.findByFacilityCode(facilityCode)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
         facility.setStatus(CommonStatusEnum.valueOf(status));
         facilityRepository.save(facility);
@@ -91,8 +83,8 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Override
     @Transactional
-    public BaseMessageData deletedFacility(Long id) {
-        Facility facility = facilityRepository.findById(id)
+    public BaseMessageData deletedFacility(String facilityCode) {
+        Facility facility = facilityRepository.findByFacilityCode(facilityCode)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
         facility.setDeleted(true);
         facilityRepository.save(facility);

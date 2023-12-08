@@ -18,6 +18,7 @@ public class GetFacilityResponse {
     private String facilityName;
     private String facilityCode;
     private String facilityCateCode;
+    private String facilityCateName;
     private String imageUrl;
     private String status;
 }

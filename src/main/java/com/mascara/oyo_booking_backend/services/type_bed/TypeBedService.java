@@ -22,14 +22,14 @@ public interface TypeBedService {
     BasePagingData<GetTypeBedResponse> getAllTypeBedWithPagingByStatus(String status, Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
-    BaseMessageData addTypeBed(AddTypeBedRequest request);
+    GetTypeBedResponse addTypeBed(AddTypeBedRequest request);
 
     @Transactional
-    BaseMessageData updateTypeBed(UpdateTypeBedRequest request, Long id);
+    GetTypeBedResponse updateTypeBed(UpdateTypeBedRequest request, String typeBedCode);
 
     @Transactional
-    BaseMessageData changeStatusTypeBed(Long id, String status);
+    BaseMessageData changeStatusTypeBed(String typeBedCode, String status);
 
     @Transactional
-    BaseMessageData deletedTypeBed(Long id);
+    BaseMessageData deletedTypeBed(String typeBedCode);
 }

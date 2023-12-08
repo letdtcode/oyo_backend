@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.controllers.publics;
 
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.surcharge.SurchargeCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeCategoryResponse;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.services.surcharge.SurchargeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +43,7 @@ public class PublicSurchargeController {
     @GetMapping("")
     public ResponseEntity<?> getAllSurchargeCategoryByStatus() {
         String status = CommonStatusEnum.ENABLE.toString();
-        List<SurchargeCategoryResponse> response = surchargeService.getAllSurchargeCategoryByStatus(status);
+        List<GetSurchargeCategoryResponse> response = surchargeService.getAllSurchargeCategoryByStatus(status);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

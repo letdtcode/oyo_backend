@@ -2,7 +2,7 @@ package com.mascara.oyo_booking_backend.mapper;
 
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
 import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;

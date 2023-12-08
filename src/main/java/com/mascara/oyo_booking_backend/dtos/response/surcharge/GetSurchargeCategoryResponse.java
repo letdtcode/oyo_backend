@@ -21,7 +21,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SurchargeCategoryResponse {
+public class GetSurchargeCategoryResponse {
     private String surchargeCateName;
     private String surchargeCode;
     private String status;

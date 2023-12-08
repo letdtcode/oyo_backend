@@ -3,7 +3,7 @@ package com.mascara.oyo_booking_backend.services.facility_category;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility_category.AddFacilityCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility_category.UpdateFacilityCategoryRequest;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +24,14 @@ public interface FacilityCategoryService {
     List<GetFacilityCategoryResponse> getAllDataFacility();
 
     @Transactional
-    BaseMessageData addFacilityCategory(AddFacilityCategoryRequest request);
+    GetFacilityCategoryResponse addFacilityCategory(AddFacilityCategoryRequest request);
 
     @Transactional
-    BaseMessageData updateFacilityCategory(UpdateFacilityCategoryRequest request, Long id);
+    GetFacilityCategoryResponse updateFacilityCategory(UpdateFacilityCategoryRequest request, String facilCateCode);
 
     @Transactional
-    BaseMessageData changeStatusFacilityCategory(Long id, String status);
+    BaseMessageData changeStatusFacilityCategory(String facilCateCode, String status);
 
     @Transactional
-    BaseMessageData deletedFacilityCategory(Long id);
+    BaseMessageData deletedFacilityCategory(String facilCateCode);
 }

@@ -64,7 +64,7 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
 
     @Override
     @Transactional
-    public BaseMessageData addAccomCategory(AddAccomCategoryRequest request) {
+    public GetAccomCategoryResponse addAccomCategory(AddAccomCategoryRequest request) {
         if (accomCategoriesRepository.existsByAccomCateName(request.getAccomCateName()))
             throw new ResourceExistException(AppContants.FIELD_EXIST_WHEN_ADD_ENTITY("Accom category", "accomCategoryName"));
         if (accomCategoriesRepository.existsByIcon(request.getIcon()))
@@ -75,21 +75,21 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
                 .icon(request.getIcon())
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
-        accomCategoriesRepository.save(accommodationCategories);
-        return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("Accom category"));
+        accommodationCategories = accomCategoriesRepository.save(accommodationCategories);
+        return mapper.map(accommodationCategories, GetAccomCategoryResponse.class);
     }
 
     @Override
     @Transactional
-    public BaseMessageData<String> updateAccomCategory(UpdateAccomCategoryRequest request, Long id) {
+    public GetAccomCategoryResponse updateAccomCategory(UpdateAccomCategoryRequest request, Long id) {
         AccommodationCategories accommodationCategories = accomCategoriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom category")));
         accommodationCategories.setAccomCateName(request.getAccomCateName());
         accommodationCategories.setDescription(request.getDescription());
         accommodationCategories.setIcon(request.getIcon());
         accommodationCategories.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
-        accomCategoriesRepository.save(accommodationCategories);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("accom category"));
+        accommodationCategories = accomCategoriesRepository.save(accommodationCategories);
+        return mapper.map(accommodationCategories, GetAccomCategoryResponse.class);
     }
 
     @Override

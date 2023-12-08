@@ -3,11 +3,8 @@ package com.mascara.oyo_booking_backend.services.facility;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility.AddFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility.UpdateFacilityRequest;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Created by: IntelliJ IDEA
@@ -19,14 +16,14 @@ import java.util.List;
 public interface FacilityService {
 
     @Transactional
-    BaseMessageData addFacility(AddFacilityRequest request);
+    GetFacilityResponse addFacility(AddFacilityRequest request);
 
     @Transactional
-    BaseMessageData updateFacility(UpdateFacilityRequest request, Long id);
+    GetFacilityResponse updateFacility(UpdateFacilityRequest request, String facilityCode);
 
     @Transactional
-    BaseMessageData changeStatusFacility(Long id, String status);
+    BaseMessageData changeStatusFacility(String facilityCode, String status);
 
     @Transactional
-    BaseMessageData deletedFacility(Long id);
+    BaseMessageData deletedFacility(String facilityCode);
 }

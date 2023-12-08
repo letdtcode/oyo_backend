@@ -1,8 +1,7 @@
 package com.mascara.oyo_booking_backend.controllers.publics;
 
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityCategoryResponse;
-import com.mascara.oyo_booking_backend.services.facility.FacilityService;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.services.facility_category.FacilityCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

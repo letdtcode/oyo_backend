@@ -1,6 +1,11 @@
 package com.mascara.oyo_booking_backend.services.surcharge;
 
-import com.mascara.oyo_booking_backend.dtos.response.surcharge.SurchargeCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.request.surcharge_category.AddSurchargeCategoryRequest;
+import com.mascara.oyo_booking_backend.dtos.request.surcharge_category.UpdateSurchargeCategoryRequest;
+import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeCategoryResponse;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,5 +17,20 @@ import java.util.List;
  * Filename  : SurchargeService
  */
 public interface SurchargeService {
-    List<SurchargeCategoryResponse> getAllSurchargeCategoryByStatus(String status);
+    @Transactional
+    BasePagingData<GetSurchargeCategoryResponse> getAllSurchargeCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
+
+    List<GetSurchargeCategoryResponse> getAllSurchargeCategoryByStatus(String status);
+
+    @Transactional
+    GetSurchargeCategoryResponse addSurchargeCategory(AddSurchargeCategoryRequest request);
+
+    @Transactional
+    GetSurchargeCategoryResponse updateSurchargeCategory(UpdateSurchargeCategoryRequest request, String surchargeCateCode);
+
+    @Transactional
+    BaseMessageData changeStatusSurchargeCategory(String surchargeCateCode, String status);
+
+    @Transactional
+    BaseMessageData deletedSurchargeCategory(String surchargeCateCode);
 }

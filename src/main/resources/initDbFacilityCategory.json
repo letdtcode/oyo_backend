@@ -3,52 +3,52 @@
     {
       "faciCateName": "Tiêu chuẩn",
       "description": "Đây là các tiện nghi tiêu chuẩn của tổ chức OYO",
-      "faciCateCode": "FACI_CATE_01"
+      "faciCateCode": "FACI_CATE_001"
     },
     {
       "faciCateName": "Lối vào",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_02"
+      "faciCateCode": "FACI_CATE_002"
     },
     {
       "faciCateName": "Bếp",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_03"
+      "faciCateCode": "FACI_CATE_003"
     },
     {
       "faciCateName": "Phòng tắm",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_04"
+      "faciCateCode": "FACI_CATE_004"
     },
     {
       "faciCateName": "Ngoài trời",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_05"
+      "faciCateCode": "FACI_CATE_005"
     },
     {
       "faciCateName": "Giải trí",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_06"
+      "faciCateCode": "FACI_CATE_006"
     },
     {
       "faciCateName": "Gia đình",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_07"
+      "faciCateCode": "FACI_CATE_007"
     },
     {
       "faciCateName": "Độ an toàn và sạch sẽ",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_08"
+      "faciCateCode": "FACI_CATE_008"
     },
     {
       "faciCateName": "Đi lại",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_09"
+      "faciCateCode": "FACI_CATE_009"
     },
     {
       "faciCateName": "Khác",
       "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
-      "faciCateCode": "FACI_CATE_10"
+      "faciCateCode": "FACI_CATE_010"
     }
   ]
 }

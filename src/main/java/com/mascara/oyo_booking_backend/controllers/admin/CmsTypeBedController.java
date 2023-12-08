@@ -39,7 +39,7 @@ public class CmsTypeBedController {
     @PostMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addTypeBed(@RequestBody @Valid AddTypeBedRequest request) {
-        BaseMessageData response = typeBedService.addTypeBed(request);
+        GetTypeBedResponse response = typeBedService.addTypeBed(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -59,29 +59,29 @@ public class CmsTypeBedController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{id}/update")
+    @PutMapping("/{typeBedCode}/update")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateTypeBed(@RequestBody @Valid UpdateTypeBedRequest request,
-                                           @PathVariable("id") @NotNull Long id) {
-        BaseMessageData response = typeBedService.updateTypeBed(request, id);
+                                           @PathVariable("typeBedCode") @NotNull String typeBedCode) {
+        GetTypeBedResponse response = typeBedService.updateTypeBed(request, typeBedCode);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{id}/change-status")
+    @PutMapping("/{typeBedCode}/change-status")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> changeStatusTypeBed(@PathVariable("id")
-                                                 @NotNull Long id,
+    public ResponseEntity<?> changeStatusTypeBed(@PathVariable("typeBedCode")
+                                                 @NotNull String typeBedCode,
                                                  @RequestParam("status")
                                                  @NotBlank
                                                  @Status String status) {
-        BaseMessageData messageReponse = typeBedService.changeStatusTypeBed(id, status);
+        BaseMessageData messageReponse = typeBedService.changeStatusTypeBed(typeBedCode, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{typeBedCode}/delete")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteTypeBed(@PathVariable("id") @NotNull Long id) {
-        BaseMessageData messageReponse = typeBedService.deletedTypeBed(id);
+    public ResponseEntity<?> deleteTypeBed(@PathVariable("id") @NotNull String typeBedCode) {
+        BaseMessageData messageReponse = typeBedService.deletedTypeBed(typeBedCode);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 }

@@ -11,4 +11,5 @@ public class AliasUtils {
     public static String TYPE_BED = "TYPE_BED";
     public static String FACILITY = "FACI";
     public static String FACILITY_CATEGORY = "FACI_CATE";
+    public static String SURCHARGE_CATEGORY = "SUR";
 }
