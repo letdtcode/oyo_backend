@@ -19,9 +19,6 @@ public class AddFacilityCategoryRequest {
     @NotNull
     @NotBlank
     private String faciCateName;
-    @NotNull
-    @NotBlank
-    private String faciCateCode;
 
     @NotNull
     @NotBlank

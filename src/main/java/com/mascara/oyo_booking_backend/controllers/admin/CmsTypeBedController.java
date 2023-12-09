@@ -80,7 +80,7 @@ public class CmsTypeBedController {
 
     @DeleteMapping("/{typeBedCode}/delete")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteTypeBed(@PathVariable("id") @NotNull String typeBedCode) {
+    public ResponseEntity<?> deleteTypeBed(@PathVariable("typeBedCode") @NotNull String typeBedCode) {
         BaseMessageData messageReponse = typeBedService.deletedTypeBed(typeBedCode);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }

@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.response.accommodation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategorWithFacilityListResponse;
 import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
 import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;
 import lombok.AllArgsConstructor;
@@ -43,7 +43,7 @@ public class GetAccomPlaceDetailResponse {
     private Double pricePerNight;
     private String guide;
     private String refundPolicy;
-    private List<GetFacilityCategoryResponse> facilityCategoryList;
+    private List<GetFacilityCategorWithFacilityListResponse> facilityCategoryList;
     private List<GetSurchargeOfAccomResponse> surchargeList;
     private String lastModifiedDate;
     @JsonFormat(pattern = "dd/MM/yyyy")

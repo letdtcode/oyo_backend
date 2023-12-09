@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.controllers.publics;
 
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategorWithFacilityListResponse;
 import com.mascara.oyo_booking_backend.services.facility_category.FacilityCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,7 +40,7 @@ public class PublicFacilityController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/get-all")
     public ResponseEntity<?> getAllDataFacility() {
-        List<GetFacilityCategoryResponse> response = facilityCategoryService.getAllDataFacility();
+        List<GetFacilityCategorWithFacilityListResponse> response = facilityCategoryService.getAllDataFacility();
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }
