@@ -12,7 +12,6 @@ import com.mascara.oyo_booking_backend.entities.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.Role;
 import com.mascara.oyo_booking_backend.entities.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
@@ -49,6 +48,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -106,7 +106,12 @@ public class AuthController {
         CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
         String userMail = (userPrincipal.getEmail());
 
-        User user = userRepository.findByMail(userMail).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+        Optional<User> optionalUser = userRepository.findByMail(userMail);
+        if (!optionalUser.isPresent()) {
+            BaseMessageData response = new BaseMessageData("Mail not exist");
+            return ResponseEntity.status(HttpStatusCode.valueOf(204)).body(new BaseResponse<>(true, 202, response));
+        }
+        User user = optionalUser.get();
         if (user.getStatus() == UserStatusEnum.PEDING) {
             BaseMessageData response = new BaseMessageData("User is peding");
             return ResponseEntity.status(HttpStatusCode.valueOf(202)).body(new BaseResponse<>(true, 202, response));

@@ -3,8 +3,9 @@ package com.mascara.oyo_booking_backend.services.facility_category;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility_category.AddFacilityCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility_category.UpdateFacilityCategoryRequest;
-import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategorWithFacilityListResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.Facility;
 import com.mascara.oyo_booking_backend.entities.FacilityCategories;
@@ -43,14 +44,14 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 
     @Override
     @Transactional
-    public BasePagingData<GetFacilityCategoryResponse> getAllFacilityCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
+    public BasePagingData<GetFacilityCategorWithFacilityListResponse> getAllFacilityCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<FacilityCategories> facilityCategoriesPage = facilityCategoriesRepository.getAllWithPaging(paging);
 
         List<FacilityCategories> facilityCategoriesList = facilityCategoriesPage.stream().toList();
-        List<GetFacilityCategoryResponse> responses = facilityCategoriesList.stream()
+        List<GetFacilityCategorWithFacilityListResponse> responses = facilityCategoriesList.stream()
                 .map(facilityCate -> mapper.map(facilityCate,
-                        GetFacilityCategoryResponse.class)).collect(Collectors.toList());
+                        GetFacilityCategorWithFacilityListResponse.class)).collect(Collectors.toList());
         for (int i = 0; i < facilityCategoriesList.size(); i++) {
             List<Facility> facilities = facilityCategoriesList.get(i).getFacilitySet().stream().toList();
             List<GetFacilityResponse> infoFacilityResponseList = facilities.stream().map(facility -> mapper.map(facility, GetFacilityResponse.class))
@@ -65,10 +66,10 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 
     @Override
     @Transactional
-    public List<GetFacilityCategoryResponse> getAllDataFacility() {
+    public List<GetFacilityCategorWithFacilityListResponse> getAllDataFacility() {
         List<FacilityCategories> facilityCategoriesList = facilityCategoriesRepository.findAll();
-        List<GetFacilityCategoryResponse> facilityCategoryResponses = facilityCategoriesList.stream()
-                .map(facilityCate -> mapper.map(facilityCate, GetFacilityCategoryResponse.class))
+        List<GetFacilityCategorWithFacilityListResponse> facilityCategoryResponses = facilityCategoriesList.stream()
+                .map(facilityCate -> mapper.map(facilityCate, GetFacilityCategorWithFacilityListResponse.class))
                 .collect(Collectors.toList());
         for (int i = 0; i < facilityCategoriesList.size(); i++) {
             List<Facility> facilities = facilityCategoriesList.get(i).getFacilitySet().stream().toList();

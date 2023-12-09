@@ -2,8 +2,8 @@ package com.mascara.oyo_booking_backend.mapper;
 
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
+import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategorWithFacilityListResponse;
 import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
 import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;
 import com.mascara.oyo_booking_backend.entities.*;
@@ -144,11 +144,11 @@ public class AccomPlaceMapper {
     };
 
     //    Convert Set Facility
-    private final Converter<Set<Facility>, List<GetFacilityCategoryResponse>> setFacilityToFacilityCateDetails = context -> {
+    private final Converter<Set<Facility>, List<GetFacilityCategorWithFacilityListResponse>> setFacilityToFacilityCateDetails = context -> {
         Set<Facility> facilitySet = context.getSource();
         if (facilitySet != null) {
             List<GetFacilityResponse> facilityList = new ArrayList<>();
-            List<GetFacilityCategoryResponse> facilityCategoryList = new ArrayList();
+            List<GetFacilityCategorWithFacilityListResponse> facilityCategoryList = new ArrayList();
             for (Facility facility : facilitySet) {
                 GetFacilityResponse facilityResponse = mapper.map(facility, GetFacilityResponse.class);
                 facilityResponse.setStatus(facility.getStatus().toString());
@@ -156,7 +156,7 @@ public class AccomPlaceMapper {
             }
             for (GetFacilityResponse facilityResponse : facilityList) {
                 boolean addCate = true;
-                for (GetFacilityCategoryResponse facilityCategoryResponse : facilityCategoryList) {
+                for (GetFacilityCategorWithFacilityListResponse facilityCategoryResponse : facilityCategoryList) {
                     if (facilityResponse.getFacilityCateCode().equals(facilityCategoryResponse.getFaciCateCode())) {
                         addCate = false;
                         break;
@@ -165,13 +165,13 @@ public class AccomPlaceMapper {
                 if (addCate == true) {
                     FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(facilityResponse
                             .getFacilityCateCode()).get();
-                    GetFacilityCategoryResponse faciCateResponse = mapper.map(facilityCategories, GetFacilityCategoryResponse.class);
+                    GetFacilityCategorWithFacilityListResponse faciCateResponse = mapper.map(facilityCategories, GetFacilityCategorWithFacilityListResponse.class);
                     faciCateResponse.setStatus(facilityCategories.getStatus().toString());
                     facilityCategoryList.add(faciCateResponse);
                 }
             }
 
-            for (GetFacilityCategoryResponse faciCate : facilityCategoryList) {
+            for (GetFacilityCategorWithFacilityListResponse faciCate : facilityCategoryList) {
                 List<GetFacilityResponse> facilityResponseList = new ArrayList<>();
                 for (GetFacilityResponse facility : facilityList) {
                     if (faciCate.getFaciCateCode().equals(facility.getFacilityCateCode()))
@@ -210,23 +210,11 @@ public class AccomPlaceMapper {
                 .addMappings(mapper -> mapper.using(imageAccomToImageAccomUrl)
                         .map(AccomPlace::getImageAccoms, GetAccomPlaceResponse::setImageAccomsUrls))
 
-//                .addMappings(mapper -> mapper.using(setFacilityToFacilityCateDetails)
-//                        .map(AccomPlace::getFacilitySet, GetAccomPlaceResponse::setFacilityCategoryList))
-
                 .addMappings(mapper -> mapper.using(accomCategoryToAccomCategoryName)
                         .map(AccomPlace::getAccommodationCategories, GetAccomPlaceResponse::setAccomCateName))
 
                 .addMappings(mapper -> mapper.using(userIdToNameHost)
                         .map(AccomPlace::getUserId, GetAccomPlaceResponse::setNameHost));
-
-//                .addMappings(mapper -> mapper.using(idAccomPlaceToSurchargeList)
-//                        .map(AccomPlace::getId, GetAccomPlaceResponse::setSurchargeList))
-
-//                .addMappings(mapper -> mapper.using(setBedRoomToNameTypeBed)
-//                        .map(AccomPlace::getBedRoomSet, GetAccomPlaceResponse::setBedRooms))
-//
-//                .addMappings(mapper -> mapper.using(idAccomPlaceToListOfBookedDates)
-//                        .map(AccomPlace::getId, GetAccomPlaceResponse::setBookedDates));
 
         mapper.createTypeMap(AccomPlace.class, GetAccomPlaceDetailResponse.class)
                 .addMappings(mapper -> mapper.using(idAccomPlaceToAddressGeneral)
