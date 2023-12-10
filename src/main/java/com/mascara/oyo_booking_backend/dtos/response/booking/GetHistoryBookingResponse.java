@@ -37,6 +37,7 @@ public class GetHistoryBookingResponse {
     private Double pricePerNight;
     private String paymentPolicy;
     private String paymentMethod;
+    private String refundPolicy;
     private boolean isReviewed;
     private String status;
 }

@@ -83,7 +83,7 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
         String codeConfirm = getRandomNumberString();
         generateTokenConfirmMail(codeConfirm, user);
         String objectSend = "email=" + user.getMail() + "&token=" + codeConfirm;
-        String baseURL = "http://localhost:8080/api/v1/auth/verify?";
+        String baseURL = "http://localhost:5173/active-account?";
         String message = baseURL + objectSend;
         Map<String, Object> mesage = new HashMap<>();
         mesage.put("link_active_user", message);
