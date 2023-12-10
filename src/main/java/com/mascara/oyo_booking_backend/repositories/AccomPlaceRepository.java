@@ -4,6 +4,7 @@ import com.mascara.oyo_booking_backend.entities.AccomPlace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +21,7 @@ import java.util.Optional;
  * Filename  : AccomPlaceRepository
  */
 @Repository
-public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
+public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, JpaSpecificationExecutor<AccomPlace> {
 
     @Query(value = "SELECT ap.* FROM accom_place ap LEFT JOIN facility_accom fa " +
             "ON ap.id = fa.accom_id LEFT JOIN facility f ON fa.facility_id = f.id " +
@@ -28,30 +29,30 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long> {
             "(:districtCode is null or ap.district_code = :districtCode) " +
             "AND (:wardCode is null or ap.ward_code = :wardCode) AND (:priceFrom is null or :priceTo is null or " +
             "(ap.price_per_night BETWEEN :priceFrom AND :priceTo)) " +
-            "AND IF(:size > 0, f.facility_name IN :facilityName,true) AND " +
+            "AND IF(:size > 0, f.faci_code IN :facilityCode,true) AND " +
             "(:numBathroom is null or ap.num_bathroom = :numBathroom) " +
             "AND (:numPeople is null or ap.num_people = :numPeople) AND " +
-            "(:numBed is null or ap.num_bed = :numBed) and ap.status = 'ENABLE' and ap.deleted = false",
+            "(:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id",
             countQuery = "SELECT count(ap.id) FROM accom_place ap LEFT JOIN facility_accom fa ON " +
                     "ap.id = fa.accom_id LEFT JOIN facility f ON " + "fa.facility_id = f.id " +
                     "WHERE (:provinceCode is null or ap.province_code = :provinceCode) AND " +
                     "(:districtCode is null or ap.district_code = :districtCode) " +
                     "AND (:wardCode is null or ap.ward_code = :wardCode) AND (:priceFrom is null or " +
                     ":priceTo is null or (ap.price_per_night BETWEEN :priceFrom AND :priceTo)) " +
-                    "AND IF(:size > 0, f.facility_name IN :facilityName,true) AND (:numBathroom is " +
+                    "AND IF(:size > 0, f.faci_code IN :facilityCode,true) AND (:numBathroom is " +
                     "null or ap.num_bathroom = :numBathroom) AND (:numPeople is null or ap.num_people = :numPeople) " +
-                    "AND (:numBed is null or ap.num_bed = :numBed) and ap.status = 'ENABLE' and ap.deleted = false",
+                    "AND (:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id",
             nativeQuery = true)
     Page<AccomPlace> getPageWithFullFilter(@Param("provinceCode") String provinceCode,
                                            @Param("districtCode") String districtCode,
                                            @Param("wardCode") String wardCode,
                                            @Param("priceFrom") Double priceFrom,
                                            @Param("priceTo") Double priceTo,
-                                           @Param("facilityName") List<String> facilityName,
+                                           @Param("facilityCode") List<String> facilityName,
                                            @Param("size") Integer size,
                                            @Param("numBathroom") Integer numBathroom,
                                            @Param("numPeople") Integer numPeople,
-                                           @Param("numBed") Integer numBed,
+                                           @Param("numBedRoom") Integer numBedRoom,
                                            Pageable pageable);
 
     @Query(value = "select ap.* from accom_place ap where ap.id = :id and ap.deleted = false", nativeQuery = true)

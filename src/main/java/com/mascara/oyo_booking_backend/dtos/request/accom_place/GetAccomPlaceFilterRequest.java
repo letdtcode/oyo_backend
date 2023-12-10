@@ -27,7 +27,7 @@ public class GetAccomPlaceFilterRequest {
 
     @Min(0L)
     private Double priceTo;
-    private List<String> facilityName;
+    private List<String> facilityCode;
 
     @Min(0)
     private Integer numBathroom;
@@ -36,5 +36,5 @@ public class GetAccomPlaceFilterRequest {
     private Integer numPeople;
 
     @Min(0)
-    private Integer numBed;
+    private Integer numBedRoom;
 }

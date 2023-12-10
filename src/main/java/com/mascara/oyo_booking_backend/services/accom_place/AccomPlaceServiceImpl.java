@@ -213,14 +213,15 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum, Integer pageSize, String sortType, String field) {
         int length = 0;
-        if (filter.getFacilityName() != null) {
-            length = filter.getFacilityName().size();
+        if (filter.getFacilityCode() != null) {
+            length = filter.getFacilityCode().size();
         }
-        if (filter.getFacilityName() == null || filter.getFacilityName().isEmpty()) {
-            filter.setFacilityName(List.of(UUID.randomUUID().toString()));
+        if (filter.getFacilityCode() == null || filter.getFacilityCode().isEmpty()) {
+            filter.setFacilityCode(List.of(UUID.randomUUID().toString()));
         }
-        Pageable paging = PageRequest.of(pageNum, 10, Sort.by(Sort.Direction.valueOf(sortType), field));
-        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getPageWithFullFilter(filter.getProvinceCode(), filter.getDistrictCode(), filter.getWardCode(), filter.getPriceFrom(), filter.getPriceTo(), filter.getFacilityName(), length, filter.getNumBathroom(), filter.getNumPeople(), filter.getNumBed(), paging);
+        log.error(String.valueOf(length));
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getPageWithFullFilter(filter.getProvinceCode(), filter.getDistrictCode(), filter.getWardCode(), filter.getPriceFrom(), filter.getPriceTo(), filter.getFacilityCode(), length, filter.getNumBathroom(), filter.getNumPeople(), filter.getNumBedRoom(), paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace)).collect(Collectors.toList());
         return new BasePagingData<>(responseList, accomPlacePage.getNumber(), accomPlacePage.getSize(), accomPlacePage.getTotalElements());

@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAccomCategoryResponse {
+    private Long id;
     private String accomCateName;
     private String description;
     private String icon;

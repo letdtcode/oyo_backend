@@ -152,8 +152,8 @@ public class AccomPlace extends BasePesistence {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "facility_accom",
-            joinColumns = {@JoinColumn(name = "facility_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "accom_id", referencedColumnName = "id")}
+            joinColumns = {@JoinColumn(name = "accom_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "facility_id", referencedColumnName = "id")}
     )
     private Set<Facility> facilitySet;
 

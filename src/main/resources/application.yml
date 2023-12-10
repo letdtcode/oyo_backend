@@ -65,7 +65,10 @@ mascara:
     dev-url: http://localhost:8080
 
 token:
-  expired: 10
+  expired: 1
+
+url:
+  client: http://localhost:3000
 
 cloudinary:
   name: dyv5zrsgj

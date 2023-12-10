@@ -23,6 +23,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/public/accoms")
 @RequiredArgsConstructor
+@Slf4j
 public class PublicAccomPlaceController {
 
     @Autowired
@@ -77,6 +79,7 @@ public class PublicAccomPlaceController {
                                                            @RequestParam(value = "pageSize", defaultValue = "0") Integer pageSize) {
         String sortType = "DESC";
         String field = "created_date";
+        log.error(filter.toString());
         BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getAccomPlaceFilterWithPaging(filter, pageNum, pageSize, sortType, field);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
