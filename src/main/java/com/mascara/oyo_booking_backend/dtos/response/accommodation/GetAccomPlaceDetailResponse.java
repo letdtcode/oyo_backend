@@ -45,7 +45,7 @@ public class GetAccomPlaceDetailResponse {
     private String refundPolicy;
     private List<GetFacilityCategorWithFacilityListResponse> facilityCategoryList;
     private List<GetSurchargeOfAccomResponse> surchargeList;
-    private String lastModifiedDate;
+//    private String lastModifiedDate;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private List<LocalDate> bookedDates;
     private String status;
