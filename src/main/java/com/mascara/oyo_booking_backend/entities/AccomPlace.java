@@ -88,6 +88,7 @@ public class AccomPlace extends BasePesistence {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)
+    @OrderBy("createdDate ASC ")
     private Set<ImageAccom> imageAccoms;
 
     @Column(name = "acreage")

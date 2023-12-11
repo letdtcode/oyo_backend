@@ -129,6 +129,16 @@ public class BookingMapper {
     };
 
     //    Covert booking code to total revenue
+    private final Converter<Long, String> idAccomToRefundPolicy = context -> {
+        Long accomId = context.getSource();
+        if (accomId != null) {
+            AccomPlace accomPlace = accomPlaceRepository.findById(accomId).get();
+            return accomPlace.getRefundPolicy();
+        }
+        return null;
+    };
+
+    //    Covert booking code to total revenue
     private final Converter<Long, Boolean> idBookingToIsReviewed = context -> {
         Long bookingId = context.getSource();
         Booking booking = bookingRepository.findById(bookingId).get();
@@ -161,6 +171,8 @@ public class BookingMapper {
                         .map(Booking::getAccomId, GetHistoryBookingResponse::setPricePerNight))
                 .addMappings(mapper -> mapper.using(idAccomToImageUrlDefaul)
                         .map(Booking::getAccomId, GetHistoryBookingResponse::setImageUrl))
+                .addMappings(mapper -> mapper.using(idAccomToRefundPolicy)
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setRefundPolicy))
                 .addMappings(mapper -> mapper.using(idBookingToIsReviewed)
                         .map(Booking::getId, GetHistoryBookingResponse::setReviewed));
     }
