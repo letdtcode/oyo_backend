@@ -23,7 +23,7 @@ import java.util.Optional;
 @Repository
 public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, JpaSpecificationExecutor<AccomPlace> {
 
-    @Query(value = "SELECT ap.* FROM accom_place ap LEFT JOIN facility_accom fa " +
+    @Query(value = "SELECT distinct ap.* FROM accom_place ap LEFT JOIN facility_accom fa " +
             "ON ap.id = fa.accom_id LEFT JOIN facility f ON fa.facility_id = f.id " +
             "WHERE (:provinceCode is null or ap.province_code = :provinceCode) AND " +
             "(:districtCode is null or ap.district_code = :districtCode) " +
@@ -32,8 +32,8 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
             "AND IF(:size > 0, f.faci_code IN :facilityCode,true) AND " +
             "(:numBathroom is null or ap.num_bathroom = :numBathroom) " +
             "AND (:numPeople is null or ap.num_people = :numPeople) AND " +
-            "(:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id",
-            countQuery = "SELECT count(ap.id) FROM accom_place ap LEFT JOIN facility_accom fa ON " +
+            "(:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id having (:size > 0 AND COUNT(DISTINCT f.faci_code) = :size) OR (:size = 0)",
+            countQuery = "SELECT distinct count(ap.id) FROM accom_place ap LEFT JOIN facility_accom fa ON " +
                     "ap.id = fa.accom_id LEFT JOIN facility f ON " + "fa.facility_id = f.id " +
                     "WHERE (:provinceCode is null or ap.province_code = :provinceCode) AND " +
                     "(:districtCode is null or ap.district_code = :districtCode) " +
@@ -41,7 +41,7 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
                     ":priceTo is null or (ap.price_per_night BETWEEN :priceFrom AND :priceTo)) " +
                     "AND IF(:size > 0, f.faci_code IN :facilityCode,true) AND (:numBathroom is " +
                     "null or ap.num_bathroom = :numBathroom) AND (:numPeople is null or ap.num_people = :numPeople) " +
-                    "AND (:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id",
+                    "AND (:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id having (:size > 0 AND COUNT(DISTINCT f.faci_code) = :size) OR (:size = 0)",
             nativeQuery = true)
     Page<AccomPlace> getPageWithFullFilter(@Param("provinceCode") String provinceCode,
                                            @Param("districtCode") String districtCode,
