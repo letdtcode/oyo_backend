@@ -7,11 +7,10 @@ import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
-import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,12 +19,10 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by: IntelliJ IDEA
@@ -38,64 +35,82 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotCredentialException.class)
-    public ProblemDetail handleNotPermission(NotCredentialException ex) {
+    public ProblemDetail handleNotPermission(final NotCredentialException ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-        problemDetail.setProperty("timestamp",Instant.now());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ProblemDetail handleSQLExcuteException(Exception ex) {
+    public ProblemDetail handleSQLExcuteException(final Exception ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-        problemDetail.setProperty("timestamp",Instant.now());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class, MissingPathVariableException.class})
-    public ProblemDetail handleConstraintArgumentTypeMismatchException(Exception ex) {
+    public ProblemDetail handleConstraintArgumentTypeMismatchException(final Exception ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-        problemDetail.setProperty("timestamp",Instant.now());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
 
     @ExceptionHandler({ConstraintViolationException.class, HttpMessageNotReadableException.class})
-    public ProblemDetail handleConstraintViolationException(Exception ex) {
+    public ProblemDetail handleConstraintViolationException(final Exception ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-        problemDetail.setProperty("timestamp",Instant.now());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, MissingServletRequestParameterException.class})
-    public ProblemDetail handleValidationExceptions(Exception ex) {
+    public ProblemDetail handleValidationExceptions(final Exception ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-        problemDetail.setProperty("timestamp",Instant.now());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
 
     @ExceptionHandler({ExpiredJwtException.class, MalformedJwtException.class, UnsupportedJwtException.class, AuthenticationException.class})
-    public ProblemDetail handleSecurityExceptions(Exception ex) {
+    public ProblemDetail handleSecurityExceptions(final Exception ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
-        problemDetail.setProperty("timestamp",Instant.now());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
 
     @ExceptionHandler(TokenRefreshException.class)
-    public ProblemDetail handleTokenRefreshException(TokenRefreshException ex) {
+    public ProblemDetail handleTokenRefreshException(final TokenRefreshException ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
-        problemDetail.setProperty("timestamp",Instant.now());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ProblemDetail handleResourceNotFoundException(ResourceNotFoundException ex) {
+    public ProblemDetail handleResourceNotFoundException(final ResourceNotFoundException ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
-        problemDetail.setProperty("timestamp",Instant.now());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
 
     @ExceptionHandler(ResourceExistException.class)
-    public ProblemDetail handleResourceExistWhenCreateException(ResourceExistException ex) {
+    public ProblemDetail handleResourceExistWhenCreateException(final ResourceExistException ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
         problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }

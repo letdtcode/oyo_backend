@@ -24,6 +24,9 @@ public interface FacilityRepository extends JpaRepository<Facility, Long> {
     @Query(value = "select f.* from facility f limit 1", nativeQuery = true)
     List<Facility> checkExistData();
 
+    @Query(value = "SELECT if(COUNT(*) >0,'true','false') FROM facility f WHERE (f.facility_name = :facility_name or f.image_url = :image_url) and f.deleted is false", nativeQuery = true)
+    boolean existsByFacilityNameOrImageUrl(@Param("facility_name") String facilityName,@Param("image_url") String imageUrl);
+
     @Query(value = "select f.* from facility f where f.facility_name = :facilityName and f.deleted is false", nativeQuery = true)
     Optional<Facility> findByFacilityName(@Param("facilityName") String facilityName);
 

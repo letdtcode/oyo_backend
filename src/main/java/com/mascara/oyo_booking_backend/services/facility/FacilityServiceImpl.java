@@ -8,6 +8,7 @@ import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.Facility;
 import com.mascara.oyo_booking_backend.entities.FacilityCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mapper.FacilityMapper;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
@@ -62,6 +63,10 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     @Transactional
     public GetFacilityResponse addFacility(AddFacilityRequest request) {
+        boolean checkExist = facilityRepository.existsByFacilityNameOrImageUrl(request.getFacilityName(), request.getImageUrl());
+        if (checkExist) {
+            throw new ResourceExistException(String.format("Facility have name: %s or imageUrl %s is already exist", request.getFacilityName(), request.getImageUrl()));
+        }
         int count = (int) facilityRepository.count();
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
@@ -81,6 +86,10 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     @Transactional
     public GetFacilityResponse updateFacility(UpdateFacilityRequest request, Long id) {
+        boolean checkExist = facilityRepository.existsByFacilityNameOrImageUrl(request.getFacilityName(), request.getImageUrl());
+        if (checkExist) {
+            throw new ResourceExistException(String.format("Facility have name: %s or imageUrl %s is already exist", request.getFacilityName(), request.getImageUrl()));
+        }
         Facility facility = facilityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
