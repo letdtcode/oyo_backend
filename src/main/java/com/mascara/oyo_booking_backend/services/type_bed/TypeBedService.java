@@ -25,11 +25,11 @@ public interface TypeBedService {
     GetTypeBedResponse addTypeBed(AddTypeBedRequest request);
 
     @Transactional
-    GetTypeBedResponse updateTypeBed(UpdateTypeBedRequest request, String typeBedCode);
+    GetTypeBedResponse updateTypeBed(UpdateTypeBedRequest request, Long id);
 
     @Transactional
-    BaseMessageData changeStatusTypeBed(String typeBedCode, String status);
+    BaseMessageData changeStatusTypeBed(Long id, String status);
 
     @Transactional
-    BaseMessageData deletedTypeBed(String typeBedCode);
+    BaseMessageData deletedTypeBed(Long id);
 }

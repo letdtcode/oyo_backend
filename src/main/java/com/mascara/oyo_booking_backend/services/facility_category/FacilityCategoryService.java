@@ -19,7 +19,10 @@ import java.util.List;
  */
 public interface FacilityCategoryService {
     @Transactional
-    BasePagingData<GetFacilityCategorWithFacilityListResponse> getAllFacilityCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
+    BasePagingData<GetFacilityCategorWithFacilityListResponse> getAllFacilityCategoryHaveFacilityListWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
+
+    @Transactional
+    BasePagingData<GetFacilityCategoryResponse> getAllFacilityCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
     List<GetFacilityCategorWithFacilityListResponse> getAllDataFacility();
@@ -28,11 +31,11 @@ public interface FacilityCategoryService {
     GetFacilityCategoryResponse addFacilityCategory(AddFacilityCategoryRequest request);
 
     @Transactional
-    GetFacilityCategoryResponse updateFacilityCategory(UpdateFacilityCategoryRequest request, String facilCateCode);
+    GetFacilityCategoryResponse updateFacilityCategory(UpdateFacilityCategoryRequest request, Long id);
 
     @Transactional
-    BaseMessageData changeStatusFacilityCategory(String facilCateCode, String status);
+    BaseMessageData changeStatusFacilityCategory(Long id, String status);
 
     @Transactional
-    BaseMessageData deletedFacilityCategory(String facilCateCode);
+    BaseMessageData deletedFacilityCategory(Long id);
 }

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetFacilityCategoryResponse {
+    private Long id;
     private String faciCateName;
     private String faciCateCode;
     private String description;

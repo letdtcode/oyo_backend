@@ -1,6 +1,9 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.Facility;
+import com.mascara.oyo_booking_backend.entities.TypeBed;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,8 +30,14 @@ public interface FacilityRepository extends JpaRepository<Facility, Long> {
     @Query(value = "select f.* from facility f where f.faci_code = :facilityCode and f.deleted is false", nativeQuery = true)
     Optional<Facility> findByFacilityCode(@Param("facilityCode") String facilityCode);
 
+    @Query(value = "select f.* from facility f where f.id = :id and f.deleted is false", nativeQuery = true)
+    Optional<Facility> findById(@Param("id") Long id);
+
     @Query(value = "select f.* from facility f where f.facility_name in :listFacilityName and f.deleted is false",nativeQuery = true)
     List<Facility> findByListFacilityName(@Param("listFacilityName") List<String> listFacilityName);
 
-
+    @Query(value = "select f.* from facility f where f.deleted is false",
+            countQuery = "select count(id) from facility f where f.deleted is false",
+            nativeQuery = true)
+    Page<Facility> getAllWithPaging(Pageable pageable);
 }

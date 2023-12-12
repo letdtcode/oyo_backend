@@ -25,8 +25,8 @@ public interface ProvinceRepository extends JpaRepository<Province, Long> {
     @Query(value = "select p.* from province p where p.province_name = :provincename and p.deleted is false", nativeQuery = true)
     Optional<Province> findByProvinceName(@Param("provincename") String provinceName);
 
-    @Query(value = "select p.* from province p where p.slugs = :provinceslugs and p.deleted is false", nativeQuery = true)
-    Optional<Province> findByProvinceSlugs(@Param("provinceslugs") String provinceSlugs);
+    @Query(value = "select p.* from province p where p.id = :id and p.deleted is false", nativeQuery = true)
+    Optional<Province> findById(@Param("id") Long id);
 
     @Query(value = "select p.* from province p limit 1", nativeQuery = true)
     List<Province> checkExistData();

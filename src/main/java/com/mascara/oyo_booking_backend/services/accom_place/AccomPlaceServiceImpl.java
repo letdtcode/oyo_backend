@@ -337,6 +337,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace.setNumKitchen(request.getNumKitchen());
         accomPlace.setAccommodationCategories(accomCate);
         accomPlace.setAccomCateId(accomCate.getId());
+        accomPlace.setNumBedRoom(request.getTypeBedCodes().size());
 
         bedRoomRepository.deleteByAccomId(accomPlace.getId());
         Set<BedRoom> bedRoomSet = new HashSet<>();

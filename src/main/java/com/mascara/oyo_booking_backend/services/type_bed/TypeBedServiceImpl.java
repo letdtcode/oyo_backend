@@ -83,8 +83,8 @@ public class TypeBedServiceImpl implements TypeBedService {
 
     @Override
     @Transactional
-    public GetTypeBedResponse updateTypeBed(UpdateTypeBedRequest request, String typeBedCode) {
-        TypeBed typeBed = typeBedRepository.findByTypeBedCode(typeBedCode)
+    public GetTypeBedResponse updateTypeBed(UpdateTypeBedRequest request, Long id) {
+        TypeBed typeBed = typeBedRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
         typeBed.setTypeBedName(request.getTypeBedName());
         typeBed.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
@@ -94,8 +94,8 @@ public class TypeBedServiceImpl implements TypeBedService {
 
     @Override
     @Transactional
-    public BaseMessageData changeStatusTypeBed(String typeBedCode, String status) {
-        TypeBed typeBed = typeBedRepository.findByTypeBedCode(typeBedCode)
+    public BaseMessageData changeStatusTypeBed(Long id, String status) {
+        TypeBed typeBed = typeBedRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
         typeBed.setStatus(CommonStatusEnum.valueOf(status));
         typeBedRepository.save(typeBed);
@@ -104,8 +104,8 @@ public class TypeBedServiceImpl implements TypeBedService {
 
     @Override
     @Transactional
-    public BaseMessageData deletedTypeBed(String typeBedCode) {
-        TypeBed typeBed = typeBedRepository.findByTypeBedCode(typeBedCode)
+    public BaseMessageData deletedTypeBed(Long id) {
+        TypeBed typeBed = typeBedRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
         typeBed.setDeleted(true);
         typeBedRepository.save(typeBed);

@@ -41,18 +41,18 @@ public class CmsProvinceController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{province-slug}/update")
+    @PutMapping("/{id}/update")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateProvince(@RequestBody @Valid UpdateProvinceRequest request,
-                                            @PathVariable("province-slug") @NotNull @NotBlank String provinceSlug) {
-        UpdateProvinceResponse response = provinceService.updateProvince(request, provinceSlug);
+                                            @PathVariable("id") @NotNull Long id) {
+        UpdateProvinceResponse response = provinceService.updateProvince(request, id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @DeleteMapping("/{province-slug}/delete")
+    @DeleteMapping("/{id}/delete")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteProvince(@PathVariable("province-slug") @NotNull @NotBlank String provinceSlug) {
-        BaseMessageData response = provinceService.deleteProvince(provinceSlug);
+    public ResponseEntity<?> deleteProvince(@PathVariable("id") @NotNull Long id) {
+        BaseMessageData response = provinceService.deleteProvince(id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

@@ -22,6 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetTypeBedResponse {
+    private Long id;
     private String typeBedName;
     private String typeBedCode;
     private String status;

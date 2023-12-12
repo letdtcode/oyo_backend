@@ -4,6 +4,7 @@ import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.facility.AddFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.request.facility.UpdateFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
+import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -16,14 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 public interface FacilityService {
 
     @Transactional
+    BasePagingData<GetFacilityResponse> getAllFacilityWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
+
+    @Transactional
     GetFacilityResponse addFacility(AddFacilityRequest request);
 
     @Transactional
-    GetFacilityResponse updateFacility(UpdateFacilityRequest request, String facilityCode);
+    GetFacilityResponse updateFacility(UpdateFacilityRequest request, Long id);
 
     @Transactional
-    BaseMessageData changeStatusFacility(String facilityCode, String status);
+    BaseMessageData changeStatusFacility(Long id, String status);
 
     @Transactional
-    BaseMessageData deletedFacility(String facilityCode);
+    BaseMessageData deletedFacility(Long id);
 }

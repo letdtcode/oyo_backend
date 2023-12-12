@@ -26,11 +26,11 @@ public interface SurchargeService {
     GetSurchargeCategoryResponse addSurchargeCategory(AddSurchargeCategoryRequest request);
 
     @Transactional
-    GetSurchargeCategoryResponse updateSurchargeCategory(UpdateSurchargeCategoryRequest request, String surchargeCateCode);
+    GetSurchargeCategoryResponse updateSurchargeCategory(UpdateSurchargeCategoryRequest request, Long id);
 
     @Transactional
-    BaseMessageData changeStatusSurchargeCategory(String surchargeCateCode, String status);
+    BaseMessageData changeStatusSurchargeCategory(Long id, String status);
 
     @Transactional
-    BaseMessageData deletedSurchargeCategory(String surchargeCateCode);
+    BaseMessageData deletedSurchargeCategory(Long id);
 }

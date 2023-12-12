@@ -175,7 +175,7 @@ public class AuthController {
                     mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @GetMapping(value = "/verify")
+    @PostMapping("/verify")
     public ResponseEntity<?> verifyTokenMail(@RequestParam("email") String email,
                                              @RequestParam("token") String token) throws MessagingException, TemplateException, IOException {
         BaseMessageData<String> messageResponse = verifyTokenService.verifyMailUser(email, token);

@@ -25,10 +25,10 @@ public interface ProvinceService {
     BaseMessageData addProvince(AddProvinceRequest request);
 
     @Transactional
-    UpdateProvinceResponse updateProvince(UpdateProvinceRequest request, String provinceName);
+    UpdateProvinceResponse updateProvince(UpdateProvinceRequest request, Long id);
 
     @Transactional
-    BaseMessageData deleteProvince(String provinceName);
+    BaseMessageData deleteProvince(Long id);
 
     @Transactional
     BasePagingData<GetProvinceResponse> getTopProvinceByField(Integer pageNum,

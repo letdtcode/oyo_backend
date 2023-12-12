@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
+import com.mascara.oyo_booking_backend.entities.Facility;
 import com.mascara.oyo_booking_backend.entities.TypeBed;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,9 @@ public interface TypeBedRepository extends JpaRepository<TypeBed, Long> {
 
     @Query(value = "select tb.* from type_bed tb where tb.type_bed_code = :typeBedCode and tb.deleted is false", nativeQuery = true)
     Optional<TypeBed> findByTypeBedCode(@Param("typeBedCode") String typeBedCode);
+
+    @Query(value = "select tb.* from type_bed tb where tb.id = :id and tb.deleted is false", nativeQuery = true)
+    Optional<TypeBed> findById(@Param("id") Long id);
 
     @Query(value = "select tb.* from type_bed tb where tb.deleted is false",
             countQuery = "select count(id) from type_bed tb where tb.deleted is false",

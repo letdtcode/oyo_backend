@@ -44,7 +44,7 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 
     @Override
     @Transactional
-    public BasePagingData<GetFacilityCategorWithFacilityListResponse> getAllFacilityCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
+    public BasePagingData<GetFacilityCategorWithFacilityListResponse> getAllFacilityCategoryHaveFacilityListWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<FacilityCategories> facilityCategoriesPage = facilityCategoriesRepository.getAllWithPaging(paging);
 
@@ -64,6 +64,24 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
                 facilityCategoriesPage.getTotalElements());
     }
 
+    @Override
+    @Transactional
+    public BasePagingData<GetFacilityCategoryResponse> getAllFacilityCategoryWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+        Page<FacilityCategories> facilityCategoriesPage = facilityCategoriesRepository.getAllWithPaging(paging);
+
+        List<FacilityCategories> facilityCategoriesList = facilityCategoriesPage.stream().toList();
+        List<GetFacilityCategoryResponse> responses = facilityCategoriesList.stream()
+                .map(facilityCate -> mapper.map(facilityCate,
+                        GetFacilityCategoryResponse.class)).collect(Collectors.toList());
+        return new BasePagingData<>(responses,
+                facilityCategoriesPage.getNumber(),
+                facilityCategoriesPage.getSize(),
+                facilityCategoriesPage.getTotalElements());
+    }
+
+
+//    Mot bo cai nay
     @Override
     @Transactional
     public List<GetFacilityCategorWithFacilityListResponse> getAllDataFacility() {
@@ -97,8 +115,8 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 
     @Override
     @Transactional
-    public GetFacilityCategoryResponse updateFacilityCategory(UpdateFacilityCategoryRequest request, String facilCateCode) {
-        FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(facilCateCode)
+    public GetFacilityCategoryResponse updateFacilityCategory(UpdateFacilityCategoryRequest request, Long id) {
+        FacilityCategories facilityCategories = facilityCategoriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
         facilityCategories.setFaciCateName(request.getFaciCateName());
         facilityCategories.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
@@ -109,8 +127,8 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 
     @Override
     @Transactional
-    public BaseMessageData changeStatusFacilityCategory(String facilCateCode, String status) {
-        FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(facilCateCode)
+    public BaseMessageData changeStatusFacilityCategory(Long id, String status) {
+        FacilityCategories facilityCategories = facilityCategoriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
         facilityCategories.setStatus(CommonStatusEnum.valueOf(status));
         facilityCategoriesRepository.save(facilityCategories);
@@ -119,8 +137,8 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 
     @Override
     @Transactional
-    public BaseMessageData deletedFacilityCategory(String facilCateCode) {
-        FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(facilCateCode)
+    public BaseMessageData deletedFacilityCategory(Long id) {
+        FacilityCategories facilityCategories = facilityCategoriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
         facilityCategories.setDeleted(true);
         facilityCategoriesRepository.save(facilityCategories);

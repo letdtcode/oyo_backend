@@ -22,6 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetSurchargeCategoryResponse {
+    private Long id;
     private String surchargeCateName;
     private String surchargeCode;
     private String status;

@@ -70,8 +70,8 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     @Transactional
-    public UpdateProvinceResponse updateProvince(UpdateProvinceRequest request, String provinceSlug) {
-        Province province = provinceRepository.findByProvinceSlugs(provinceSlug)
+    public UpdateProvinceResponse updateProvince(UpdateProvinceRequest request, Long id) {
+        Province province = provinceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
         province.setProvinceName(request.getProvinceName());
         province.setThumbnail(request.getThumbnailLink());
@@ -82,8 +82,8 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     @Transactional
-    public BaseMessageData deleteProvince(String provinceSlug) {
-        Province province = provinceRepository.findByProvinceSlugs(provinceSlug)
+    public BaseMessageData deleteProvince(Long id) {
+        Province province = provinceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
         provinceRepository.delete(province);
         return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Province"));

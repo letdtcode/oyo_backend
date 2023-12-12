@@ -24,9 +24,5 @@ public class AddSurchargeCategoryRequest {
 
     @NotNull
     @NotBlank
-    private String surchargeCode;
-
-    @NotNull
-    @NotBlank
     private String status;
 }

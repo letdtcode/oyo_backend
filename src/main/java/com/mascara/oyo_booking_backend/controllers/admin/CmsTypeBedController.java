@@ -59,29 +59,29 @@ public class CmsTypeBedController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{typeBedCode}/update")
+    @PutMapping("/{id}/update")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateTypeBed(@RequestBody @Valid UpdateTypeBedRequest request,
-                                           @PathVariable("typeBedCode") @NotNull String typeBedCode) {
-        GetTypeBedResponse response = typeBedService.updateTypeBed(request, typeBedCode);
+                                           @PathVariable("id") @NotNull Long id) {
+        GetTypeBedResponse response = typeBedService.updateTypeBed(request, id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @PutMapping("/{typeBedCode}/change-status")
+    @PutMapping("/{id}/change-status")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> changeStatusTypeBed(@PathVariable("typeBedCode")
-                                                 @NotNull String typeBedCode,
+    public ResponseEntity<?> changeStatusTypeBed(@PathVariable("id")
+                                                 @NotNull Long id,
                                                  @RequestParam("status")
                                                  @NotBlank
                                                  @Status String status) {
-        BaseMessageData messageReponse = typeBedService.changeStatusTypeBed(typeBedCode, status);
+        BaseMessageData messageReponse = typeBedService.changeStatusTypeBed(id, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
-    @DeleteMapping("/{typeBedCode}/delete")
+    @DeleteMapping("/{id}/delete")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteTypeBed(@PathVariable("typeBedCode") @NotNull String typeBedCode) {
-        BaseMessageData messageReponse = typeBedService.deletedTypeBed(typeBedCode);
+    public ResponseEntity<?> deleteTypeBed(@PathVariable("id") @NotNull Long id) {
+        BaseMessageData messageReponse = typeBedService.deletedTypeBed(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 }

@@ -77,8 +77,8 @@ public class SurchargeServiceImpl implements SurchargeService {
 
     @Override
     @Transactional
-    public GetSurchargeCategoryResponse updateSurchargeCategory(UpdateSurchargeCategoryRequest request, String surchargeCateCode) {
-        SurchargeCategory surchargeCategory = surchargeCategoryRepository.findSurchargeCategoryByCode(surchargeCateCode)
+    public GetSurchargeCategoryResponse updateSurchargeCategory(UpdateSurchargeCategoryRequest request,Long id) {
+        SurchargeCategory surchargeCategory = surchargeCategoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge category")));
         surchargeCategory.setSurchargeCateName(request.getSurchargeCateName());
         surchargeCategory.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
@@ -88,8 +88,8 @@ public class SurchargeServiceImpl implements SurchargeService {
 
     @Override
     @Transactional
-    public BaseMessageData changeStatusSurchargeCategory(String surchargeCateCode, String status) {
-        SurchargeCategory surchargeCategory = surchargeCategoryRepository.findSurchargeCategoryByCode(surchargeCateCode)
+    public BaseMessageData changeStatusSurchargeCategory(Long id, String status) {
+        SurchargeCategory surchargeCategory = surchargeCategoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge category")));
         surchargeCategory.setStatus(CommonStatusEnum.valueOf(status));
         surchargeCategoryRepository.save(surchargeCategory);
@@ -98,8 +98,8 @@ public class SurchargeServiceImpl implements SurchargeService {
 
     @Override
     @Transactional
-    public BaseMessageData deletedSurchargeCategory(String surchargeCateCode) {
-        SurchargeCategory surchargeCategory = surchargeCategoryRepository.findSurchargeCategoryByCode(surchargeCateCode)
+    public BaseMessageData deletedSurchargeCategory(Long id) {
+        SurchargeCategory surchargeCategory = surchargeCategoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge category")));
         surchargeCategory.setDeleted(true);
         surchargeCategoryRepository.save(surchargeCategory);
