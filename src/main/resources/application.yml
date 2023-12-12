@@ -50,6 +50,9 @@ spring:
     multipart:
       max-file-size: 3MB
       max-request-size: 3MB
+  mvc:
+    problemdetails:
+      enabled: true
 
 
 logging:

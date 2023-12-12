@@ -5,10 +5,10 @@ import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +20,10 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -36,92 +38,65 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotCredentialException.class)
-    public ResponseEntity<Object> handleNotPermission(NotCredentialException ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(body);
+    public ProblemDetail handleNotPermission(NotCredentialException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setProperty("timestamp",Instant.now());
+        return problemDetail;
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<Object> handleSQLExcuteException(Exception ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(body);
+    public ProblemDetail handleSQLExcuteException(Exception ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        problemDetail.setProperty("timestamp",Instant.now());
+        return problemDetail;
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class, MissingPathVariableException.class})
-    public ResponseEntity<Object> handleConstraintArgumentTypeMismatchException(Exception ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(body);
+    public ProblemDetail handleConstraintArgumentTypeMismatchException(Exception ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setProperty("timestamp",Instant.now());
+        return problemDetail;
     }
 
     @ExceptionHandler({ConstraintViolationException.class, HttpMessageNotReadableException.class})
-    public ResponseEntity<Object> handleConstraintViolationException(Exception ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(body);
+    public ProblemDetail handleConstraintViolationException(Exception ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setProperty("timestamp",Instant.now());
+        return problemDetail;
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, MissingServletRequestParameterException.class})
-    public ResponseEntity<Object> handleValidationExceptions(Exception ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(body);
+    public ProblemDetail handleValidationExceptions(Exception ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setProperty("timestamp",Instant.now());
+        return problemDetail;
     }
 
     @ExceptionHandler({ExpiredJwtException.class, MalformedJwtException.class, UnsupportedJwtException.class, AuthenticationException.class})
-    public ResponseEntity<Object> handleSecurityExceptions(Exception ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.UNAUTHORIZED.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(body);
+    public ProblemDetail handleSecurityExceptions(Exception ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        problemDetail.setProperty("timestamp",Instant.now());
+        return problemDetail;
     }
 
     @ExceptionHandler(TokenRefreshException.class)
-    public ResponseEntity<Object> handleTokenRefreshException(TokenRefreshException ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.UNAUTHORIZED.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(body);
+    public ProblemDetail handleTokenRefreshException(TokenRefreshException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        problemDetail.setProperty("timestamp",Instant.now());
+        return problemDetail;
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(body);
+    public ProblemDetail handleResourceNotFoundException(ResourceNotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        problemDetail.setProperty("timestamp",Instant.now());
+        return problemDetail;
     }
 
     @ExceptionHandler(ResourceExistException.class)
-    public ResponseEntity<Object> handleResourceExistWhenCreateException(ResourceExistException ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.CONFLICT.value());
-        body.put("errors", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(body);
+    public ProblemDetail handleResourceExistWhenCreateException(ResourceExistException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
     }
 }
