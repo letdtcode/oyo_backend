@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAccomPlaceFilterRequest {
+    private String accomCateName;
     private String provinceCode;
     private String districtCode;
     private String wardCode;

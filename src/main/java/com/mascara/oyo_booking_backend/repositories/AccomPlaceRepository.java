@@ -24,8 +24,8 @@ import java.util.Optional;
 public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, JpaSpecificationExecutor<AccomPlace> {
 
     @Query(value = "SELECT distinct ap.* FROM accom_place ap LEFT JOIN facility_accom fa " +
-            "ON ap.id = fa.accom_id LEFT JOIN facility f ON fa.facility_id = f.id " +
-            "WHERE (:provinceCode is null or ap.province_code = :provinceCode) AND " +
+            "ON ap.id = fa.accom_id LEFT JOIN facility f ON fa.facility_id = f.id LEFT JOIN accommodation_categories ac on  ap.accom_cate_id = ac.id" +
+            " where (:accomCateName is null or ac.accom_cate_name = :accomCateName) and (:provinceCode is null or ap.province_code = :provinceCode) AND " +
             "(:districtCode is null or ap.district_code = :districtCode) " +
             "AND (:wardCode is null or ap.ward_code = :wardCode) AND (:priceFrom is null or :priceTo is null or " +
             "(ap.price_per_night BETWEEN :priceFrom AND :priceTo)) " +
@@ -43,17 +43,19 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
                     "null or ap.num_bathroom = :numBathroom) AND (:numPeople is null or ap.num_people = :numPeople) " +
                     "AND (:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id having (:size > 0 AND COUNT(DISTINCT f.faci_code) = :size) OR (:size = 0)",
             nativeQuery = true)
-    Page<AccomPlace> getPageWithFullFilter(@Param("provinceCode") String provinceCode,
-                                           @Param("districtCode") String districtCode,
-                                           @Param("wardCode") String wardCode,
-                                           @Param("priceFrom") Double priceFrom,
-                                           @Param("priceTo") Double priceTo,
-                                           @Param("facilityCode") List<String> facilityName,
-                                           @Param("size") Integer size,
-                                           @Param("numBathroom") Integer numBathroom,
-                                           @Param("numPeople") Integer numPeople,
-                                           @Param("numBedRoom") Integer numBedRoom,
-                                           Pageable pageable);
+    Page<AccomPlace> getPageWithFullFilter(
+            @Param("accomCateName") String accomCateName,
+            @Param("provinceCode") String provinceCode,
+            @Param("districtCode") String districtCode,
+            @Param("wardCode") String wardCode,
+            @Param("priceFrom") Double priceFrom,
+            @Param("priceTo") Double priceTo,
+            @Param("facilityCode") List<String> facilityName,
+            @Param("size") Integer size,
+            @Param("numBathroom") Integer numBathroom,
+            @Param("numPeople") Integer numPeople,
+            @Param("numBedRoom") Integer numBedRoom,
+            Pageable pageable);
 
     @Query(value = "select ap.* from accom_place ap where ap.id = :id and ap.deleted = false", nativeQuery = true)
     Optional<AccomPlace> findById(@Param("id") Long id);
