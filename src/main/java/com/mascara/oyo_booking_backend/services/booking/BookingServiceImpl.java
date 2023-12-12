@@ -182,8 +182,10 @@ public class BookingServiceImpl implements BookingService {
                 costSurcharge = costSurcharge + surcharge.getCost();
             }
         }
+
         Period p = Period.between(request.getCheckIn(), request.getCheckOut());
-        int numNight = p.getDays();
+        int numNight = p.getDays() + 1;
+
         Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
         Double totalBill = totalCostAccom + costSurcharge;
 
