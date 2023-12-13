@@ -3,7 +3,10 @@ package com.mascara.oyo_booking_backend.entities;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -45,7 +48,7 @@ public class Facility extends BasePesistence {
     @Column(name = "faci_cate_code")
     private String facilityCateCode;
 
-    @Column(name = "image_url", unique = true, nullable = false)
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     @Column(name = "status")

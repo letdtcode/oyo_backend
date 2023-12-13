@@ -63,9 +63,9 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     @Transactional
     public GetFacilityResponse addFacility(AddFacilityRequest request) {
-        boolean checkExist = facilityRepository.existsByFacilityNameOrImageUrl(request.getFacilityName(), request.getImageUrl());
+        boolean checkExist = facilityRepository.existsByFacilityName(request.getFacilityName());
         if (checkExist) {
-            throw new ResourceExistException(String.format("Facility have name: %s or imageUrl %s is already exist", request.getFacilityName(), request.getImageUrl()));
+            throw new ResourceExistException(String.format("Facility have name: %s is already exist", request.getFacilityName()));
         }
         int count = (int) facilityRepository.count();
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
@@ -86,9 +86,9 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     @Transactional
     public GetFacilityResponse updateFacility(UpdateFacilityRequest request, Long id) {
-        boolean checkExist = facilityRepository.existsByFacilityNameOrImageUrl(request.getFacilityName(), request.getImageUrl());
+        boolean checkExist = facilityRepository.existsByFacilityNameWithIdDiffrent(request.getFacilityName(), id);
         if (checkExist) {
-            throw new ResourceExistException(String.format("Facility have name: %s or imageUrl %s is already exist", request.getFacilityName(), request.getImageUrl()));
+            throw new ResourceExistException(String.format("Facility have name: %s is already exist", request.getFacilityName()));
         }
         Facility facility = facilityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
