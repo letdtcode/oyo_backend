@@ -27,8 +27,32 @@ spring:
       client:
         registration:
           google:
-            client-id: 430482886897-aigo5f3p4lfli4kg3psjj1o0n3olbsc4.apps.googleusercontent.com
-            client-secret: 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
+            clientId: 430482886897-aigo5f3p4lfli4kg3psjj1o0n3olbsc4.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+          facebook:
+            clientId: 121189305185277
+            clientSecret: 42ffe5aa7379e8326387e0fe16f34132
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - public_profile
+          github:
+            clientId: d3e47fc2ddd966fa4352
+            clientSecret: 3bc0f6b8332f93076354c2a5bada2f5a05aea60d
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - user:email
+              - read:user
+        provider:
+          facebook:
+            authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+            tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+            userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+
   datasource:
     url: jdbc:mysql://localhost:3306/oyo?createDatabaseIfNotExist=true
     username: root
@@ -80,7 +104,21 @@ cloudinary:
   secure_mode: true
 
 storage:
-    location: uploads/images
+  location: uploads/images
 
 avatar:
   default: https://res.cloudinary.com/dyv5zrsgj/image/upload/v1698163058/oyo_booking/nqxq12lb5gazvph6rwf7.png
+
+app:
+  auth:
+    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    tokenExpirationMsec: 864000000
+  cors:
+    allowedOrigins: http://localhost:3000,http://localhost:8080
+  oauth2:
+    # After successfully authenticating with the OAuth2 Provider,
+    # we'll be generating an auth token for the user and sending the token to the
+    # redirectUri mentioned by the client in the /oauth2/authorize request.
+    # We're not using cookies because they won't work well in mobile clients.
+    authorizedRedirectUris:
+      - http://localhost:5173/oauth2/redirect

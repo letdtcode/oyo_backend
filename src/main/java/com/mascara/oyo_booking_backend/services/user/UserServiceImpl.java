@@ -9,6 +9,7 @@ import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.*;
+import com.mascara.oyo_booking_backend.enums.AuthProviderEnum;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
@@ -21,6 +22,7 @@ import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
+import com.mascara.oyo_booking_backend.securities.oauth2.user.OAuth2UserInfo;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.RandomStringUtils;
 import freemarker.template.TemplateException;
@@ -34,6 +36,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -79,6 +82,60 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public User createUserOauth2(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
+        User user = User.builder()
+                .firstName(oAuth2UserInfo.getName())
+                .mail(oAuth2UserInfo.getEmail())
+                .avatarUrl(oAuth2UserInfo.getImageUrl())
+                .provider(AuthProviderEnum.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
+                .providerId(oAuth2UserInfo.getId())
+                .status(UserStatusEnum.ENABLE)
+                .build();
+
+        Set<String> strRoles = new HashSet<>(Arrays.asList("Client", "Partner"));
+        Set<Role> roles = new HashSet<>();
+        strRoles.forEach(role -> {
+            switch (role) {
+                case "Admin":
+                    Role adminRole = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString())
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    roles.add(adminRole);
+                    break;
+                case "Partner":
+                    Role modRole = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER.toString())
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    roles.add(modRole);
+                    break;
+                default:
+                    Role userRole = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT.toString())
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    roles.add(userRole);
+            }
+        });
+        WishList wishList = WishList.builder().user(user).build();
+
+        BookingList bookingList = BookingList.builder().user(user).build();
+
+        ReviewList reviewList = ReviewList.builder().user(user).build();
+
+        RevenueList revenueList = RevenueList.builder().discount(10F).user(user).build();
+
+        int desiredLength = 7;
+        String randomUsername = UUID.randomUUID()
+                .toString()
+                .substring(0, desiredLength);
+
+        user.setUserName("user-" + randomUsername);
+        user.setRoleSet(roles);
+        user.setWishList(wishList);
+        user.setBookingList(bookingList);
+        user.setReviewList(reviewList);
+        user.setRevenueList(revenueList);
+        return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
     public User addUser(RegisterRequest request, String passwordEncode) {
         User user = User.builder()
                 .firstName(request.getFirstName())
@@ -86,6 +143,7 @@ public class UserServiceImpl implements UserService {
                 .mail(request.getEmail())
                 .password(passwordEncode)
                 .gender(2)
+                .provider(AuthProviderEnum.local)
                 .status(UserStatusEnum.PEDING)
                 .build();
 

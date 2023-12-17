@@ -1,9 +1,13 @@
 package com.mascara.oyo_booking_backend.entities;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
+import com.mascara.oyo_booking_backend.enums.AuthProviderEnum;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Fetch;
@@ -55,6 +59,13 @@ public class User extends BasePesistence {
 
     @Column(name = "avatar_url")
     private String avatarUrl;
+
+    @Column(name = "provider", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AuthProviderEnum provider;
+
+    @Column(name = "provider_id")
+    private String providerId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Fetch(FetchMode.SUBSELECT)

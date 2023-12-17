@@ -2,6 +2,10 @@ package com.mascara.oyo_booking_backend.config;
 
 import com.mascara.oyo_booking_backend.securities.jwt.AuthEntryPointJwt;
 import com.mascara.oyo_booking_backend.securities.jwt.AuthTokenFilter;
+import com.mascara.oyo_booking_backend.securities.oauth2.CustomOAuth2UserService;
+import com.mascara.oyo_booking_backend.securities.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.mascara.oyo_booking_backend.securities.oauth2.OAuth2AuthenticationFailureHandler;
+import com.mascara.oyo_booking_backend.securities.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.mascara.oyo_booking_backend.securities.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -20,7 +24,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 
@@ -34,8 +37,20 @@ import java.util.Arrays;
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
+
     @Autowired
-    CustomUserDetailsService userDetailsService;
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
+
+    @Autowired
+    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+
+    @Autowired
+    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -46,10 +61,15 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
+        return new HttpCookieOAuth2AuthorizationRequestRepository();
+    }
+
+    @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 
@@ -58,10 +78,7 @@ public class WebSecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -79,6 +96,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
+                .formLogin(form -> form.disable())
+                .httpBasic(httpSecurityHttpBasicConfigurer -> httpSecurityHttpBasicConfigurer.disable())
                 .exceptionHandling(exception ->
                         exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session ->
@@ -98,7 +117,18 @@ public class WebSecurityConfig {
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/templates/**").permitAll()
                                 .anyRequest().authenticated()
-                );
+                )
+                .oauth2Login(oauth2Login ->
+                        oauth2Login
+                                .authorizationEndpoint(authorizationEndpointConfig ->
+                                        authorizationEndpointConfig
+                                                .baseUri("/oauth2/authorize")
+                                                .authorizationRequestRepository(cookieAuthorizationRequestRepository()))
+                                .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig.baseUri("/oauth2/callback/*"))
+                                .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(customOAuth2UserService))
+                                .successHandler(oAuth2AuthenticationSuccessHandler)
+                                .failureHandler(oAuth2AuthenticationFailureHandler));
+
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
