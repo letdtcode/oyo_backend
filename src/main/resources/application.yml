@@ -1,3 +1,6 @@
+server:
+  forward-headers-strategy: framework
+
 spring:
   profiles:
     active: ${ENV:dev}
@@ -122,3 +125,4 @@ app:
     # We're not using cookies because they won't work well in mobile clients.
     authorizedRedirectUris:
       - http://localhost:5173/oauth2/redirect
+
