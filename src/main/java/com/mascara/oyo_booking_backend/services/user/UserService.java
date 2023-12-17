@@ -9,8 +9,10 @@ import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.User;
+import com.mascara.oyo_booking_backend.securities.oauth2.user.OAuth2UserInfo;
 import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +26,9 @@ import java.io.IOException;
  * Filename  : IUserService
  */
 public interface UserService {
+    @Transactional
+    User createUserOauth2(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo);
+
     User addUser(RegisterRequest request, String passwordEncode);
 
     @Transactional

@@ -7,10 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @NoArgsConstructor
 @Slf4j
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements OAuth2User, UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -35,6 +37,10 @@ public class CustomUserDetails implements UserDetails {
 
     @JsonIgnore
     private String password;
+
+    private String firstName;
+
+    private Map<String, Object> attributes;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -57,6 +63,21 @@ public class CustomUserDetails implements UserDetails {
                 user.getMail(),
                 user.getPassword(),
                 authorities);
+    }
+
+    public static CustomUserDetails build(User user, Map<String, Object> attributes) {
+        CustomUserDetails customUserDetails = CustomUserDetails.build(user);
+        customUserDetails.setAttributes(attributes);
+        return customUserDetails;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
 
     @Override
@@ -112,5 +133,10 @@ public class CustomUserDetails implements UserDetails {
         log.error(id.toString());
         log.error(user.id.toString());
         return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public String getName() {
+        return firstName;
     }
 }
