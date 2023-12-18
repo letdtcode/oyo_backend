@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.securities.oauth2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mascara.oyo_booking_backend.config.AppProperties;
 import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.RefreshToken;
@@ -110,6 +111,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         InfoUserResponse infoUser = mapper.map(user, InfoUserResponse.class);
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         String jsonStringInfoUser;
         try {
             jsonStringInfoUser = objectMapper.writeValueAsString(infoUser);
