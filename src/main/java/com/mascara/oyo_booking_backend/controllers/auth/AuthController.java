@@ -116,6 +116,10 @@ public class AuthController {
             BaseMessageData response = new BaseMessageData("User is peding");
             return ResponseEntity.status(HttpStatusCode.valueOf(202)).body(new BaseResponse<>(true, 202, response));
         }
+        if (user.getStatus() == UserStatusEnum.BANNED) {
+            BaseMessageData response = new BaseMessageData("User is banned");
+            return ResponseEntity.status(HttpStatusCode.valueOf(203)).body(new BaseResponse<>(true, 202, response));
+        }
         Set<Role> rolesOfUser = user.getRoleSet();
         Set<String> rolesName = rolesOfUser.stream().map(role -> role.getRoleName().toString()).collect(Collectors.toSet());
         String accessToken = jwtUtils.generateAccessJwtToken(userMail, rolesName);
