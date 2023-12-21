@@ -45,26 +45,26 @@ public interface AccomPlaceService {
     BaseMessageData deleteAccomPlace(Long id);
 
     @Transactional
-    BaseMessageData updateTitleAccom(UpdateTitleAccomRequest request, Long accomId);
+    GetAccomPlaceDetailResponse updateTitleAccom(UpdateTitleAccomRequest request, Long accomId);
 
     @Transactional
-    BaseMessageData updateFacilityAccom(UpdateFacilityAccomRequest request, Long accomId);
+    GetAccomPlaceDetailResponse updateFacilityAccom(UpdateFacilityAccomRequest request, Long accomId);
 
     @Transactional
-    BaseMessageData updateRoomAccom(UpdateRoomAccomRequest request, Long accomId);
+    GetAccomPlaceDetailResponse updateRoomAccom(UpdateRoomAccomRequest request, Long accomId);
 
     @Transactional
-    BaseMessageData updateImageAccom(UpdateImageAccomRequest request, Long accomId);
+    GetAccomPlaceDetailResponse updateImageAccom(UpdateImageAccomRequest request, Long accomId);
 
     @Transactional
-    BaseMessageData updateAddressAccom(UpdateAddressAccomRequest request, Long accomId);
+    GetAccomPlaceDetailResponse updateAddressAccom(UpdateAddressAccomRequest request, Long accomId);
 
     @Transactional
-    BaseMessageData updateSurchargeAccom(UpdateSurchargeAccomRequest request, Long accomId);
+    GetAccomPlaceDetailResponse updateSurchargeAccom(UpdateSurchargeAccomRequest request, Long accomId);
 
     @Transactional
-    BaseMessageData changePriceAccom(Double pricePerNight, Long accomId);
+    GetAccomPlaceDetailResponse changePriceAccom(Double pricePerNight, Long accomId);
 
     @Transactional
-    BaseMessageData updateDiscountAccom(Double discountPercent, Long accomId);
+    GetAccomPlaceDetailResponse updateDiscountAccom(Double discountPercent, Long accomId);
 }

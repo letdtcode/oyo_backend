@@ -1,8 +1,8 @@
 package com.mascara.oyo_booking_backend.controllers.partner;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.accom_place.*;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
@@ -101,7 +101,7 @@ public class PartnerManageAccomController {
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> updateTitleAccom(@RequestBody @Valid UpdateTitleAccomRequest request,
                                               @RequestParam("accomId") Long accomId) {
-        BaseMessageData response = accomPlaceService.updateTitleAccom(request, accomId);
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateTitleAccom(request, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -114,7 +114,7 @@ public class PartnerManageAccomController {
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> updateFacilityAccom(@RequestBody @Valid UpdateFacilityAccomRequest request,
                                                  @RequestParam("accomId") Long accomId) {
-        BaseMessageData response = accomPlaceService.updateFacilityAccom(request, accomId);
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateFacilityAccom(request, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -127,7 +127,7 @@ public class PartnerManageAccomController {
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> updateRoomAccom(@RequestBody @Valid UpdateRoomAccomRequest request,
                                              @RequestParam("accomId") Long accomId) {
-        BaseMessageData response = accomPlaceService.updateRoomAccom(request, accomId);
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateRoomAccom(request, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -140,7 +140,7 @@ public class PartnerManageAccomController {
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> updateImageAccom(@RequestBody @Valid UpdateImageAccomRequest request,
                                               @RequestParam("accomId") Long accomId) {
-        BaseMessageData response = accomPlaceService.updateImageAccom(request, accomId);
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateImageAccom(request, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -153,7 +153,7 @@ public class PartnerManageAccomController {
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> updateAddressAccom(@RequestBody @Valid UpdateAddressAccomRequest request,
                                                 @RequestParam("accomId") Long accomId) {
-        BaseMessageData response = accomPlaceService.updateAddressAccom(request, accomId);
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateAddressAccom(request, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -166,7 +166,7 @@ public class PartnerManageAccomController {
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> updateSurchargeAccom(@RequestBody @Valid UpdateSurchargeAccomRequest request,
                                                   @RequestParam("accomId") Long accomId) {
-        BaseMessageData response = accomPlaceService.updateSurchargeAccom(request, accomId);
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateSurchargeAccom(request, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -179,7 +179,7 @@ public class PartnerManageAccomController {
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> changePriceAccom(@RequestParam("pricePerNight") Double pricePerNight,
                                               @RequestParam("accomId") Long accomId) {
-        BaseMessageData response = accomPlaceService.changePriceAccom(pricePerNight, accomId);
+        GetAccomPlaceDetailResponse response = accomPlaceService.changePriceAccom(pricePerNight, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -192,7 +192,7 @@ public class PartnerManageAccomController {
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> updateDiscountAccom(@RequestParam("discount") Double discount,
                                                  @RequestParam("accomId") Long accomId) {
-        BaseMessageData response = accomPlaceService.updateDiscountAccom(discount, accomId);
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateDiscountAccom(discount, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

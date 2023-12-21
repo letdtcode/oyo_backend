@@ -109,12 +109,16 @@ public class AuthController {
         Optional<User> optionalUser = userRepository.findByMail(userMail);
         if (!optionalUser.isPresent()) {
             BaseMessageData response = new BaseMessageData("Mail not exist");
-            return ResponseEntity.status(HttpStatusCode.valueOf(204)).body(new BaseResponse<>(true, 202, response));
+            return ResponseEntity.status(HttpStatusCode.valueOf(204)).body(new BaseResponse<>(true, 204, response));
         }
         User user = optionalUser.get();
         if (user.getStatus() == UserStatusEnum.PEDING) {
             BaseMessageData response = new BaseMessageData("User is peding");
             return ResponseEntity.status(HttpStatusCode.valueOf(202)).body(new BaseResponse<>(true, 202, response));
+        }
+        if (user.getStatus() == UserStatusEnum.BANNED) {
+            BaseMessageData response = new BaseMessageData("User is banned");
+            return ResponseEntity.status(HttpStatusCode.valueOf(203)).body(new BaseResponse<>(true, 203, response));
         }
         Set<Role> rolesOfUser = user.getRoleSet();
         Set<String> rolesName = rolesOfUser.stream().map(role -> role.getRoleName().toString()).collect(Collectors.toSet());
