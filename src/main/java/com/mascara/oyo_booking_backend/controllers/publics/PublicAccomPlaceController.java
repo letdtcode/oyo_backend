@@ -84,6 +84,21 @@ public class PublicAccomPlaceController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
+    @Operation(summary = "Search Accom Place", description = "Public Api search accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/search")
+    public ResponseEntity<?> getAccomPlaceFilterWithPaging(@RequestParam("keyword") String keyword,
+                                                           @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
+                                                           @RequestParam(value = "pageSize", defaultValue = "0") Integer pageSize) {
+        String sortType = "DESC";
+        String field = "num_view";
+        BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getFilterByKeyWord(keyword, pageNum, pageSize, sortType, field);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
     @Operation(summary = "Info Detail Accom Place", description = "Public Api detail of accom place")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),

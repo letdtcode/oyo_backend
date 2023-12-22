@@ -57,6 +57,11 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
             @Param("numBedRoom") Integer numBedRoom,
             Pageable pageable);
 
+    @Query(value = "select ap.* from accom_place ap, province p where ap.province_code = p.province_code " +
+            "and (upper(ap.accom_name) like upper(CONCAT('%', :keyword,'%')) OR " +
+            "upper(p.province_name) like upper(CONCAT('%', :keyword,'%')))",nativeQuery = true)
+    Page<AccomPlace> getFilterByKeyWord(@Param("keyword") String keyword, Pageable pageable);
+
     @Query(value = "select ap.* from accom_place ap where ap.id = :id and ap.deleted = false", nativeQuery = true)
     Optional<AccomPlace> findById(@Param("id") Long id);
 
