@@ -44,7 +44,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(value = "select b.* from booking b where b.booking_code = :booking_code and b.deleted is false", nativeQuery = true)
     Optional<Booking> findBookingByCode(@Param("booking_code") String bookingCode);
 
-    @Query(value = "select b.* from booking b where (b.date_check_in >= :start_date or b.date_check_out >= :start_date) and b.accom_id = :accom_id and b.deleted is false ORDER BY b.created_date DESC", nativeQuery = true)
+    @Query(value = "select b.* from booking b where (b.date_check_in >= :start_date or b.date_check_out >= :start_date) and b.accom_id = :accom_id and b.status != 'CANCELED' and b.deleted is false ORDER BY b.created_date DESC", nativeQuery = true)
     List<Booking> findBookingByRangeDateStartFromCurrent(@Param("accom_id") Long accomId, @Param("start_date") LocalDate startDate);
 
     @Modifying
