@@ -109,7 +109,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (userList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbUser.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbUser.json")).getFile()
                 );
                 ObjectMapper mapper = new ObjectMapper();
                 InitDbModel<RegisterRequest> initModel = mapper.readValue(file, new TypeReference<>() {
@@ -130,7 +130,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbDistrict.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbDistrict.json")).getFile()
                 );
                 ObjectMapper mapper = new ObjectMapper();
                 InitDbModel<District> initModel = mapper.readValue(file, new TypeReference<>() {
@@ -156,7 +156,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbProvince.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbProvince.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -180,7 +180,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbWard.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbWard.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -208,7 +208,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbFacilityCategory.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbFacilityCategory.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -232,7 +232,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbFacility.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbFacility.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -261,7 +261,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbAccomCategory.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbAccomCategory.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -285,7 +285,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbTypeBed.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbTypeBed.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -309,7 +309,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbAccomPlace.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbAccomPlace.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -330,7 +330,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbSurcharge.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbSurcharge.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -357,7 +357,7 @@ public class InitDataService implements CommandLineRunner {
         try {
             if (checkList.isEmpty()) {
                 File file = new File(
-                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initDbImageAccom.json")).getFile()
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbImageAccom.json")).getFile()
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -387,9 +387,9 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionProvince();
         implementInitDataMenuActionDistrict();
         implementInitDataMenuActionWard();
+        implementInitDataMenuActionAccomCategory();
         implementInitDataMenuActionFacilityCategory();
         implementInitDataMenuActionFacility();
-        implementInitDataMenuActionAccomCategory();
         implementInitDataMenuActionTypeBed();
         implementInitDataMenuActionSurcharge();
         implementInitDataAccomPlace();

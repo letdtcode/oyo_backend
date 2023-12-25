@@ -41,6 +41,7 @@ public class GetAccomPlaceDetailResponse {
     private Long numReview;
     private List<GetTypeBedResponse> bedRooms;
     private Double pricePerNight;
+    private Double discount;
     private String guide;
     private String refundPolicy;
     private List<GetFacilityCategorWithFacilityListResponse> facilityCategoryList;

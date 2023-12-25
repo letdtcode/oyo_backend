@@ -457,9 +457,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     public GetAccomPlaceDetailResponse updateDiscountAccom(Double discountPercent, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        Double newPrice = accomPlace.getPricePerNight() - ((accomPlace.getPricePerNight() * discountPercent) / 100);
+//        Double newPrice = accomPlace.getPricePerNight() - ((accomPlace.getPricePerNight() * discountPercent) / 100);
         accomPlace.setDiscount(discountPercent);
-        accomPlace.setPricePerNight(newPrice);
+//        accomPlace.setPricePerNight(newPrice);
         accomPlace = accomPlaceRepository.save(accomPlace);
         return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }

@@ -217,7 +217,9 @@ public class BookingServiceImpl implements BookingService {
                                                                       String field) {
         User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
-        Page<Booking> bookingPage = bookingRepository.getListBookingOfPartner(user.getId(), status, paging);
+
+        LocalDate dateNow = LocalDate.now();
+        Page<Booking> bookingPage = bookingRepository.getListBookingOfPartner(user.getId(), status, dateNow, paging);
         List<Booking> bookingList = bookingPage.stream().toList();
         List<GetBookingResponse> responseList = bookingList.stream().map(booking -> bookingMapper.toGetBookingResponse(booking))
                 .collect(Collectors.toList());

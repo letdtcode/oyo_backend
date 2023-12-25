@@ -30,11 +30,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                                   @Param("date_check_out") LocalDate checkOut);
 
     @Query(value = "select b.* from accom_place ap join booking b where ap.id = b.accom_id and ap.user_id = :host_id and " +
-            "(b.status = :status or :status is null) and ap.deleted is false and b.deleted is false",
+            "(b.status = :status or :status is null) and b.date_check_in = :date and ap.deleted is false and b.deleted is false",
             countQuery = "select count(ap.id) from accom_place ap join booking b where ap.id = b.accom_id and " +
-                    "ap.user_id = :host_id and (b.status = :status or :status is null) and ap.deleted is false and b.deleted is false",
+                    "ap.user_id = :host_id and (b.status = :status or :status is null) and b.date_check_in = :date and ap.deleted is false and b.deleted is false",
             nativeQuery = true)
-    Page<Booking> getListBookingOfPartner(@Param("host_id") Long hostId, @Param("status") String status, Pageable pageable);
+    Page<Booking> getListBookingOfPartner(@Param("host_id") Long hostId, @Param("status") String status, @Param("date") LocalDate date, Pageable pageable);
 
     @Query(value = "select b.* from booking b where b.booking_list_id = :user_id and b.deleted is false",
             countQuery = "select count(b.id) from booking b where b.booking_list_id = :user_id and b.deleted is false",
