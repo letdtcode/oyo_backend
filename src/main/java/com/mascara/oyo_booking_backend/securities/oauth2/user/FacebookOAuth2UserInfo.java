@@ -1,0 +1,45 @@
+package com.mascara.oyo_booking_backend.securities.oauth2.user;
+
+import java.util.Map;
+
+/**
+ * Created by: IntelliJ IDEA
+ * User      : boyng
+ * Date      : 17/12/2023
+ * Time      : 5:35 CH
+ * Filename  : FacebookOAuth2UserInfo
+ */
+public class FacebookOAuth2UserInfo extends OAuth2UserInfo {
+    public FacebookOAuth2UserInfo(Map<String, Object> attributes) {
+        super(attributes);
+    }
+
+    @Override
+    public String getId() {
+        return (String) attributes.get("id");
+    }
+
+    @Override
+    public String getName() {
+        return (String) attributes.get("name");
+    }
+
+    @Override
+    public String getEmail() {
+        return (String) attributes.get("email");
+    }
+
+    @Override
+    public String getImageUrl() {
+        if (attributes.containsKey("picture")) {
+            Map<String, Object> pictureObj = (Map<String, Object>) attributes.get("picture");
+            if (pictureObj.containsKey("data")) {
+                Map<String, Object> dataObj = (Map<String, Object>) pictureObj.get("data");
+                if (dataObj.containsKey("url")) {
+                    return (String) dataObj.get("url");
+                }
+            }
+        }
+        return null;
+    }
+}
