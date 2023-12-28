@@ -52,6 +52,10 @@ public class BookingRequest {
 
     @NotNull
     @Min(0)
+    private Double discount;
+
+    @NotNull
+    @Min(0)
     private Double surcharge;
 
     @NotNull

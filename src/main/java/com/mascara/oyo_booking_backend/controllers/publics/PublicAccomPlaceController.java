@@ -95,6 +95,7 @@ public class PublicAccomPlaceController {
                                                            @RequestParam(value = "pageSize", defaultValue = "0") Integer pageSize) {
         String sortType = "DESC";
         String field = "num_view";
+        log.error("keyword: " + keyword);
         BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getFilterByKeyWord(keyword, pageNum, pageSize, sortType, field);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }

@@ -18,6 +18,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetHistoryBookingResponse {
+    private Long accomId;
     private String bookingCode;
     private String fullNameHost;
     private String nameAccom;
