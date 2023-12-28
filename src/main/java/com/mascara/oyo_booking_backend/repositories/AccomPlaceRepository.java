@@ -83,7 +83,7 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
 
 
     @Query(value = "select ap.* from accom_place ap join wish_item wi on ap.id = wi.accom_id where wi.wish_id = :wish_id and wi.deleted is false",
-            countQuery = "select count(id) from accom_place ap join wish_item wi on ap.id = wi.accom_id where wi.wish_id = :wish_id and wi.deleted is false",
+            countQuery = "select count(ap.id) from accom_place ap join wish_item wi on ap.id = wi.accom_id where wi.wish_id = :wish_id and wi.deleted is false",
             nativeQuery = true)
     Page<AccomPlace> getListAccomPlaceOfWishListUser(@Param("wish_id") Long wishListId, Pageable pageable);
 
