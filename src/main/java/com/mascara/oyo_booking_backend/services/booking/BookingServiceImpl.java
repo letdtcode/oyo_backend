@@ -106,9 +106,12 @@ public class BookingServiceImpl implements BookingService {
         BookingList bookingList = bookingListRepository.findByUserMail(mailUser)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String bookingCode = UUID.randomUUID().toString();
-        Double originPriceAfterPromotion = request.getOriginPay() - (request.getOriginPay() * request.getDiscount() / 100);
-        Double totalBill =
-                +request.getSurcharge();
+
+        Period p = Period.between(request.getCheckIn(), request.getCheckOut());
+        int numNight = p.getDays() + 1;
+        Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
+        Double originPriceAfterPromotion = totalCostAccom - (totalCostAccom * request.getDiscount() / 100);
+        Double totalBill = originPriceAfterPromotion + request.getSurcharge();
         Double totalTrasfer = 0D;
         switch (PaymentMethodEnum.valueOf(request.getPaymentMethod())) {
             case PAYPAL -> totalBill = (totalBill * PaymentMethodEnum.PAYPAL.getPercent()) / 100;
