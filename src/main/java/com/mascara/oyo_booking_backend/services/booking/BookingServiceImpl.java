@@ -107,7 +107,8 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String bookingCode = UUID.randomUUID().toString();
         Double originPriceAfterPromotion = request.getOriginPay() - (request.getOriginPay() * request.getDiscount() / 100);
-        Double totalBill = originPriceAfterPromotion + request.getSurcharge();
+        Double totalBill =
+                +request.getSurcharge();
         Double totalTrasfer = 0D;
         switch (PaymentMethodEnum.valueOf(request.getPaymentMethod())) {
             case PAYPAL -> totalBill = (totalBill * PaymentMethodEnum.PAYPAL.getPercent()) / 100;
@@ -187,8 +188,8 @@ public class BookingServiceImpl implements BookingService {
 
         Period p = Period.between(request.getCheckIn(), request.getCheckOut());
         int numNight = p.getDays() + 1;
-
-        Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
+        Double priceOriginAccom = accomPlace.getPricePerNight() - (accomPlace.getPricePerNight() * accomPlace.getDiscount() / 100);
+        Double totalCostAccom = priceOriginAccom * numNight;
         Double totalBill = totalCostAccom + costSurcharge;
 
         int maxPeople = accomPlace.getNumPeople();
