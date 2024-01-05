@@ -442,7 +442,6 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace = accomPlaceRepository.findById(accomId).get();
         return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }
-
     @Override
     @Transactional
     public GetAccomPlaceDetailResponse changePriceAccom(Double pricePerNight, Long accomId) {

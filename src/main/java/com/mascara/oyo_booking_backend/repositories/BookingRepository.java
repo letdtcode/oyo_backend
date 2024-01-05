@@ -24,7 +24,7 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(value = "select if(count(id) > 0,'false','true') from booking b where b.accom_id = :accom_id and ((b.date_check_in <= :date_check_in AND b.date_check_out >= :date_check_in)" +
             "        OR (b.date_check_in <= :date_check_out AND b.date_check_out >= :date_check_out)" +
-            "        OR (b.date_check_in >= :date_check_in AND b.date_check_out <= :date_check_out)) and b.deleted is false", nativeQuery = true)
+            "        OR (b.date_check_in >= :date_check_in AND b.date_check_out <= :date_check_out)) and b.status != 'CANCELED' and b.deleted is false", nativeQuery = true)
     boolean checkBookingAvailable(@Param("accom_id") Long accomId,
                                   @Param("date_check_in") LocalDate checkIn,
                                   @Param("date_check_out") LocalDate checkOut);

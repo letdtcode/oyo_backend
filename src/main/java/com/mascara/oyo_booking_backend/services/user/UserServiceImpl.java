@@ -202,7 +202,7 @@ public class UserServiceImpl implements UserService {
             user.setLastModifiedBy("dev");
             user.setStatus(UserStatusEnum.ENABLE);
             user.setAddress("Tp.HCM");
-            user.setAvatarUrl("https://res.cloudinary.com/dyv5zrsgj/image/upload/v1698163058/oyo_booking/nqxq12lb5gazvph6rwf7.png");
+//            user.setAvatarUrl("https://res.cloudinary.com/dyv5zrsgj/image/upload/v1698163058/oyo_booking/nqxq12lb5gazvph6rwf7.png");
             user.setDateOfBirth(LocalDate.ofEpochDay(23 / 12 / 2002));
         }
         user.setUserName("user-" + randomUsername);
