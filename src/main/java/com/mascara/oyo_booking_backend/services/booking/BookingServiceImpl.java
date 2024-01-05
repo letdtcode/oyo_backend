@@ -188,8 +188,8 @@ public class BookingServiceImpl implements BookingService {
 
         Period p = Period.between(request.getCheckIn(), request.getCheckOut());
         int numNight = p.getDays() + 1;
-        Double priceOriginAccom = accomPlace.getPricePerNight() - (accomPlace.getPricePerNight() * accomPlace.getDiscount() / 100);
-        Double totalCostAccom = priceOriginAccom * numNight;
+//        Double priceOriginAccom = accomPlace.getPricePerNight() - (accomPlace.getPricePerNight() * accomPlace.getDiscount() / 100);
+        Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
         Double totalBill = totalCostAccom + costSurcharge;
 
         int maxPeople = accomPlace.getNumPeople();
