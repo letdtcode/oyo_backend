@@ -83,8 +83,19 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User createUserOauth2(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
+        String fullName = oAuth2UserInfo.getName();
+        String firstName = "";
+        String lastName = "";
+        int indexSpaceInFullName = fullName.indexOf(" ");
+        if (indexSpaceInFullName != -1) {
+            firstName = fullName.substring(0, indexSpaceInFullName);
+            lastName = fullName.substring(indexSpaceInFullName + 1);
+        } else {
+            firstName = fullName;
+        }
         User user = User.builder()
-                .firstName(oAuth2UserInfo.getName())
+                .firstName(firstName)
+                .lastName(lastName)
                 .mail(oAuth2UserInfo.getEmail())
                 .avatarUrl(oAuth2UserInfo.getImageUrl())
                 .provider(AuthProviderEnum.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
