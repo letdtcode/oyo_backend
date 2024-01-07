@@ -241,7 +241,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Override
     @Transactional
     public GetAccomPlaceDetailResponse getAccomPlaceDetails(Long id) {
-        AccomPlace accomPlace = accomPlaceRepository.findByIdByClient(id)
+        AccomPlace accomPlace = accomPlaceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
         LocalDate dateNow = LocalDate.now();
         List<Booking> bookingOfRangeDate = bookingRepository.findBookingByRangeDateStartFromCurrent(accomPlace.getId(), dateNow);

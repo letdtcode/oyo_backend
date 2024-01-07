@@ -68,8 +68,8 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
     @Query(value = "select ap.* from accom_place ap where ap.id = :id and ap.deleted = false", nativeQuery = true)
     Optional<AccomPlace> findById(@Param("id") Long id);
 
-    @Query(value = "select ap.* from accom_place ap where ap.id = :id and ap.status = 'ENABLE' and ap.deleted = false", nativeQuery = true)
-    Optional<AccomPlace> findByIdByClient(@Param("id") Long id);
+//    @Query(value = "select ap.* from accom_place ap where ap.id = :id and ap.deleted = false", nativeQuery = true)
+//    Optional<AccomPlace> findByIdByClient(@Param("id") Long id);
 
     @Query(value = "select ap.* from accom_place ap limit 1", nativeQuery = true)
     List<AccomPlace> checkExistData();
