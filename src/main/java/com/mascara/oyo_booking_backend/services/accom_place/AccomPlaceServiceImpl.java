@@ -122,6 +122,10 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .pricePerNight(request.getPricePerNight())
                 .facilitySet(facilitySet)
                 .status(AccomStatusEnum.ENABLE).build();
+
+        if (request.getVideoIntroUrl() != null && !request.getVideoIntroUrl().isBlank()) {
+            accomPlace.setVideoIntroUrl(request.getVideoIntroUrl());
+        }
         int numRoom = accomPlace.getNumBedRoom();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
@@ -442,6 +446,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace = accomPlaceRepository.findById(accomId).get();
         return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }
+
     @Override
     @Transactional
     public GetAccomPlaceDetailResponse changePriceAccom(Double pricePerNight, Long accomId) {

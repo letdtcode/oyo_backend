@@ -11,6 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>OYO_Booking_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>OYO_Booking_backend</name>
     <description>OYO_Booking_backend</description>
     <properties>

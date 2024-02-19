@@ -48,6 +48,8 @@ public class AddAccomPlaceRequest {
     @NotBlank
     private String wardCode;
 
+    private String videoIntroUrl;
+
     @NotNull
     private Float acreage;
 
