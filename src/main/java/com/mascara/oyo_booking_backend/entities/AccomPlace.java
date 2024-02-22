@@ -91,8 +91,8 @@ public class AccomPlace extends BasePesistence {
     @OrderBy("createdDate ASC ")
     private Set<ImageAccom> imageAccoms;
 
-    @Column(name = "video_intro_url")
-    private String videoIntroUrl;
+    @Column(name = "cld_video_id",columnDefinition = "VARCHAR(255)")
+    private String cldVideoId;
 
     @Column(name = "acreage")
     private Float acreage;

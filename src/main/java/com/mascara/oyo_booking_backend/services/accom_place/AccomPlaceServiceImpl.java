@@ -123,8 +123,8 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .facilitySet(facilitySet)
                 .status(AccomStatusEnum.ENABLE).build();
 
-        if (request.getVideoIntroUrl() != null && !request.getVideoIntroUrl().isBlank()) {
-            accomPlace.setVideoIntroUrl(request.getVideoIntroUrl());
+        if (request.getCldVideoId() != null && !request.getCldVideoId().isBlank()) {
+            accomPlace.setCldVideoId(request.getCldVideoId());
         }
         int numRoom = accomPlace.getNumBedRoom();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -12,7 +12,10 @@ import lombok.Getter;
 @Getter
 public enum PaymentMethodEnum {
     DIRECT("DIRECT", 100d),
-    PAYPAL("PAYPAL", 90D);
+    PAYPAL("PAYPAL", 90D),
+
+    VNPAY("VNPAY", 90D);
+
     private String key;
     private Double percent;
 

@@ -31,6 +31,7 @@ public class GetAccomPlaceDetailResponse {
     private String accomCateName;
     private String addressGeneral;
     private List<String> imageAccomsUrls;
+    private String cldVideoId;
     private Float acreage;
     private Integer numPeople;
     private Integer numBathRoom;
@@ -46,7 +47,6 @@ public class GetAccomPlaceDetailResponse {
     private String refundPolicy;
     private List<GetFacilityCategorWithFacilityListResponse> facilityCategoryList;
     private List<GetSurchargeOfAccomResponse> surchargeList;
-//    private String lastModifiedDate;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private List<LocalDate> bookedDates;
     private String status;
