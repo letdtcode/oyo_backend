@@ -198,7 +198,7 @@ public class AuthController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestParam("mail") @Email @NotNull String mail) throws MessagingException, TemplateException, IOException {
+    public ResponseEntity<?> resetPassword(@RequestParam("mail") @Email @NotNull String mail) {
         BaseMessageData response = userService.resetPasswordUser(mail);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }

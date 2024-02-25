@@ -395,6 +395,16 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
+    public GetAccomPlaceDetailResponse updateVideoAccom(UpdateVideoAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        accomPlace.setCldVideoId(request.getCldVideoId());
+        accomPlace = accomPlaceRepository.save(accomPlace);
+        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
+    }
+
+    @Override
+    @Transactional
     public GetAccomPlaceDetailResponse updateAddressAccom(UpdateAddressAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));

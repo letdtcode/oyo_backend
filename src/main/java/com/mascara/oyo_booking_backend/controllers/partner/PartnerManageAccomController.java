@@ -144,6 +144,19 @@ public class PartnerManageAccomController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
+    @Operation(summary = "Update video accom place", description = "Update video accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @PutMapping("/video")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> updateVideoAccom(@RequestBody @Valid UpdateVideoAccomRequest request,
+                                              @RequestParam("accomId") Long accomId) {
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateVideoAccom(request, accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
     @Operation(summary = "Update address accom place", description = "Update address accom place")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),

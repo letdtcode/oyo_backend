@@ -48,7 +48,7 @@ public interface UserService {
     BaseMessageData changeStatusUser(String email, String status);
 
     @Transactional
-    BaseMessageData resetPasswordUser(String mail) throws MessagingException, TemplateException, IOException;
+    BaseMessageData resetPasswordUser(String mail);
 
     @Transactional
     BaseMessageData deleteUser(String email);

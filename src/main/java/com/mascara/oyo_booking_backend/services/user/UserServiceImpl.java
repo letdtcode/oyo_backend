@@ -323,7 +323,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public BaseMessageData<String> resetPasswordUser(String mail) throws MessagingException, TemplateException, IOException {
+    public BaseMessageData<String> resetPasswordUser(String mail) {
         User user = userRepository.findByMail(mail)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
         String newPassword = RandomStringUtils.generateRandomString();

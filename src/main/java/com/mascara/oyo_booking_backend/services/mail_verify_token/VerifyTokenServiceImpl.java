@@ -58,7 +58,7 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
     }
 
     @Override
-    public BaseMessageData verifyMailUser(String mail, String token) throws MessagingException, TemplateException, IOException {
+    public BaseMessageData verifyMailUser(String mail, String token) {
         MailConfirmToken mailConfirmToken = mailConfirmTokenRepository.findByVerifyToken(token)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("confirm token")));
         User user = userRepository.findByMailConfirmTokenId(mailConfirmToken.getId())

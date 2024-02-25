@@ -60,6 +60,9 @@ public interface AccomPlaceService {
     GetAccomPlaceDetailResponse updateImageAccom(UpdateImageAccomRequest request, Long accomId);
 
     @Transactional
+    GetAccomPlaceDetailResponse updateVideoAccom(UpdateVideoAccomRequest request, Long accomId);
+
+    @Transactional
     GetAccomPlaceDetailResponse updateAddressAccom(UpdateAddressAccomRequest request, Long accomId);
 
     @Transactional
