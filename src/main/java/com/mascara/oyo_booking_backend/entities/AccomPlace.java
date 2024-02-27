@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
+import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -91,7 +92,7 @@ public class AccomPlace extends BasePesistence {
     @OrderBy("createdDate ASC ")
     private Set<ImageAccom> imageAccoms;
 
-    @Column(name = "cld_video_id",columnDefinition = "VARCHAR(255)")
+    @Column(name = "cld_video_id", columnDefinition = "VARCHAR(255)")
     private String cldVideoId;
 
     @Column(name = "acreage")
@@ -167,4 +168,11 @@ public class AccomPlace extends BasePesistence {
 
     @Column(name = "slugs", columnDefinition = "varchar (255)", unique = true)
     private String slugs;
+
+    @Column(name = "cancellation_policy")
+    @Enumerated(EnumType.STRING)
+    private CancellationPolicyEnum cancellationPolicy;
+
+    @Column(name = "cancellation_fee")
+    private Integer cancellationFee;
 }
