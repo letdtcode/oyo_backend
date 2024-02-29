@@ -13,5 +13,5 @@ public enum CancellationPolicyEnum {
     CANCEL_7D,
     CANCEL_15D,
     CANCEL_30D,
-    NO_CALCEL
+    NO_CANCEL
 }
