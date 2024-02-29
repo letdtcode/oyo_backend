@@ -131,8 +131,8 @@ public class AccomPlace extends BasePesistence {
     @Column(name = "guide", columnDefinition = "NVARCHAR(255)")
     private String guide;
 
-    @Column(name = "refund_policy", columnDefinition = "NVARCHAR(255)")
-    private String refundPolicy;
+//    @Column(name = "refund_policy", columnDefinition = "NVARCHAR(255)")
+//    private String refundPolicy;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

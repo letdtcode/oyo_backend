@@ -9,6 +9,7 @@ import com.mascara.oyo_booking_backend.dtos.response.booking.GetHistoryBookingRe
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
@@ -27,7 +28,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -271,6 +274,38 @@ public class BookingServiceImpl implements BookingService {
         User user = userRepository.findUserByBookingCode(bookingCode).get();
         if (!user.getMail().equals(userMail)) {
             return new BaseMessageData(AppContants.NOT_PERMIT);
+        }
+
+        boolean canCancel = true;
+        Booking booking = bookingRepository.findBookingByCode(bookingCode).orElseThrow(() -> new ResourceNotFoundException("Booking code not exist"));
+        AccomPlace accomPlace = accomPlaceRepository.findById(booking.getAccomId()).orElseThrow(() -> new ResourceNotFoundException("Accom place not exist"));
+        CancellationPolicyEnum cancelPolicyOfAccom = accomPlace.getCancellationPolicy();
+
+        long days = ChronoUnit.DAYS.between(booking.getLastModifiedDate(), LocalDateTime.now());
+        switch (cancelPolicyOfAccom) {
+            case CANCEL_24H:
+                long hours = ChronoUnit.HOURS.between(booking.getLastModifiedDate(), LocalDateTime.now());
+                if (hours > 24)
+                    canCancel = false;
+                break;
+            case CANCEL_5D:
+                if (days > 5)
+                    canCancel = false;
+                break;
+            case CANCEL_7D:
+                if (days > 7)
+                    canCancel = false;
+                break;
+            case CANCEL_15D:
+                if (days > 15)
+                    canCancel = false;
+                break;
+            case CANCEL_30D:
+                if (days > 30)
+                    canCancel = false;
+        }
+        if (canCancel) {
+
         }
         bookingRepository.changeStatusBooking(bookingCode, status);
         return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);

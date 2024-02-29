@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
+import com.mascara.oyo_booking_backend.entities.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.Booking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,5 +51,4 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Modifying
     @Query(value = "update booking b set b.status = :status where b.booking_code = :booking_code", nativeQuery = true)
     void changeStatusBooking(@Param("booking_code") String bookingCode, @Param("status") String status);
-
 }

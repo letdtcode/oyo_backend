@@ -118,7 +118,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .numBathRoom(request.getNumBathRoom())
                 .numBedRoom(request.getNumBedRoom())
                 .numKitchen(request.getNumKitchen())
-                .refundPolicy("Trả trước 7 ngày")
+//                .refundPolicy("Trả trước 7 ngày")
                 .pricePerNight(request.getPricePerNight())
                 .facilitySet(facilitySet)
                 .status(AccomStatusEnum.ENABLE).build();
@@ -132,7 +132,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             User user = userRepository.findByMail(authentication.getName()).get();
             accomPlace.setUser(user);
             accomPlace.setGuide("Đến là đón");
-            accomPlace.setRefundPolicy("Trả trước 7 ngày");
+//            accomPlace.setRefundPolicy("Trả trước 7 ngày");
             accomPlace.setUserId(user.getId());
         } else {
             User user = userRepository.findByMail("client1@gmail.com")
@@ -320,7 +320,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace.setAccomName(request.getNameAccom());
         accomPlace.setDescription(request.getDescription());
         accomPlace.setGuide(request.getGuide());
-        accomPlace.setRefundPolicy(request.getRefundPolicy());
+//        accomPlace.setRefundPolicy(request.getRefundPolicy());
         accomPlace = accomPlaceRepository.save(accomPlace);
         return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }
