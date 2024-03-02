@@ -4,6 +4,8 @@ import com.mascara.oyo_booking_backend.entities.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -13,4 +15,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
+    Optional<Payment> findById(Long id);
 }

@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.services.booking;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
+import com.mascara.oyo_booking_backend.dtos.request.booking.CancelBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
@@ -42,5 +43,8 @@ public interface BookingService {
     BaseMessageData changeStatusBookingByHost(String hostMail, String bookingCode, String status);
 
     @Transactional
-    BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status);
+    BaseMessageData cancelBooking(String userMail, CancelBookingRequest request);
+
+//    @Transactional
+//    BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status);
 }

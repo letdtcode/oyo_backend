@@ -15,14 +15,13 @@ public class AppContants {
     public static final String PASSWORD_INCORRECT = "Password is incorrect";
     public static final String CHANGE_PASSWORD_SUCCESS = "Change password success";
     public static final String FILE_IS_NULL = "File is null";
-
-    public static final String BOOKING_SUCESSFUL = "Booking successful";
     public static final String NOT_PERMIT = "Not permit do this";
     public static final String RESET_PASSWORD_SUCESS = "Reset password sucess";
     public static final Object REVIEW_IS_NOT_AVAILABLE = "Review is not available";
     public static final Object CHANGE_STATUS_BOOKING_SUCCESS = "Change status booking success";
     public static final String ADD_WISH_ITEM_SUCCESS = "Add wish item success";
     public static final String REMOVE_WISH_ITEM_SUCCESS = "Remove wish item success";
+//    public static final Object BOOKING_SUCESSFUL = "B";
 
     public static final String BOOKING_NOT_AVAILABLE_TIME(Long accomId, String dateCheckIn, String dateCheckOut) {
         return "Booking not available for accom " + accomId + "from " + dateCheckIn + " to " + dateCheckOut;

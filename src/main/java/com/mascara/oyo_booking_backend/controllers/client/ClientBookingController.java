@@ -85,24 +85,24 @@ public class ClientBookingController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @Operation(summary = "Check accom place is in wish list or not", description = "Client Api for check accom place is in wish list or not")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
-            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PutMapping("/cancel")
-    @PreAuthorize("hasRole('CLIENT')")
-    public ResponseEntity<?> cancelBooking(@RequestParam("bookingCode")
-                                           @NotNull(message = "Booking code must not null")
-                                           String bookingCode) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        String userMail = principal.getName();
-        String status = BookingStatusEnum.CANCELED.toString();
-        BaseMessageData response = bookingService.changeStatusBookingByUser(userMail, bookingCode, status);
-        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
-        }
-        response.setMessage("Cancel booking sucessful");
-        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
-    }
+//    @Operation(summary = "Check accom place is in wish list or not", description = "Client Api for check accom place is in wish list or not")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+//            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+//            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+//    @PutMapping("/cancel")
+//    @PreAuthorize("hasRole('CLIENT')")
+//    public ResponseEntity<?> cancelBooking(@RequestParam("bookingCode")
+//                                           @NotNull(message = "Booking code must not null")
+//                                           String bookingCode) {
+//        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+//        String userMail = principal.getName();
+//        String status = BookingStatusEnum.CANCELED.toString();
+////        BaseMessageData response = bookingService.changeStatusBookingByUser(userMail, bookingCode, status);
+//        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
+//            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
+//        }
+//        response.setMessage("Cancel booking sucessful");
+////        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+//    }
 }

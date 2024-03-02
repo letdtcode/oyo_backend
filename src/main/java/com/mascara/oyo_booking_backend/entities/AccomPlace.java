@@ -91,7 +91,7 @@ public class AccomPlace extends BasePesistence {
     private CancellationPolicyEnum cancellationPolicy;
 
     @Column(name = "cancellation_fee")
-    private Integer cancellationFee;
+    private Integer cancellationFeeRate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)

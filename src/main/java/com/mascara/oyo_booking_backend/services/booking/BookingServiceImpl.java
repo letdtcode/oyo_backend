@@ -1,8 +1,10 @@
 package com.mascara.oyo_booking_backend.services.booking;
 
+import com.mascara.oyo_booking_backend.constant.BookingConstant;
 import com.mascara.oyo_booking_backend.constant.FeeRateOfAdminConstant;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
+import com.mascara.oyo_booking_backend.dtos.request.booking.CancelBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
@@ -10,6 +12,7 @@ import com.mascara.oyo_booking_backend.dtos.response.booking.GetHistoryBookingRe
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
@@ -28,7 +31,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -181,7 +186,7 @@ public class BookingServiceImpl implements BookingService {
                 .recipient(mailUser)
                 .subject("Đặt phòng thành công").build();
         emailService.sendMailWithTemplate(emailDetails, "Email_Booking_Success.ftl", model);
-        return new BaseMessageData(AppContants.BOOKING_SUCESSFUL);
+        return new BaseMessageData(BookingConstant.BOOKING_SUCESS);
     }
 
     public boolean checkAvailableAccom(Long accomId, LocalDate checkIn, LocalDate checkOut) {
@@ -204,7 +209,6 @@ public class BookingServiceImpl implements BookingService {
 
         Period p = Period.between(request.getCheckIn(), request.getCheckOut());
         int numNight = p.getDays() + 1;
-//        Double priceOriginAccom = accomPlace.getPricePerNight() - (accomPlace.getPricePerNight() * accomPlace.getDiscount() / 100);
         Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
         Double totalBill = totalCostAccom + costSurcharge;
 
@@ -278,14 +282,72 @@ public class BookingServiceImpl implements BookingService {
         return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
     }
 
+//    @Override
+//    @Transactional
+//    public BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status) {
+//        User user = userRepository.findUserByBookingCode(bookingCode).get();
+//        if (!user.getMail().equals(userMail)) {
+//            return new BaseMessageData(AppContants.NOT_PERMIT);
+//        }
+//        bookingRepository.changeStatusBooking(bookingCode, status);
+//        return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
+//    }
+
     @Override
     @Transactional
-    public BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status) {
-        User user = userRepository.findUserByBookingCode(bookingCode).get();
+    public BaseMessageData cancelBooking(String userMail, CancelBookingRequest request) {
+        User user = userRepository.findUserByBookingCode(request.getBookingCode()).get();
         if (!user.getMail().equals(userMail)) {
             return new BaseMessageData(AppContants.NOT_PERMIT);
         }
-        bookingRepository.changeStatusBooking(bookingCode, status);
-        return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
+        Booking booking = bookingRepository.findBookingByCode(request.getBookingCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Booking code")));
+        Payment payment = paymentRepository.findById(booking.getId()).get();
+        if (!booking.getStatus().equals(BookingStatusEnum.WAITING)) {
+            return new BaseMessageData(AppContants.NOT_PERMIT);
+        }
+
+        AccomPlace accomHost = accomPlaceRepository.findById(booking.getAccomId()).get();
+        CancellationPolicyEnum cancellationPolicy = accomHost.getCancellationPolicy();
+        LocalDateTime timeNow = LocalDateTime.now();
+        long hours = ChronoUnit.HOURS.between(booking.getCreatedDate(), timeNow);
+        long days = ChronoUnit.DAYS.between(booking.getCreatedDate(), timeNow);
+        double cancellationFee = (accomHost.getCancellationFeeRate() * payment.getTotalBill()) / 100;
+        boolean canCancel = true;
+
+        switch (cancellationPolicy) {
+            case NO_CANCEL:
+                canCancel = false;
+                break;
+            case CANCEL_24H:
+                if (hours > 24)
+                    canCancel = false;
+                break;
+            case CANCEL_5D:
+                if (days > 5)
+                    canCancel = false;
+                break;
+            case CANCEL_7D:
+                if (days > 7)
+                    canCancel = false;
+                break;
+            case CANCEL_15D:
+                if (days > 15)
+                    canCancel = false;
+                break;
+            case CANCEL_30D:
+                if (days > 30)
+                    canCancel = false;
+                break;
+        }
+
+        if (!canCancel) {
+            return new BaseMessageData(BookingConstant.CANCEL_BOOKING_UNSUCCESS);
+        }
+        bookingRepository.changeStatusBooking(request.getBookingCode(), BookingStatusEnum.CANCELED.toString());
+        payment.setCancellationFee(cancellationFee);
+        payment.setCancelReason(request.getCancelReason());
+        payment.setCancelPeriod(LocalDateTime.now());
+        return new BaseMessageData(BookingConstant.CANCEL_BOOKING_SUCCESS);
     }
 }
