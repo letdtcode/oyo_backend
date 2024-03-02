@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
         ReviewList reviewList = ReviewList.builder().user(user).build();
 
-        RevenueList revenueList = RevenueList.builder().discount(10F).user(user).build();
+//        RevenueList revenueList = RevenueList.builder().discount(10F).user(user).build();
 
         int desiredLength = 7;
         String randomUsername = UUID.randomUUID()
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
         user.setWishList(wishList);
         user.setBookingList(bookingList);
         user.setReviewList(reviewList);
-        user.setRevenueList(revenueList);
+//        user.setRevenueList(revenueList);
         return userRepository.save(user);
     }
 
@@ -191,7 +191,7 @@ public class UserServiceImpl implements UserService {
 
         ReviewList reviewList = ReviewList.builder().user(user).build();
 
-        RevenueList revenueList = RevenueList.builder().discount(10F).user(user).build();
+//        RevenueList revenueList = RevenueList.builder().discount(10F).user(user).build();
 
         int desiredLength = 7;
         String randomUsername = UUID.randomUUID()
@@ -206,8 +206,8 @@ public class UserServiceImpl implements UserService {
             bookingList.setLastModifiedBy("dev");
             reviewList.setCreatedBy("dev");
             reviewList.setLastModifiedBy("dev");
-            revenueList.setCreatedBy("dev");
-            revenueList.setLastModifiedBy("dev");
+//            revenueList.setCreatedBy("dev");
+//            revenueList.setLastModifiedBy("dev");
 
             user.setCreatedBy("dev");
             user.setLastModifiedBy("dev");
@@ -221,7 +221,7 @@ public class UserServiceImpl implements UserService {
         user.setWishList(wishList);
         user.setBookingList(bookingList);
         user.setReviewList(reviewList);
-        user.setRevenueList(revenueList);
+//        user.setRevenueList(revenueList);
         return userRepository.save(user);
     }
 

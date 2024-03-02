@@ -42,26 +42,6 @@ public class Booking extends BasePesistence {
     @Column(name = "phone_number_customer", nullable = false)
     private String phoneNumberCustomer;
 
-    @Column(name = "origin_pay", nullable = false)
-    private Double originPay;
-
-    @Column(name = "surcharge", nullable = false)
-    private Double surcharge;
-
-    @Column(name = "total_bill", nullable = false)
-    private Double totalBill;
-
-    @Column(name = "total_transfer", nullable = false)
-    private Double totalTransfer;
-
-    @Column(name = "payment_policy", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PaymentPolicyEnum paymentPolicy;
-
-    @Column(name = "payment_method", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PaymentMethodEnum paymentMethod;
-
     @Column(name = "num_adult", nullable = false)
     private Integer numAdult;
 
@@ -70,10 +50,6 @@ public class Booking extends BasePesistence {
 
     @Column(name = "num_born_child", nullable = false)
     private Integer numBornChild;
-
-    @Column(name = "status", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private BookingStatusEnum status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -104,8 +80,9 @@ public class Booking extends BasePesistence {
     private Long bookListId;
 
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Revenue revenue;
-
-    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Review review;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BookingStatusEnum status;
 }

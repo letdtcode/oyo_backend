@@ -98,11 +98,11 @@ public class ClientBookingController {
 //        Principal principal = SecurityContextHolder.getContext().getAuthentication();
 //        String userMail = principal.getName();
 //        String status = BookingStatusEnum.CANCELED.toString();
-//        BaseMessageData response = bookingService.changeStatusBookingByUser(userMail, bookingCode, status);
+////        BaseMessageData response = bookingService.changeStatusBookingByUser(userMail, bookingCode, status);
 //        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
 //            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
 //        }
 //        response.setMessage("Cancel booking sucessful");
-//        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+////        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
 //    }
 }

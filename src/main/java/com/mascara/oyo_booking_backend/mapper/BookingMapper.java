@@ -33,8 +33,8 @@ public class BookingMapper {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RevenueRepository revenueRepository;
+//    @Autowired
+//    private RevenueRepository revenueRepository;
 
     @Autowired
     private DistrictRepository districtRepository;
@@ -56,24 +56,24 @@ public class BookingMapper {
     };
 
     //    Covert booking code to commision money
-    private final Converter<String, Double> bookingCodeToCommisionMoney = context -> {
-        String bookingCode = context.getSource();
-        if (bookingCode != null) {
-            Revenue revenue = revenueRepository.findByBookingCode(bookingCode).get();
-            return revenue.getCommPay();
-        }
-        return null;
-    };
+//    private final Converter<String, Double> bookingCodeToCommisionMoney = context -> {
+//        String bookingCode = context.getSource();
+//        if (bookingCode != null) {
+//            Revenue revenue = revenueRepository.findByBookingCode(bookingCode).get();
+//            return revenue.getCommPay();
+//        }
+//        return null;
+//    };
 
     //    Covert booking code to total revenue
-    private final Converter<String, Double> bookingCodeToTotalRevenue = context -> {
-        String bookingCode = context.getSource();
-        if (bookingCode != null) {
-            Revenue revenue = revenueRepository.findByBookingCode(bookingCode).get();
-            return revenue.getTotalRevenue();
-        }
-        return null;
-    };
+//    private final Converter<String, Double> bookingCodeToTotalRevenue = context -> {
+//        String bookingCode = context.getSource();
+//        if (bookingCode != null) {
+//            Revenue revenue = revenueRepository.findByBookingCode(bookingCode).get();
+//            return revenue.getTotalRevenue();
+//        }
+//        return null;
+//    };
 
     //    Covert booking code to total revenue
     private final Converter<Long, String> idAccomToFullNameHost = context -> {
@@ -154,11 +154,7 @@ public class BookingMapper {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         mapper.createTypeMap(Booking.class, GetBookingResponse.class)
                 .addMappings(mapper -> mapper.using(idAccomPlaceToNameAccom)
-                        .map(Booking::getAccomId, GetBookingResponse::setNameAccom))
-                .addMappings(mapper -> mapper.using(bookingCodeToCommisionMoney)
-                        .map(Booking::getBookingCode, GetBookingResponse::setCommisionMoney))
-                .addMappings(mapper -> mapper.using(bookingCodeToTotalRevenue)
-                        .map(Booking::getBookingCode, GetBookingResponse::setTotalRevenue));
+                        .map(Booking::getAccomId, GetBookingResponse::setNameAccom));
 
         mapper.createTypeMap(Booking.class, GetHistoryBookingResponse.class)
                 .addMappings(mapper -> mapper.using(idAccomToFullNameHost)
@@ -170,7 +166,7 @@ public class BookingMapper {
                 .addMappings(mapper -> mapper.using(idAccomToPricePerNight)
                         .map(Booking::getAccomId, GetHistoryBookingResponse::setPricePerNight))
                 .addMappings(mapper -> mapper.using(idAccomToImageUrlDefaul)
-                        .map(Booking::getAccomId, GetHistoryBookingResponse::setImageUrl))
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setRefundPolicy))
                 .addMappings(mapper -> mapper.using(idBookingToIsReviewed)
                         .map(Booking::getId, GetHistoryBookingResponse::setReviewed));
     }

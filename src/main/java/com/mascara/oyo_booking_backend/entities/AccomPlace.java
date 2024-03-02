@@ -38,6 +38,66 @@ public class AccomPlace extends BasePesistence {
     @Column(name = "address_detail")
     private String addressDetail;
 
+    @Column(name = "district_code")
+    private String districtCode;
+
+    @Column(name = "ward_code")
+    private String wardCode;
+
+    @Column(name = "cld_video_id", columnDefinition = "VARCHAR(255)")
+    private String cldVideoId;
+
+    @Column(name = "acreage")
+    private Float acreage;
+
+    @Column(name = "num_people", nullable = false)
+    private Integer numPeople;
+
+    @Column(name = "num_bathroom")
+    private Integer numBathRoom;
+
+    @Column(name = "num_bed_room", nullable = false)
+    private Integer numBedRoom;
+
+    @Column(name = "num_kitchen", nullable = false)
+    private Integer numKitchen;
+
+    @Column(name = "num_view", nullable = false, columnDefinition = "bigint default 0")
+    private Long numView;
+
+    @Column(name = "grade_rate", nullable = false, columnDefinition = "float default 5")
+    private Float gradeRate;
+
+    @Column(name = "num_review", nullable = false, columnDefinition = "bigint default 0")
+    private Long numReview;
+
+    @Column(name = "num_booking", nullable = false, columnDefinition = "bigint default 0")
+    private Long numBooking;
+
+    @Column(name = "price_per_night", nullable = false)
+    private Double pricePerNight;
+
+    @Column(name = "discount", nullable = false, columnDefinition = "double default 0")
+    private Double discount;
+
+    @Column(name = "guide", columnDefinition = "NVARCHAR(255)")
+    private String guide;
+
+    @Column(name = "slugs", columnDefinition = "varchar (255)", unique = true)
+    private String slugs;
+
+    @Column(name = "cancellation_policy")
+    @Enumerated(EnumType.STRING)
+    private CancellationPolicyEnum cancellationPolicy;
+
+    @Column(name = "cancellation_fee")
+    private Integer cancellationFeeRate;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
+    @Fetch(FetchMode.SUBSELECT)
+    @OrderBy("createdDate ASC ")
+    private Set<ImageAccom> imageAccoms;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id",
@@ -81,67 +141,6 @@ public class AccomPlace extends BasePesistence {
     @Column(name = "province_code")
     private String provinceCode;
 
-    @Column(name = "district_code")
-    private String districtCode;
-
-    @Column(name = "ward_code")
-    private String wardCode;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
-    @Fetch(FetchMode.SUBSELECT)
-    @OrderBy("createdDate ASC ")
-    private Set<ImageAccom> imageAccoms;
-
-    @Column(name = "cld_video_id", columnDefinition = "VARCHAR(255)")
-    private String cldVideoId;
-
-    @Column(name = "acreage")
-    private Float acreage;
-
-    @Column(name = "num_people", nullable = false)
-    private Integer numPeople;
-
-    @Column(name = "num_bathroom")
-    private Integer numBathRoom;
-
-    @Column(name = "num_bed_room", nullable = false)
-    private Integer numBedRoom;
-
-    @Column(name = "num_kitchen", nullable = false)
-    private Integer numKitchen;
-
-    @Column(name = "num_view", nullable = false, columnDefinition = "bigint default 0")
-    private Long numView;
-
-    @Column(name = "grade_rate", nullable = false, columnDefinition = "float default 5")
-    private Float gradeRate;
-
-    @Column(name = "num_review", nullable = false, columnDefinition = "bigint default 0")
-    private Long numReview;
-
-    @Column(name = "num_booking", nullable = false, columnDefinition = "bigint default 0")
-    private Long numBooking;
-
-    @Column(name = "price_per_night", nullable = false)
-    private Double pricePerNight;
-
-    @Column(name = "discount", nullable = false, columnDefinition = "double default 0")
-    private Double discount;
-
-    @Column(name = "guide", columnDefinition = "NVARCHAR(255)")
-    private String guide;
-
-//    @Column(name = "refund_policy", columnDefinition = "NVARCHAR(255)")
-//    private String refundPolicy;
-
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private AccomStatusEnum status;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
-    @Fetch(FetchMode.SUBSELECT)
-    private Set<Review> reviewSet;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accomPlace")
     @Fetch(FetchMode.SUBSELECT)
     private Set<WishItem> wishItemSet;
@@ -166,13 +165,7 @@ public class AccomPlace extends BasePesistence {
     @Fetch(FetchMode.SUBSELECT)
     private Set<BedRoom> bedRoomSet;
 
-    @Column(name = "slugs", columnDefinition = "varchar (255)", unique = true)
-    private String slugs;
-
-    @Column(name = "cancellation_policy")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private CancellationPolicyEnum cancellationPolicy;
-
-    @Column(name = "cancellation_fee")
-    private Integer cancellationFee;
+    private AccomStatusEnum status;
 }

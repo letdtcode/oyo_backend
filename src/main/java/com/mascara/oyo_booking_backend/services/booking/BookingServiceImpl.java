@@ -1,7 +1,10 @@
 package com.mascara.oyo_booking_backend.services.booking;
 
+import com.mascara.oyo_booking_backend.constant.BookingConstant;
+import com.mascara.oyo_booking_backend.constant.FeeRateOfAdminConstant;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
+import com.mascara.oyo_booking_backend.dtos.request.booking.CancelBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
@@ -57,16 +60,19 @@ public class BookingServiceImpl implements BookingService {
     private BookingRepository bookingRepository;
 
     @Autowired
+    private PaymentRepository paymentRepository;
+
+    @Autowired
+    private PartnerEarningRepository partnerEarningRepository;
+
+    @Autowired
+    private AdminEarningRepository adminEarningRepository;
+
+    @Autowired
     private ModelMapper mapper;
 
     @Autowired
     private ProvinceRepository provinceRepository;
-
-    @Autowired
-    private RevenueListRepository revenueListRepository;
-
-    @Autowired
-    private RevenueRepository revenueRepository;
 
     @Autowired
     private BookingMapper bookingMapper;
@@ -85,7 +91,6 @@ public class BookingServiceImpl implements BookingService {
     public BaseMessageData createOrderBookingAccom(BookingRequest request, String mailUser) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
-        RevenueList revenueListUser = revenueListRepository.findByUserId(accomPlace.getUserId()).get();
         boolean isAvailable = checkAvailableAccom(accomPlace.getId(), request.getCheckIn(), request.getCheckOut());
 
         if (!isAvailable) {
@@ -128,29 +133,39 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = mapper.map(request, Booking.class);
         booking.setAccomPlace(accomPlace);
         booking.setAccomId(accomPlace.getId());
-        booking.setOriginPay(originPriceAfterPromotion);
-        booking.setTotalBill(totalBill);
-        booking.setTotalTransfer(totalTrasfer);
         booking.setBookingList(bookingList);
         booking.setBookListId(bookingList.getId());
         booking.setBookingCode(bookingCode);
         booking.setStatus(BookingStatusEnum.WAITING);
-        booking.setPaymentPolicy(PaymentPolicyEnum.valueOf(request.getPaymentPolicy()));
-        booking.setPaymentMethod(PaymentMethodEnum.valueOf(request.getPaymentMethod()));
         booking = bookingRepository.save(booking);
 
-        Double commisionMoney = (revenueListUser.getDiscount() * totalBill) / 100;
-        Double totalRevenue = totalBill - commisionMoney;
-        Revenue revenue = Revenue.builder()
+        Payment payment = Payment.builder()
+                .originPay(originPriceAfterPromotion)
+                .totalBill(totalBill).totalTransfer(totalTrasfer)
+                .surchargePay(request.getSurcharge())
+                .paymentPolicy(PaymentPolicyEnum.valueOf(request.getPaymentPolicy()))
+                .paymentMethod(PaymentMethodEnum.valueOf(request.getPaymentMethod()))
                 .booking(booking)
-                .bookingCode(bookingCode)
-                .commPay(commisionMoney)
-                .totalRevenue(totalRevenue)
-                .totalBill(totalBill)
-                .revenueList(revenueListUser)
-                .revenueListId(revenueListUser.getId())
                 .build();
-        revenueRepository.save(revenue);
+        paymentRepository.save(payment);
+
+        Double moneyForAdmin = (FeeRateOfAdminConstant.FEE_RATE_OF_ADMIN * totalBill) / 100;
+        Double moneyForPartner = totalBill - moneyForAdmin;
+
+        PartnerEarning partnerEarning = PartnerEarning.builder()
+                .partnerId(accomPlace.getUserId())
+                .earningAmount(moneyForPartner)
+                .payment(payment)
+                .build();
+
+        partnerEarningRepository.save(partnerEarning);
+
+        AdminEarning adminEarning = AdminEarning.builder()
+                .payment(payment)
+                .earningAmount(moneyForAdmin)
+                .build();
+        adminEarningRepository.save(adminEarning);
+
         //        Send mail booking success
         Long hostId = accomPlace.getUserId();
         User host = userRepository.findByUserId(hostId).get();
@@ -171,7 +186,7 @@ public class BookingServiceImpl implements BookingService {
                 .recipient(mailUser)
                 .subject("Đặt phòng thành công").build();
         emailService.sendMailWithTemplate(emailDetails, "Email_Booking_Success.ftl", model);
-        return new BaseMessageData(AppContants.BOOKING_SUCESSFUL);
+        return new BaseMessageData(BookingConstant.BOOKING_SUCESS);
     }
 
     public boolean checkAvailableAccom(Long accomId, LocalDate checkIn, LocalDate checkOut) {
@@ -194,7 +209,6 @@ public class BookingServiceImpl implements BookingService {
 
         Period p = Period.between(request.getCheckIn(), request.getCheckOut());
         int numNight = p.getDays() + 1;
-//        Double priceOriginAccom = accomPlace.getPricePerNight() - (accomPlace.getPricePerNight() * accomPlace.getDiscount() / 100);
         Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
         Double totalBill = totalCostAccom + costSurcharge;
 
@@ -268,23 +282,44 @@ public class BookingServiceImpl implements BookingService {
         return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
     }
 
+//    @Override
+//    @Transactional
+//    public BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status) {
+//        User user = userRepository.findUserByBookingCode(bookingCode).get();
+//        if (!user.getMail().equals(userMail)) {
+//            return new BaseMessageData(AppContants.NOT_PERMIT);
+//        }
+//        bookingRepository.changeStatusBooking(bookingCode, status);
+//        return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
+//    }
+
     @Override
     @Transactional
-    public BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status) {
-        User user = userRepository.findUserByBookingCode(bookingCode).get();
+    public BaseMessageData cancelBooking(String userMail, CancelBookingRequest request) {
+        User user = userRepository.findUserByBookingCode(request.getBookingCode()).get();
         if (!user.getMail().equals(userMail)) {
             return new BaseMessageData(AppContants.NOT_PERMIT);
         }
+        Booking booking = bookingRepository.findBookingByCode(request.getBookingCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Booking code")));
+        Payment payment = paymentRepository.findById(booking.getId()).get();
+        if (!booking.getStatus().equals(BookingStatusEnum.WAITING)) {
+            return new BaseMessageData(AppContants.NOT_PERMIT);
+        }
 
+        AccomPlace accomHost = accomPlaceRepository.findById(booking.getAccomId()).get();
+        CancellationPolicyEnum cancellationPolicy = accomHost.getCancellationPolicy();
+        LocalDateTime timeNow = LocalDateTime.now();
+        long hours = ChronoUnit.HOURS.between(booking.getCreatedDate(), timeNow);
+        long days = ChronoUnit.DAYS.between(booking.getCreatedDate(), timeNow);
+        double cancellationFee = (accomHost.getCancellationFeeRate() * payment.getTotalBill()) / 100;
         boolean canCancel = true;
-        Booking booking = bookingRepository.findBookingByCode(bookingCode).orElseThrow(() -> new ResourceNotFoundException("Booking code not exist"));
-        AccomPlace accomPlace = accomPlaceRepository.findById(booking.getAccomId()).orElseThrow(() -> new ResourceNotFoundException("Accom place not exist"));
-        CancellationPolicyEnum cancelPolicyOfAccom = accomPlace.getCancellationPolicy();
 
-        long days = ChronoUnit.DAYS.between(booking.getLastModifiedDate(), LocalDateTime.now());
-        switch (cancelPolicyOfAccom) {
+        switch (cancellationPolicy) {
+            case NO_CANCEL:
+                canCancel = false;
+                break;
             case CANCEL_24H:
-                long hours = ChronoUnit.HOURS.between(booking.getLastModifiedDate(), LocalDateTime.now());
                 if (hours > 24)
                     canCancel = false;
                 break;
@@ -303,11 +338,16 @@ public class BookingServiceImpl implements BookingService {
             case CANCEL_30D:
                 if (days > 30)
                     canCancel = false;
+                break;
         }
-        if (canCancel) {
 
+        if (!canCancel) {
+            return new BaseMessageData(BookingConstant.CANCEL_BOOKING_UNSUCCESS);
         }
-        bookingRepository.changeStatusBooking(bookingCode, status);
-        return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
+        bookingRepository.changeStatusBooking(request.getBookingCode(), BookingStatusEnum.CANCELED.toString());
+        payment.setCancellationFee(cancellationFee);
+        payment.setCancelReason(request.getCancelReason());
+        payment.setCancelPeriod(LocalDateTime.now());
+        return new BaseMessageData(BookingConstant.CANCEL_BOOKING_SUCCESS);
     }
 }

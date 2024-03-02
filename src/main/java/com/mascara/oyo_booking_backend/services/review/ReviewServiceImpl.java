@@ -85,8 +85,8 @@ public class ReviewServiceImpl implements ReviewService {
         AccomPlace accomPlace = accomPlaceRepository.findById(booking.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
         Review review = mapper.map(request, Review.class);
-        review.setAccomPlace(accomPlace);
-        review.setAccomPlaceId(accomPlace.getId());
+//        review.setAccomPlace(accomPlace);
+//        review.setAccomPlaceId(accomPlace.getId());
         review.setReviewList(reviewList);
         review.setBooking(booking);
         review.setReviewListId(reviewList.getId());
