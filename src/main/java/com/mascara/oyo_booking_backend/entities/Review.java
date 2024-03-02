@@ -40,24 +40,6 @@ public class Review extends BasePesistence {
     @Fetch(FetchMode.SUBSELECT)
     private Set<ImageReview> imageReviewSet;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private CommonStatusEnum status;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "accom_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_association_review_accom"),
-            nullable = false,
-            insertable = false,
-            updatable = false
-    )
-    private AccomPlace accomPlace;
-
-    @Column(name = "accom_id")
-    private Long accomPlaceId;
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_id")
     private Booking booking;
@@ -75,4 +57,8 @@ public class Review extends BasePesistence {
 
     @Column(name = "review_list_id")
     private Long reviewListId;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private CommonStatusEnum status;
 }

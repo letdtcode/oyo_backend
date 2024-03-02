@@ -105,7 +105,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .refreshToken(refreshToken)
                 .user(user)
                 .userId(user.getId())
-                .expiryDate(expiredToken)
+                .expiredDate(expiredToken)
                 .build();
         refreshTokenRepository.save(refreshTokenUser);
 

@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.booking;
 
+import com.mascara.oyo_booking_backend.constant.FeeRateOfAdminConstant;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
@@ -54,16 +55,19 @@ public class BookingServiceImpl implements BookingService {
     private BookingRepository bookingRepository;
 
     @Autowired
+    private PaymentRepository paymentRepository;
+
+    @Autowired
+    private PartnerEarningRepository partnerEarningRepository;
+
+    @Autowired
+    private AdminEarningRepository adminEarningRepository;
+
+    @Autowired
     private ModelMapper mapper;
 
     @Autowired
     private ProvinceRepository provinceRepository;
-
-    @Autowired
-    private RevenueListRepository revenueListRepository;
-
-    @Autowired
-    private RevenueRepository revenueRepository;
 
     @Autowired
     private BookingMapper bookingMapper;
@@ -82,7 +86,6 @@ public class BookingServiceImpl implements BookingService {
     public BaseMessageData createOrderBookingAccom(BookingRequest request, String mailUser) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
-        RevenueList revenueListUser = revenueListRepository.findByUserId(accomPlace.getUserId()).get();
         boolean isAvailable = checkAvailableAccom(accomPlace.getId(), request.getCheckIn(), request.getCheckOut());
 
         if (!isAvailable) {
@@ -125,29 +128,39 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = mapper.map(request, Booking.class);
         booking.setAccomPlace(accomPlace);
         booking.setAccomId(accomPlace.getId());
-        booking.setOriginPay(originPriceAfterPromotion);
-        booking.setTotalBill(totalBill);
-        booking.setTotalTransfer(totalTrasfer);
         booking.setBookingList(bookingList);
         booking.setBookListId(bookingList.getId());
         booking.setBookingCode(bookingCode);
         booking.setStatus(BookingStatusEnum.WAITING);
-        booking.setPaymentPolicy(PaymentPolicyEnum.valueOf(request.getPaymentPolicy()));
-        booking.setPaymentMethod(PaymentMethodEnum.valueOf(request.getPaymentMethod()));
         booking = bookingRepository.save(booking);
 
-        Double commisionMoney = (revenueListUser.getDiscount() * totalBill) / 100;
-        Double totalRevenue = totalBill - commisionMoney;
-        Revenue revenue = Revenue.builder()
+        Payment payment = Payment.builder()
+                .originPay(originPriceAfterPromotion)
+                .totalBill(totalBill).totalTransfer(totalTrasfer)
+                .surchargePay(request.getSurcharge())
+                .paymentPolicy(PaymentPolicyEnum.valueOf(request.getPaymentPolicy()))
+                .paymentMethod(PaymentMethodEnum.valueOf(request.getPaymentMethod()))
                 .booking(booking)
-                .bookingCode(bookingCode)
-                .commPay(commisionMoney)
-                .totalRevenue(totalRevenue)
-                .totalBill(totalBill)
-                .revenueList(revenueListUser)
-                .revenueListId(revenueListUser.getId())
                 .build();
-        revenueRepository.save(revenue);
+        paymentRepository.save(payment);
+
+        Double moneyForAdmin = (FeeRateOfAdminConstant.FEE_RATE_OF_ADMIN * totalBill) / 100;
+        Double moneyForPartner = totalBill - moneyForAdmin;
+
+        PartnerEarning partnerEarning = PartnerEarning.builder()
+                .partnerId(accomPlace.getUserId())
+                .earningAmount(moneyForPartner)
+                .payment(payment)
+                .build();
+
+        partnerEarningRepository.save(partnerEarning);
+
+        AdminEarning adminEarning = AdminEarning.builder()
+                .payment(payment)
+                .earningAmount(moneyForAdmin)
+                .build();
+        adminEarningRepository.save(adminEarning);
+
         //        Send mail booking success
         Long hostId = accomPlace.getUserId();
         User host = userRepository.findByUserId(hostId).get();

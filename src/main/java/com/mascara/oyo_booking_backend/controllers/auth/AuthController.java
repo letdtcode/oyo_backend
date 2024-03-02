@@ -33,7 +33,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -131,7 +130,7 @@ public class AuthController {
                 .refreshToken(refreshToken)
                 .user(user)
                 .userId(user.getId())
-                .expiryDate(expiredToken)
+                .expiredDate(expiredToken)
                 .build();
         refreshTokenRepository.save(refreshTokenUser);
 

@@ -2,7 +2,10 @@ package com.mascara.oyo_booking_backend.entities;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.NaturalId;
@@ -51,7 +54,7 @@ public class RefreshToken extends BasePesistence {
     private Long refreshCount;
 
     @Column(name = "expired_date", nullable = false, columnDefinition = "TIMESTAMP")
-    private LocalDateTime expiryDate;
+    private LocalDateTime expiredDate;
 
     public void incrementRefreshCount() {
         refreshCount = refreshCount + 1;

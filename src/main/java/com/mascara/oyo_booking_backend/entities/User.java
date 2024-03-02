@@ -71,12 +71,6 @@ public class User extends BasePesistence {
     @Fetch(FetchMode.SUBSELECT)
     private Set<RefreshToken> refreshTokenSet;
 
-
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private UserStatusEnum status;
-
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Fetch(FetchMode.SUBSELECT)
     private Set<AccomPlace> accomPlace;
@@ -91,9 +85,6 @@ public class User extends BasePesistence {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ReviewList reviewList;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private RevenueList revenueList;
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
@@ -104,4 +95,8 @@ public class User extends BasePesistence {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private MailConfirmToken mailConfirmToken;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private UserStatusEnum status;
 }
