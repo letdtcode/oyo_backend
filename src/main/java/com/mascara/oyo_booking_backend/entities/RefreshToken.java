@@ -2,10 +2,7 @@ package com.mascara.oyo_booking_backend.entities;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.NaturalId;
@@ -25,7 +22,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "refresh_token")
 public class RefreshToken extends BasePesistence {
     @Id
@@ -50,8 +46,9 @@ public class RefreshToken extends BasePesistence {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "refresh_count", nullable = false, columnDefinition = "bigint default 0")
-    private Long refreshCount;
+    @Column(name = "refresh_count", nullable = false, columnDefinition = "bigint")
+    @Builder.Default
+    private Long refreshCount = 0L;
 
     @Column(name = "expired_date", nullable = false, columnDefinition = "TIMESTAMP")
     private LocalDateTime expiredDate;

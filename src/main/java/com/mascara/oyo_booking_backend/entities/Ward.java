@@ -20,7 +20,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "ward")
 public class Ward extends BasePesistence {
     @Id

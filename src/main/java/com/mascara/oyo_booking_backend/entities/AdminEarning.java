@@ -22,7 +22,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "admin_earning")
 public class AdminEarning extends BasePesistence {
     @Id

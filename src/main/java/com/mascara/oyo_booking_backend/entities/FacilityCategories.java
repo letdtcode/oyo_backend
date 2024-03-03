@@ -17,7 +17,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "facility_categories")
 public class FacilityCategories extends BasePesistence {
     @Id

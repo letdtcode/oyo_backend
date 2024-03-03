@@ -21,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 public abstract class BasePesistence extends Audit<String> {
     @JsonIgnore
-    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
-    private boolean deleted;
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean")
+    @Builder.Default
+    private boolean deleted = false;
 }

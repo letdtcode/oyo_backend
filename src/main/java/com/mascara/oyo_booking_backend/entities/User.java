@@ -22,7 +22,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "users")
 public class User extends BasePesistence {
     @Id

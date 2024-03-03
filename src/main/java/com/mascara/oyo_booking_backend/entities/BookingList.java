@@ -24,7 +24,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "booking_list")
 public class BookingList extends BasePesistence {
     @Id

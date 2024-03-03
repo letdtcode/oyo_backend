@@ -282,17 +282,6 @@ public class BookingServiceImpl implements BookingService {
         return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
     }
 
-//    @Override
-//    @Transactional
-//    public BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status) {
-//        User user = userRepository.findUserByBookingCode(bookingCode).get();
-//        if (!user.getMail().equals(userMail)) {
-//            return new BaseMessageData(AppContants.NOT_PERMIT);
-//        }
-//        bookingRepository.changeStatusBooking(bookingCode, status);
-//        return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
-//    }
-
     @Override
     @Transactional
     public BaseMessageData cancelBooking(String userMail, CancelBookingRequest request) {
@@ -308,11 +297,16 @@ public class BookingServiceImpl implements BookingService {
         }
 
         AccomPlace accomHost = accomPlaceRepository.findById(booking.getAccomId()).get();
+        PartnerEarning partnerEarning = partnerEarningRepository.findById(booking.getId()).get();
+        AdminEarning adminEarning = adminEarningRepository.findById(booking.getId()).get();
         CancellationPolicyEnum cancellationPolicy = accomHost.getCancellationPolicy();
         LocalDateTime timeNow = LocalDateTime.now();
         long hours = ChronoUnit.HOURS.between(booking.getCreatedDate(), timeNow);
         long days = ChronoUnit.DAYS.between(booking.getCreatedDate(), timeNow);
         double cancellationFee = (accomHost.getCancellationFeeRate() * payment.getTotalBill()) / 100;
+        double adminEarn = (cancellationFee * FeeRateOfAdminConstant.FEE_RATE_OF_ADMIN) / 100;
+        double partnerEarn = cancellationFee - adminEarn;
+
         boolean canCancel = true;
 
         switch (cancellationPolicy) {
@@ -348,6 +342,11 @@ public class BookingServiceImpl implements BookingService {
         payment.setCancellationFee(cancellationFee);
         payment.setCancelReason(request.getCancelReason());
         payment.setCancelPeriod(LocalDateTime.now());
+
+        adminEarning.setEarningAmount(adminEarn);
+        partnerEarning.setEarningAmount(partnerEarn);
+        adminEarningRepository.save(adminEarning);
+        partnerEarningRepository.save(partnerEarning);
         return new BaseMessageData(BookingConstant.CANCEL_BOOKING_SUCCESS);
     }
 }

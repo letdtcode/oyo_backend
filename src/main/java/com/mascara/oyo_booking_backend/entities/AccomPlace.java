@@ -5,12 +5,8 @@ import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -22,7 +18,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "accom_place")
 public class AccomPlace extends BasePesistence {
     @Id
@@ -62,23 +57,28 @@ public class AccomPlace extends BasePesistence {
     @Column(name = "num_kitchen", nullable = false)
     private Integer numKitchen;
 
-    @Column(name = "num_view", nullable = false, columnDefinition = "bigint default 0")
-    private Long numView;
+    @Column(name = "num_view", nullable = false, columnDefinition = "bigint")
+    @Builder.Default
+    private Long numView = 0L;
 
-    @Column(name = "grade_rate", nullable = false, columnDefinition = "float default 5")
-    private Float gradeRate;
+    @Column(name = "grade_rate", nullable = false, columnDefinition = "float")
+    @Builder.Default
+    private Float gradeRate = 5f;
 
-    @Column(name = "num_review", nullable = false, columnDefinition = "bigint default 0")
-    private Long numReview;
+    @Column(name = "num_review", nullable = false, columnDefinition = "bigint")
+    @Builder.Default
+    private Long numReview = 0L;
 
-    @Column(name = "num_booking", nullable = false, columnDefinition = "bigint default 0")
-    private Long numBooking;
+    @Column(name = "num_booking", nullable = false, columnDefinition = "bigint")
+    @Builder.Default
+    private Long numBooking = 0L;
 
     @Column(name = "price_per_night", nullable = false)
     private Double pricePerNight;
 
-    @Column(name = "discount", nullable = false, columnDefinition = "double default 0")
-    private Double discount;
+    @Column(name = "discount", nullable = false)
+    @Builder.Default
+    private Double discount = 0D;
 
     @Column(name = "guide", columnDefinition = "NVARCHAR(255)")
     private String guide;

@@ -25,7 +25,6 @@ import java.util.TimeZone;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "mail_confirm_token")
 public class MailConfirmToken extends BasePesistence {
 

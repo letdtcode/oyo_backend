@@ -50,7 +50,9 @@ public class PartnerManageAccomController {
     @PostMapping("/create")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> addAccomPlace(@RequestBody @Valid AddAccomPlaceRequest addAccomPlaceRequest) {
-        GetAccomPlaceResponse response = accomPlaceService.addAccomPlace(addAccomPlaceRequest);
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String mailPartner = principal.getName();
+        GetAccomPlaceResponse response = accomPlaceService.addAccomPlace(addAccomPlaceRequest, mailPartner);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

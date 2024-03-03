@@ -12,7 +12,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "image_accom")
 public class ImageAccom extends BasePesistence {
     @Id

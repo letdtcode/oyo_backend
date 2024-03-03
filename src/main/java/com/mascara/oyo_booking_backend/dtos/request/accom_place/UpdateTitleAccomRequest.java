@@ -28,8 +28,4 @@ public class UpdateTitleAccomRequest {
     @NotNull
     @NotBlank
     private String guide;
-
-    @NotNull
-    @NotBlank
-    private String refundPolicy;
 }

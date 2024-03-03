@@ -18,7 +18,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "facility")
 public class Facility extends BasePesistence {
     @Id
