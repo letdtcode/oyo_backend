@@ -75,4 +75,8 @@ public class AddAccomPlaceRequest {
 
     @NotNull
     private List<String> facilityNameList;
+
+    @NotNull
+    @NotBlank
+    private String guide;
 }

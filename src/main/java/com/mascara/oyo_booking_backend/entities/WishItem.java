@@ -12,7 +12,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "wish_item")
 public class WishItem extends BasePesistence {
     @Id

@@ -26,7 +26,6 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "district")
-@DynamicInsert
 @JsonIgnoreProperties(value = {"province"})
 public class District extends BasePesistence {
     @Id

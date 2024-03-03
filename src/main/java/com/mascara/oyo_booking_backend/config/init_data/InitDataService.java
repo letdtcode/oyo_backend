@@ -317,7 +317,7 @@ public class InitDataService implements CommandLineRunner {
                 });
                 List<AddAccomPlaceRequest> accomPlaceRequestList = initModel.getData();
                 for (AddAccomPlaceRequest accomPlace : accomPlaceRequestList) {
-                    accomPlaceService.addAccomPlace(accomPlace);
+                    accomPlaceService.addAccomPlace(accomPlace, "client1@gmail.com");
                 }
             }
         } catch (Exception e) {

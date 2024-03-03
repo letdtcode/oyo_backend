@@ -24,7 +24,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "type_bed")
 public class TypeBed extends BasePesistence {
     @Id

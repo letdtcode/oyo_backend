@@ -27,7 +27,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "surcharge_category")
 public class SurchargeCategory extends BasePesistence {
     @Id

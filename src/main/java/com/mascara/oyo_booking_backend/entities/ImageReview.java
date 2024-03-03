@@ -19,7 +19,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "image_review")
 public class ImageReview extends BasePesistence {
 

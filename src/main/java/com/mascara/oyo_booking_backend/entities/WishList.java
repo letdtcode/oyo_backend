@@ -19,7 +19,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "wish_list")
 public class WishList extends BasePesistence {
     @Id

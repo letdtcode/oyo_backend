@@ -3,7 +3,10 @@ package com.mascara.oyo_booking_backend.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Fetch;
@@ -17,7 +20,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "province")
 public class Province extends BasePesistence {
     @Id
@@ -39,8 +41,8 @@ public class Province extends BasePesistence {
     @Column(name = "slugs", columnDefinition = "varchar (255)", unique = true)
     private String slugs;
 
-    @Column(name = "num_booking", nullable = false, columnDefinition = "bigint default 0")
-        private Long numBooking;
+    @Column(name = "num_booking", nullable = false, columnDefinition = "bigint")
+    private Long numBooking = 0L;
 
     //    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "province")

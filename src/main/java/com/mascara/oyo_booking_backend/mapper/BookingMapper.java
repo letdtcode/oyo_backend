@@ -165,8 +165,6 @@ public class BookingMapper {
                         .map(Booking::getAccomId, GetHistoryBookingResponse::setGeneralAddress))
                 .addMappings(mapper -> mapper.using(idAccomToPricePerNight)
                         .map(Booking::getAccomId, GetHistoryBookingResponse::setPricePerNight))
-                .addMappings(mapper -> mapper.using(idAccomToImageUrlDefaul)
-                        .map(Booking::getAccomId, GetHistoryBookingResponse::setRefundPolicy))
                 .addMappings(mapper -> mapper.using(idBookingToIsReviewed)
                         .map(Booking::getId, GetHistoryBookingResponse::setReviewed));
     }

@@ -20,7 +20,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "booking")
 public class Booking extends BasePesistence {
     @Id

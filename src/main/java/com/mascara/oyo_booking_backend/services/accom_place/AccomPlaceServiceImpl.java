@@ -7,6 +7,7 @@ import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlace
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
+import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
@@ -89,17 +90,26 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request) {
-        Province province = provinceRepository.findByProvinceCode(request.getProvinceCode()).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
-        District district = districtRepository.findByDistrictCode(request.getDistrictCode()).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district")));
-        Ward ward = wardRepository.findByWardCode(request.getWardCode()).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("ward")));
+    public GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request, String mailPartner) {
+        Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
 
-        AccommodationCategories accomCategories = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName()).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
+        District district = districtRepository.findByDistrictCode(request.getDistrictCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district")));
+
+        Ward ward = wardRepository.findByWardCode(request.getWardCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("ward")));
+
+        User user = userRepository.findByMail(mailPartner).get();
+        AccommodationCategories accomCategories = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
 
         Set<Facility> facilitySet = new HashSet<>();
         for (String facilityName : request.getFacilityNameList()) {
-            facilitySet.add(facilityRepository.findByFacilityName(facilityName).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility"))));
+            facilitySet.add(facilityRepository.findByFacilityName(facilityName)
+                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility"))));
         }
+
         String addressDetail = request.getNumHouseAndStreetName() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
         String slugs = SlugsUtils.toSlug(request.getAccomName());
         AccomPlace accomPlace = AccomPlace.builder()
@@ -113,6 +123,8 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .provinceCode(request.getProvinceCode())
                 .districtCode(district.getDistrictCode())
                 .wardCode(ward.getWardCode())
+                .cancellationPolicy(CancellationPolicyEnum.CANCEL_24H)
+                .cancellationFeeRate(10)
                 .acreage(request.getAcreage())
                 .numPeople(request.getNumPeople())
                 .numBathRoom(request.getNumBathRoom())
@@ -120,28 +132,18 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .numKitchen(request.getNumKitchen())
                 .pricePerNight(request.getPricePerNight())
                 .facilitySet(facilitySet)
+                .guide(request.getGuide())
+                .user(user)
+                .userId(user.getId())
                 .status(AccomStatusEnum.ENABLE).build();
 
         if (request.getCldVideoId() != null && !request.getCldVideoId().isBlank()) {
             accomPlace.setCldVideoId(request.getCldVideoId());
         }
-        int numRoom = accomPlace.getNumBedRoom();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            User user = userRepository.findByMail(authentication.getName()).get();
-            accomPlace.setUser(user);
-            accomPlace.setGuide("Đến là đón");
-            accomPlace.setUserId(user.getId());
-        } else {
-            User user = userRepository.findByMail("client1@gmail.com")
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
-            accomPlace.setUser(user);
-            accomPlace.setUserId(user.getId());
-            accomPlace.setGuide("Giờ mở cửa và thông tin về các hoạt động có sẵn tại trung tâm.");
-            accomPlace.setCreatedBy("dev");
-            accomPlace.setLastModifiedBy("dev");
-        }
         accomPlace = accomPlaceRepository.save(accomPlace);
+
+//        Create type bed for number of bed room
+        int numRoom = request.getNumBedRoom();
         TypeBed typeBedDefault = typeBedRepository.findByTypeBedCode("TYPE_BED_003")
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
         List<BedRoom> bedRooms = new ArrayList<>();
@@ -152,14 +154,12 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                     .typeBed(typeBedDefault)
                     .typeBedCode(typeBedDefault.getTypeBedCode())
                     .build();
-            if (authentication == null) {
-                bedRoom.setCreatedBy("dev");
-                bedRoom.setLastModifiedBy("dev");
-            }
             bedRooms.add(bedRoom);
         }
         bedRoomRepository.saveAll(bedRooms);
 
+//        Init surcharge sample for 20 init data accom place
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             List<SurchargeCategory> surchargeCategoryList = surchargeCategoryRepository.findAll();
             for (SurchargeCategory surchargeCategory : surchargeCategoryList) {
@@ -169,8 +169,6 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                         .accomPlaceId(accomPlace.getId())
                         .surchargeCategory(surchargeCategory)
                         .surchargeCateId(surchargeCategory.getId())
-                        .createdBy("dev")
-                        .lastModifiedBy("dev")
                         .build();
                 surchargeOfAccomRepository.save(surcharge);
             }

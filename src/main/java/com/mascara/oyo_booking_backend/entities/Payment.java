@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "payment")
 public class Payment extends BasePesistence {
     @Id

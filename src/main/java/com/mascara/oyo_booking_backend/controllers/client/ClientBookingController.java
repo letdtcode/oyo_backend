@@ -1,10 +1,11 @@
 package com.mascara.oyo_booking_backend.controllers.client;
 
+import com.mascara.oyo_booking_backend.constant.BookingConstant;
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
+import com.mascara.oyo_booking_backend.dtos.request.booking.CancelBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +19,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -85,24 +87,23 @@ public class ClientBookingController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-//    @Operation(summary = "Check accom place is in wish list or not", description = "Client Api for check accom place is in wish list or not")
-//    @ApiResponses({
-//            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
-//            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
-//            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-//    @PutMapping("/cancel")
-//    @PreAuthorize("hasRole('CLIENT')")
-//    public ResponseEntity<?> cancelBooking(@RequestParam("bookingCode")
-//                                           @NotNull(message = "Booking code must not null")
-//                                           String bookingCode) {
-//        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-//        String userMail = principal.getName();
-//        String status = BookingStatusEnum.CANCELED.toString();
-////        BaseMessageData response = bookingService.changeStatusBookingByUser(userMail, bookingCode, status);
-//        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
-//            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
-//        }
-//        response.setMessage("Cancel booking sucessful");
-////        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
-//    }
+    @Operation(summary = "Check accom place is in wish list or not", description = "Client Api for check accom place is in wish list or not")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @PutMapping("/cancel")
+    @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<?> cancelBooking(@Valid @RequestBody CancelBookingRequest request) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String userMail = principal.getName();
+        BaseMessageData response = bookingService.cancelBooking(userMail, request);
+        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
+        }
+        if (response.getMessage().equals(BookingConstant.CANCEL_BOOKING_UNSUCCESS)) {
+            return ResponseEntity.status(HttpStatus.valueOf(208)).body(new BaseResponse<>(true, 208, response));
+        }
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
 }

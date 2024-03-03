@@ -17,7 +17,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "review")
 public class Review extends BasePesistence {
     @Id

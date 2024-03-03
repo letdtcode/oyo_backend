@@ -19,7 +19,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "surcharge_of_accom")
 public class SurchargeOfAccom extends BasePesistence {
     @Id

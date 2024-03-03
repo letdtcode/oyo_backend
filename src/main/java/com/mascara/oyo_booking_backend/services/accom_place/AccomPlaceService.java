@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface AccomPlaceService {
     @Transactional
-    GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request);
+    GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request, String mailPartner);
 
     GetAccomPlaceResponse addImageAccomPlace(List<MultipartFile> files, Long id, String hostMail);
 

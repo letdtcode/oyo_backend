@@ -36,7 +36,6 @@ public class GetAccomPlaceResponse {
     private Long numReview;
     private Double pricePerNight;
     private String guide;
-    private String refundPolicy;
     private String lastModifiedDate;
     private String status;
 }

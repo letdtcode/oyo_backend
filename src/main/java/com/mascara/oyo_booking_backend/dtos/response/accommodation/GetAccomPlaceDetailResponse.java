@@ -44,7 +44,6 @@ public class GetAccomPlaceDetailResponse {
     private Double pricePerNight;
     private Double discount;
     private String guide;
-    private String refundPolicy;
     private List<GetFacilityCategorWithFacilityListResponse> facilityCategoryList;
     private List<GetSurchargeOfAccomResponse> surchargeList;
     @JsonFormat(pattern = "dd/MM/yyyy")
