@@ -33,8 +33,8 @@ public class BookingMapper {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private RevenueRepository revenueRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @Autowired
     private DistrictRepository districtRepository;
@@ -55,27 +55,86 @@ public class BookingMapper {
         return null;
     };
 
-    //    Covert booking code to commision money
-//    private final Converter<String, Double> bookingCodeToCommisionMoney = context -> {
-//        String bookingCode = context.getSource();
-//        if (bookingCode != null) {
-//            Revenue revenue = revenueRepository.findByBookingCode(bookingCode).get();
-//            return revenue.getCommPay();
-//        }
-//        return null;
-//    };
+    //        Covert booking id to origin pay
+    private final Converter<Long, Double> bookingIdToOriginPay = context -> {
+        Long id = context.getSource();
+        if (id != null) {
+            Payment payment = paymentRepository.findById(id).get();
+            return payment.getOriginPay();
+        }
+        return null;
+    };
 
-    //    Covert booking code to total revenue
-//    private final Converter<String, Double> bookingCodeToTotalRevenue = context -> {
-//        String bookingCode = context.getSource();
-//        if (bookingCode != null) {
-//            Revenue revenue = revenueRepository.findByBookingCode(bookingCode).get();
-//            return revenue.getTotalRevenue();
-//        }
-//        return null;
-//    };
+    //        Covert booking id to surcharge pay
+    private final Converter<Long, Double> bookingIdToSurchargePay = context -> {
+        Long id = context.getSource();
+        if (id != null) {
+            Payment payment = paymentRepository.findById(id).get();
+            return payment.getSurchargePay();
+        }
+        return null;
+    };
 
-    //    Covert booking code to total revenue
+    //        Covert booking id to total bill
+    private final Converter<Long, Double> bookingIdToTotalBill = context -> {
+        Long id = context.getSource();
+        if (id != null) {
+            Payment payment = paymentRepository.findById(id).get();
+            return payment.getTotalBill();
+        }
+        return null;
+    };
+
+    //        Covert booking id to total transfer
+    private final Converter<Long, Double> bookingIdToTotalTransfer = context -> {
+        Long id = context.getSource();
+        if (id != null) {
+            Payment payment = paymentRepository.findById(id).get();
+            return payment.getTotalTransfer();
+        }
+        return null;
+    };
+
+    //        Covert booking id to payment policy
+    private final Converter<Long, String> bookingIdToPaymentPolicy = context -> {
+        Long id = context.getSource();
+        if (id != null) {
+            Payment payment = paymentRepository.findById(id).get();
+            return payment.getPaymentPolicy().toString();
+        }
+        return null;
+    };
+
+    //        Covert booking id to origin pay
+    private final Converter<Long, String> bookingIdToPaymentMethod = context -> {
+        Long id = context.getSource();
+        if (id != null) {
+            Payment payment = paymentRepository.findById(id).get();
+            return payment.getPaymentMethod().toString();
+        }
+        return null;
+    };
+
+    //        Covert accom place id to cancellation policy
+    private final Converter<Long, String> accomPlaceIdToCancellationPolicy = context -> {
+        Long id = context.getSource();
+        if (id != null) {
+            AccomPlace accomPlace = accomPlaceRepository.findById(id).get();
+            return accomPlace.getCancellationPolicy().toString();
+        }
+        return null;
+    };
+
+    //        Covert accom place id to cancellation fee rate
+    private final Converter<Long, Integer> accomPlaceIdToCancellationFeeRate = context -> {
+        Long id = context.getSource();
+        if (id != null) {
+            AccomPlace accomPlace = accomPlaceRepository.findById(id).get();
+            return accomPlace.getCancellationFeeRate();
+        }
+        return null;
+    };
+
     private final Converter<Long, String> idAccomToFullNameHost = context -> {
         Long accomId = context.getSource();
         if (accomId != null) {
@@ -101,7 +160,6 @@ public class BookingMapper {
         return null;
     };
 
-    //    Covert booking code to total revenue
     private final Converter<Long, Double> idAccomToPricePerNight = context -> {
         Long accomId = context.getSource();
         if (accomId != null) {
@@ -112,7 +170,7 @@ public class BookingMapper {
         return null;
     };
 
-    //    Covert booking code to total revenue
+
     private final Converter<Long, String> idAccomToImageUrlDefaul = context -> {
         Long accomId = context.getSource();
         if (accomId != null) {
@@ -128,17 +186,6 @@ public class BookingMapper {
         return null;
     };
 
-    //    Covert booking code to total revenue
-//    private final Converter<Long, String> idAccomToRefundPolicy = context -> {
-//        Long accomId = context.getSource();
-//        if (accomId != null) {
-//            AccomPlace accomPlace = accomPlaceRepository.findById(accomId).get();
-//            return accomPlace.getRefundPolicy();
-//        }
-//        return null;
-//    };
-
-    //    Covert booking code to total revenue
     private final Converter<Long, Boolean> idBookingToIsReviewed = context -> {
         Long bookingId = context.getSource();
         Booking booking = bookingRepository.findById(bookingId).get();
@@ -147,7 +194,6 @@ public class BookingMapper {
             return true;
         return false;
     };
-
 
     @PostConstruct
     public void init() {
@@ -163,8 +209,31 @@ public class BookingMapper {
                         .map(Booking::getAccomId, GetHistoryBookingResponse::setNameAccom))
                 .addMappings(mapper -> mapper.using(idAccomToGeneralAddress)
                         .map(Booking::getAccomId, GetHistoryBookingResponse::setGeneralAddress))
+                .addMappings(mapper -> mapper.using(idAccomToImageUrlDefaul)
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setImageUrl))
+
+                .addMappings(mapper -> mapper.using(bookingIdToOriginPay)
+                        .map(Booking::getId, GetHistoryBookingResponse::setOriginPay))
+                .addMappings(mapper -> mapper.using(bookingIdToSurchargePay)
+                        .map(Booking::getId, GetHistoryBookingResponse::setSurcharge))
+                .addMappings(mapper -> mapper.using(bookingIdToTotalBill)
+                        .map(Booking::getId, GetHistoryBookingResponse::setTotalBill))
+                .addMappings(mapper -> mapper.using(bookingIdToTotalTransfer)
+                        .map(Booking::getId, GetHistoryBookingResponse::setTotalTransfer))
+
                 .addMappings(mapper -> mapper.using(idAccomToPricePerNight)
                         .map(Booking::getAccomId, GetHistoryBookingResponse::setPricePerNight))
+
+                .addMappings(mapper -> mapper.using(bookingIdToPaymentPolicy)
+                        .map(Booking::getId, GetHistoryBookingResponse::setPaymentPolicy))
+                .addMappings(mapper -> mapper.using(bookingIdToPaymentMethod)
+                        .map(Booking::getId, GetHistoryBookingResponse::setPaymentMethod))
+
+                .addMappings(mapper -> mapper.using(accomPlaceIdToCancellationPolicy)
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setCancellationPolicy))
+                .addMappings(mapper -> mapper.using(accomPlaceIdToCancellationFeeRate)
+                        .map(Booking::getAccomId, GetHistoryBookingResponse::setCancellationFeeRate))
+
                 .addMappings(mapper -> mapper.using(idBookingToIsReviewed)
                         .map(Booking::getId, GetHistoryBookingResponse::setReviewed));
     }

@@ -26,11 +26,7 @@ public class GetAccomPlaceDetailResponse {
     private String accomName;
     private String description;
     private String addressDetail;
-    private Long userId;
-    private String nameHost;
-    private String accomCateName;
     private String addressGeneral;
-    private List<String> imageAccomsUrls;
     private String cldVideoId;
     private Float acreage;
     private Integer numPeople;
@@ -40,10 +36,18 @@ public class GetAccomPlaceDetailResponse {
     private Integer numView;
     private Float gradeRate;
     private Long numReview;
-    private List<GetTypeBedResponse> bedRooms;
     private Double pricePerNight;
     private Double discount;
     private String guide;
+    private String cancellationPolicy;
+    private Integer cancellationFeeRate;
+    private List<String> imageAccomsUrls;
+    private Long userId;
+
+    //    Addtion fields
+    private String nameHost;
+    private String accomCateName;
+    private List<GetTypeBedResponse> bedRooms;
     private List<GetFacilityCategorWithFacilityListResponse> facilityCategoryList;
     private List<GetSurchargeOfAccomResponse> surchargeList;
     @JsonFormat(pattern = "dd/MM/yyyy")

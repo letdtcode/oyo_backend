@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.advice;
+package com.mascara.oyo_booking_backend.exceptions;
 
 import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
