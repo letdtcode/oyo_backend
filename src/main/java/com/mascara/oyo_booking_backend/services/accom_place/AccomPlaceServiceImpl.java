@@ -8,6 +8,7 @@ import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.*;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
+import com.mascara.oyo_booking_backend.exceptions.ForbiddenException;
 import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
@@ -470,6 +471,22 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 //        Double newPrice = accomPlace.getPricePerNight() - ((accomPlace.getPricePerNight() * discountPercent) / 100);
         accomPlace.setDiscount(discountPercent);
 //        accomPlace.setPricePerNight(newPrice);
+        accomPlace = accomPlaceRepository.save(accomPlace);
+        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
+    }
+
+    @Override
+    @Transactional
+    public GetAccomPlaceDetailResponse updateCancellationPolicy(UpdateCancellationPolicyRequest request, Long accomId, String partnerMail) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+
+        User user = userRepository.findByMail(partnerMail).get();
+        if (!accomPlace.getUserId().equals(user.getId())) {
+            throw new ForbiddenException("Request is forbidden");
+        }
+        accomPlace.setCancellationPolicy(CancellationPolicyEnum.valueOf(request.getCancellationPolicy()));
+        accomPlace.setCancellationFeeRate(request.getCancellationFeeRate());
         accomPlace = accomPlaceRepository.save(accomPlace);
         return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }

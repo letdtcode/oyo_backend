@@ -73,4 +73,7 @@ public interface AccomPlaceService {
 
     @Transactional
     GetAccomPlaceDetailResponse updateDiscountAccom(Double discountPercent, Long accomId);
+
+    @Transactional
+    GetAccomPlaceDetailResponse updateCancellationPolicy(UpdateCancellationPolicyRequest request, Long accomId, String partnerMail);
 }

@@ -198,6 +198,21 @@ public class PartnerManageAccomController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
+    @Operation(summary = "Update price per night accom place", description = "Update price per night accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @PutMapping("/cancellation-policy")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> changeCancellationPolicy(@RequestBody @Valid UpdateCancellationPolicyRequest request,
+                                                      @RequestParam("accomId") Long accomId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String partnerMail = principal.getName();
+        GetAccomPlaceDetailResponse response = accomPlaceService.updateCancellationPolicy(request, accomId, partnerMail);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
     @Operation(summary = "Update discount accom place", description = "Update discount accom place")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
