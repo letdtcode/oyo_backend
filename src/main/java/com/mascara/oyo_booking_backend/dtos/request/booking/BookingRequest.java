@@ -63,7 +63,7 @@ public class BookingRequest {
     private String paymentPolicy;
 
     @NotNull
-    @Pattern(regexp = "DIRECT|PAYPAL", message = "Payment method must be 'DIRECT' or 'PAYPAL'")
+    @Pattern(regexp = "DIRECT|PAYPAL|VNPAY", message = "Payment method must be 'DIRECT' or 'PAYPAL'")
     private String paymentMethod;
 
     @NotNull
