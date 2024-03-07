@@ -18,6 +18,6 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query(value = "select r.* from review r where r.accom_id = :id and r.status = 'ENABLE' and r.deleted is false",nativeQuery = true)
+    @Query(value = "select r.* from review r join booking b on r.booking_id = b.id where b.accom_id = :id and r.status = 'ENABLE' and r.deleted is false", nativeQuery = true)
     List<Review> findByAccomPlaceId(@Param("id") Long id);
 }

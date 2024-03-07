@@ -58,6 +58,7 @@ public class ReviewServiceImpl implements ReviewService {
             User user = userRepository.findByUserId(review.getReviewListId())
                     .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
             reviewResponse.setAvatarUserUrl(user.getAvatarUrl());
+            reviewResponse.setAccomPlaceId(id);
             reviewResponse.setFirstName(user.getFirstName());
             reviewResponse.setLastName(user.getLastName());
             if (review.getHaveImage()) {
