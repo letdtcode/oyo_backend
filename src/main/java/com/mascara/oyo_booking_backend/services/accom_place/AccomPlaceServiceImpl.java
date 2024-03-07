@@ -133,13 +133,17 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .numKitchen(request.getNumKitchen())
                 .pricePerNight(request.getPricePerNight())
                 .facilitySet(facilitySet)
-                .guide(request.getGuide())
                 .user(user)
                 .userId(user.getId())
                 .status(AccomStatusEnum.ENABLE).build();
 
-        if (request.getCldVideoId() != null && !request.getCldVideoId().isBlank()) {
-            accomPlace.setCldVideoId(request.getCldVideoId());
+        String guide = request.getGuide();
+        String cldVideoId = request.getCldVideoId();
+        if (guide != null && !guide.isBlank() && !guide.isEmpty())
+            accomPlace.setGuide(guide);
+
+        if (cldVideoId != null && !cldVideoId.isBlank()) {
+            accomPlace.setCldVideoId(cldVideoId);
         }
         accomPlace = accomPlaceRepository.save(accomPlace);
 
@@ -394,7 +398,10 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     public GetAccomPlaceDetailResponse updateVideoAccom(UpdateVideoAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        accomPlace.setCldVideoId(request.getCldVideoId());
+        String cldVideoid = request.getCldVideoId();
+        if (cldVideoid == null || cldVideoid.isBlank() || cldVideoid.isEmpty())
+            cldVideoid = null;
+        accomPlace.setCldVideoId(cldVideoid);
         accomPlace = accomPlaceRepository.save(accomPlace);
         return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }
