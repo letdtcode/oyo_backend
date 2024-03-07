@@ -300,9 +300,9 @@ public class BookingServiceImpl implements BookingService {
         PartnerEarning partnerEarning = partnerEarningRepository.findById(booking.getId()).get();
         AdminEarning adminEarning = adminEarningRepository.findById(booking.getId()).get();
         CancellationPolicyEnum cancellationPolicy = accomHost.getCancellationPolicy();
-        LocalDateTime timeNow = LocalDateTime.now();
-        long hours = ChronoUnit.HOURS.between(booking.getCreatedDate(), timeNow);
-        long days = ChronoUnit.DAYS.between(booking.getCreatedDate(), timeNow);
+        
+        LocalDate today = LocalDate.now();
+        long days = ChronoUnit.DAYS.between(booking.getCheckIn(), today);
         double cancellationFee = (accomHost.getCancellationFeeRate() * payment.getTotalBill()) / 100;
         double adminEarn = (cancellationFee * FeeRateOfAdminConstant.FEE_RATE_OF_ADMIN) / 100;
         double partnerEarn = cancellationFee - adminEarn;
@@ -314,23 +314,23 @@ public class BookingServiceImpl implements BookingService {
                 canCancel = false;
                 break;
             case CANCEL_24H:
-                if (hours > 24)
+                if (days < 1)
                     canCancel = false;
                 break;
             case CANCEL_5D:
-                if (days > 5)
+                if (days < 5)
                     canCancel = false;
                 break;
             case CANCEL_7D:
-                if (days > 7)
+                if (days < 7)
                     canCancel = false;
                 break;
             case CANCEL_15D:
-                if (days > 15)
+                if (days < 15)
                     canCancel = false;
                 break;
             case CANCEL_30D:
-                if (days > 30)
+                if (days < 30)
                     canCancel = false;
                 break;
         }
