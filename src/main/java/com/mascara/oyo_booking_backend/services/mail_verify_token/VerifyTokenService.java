@@ -1,8 +1,8 @@
 package com.mascara.oyo_booking_backend.services.mail_verify_token;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.entities.MailConfirmToken;
-import com.mascara.oyo_booking_backend.entities.User;
+import com.mascara.oyo_booking_backend.entities.authentication.MailConfirmToken;
+import com.mascara.oyo_booking_backend.entities.authentication.User;
 import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
 

@@ -5,7 +5,7 @@
 //import com.mascara.oyo_booking_backend.dtos.response.statistic.models.AdminStatisticForGuestResponse;
 //import com.mascara.oyo_booking_backend.dtos.response.statistic.models.AdminStatisticResponse;
 //import com.mascara.oyo_booking_backend.entities.Revenue;
-//import com.mascara.oyo_booking_backend.entities.User;
+//import com.mascara.oyo_booking_backend.entities.authentication.User;
 //import com.mascara.oyo_booking_backend.repositories.BookingRepository;
 //import com.mascara.oyo_booking_backend.repositories.RevenueRepository;
 //import com.mascara.oyo_booking_backend.repositories.UserRepository;

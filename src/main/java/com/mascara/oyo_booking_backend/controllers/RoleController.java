@@ -1,6 +1,6 @@
 //package com.mascara.oyo_booking_backend.controllers;
 //
-//import com.mascara.oyo_booking_backend.entities.Role;
+//import com.mascara.oyo_booking_backend.entities.authentication.Role;
 //import com.mascara.oyo_booking_backend.enums.RoleEnum;
 //import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 //import org.springframework.http.ResponseEntity;

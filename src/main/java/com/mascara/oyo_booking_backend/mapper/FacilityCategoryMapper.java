@@ -1,8 +1,8 @@
 //package com.mascara.oyo_booking_backend.mapper;
 //
 //import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
-//import com.mascara.oyo_booking_backend.entities.Facility;
-//import com.mascara.oyo_booking_backend.entities.FacilityCategories;
+//import com.mascara.oyo_booking_backend.entities.facility.Facility;
+//import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 //import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
 //import jakarta.annotation.PostConstruct;
 //import org.modelmapper.Converter;

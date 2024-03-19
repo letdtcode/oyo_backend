@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.securities.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mascara.oyo_booking_backend.entities.User;
+import com.mascara.oyo_booking_backend.entities.authentication.User;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;

@@ -5,7 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.request.accom_category.AddAccomCateg
 import com.mascara.oyo_booking_backend.dtos.request.accom_category.UpdateAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.response.accom_category.GetAccomCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.entities.AccommodationCategories;
+import com.mascara.oyo_booking_backend.entities.accommodation.AccommodationCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;

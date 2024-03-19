@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.specifications;
 
-import com.mascara.oyo_booking_backend.entities.AccomPlace;
+import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.specifications.criteria.SearchCriteria;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

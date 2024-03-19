@@ -1,7 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.WishItem;
-import com.mascara.oyo_booking_backend.entities.WishList;
+import com.mascara.oyo_booking_backend.entities.wish.WishList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

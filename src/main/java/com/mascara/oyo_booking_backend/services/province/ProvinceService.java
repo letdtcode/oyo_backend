@@ -6,7 +6,7 @@ import com.mascara.oyo_booking_backend.dtos.request.province.UpdateProvinceReque
 import com.mascara.oyo_booking_backend.dtos.response.location.GetProvinceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.location.UpdateProvinceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.entities.Province;
+import com.mascara.oyo_booking_backend.entities.address.Province;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

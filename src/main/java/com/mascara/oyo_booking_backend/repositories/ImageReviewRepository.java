@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.ImageReview;
+import com.mascara.oyo_booking_backend.entities.review.ImageReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

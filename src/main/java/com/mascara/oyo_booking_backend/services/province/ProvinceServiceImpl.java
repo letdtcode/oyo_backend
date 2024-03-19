@@ -6,8 +6,8 @@ import com.mascara.oyo_booking_backend.dtos.request.province.UpdateProvinceReque
 import com.mascara.oyo_booking_backend.dtos.response.location.GetProvinceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.location.UpdateProvinceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.entities.Province;
-import com.mascara.oyo_booking_backend.entities.Ward;
+import com.mascara.oyo_booking_backend.entities.address.Province;
+import com.mascara.oyo_booking_backend.entities.address.Ward;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.DistrictRepository;
 import com.mascara.oyo_booking_backend.repositories.ProvinceRepository;

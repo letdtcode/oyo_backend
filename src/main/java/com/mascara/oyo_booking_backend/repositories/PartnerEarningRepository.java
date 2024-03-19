@@ -1,10 +1,8 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.PartnerEarning;
+import com.mascara.oyo_booking_backend.entities.order.PartnerEarning;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 /**
  * Created by: IntelliJ IDEA

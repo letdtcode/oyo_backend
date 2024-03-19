@@ -5,7 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.request.type_bed.AddTypeBedRequest;
 import com.mascara.oyo_booking_backend.dtos.request.type_bed.UpdateTypeBedRequest;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;
-import com.mascara.oyo_booking_backend.entities.TypeBed;
+import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.TypeBedRepository;

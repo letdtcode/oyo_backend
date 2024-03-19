@@ -5,7 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.request.surcharge_category.AddSurcha
 import com.mascara.oyo_booking_backend.dtos.request.surcharge_category.UpdateSurchargeCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeCategoryResponse;
-import com.mascara.oyo_booking_backend.entities.SurchargeCategory;
+import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.SurchargeCategoryRepository;

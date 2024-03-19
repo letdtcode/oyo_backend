@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.securities.service;
 
-import com.mascara.oyo_booking_backend.entities.User;
+import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

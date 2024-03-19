@@ -1,7 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
-import com.mascara.oyo_booking_backend.entities.Role;
-import com.mascara.oyo_booking_backend.enums.RoleEnum;
+import com.mascara.oyo_booking_backend.entities.authentication.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

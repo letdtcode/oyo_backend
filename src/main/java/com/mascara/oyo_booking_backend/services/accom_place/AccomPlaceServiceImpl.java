@@ -5,7 +5,19 @@ import com.mascara.oyo_booking_backend.dtos.request.accom_place.*;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.entities.*;
+import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
+import com.mascara.oyo_booking_backend.entities.accommodation.AccommodationCategories;
+import com.mascara.oyo_booking_backend.entities.accommodation.ImageAccom;
+import com.mascara.oyo_booking_backend.entities.address.District;
+import com.mascara.oyo_booking_backend.entities.address.Province;
+import com.mascara.oyo_booking_backend.entities.address.Ward;
+import com.mascara.oyo_booking_backend.entities.authentication.User;
+import com.mascara.oyo_booking_backend.entities.booking.Booking;
+import com.mascara.oyo_booking_backend.entities.facility.Facility;
+import com.mascara.oyo_booking_backend.entities.accommodation.BedRoom;
+import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
+import com.mascara.oyo_booking_backend.entities.accommodation.SurchargeOfAccom;
+import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ForbiddenException;
@@ -88,6 +100,23 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Override
+    @Transactional
+    public Long registrationAccomPlace(Long categoryId, String mailPartner) {
+        User user = userRepository.findByMail(mailPartner).get();
+        AccommodationCategories accomCategories = accommodationCategoriesRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
+
+        AccomPlace accomPlace = AccomPlace.builder()
+                .user(user)
+                .userId(user.getId())
+                .accommodationCategories(accomCategories)
+                .accomCateId(accomCategories.getId())
+                .build();
+        accomPlace = accomPlaceRepository.save(accomPlace);
+        return accomPlace.getId();
+    }
 
     @Override
     @Transactional

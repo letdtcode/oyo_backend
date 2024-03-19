@@ -1,8 +1,8 @@
 package com.mascara.oyo_booking_backend.services.mail_verify_token;
 
 import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.entities.MailConfirmToken;
-import com.mascara.oyo_booking_backend.entities.User;
+import com.mascara.oyo_booking_backend.entities.authentication.MailConfirmToken;
+import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
@@ -10,13 +10,10 @@ import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailServic
 import com.mascara.oyo_booking_backend.repositories.MailConfirmTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import freemarker.template.TemplateException;
-import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;

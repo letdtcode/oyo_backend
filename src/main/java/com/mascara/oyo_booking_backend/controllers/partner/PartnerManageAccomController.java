@@ -47,9 +47,9 @@ public class PartnerManageAccomController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PostMapping("/create")
+    @PostMapping("/registration")
     @PreAuthorize("hasRole('PARTNER')")
-    public ResponseEntity<?> addAccomPlace(@RequestBody @Valid AddAccomPlaceRequest addAccomPlaceRequest) {
+    public ResponseEntity<?> registrationAccomPlace(@RequestBody @Valid AddAccomPlaceRequest addAccomPlaceRequest) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String mailPartner = principal.getName();
         GetAccomPlaceResponse response = accomPlaceService.addAccomPlace(addAccomPlaceRequest, mailPartner);

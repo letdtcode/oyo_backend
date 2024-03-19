@@ -7,8 +7,8 @@ import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityRespons
 import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategorWithFacilityListResponse;
 import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.entities.Facility;
-import com.mascara.oyo_booking_backend.entities.FacilityCategories;
+import com.mascara.oyo_booking_backend.entities.facility.Facility;
+import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;

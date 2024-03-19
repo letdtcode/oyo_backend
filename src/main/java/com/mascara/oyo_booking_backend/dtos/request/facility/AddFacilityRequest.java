@@ -1,16 +1,10 @@
 package com.mascara.oyo_booking_backend.dtos.request.facility;
 
-import com.mascara.oyo_booking_backend.entities.AccomPlace;
-import com.mascara.oyo_booking_backend.entities.FacilityCategories;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Set;
 
 /**
  * Created by: IntelliJ IDEA
