@@ -1,8 +1,8 @@
 package com.mascara.oyo_booking_backend.services.review;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.review.ReviewBookingRequest;
-import com.mascara.oyo_booking_backend.dtos.response.review.GetReviewResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.review.request.ReviewBookingRequest;
+import com.mascara.oyo_booking_backend.dtos.review.response.GetReviewResponse;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

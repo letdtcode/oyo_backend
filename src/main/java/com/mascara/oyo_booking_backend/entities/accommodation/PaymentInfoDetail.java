@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.entities.accommodation;
 
+import com.mascara.oyo_booking_backend.entities.bank.Bank;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,19 @@ public class PaymentInfoDetail extends BasePesistence {
 
     @Column(name = "swift_code")
     private String swiftCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "bank_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_association_payment_infodetail_bank"),
+            insertable = false,
+            updatable = false
+    )
+    private Bank bank;
+
+    @Column(name = "bank_id")
+    private Long bankId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId

@@ -25,6 +25,7 @@ import lombok.experimental.SuperBuilder;
 public class GeneralPolicyDetail extends BasePesistence {
 
     @Id
+//    @Column(name = "id")
     private Long Id;
 
     @Column(name = "allow_event")

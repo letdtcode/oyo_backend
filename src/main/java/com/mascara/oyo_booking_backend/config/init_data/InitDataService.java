@@ -2,9 +2,10 @@ package com.mascara.oyo_booking_backend.config.init_data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mascara.oyo_booking_backend.config.init_data.models.InitAccomPlaceModel;
 import com.mascara.oyo_booking_backend.config.init_data.models.InitDbModel;
-import com.mascara.oyo_booking_backend.dtos.request.accom_place.AddAccomPlaceRequest;
-import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
+import com.mascara.oyo_booking_backend.config.init_data.service.InitAccomPlaceService;
+import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccommodationCategories;
 import com.mascara.oyo_booking_backend.entities.accommodation.ImageAccom;
@@ -21,7 +22,6 @@ import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.enums.RoleEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
-import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
 import com.mascara.oyo_booking_backend.services.user.UserService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
@@ -76,7 +76,7 @@ public class InitDataService implements CommandLineRunner {
     private final AccomPlaceRepository accomPlaceRepository;
 
     @Autowired
-    private final AccomPlaceService accomPlaceService;
+    private final InitAccomPlaceService initAccomPlaceService;
 
     @Autowired
     private final UserRepository userRepository;
@@ -324,11 +324,11 @@ public class InitDataService implements CommandLineRunner {
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
-                InitDbModel<AddAccomPlaceRequest> initModel = mapper.readValue(file, new TypeReference<>() {
+                InitDbModel<InitAccomPlaceModel> initModel = mapper.readValue(file, new TypeReference<>() {
                 });
-                List<AddAccomPlaceRequest> accomPlaceRequestList = initModel.getData();
-                for (AddAccomPlaceRequest accomPlace : accomPlaceRequestList) {
-                    accomPlaceService.addAccomPlace(accomPlace, "client1@gmail.com");
+                List<InitAccomPlaceModel> accomPlaceRequestList = initModel.getData();
+                for (InitAccomPlaceModel accomPlace : accomPlaceRequestList) {
+                    initAccomPlaceService.addAccomPlace (accomPlace, "client1@gmail.com");
                 }
             }
         } catch (Exception e) {

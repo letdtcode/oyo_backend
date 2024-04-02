@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.services.mail_verify_token;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.entities.authentication.MailConfirmToken;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;

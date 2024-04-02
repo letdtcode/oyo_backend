@@ -1,24 +1,20 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.accom_place.*;
-import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
-import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
-import com.mascara.oyo_booking_backend.entities.accommodation.AccommodationCategories;
-import com.mascara.oyo_booking_backend.entities.accommodation.ImageAccom;
+import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.entities.accommodation.*;
 import com.mascara.oyo_booking_backend.entities.address.District;
 import com.mascara.oyo_booking_backend.entities.address.Province;
 import com.mascara.oyo_booking_backend.entities.address.Ward;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
+import com.mascara.oyo_booking_backend.entities.bank.Bank;
 import com.mascara.oyo_booking_backend.entities.booking.Booking;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
-import com.mascara.oyo_booking_backend.entities.accommodation.BedRoom;
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
-import com.mascara.oyo_booking_backend.entities.accommodation.SurchargeOfAccom;
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
-import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ForbiddenException;
 import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
@@ -27,7 +23,6 @@ import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.Cloud
 import com.mascara.oyo_booking_backend.mapper.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +30,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -101,11 +94,21 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private GeneralPolicyDetailRepository generalPolicyDetailRepository;
+
+    @Autowired
+    private PaymentInfoDetailRepository paymentInfoDetailRepository;
+
+    @Autowired
+    private BankRepository bankRepository;
+
     @Override
     @Transactional
-    public Long registrationAccomPlace(Long categoryId, String mailPartner) {
-        User user = userRepository.findByMail(mailPartner).get();
-        AccommodationCategories accomCategories = accommodationCategoriesRepository.findById(categoryId)
+    public Long registerAccomPlace(String accomCateName, String mailPartner) {
+        User user = userRepository.findByMail(mailPartner)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+        AccommodationCategories accomCategories = accommodationCategoriesRepository.findByAccomCateName(accomCateName)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
 
         AccomPlace accomPlace = AccomPlace.builder()
@@ -115,123 +118,202 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .accomCateId(accomCategories.getId())
                 .build();
         accomPlace = accomPlaceRepository.save(accomPlace);
+
+        GeneralPolicyDetail generalPolicyDetail = GeneralPolicyDetail.builder()
+                .accomPlace(accomPlace)
+                .build();
+        generalPolicyDetailRepository.save(generalPolicyDetail);
+
+        PaymentInfoDetail paymentInfoDetail = PaymentInfoDetail.builder()
+                .accomPlace(accomPlace)
+                .build();
+        paymentInfoDetailRepository.save(paymentInfoDetail);
         return accomPlace.getId();
     }
 
     @Override
     @Transactional
-    public GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request, String mailPartner) {
-        Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
-
-        District district = districtRepository.findByDistrictCode(request.getDistrictCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district")));
-
-        Ward ward = wardRepository.findByWardCode(request.getWardCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("ward")));
-
-        User user = userRepository.findByMail(mailPartner).get();
+    public BaseMessageData updateGeneralInfo(UpdateGeneralInfoRequest request, Long accomId) {
         AccommodationCategories accomCategories = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
 
-        Set<Facility> facilitySet = new HashSet<>();
-        for (String facilityName : request.getFacilityNameList()) {
-            facilitySet.add(facilityRepository.findByFacilityName(facilityName)
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility"))));
-        }
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        accomPlace.setAccommodationCategories(accomCategories);
+        accomPlace.setAccomCateId(accomCategories.getId());
+        accomPlace.setAccomName(request.getNameAccom());
+        accomPlace.setDescription(request.getDescription());
+        accomPlace.setGuide(request.getGuide());
+        accomPlace.setAcreage(request.getAcreage());
+        accomPlace.setPricePerNight(request.getPricePerNight());
+        accomPlace.setCheckInFrom(request.getCheckInFrom());
+        accomPlace.setCheckOutTo(request.getCheckOutTo());
+        accomPlace.setDiscount(request.getDiscountPercent());
+        accomPlaceRepository.save(accomPlace);
 
-        String addressDetail = request.getNumHouseAndStreetName() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
-        String slugs = SlugsUtils.toSlug(request.getAccomName());
-        AccomPlace accomPlace = AccomPlace.builder()
-                .accomName(request.getAccomName())
-                .description(request.getDescription())
-                .addressDetail(addressDetail)
-                .slugs(slugs)
-                .accommodationCategories(accomCategories)
-                .accomCateId(accomCategories.getId())
-                .province(province)
-                .provinceCode(request.getProvinceCode())
-                .districtCode(district.getDistrictCode())
-                .wardCode(ward.getWardCode())
-                .cancellationPolicy(CancellationPolicyEnum.CANCEL_24H)
-                .cancellationFeeRate(10)
-                .acreage(request.getAcreage())
-                .numPeople(request.getNumPeople())
-                .numBathRoom(request.getNumBathRoom())
-                .numBedRoom(request.getNumBedRoom())
-                .numKitchen(request.getNumKitchen())
-                .pricePerNight(request.getPricePerNight())
-                .facilitySet(facilitySet)
-                .user(user)
-                .userId(user.getId())
-                .status(AccomStatusEnum.ENABLE).build();
-
-        String guide = request.getGuide();
-        String cldVideoId = request.getCldVideoId();
-        if (guide != null && !guide.isBlank() && !guide.isEmpty())
-            accomPlace.setGuide(guide);
-
-        if (cldVideoId != null && !cldVideoId.isBlank()) {
-            accomPlace.setCldVideoId(cldVideoId);
-        }
-        accomPlace = accomPlaceRepository.save(accomPlace);
-
-//        Create type bed for number of bed room
-        int numRoom = request.getNumBedRoom();
-        TypeBed typeBedDefault = typeBedRepository.findByTypeBedCode("TYPE_BED_003")
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
-        List<BedRoom> bedRooms = new ArrayList<>();
-        for (int i = 0; i < numRoom; i++) {
-            BedRoom bedRoom = BedRoom.builder()
+//        Set surcharge list for accom
+        surchargeOfAccomRepository.deleteByAccomId(accomPlace.getId());
+        Set<SurchargeOfAccom> surchargeOfAccomSet = new HashSet<>();
+        for (ItemSurcharge itemSurcharge : request.getSurchargeList()) {
+            String surchargeCode = itemSurcharge.getSurchargeCode();
+            Double cost = itemSurcharge.getCost();
+            SurchargeCategory surchargeCategory = surchargeCategoryRepository.findSurchargeCategoryByCode(surchargeCode)
+                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge code")));
+            SurchargeOfAccom surcharge = SurchargeOfAccom.builder()
                     .accomPlace(accomPlace)
-                    .accomId(accomPlace.getId())
-                    .typeBed(typeBedDefault)
-                    .typeBedCode(typeBedDefault.getTypeBedCode())
-                    .build();
-            bedRooms.add(bedRoom);
+                    .accomPlaceId(accomPlace.getId())
+                    .surchargeCategory(surchargeCategory)
+                    .surchargeCateId(surchargeCategory.getId())
+                    .cost(cost).build();
+            surchargeOfAccomRepository.save(surcharge);
+            surchargeOfAccomSet.add(surcharge);
         }
-        bedRoomRepository.saveAll(bedRooms);
-
-//        Init surcharge sample for 20 init data accom place
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            List<SurchargeCategory> surchargeCategoryList = surchargeCategoryRepository.findAll();
-            for (SurchargeCategory surchargeCategory : surchargeCategoryList) {
-                SurchargeOfAccom surcharge = SurchargeOfAccom.builder()
-                        .cost(20000D)
-                        .accomPlace(accomPlace)
-                        .accomPlaceId(accomPlace.getId())
-                        .surchargeCategory(surchargeCategory)
-                        .surchargeCateId(surchargeCategory.getId())
-                        .build();
-                surchargeOfAccomRepository.save(surcharge);
-            }
-        }
-        GetAccomPlaceResponse response = accomPlaceMapper.toGetAccomPlaceResponse(accomPlace);
-        return response;
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
-    public GetAccomPlaceResponse addImageAccomPlace(List<MultipartFile> files, Long id, String hostMail) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+    @Transactional
+    public BaseMessageData updateAddress(UpdateAddressAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+
+        Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
+        boolean districtExist = districtRepository.existsByDistrictCode(request.getDistrictCode());
+        boolean wardExist = wardRepository.existsByWardCode(request.getWardCode());
+
+        District district = districtRepository.findByDistrictCode(request.getDistrictCode()).get();
+        Ward ward = wardRepository.findByWardCode(request.getWardCode()).get();
+
+        if (!districtExist || !wardExist) {
+            throw new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district or ward"));
+        }
+        String addressDetail = request.getNumHouseAndStreetName() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
+        accomPlace.setDistrictCode(request.getDistrictCode());
+        accomPlace.setWardCode(request.getWardCode());
+        accomPlace.setProvince(province);
+        accomPlace.setProvinceCode(request.getProvinceCode());
+        accomPlace.setAddressDetail(addressDetail);
+        accomPlace.setLongitude(request.getLongitude());
+        accomPlace.setLatitude(request.getLatitude());
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateFacilities(UpdateFacilityAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        Set<Facility> facilitySet = new HashSet<>();
+        for (String facilityCode : request.getFacilityCodes()) {
+            Facility facility = facilityRepository.findByFacilityCode(facilityCode).get();
+            facilitySet.add(facility);
+        }
+        accomPlace.setFacilitySet(facilitySet);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateImages(UpdateImageAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+
+        imageAccomRepository.deleteByAccomId(accomPlace.getId());
+        Set<ImageAccom> imageAccomSet = new HashSet<>();
+        for (String imageUrl : request.getImageAccomUrls()) {
+            ImageAccom imageAccom = ImageAccom.builder()
+                    .imgAccomLink(imageUrl)
+                    .accomPlace(accomPlace)
+                    .accomPlaceId(accomPlace.getId()).build();
+            imageAccomRepository.save(imageAccom);
+            imageAccomSet.add(imageAccom);
+        }
+        accomPlace.setImageAccoms(imageAccomSet);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateRooms(UpdateRoomAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        AccommodationCategories accomCate = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom category")));
+
+        accomPlace.setNumBathRoom(request.getNumBathRoom());
+        accomPlace.setNumKitchen(request.getNumKitchen());
+        accomPlace.setAccommodationCategories(accomCate);
+        accomPlace.setAccomCateId(accomCate.getId());
+        accomPlace.setNumBedRoom(request.getTypeBedCodes().size());
+
+        bedRoomRepository.deleteByAccomId(accomPlace.getId());
+        Set<BedRoom> bedRoomSet = new HashSet<>();
+        for (String bedCode : request.getTypeBedCodes()) {
+            TypeBed typeBed = typeBedRepository.findByTypeBedCode(bedCode).get();
+            BedRoom bedRoom = BedRoom.builder()
+                    .accomPlace(accomPlace)
+                    .accomId(accomPlace.getId())
+                    .typeBed(typeBed)
+                    .typeBedCode(typeBed.getTypeBedCode())
+                    .build();
+            bedRoomRepository.save(bedRoom);
+            bedRoomSet.add(bedRoom);
+        }
+        accomPlace.setBedRoomSet(bedRoomSet);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updatePolicy(UpdatePolicyAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        GeneralPolicyDetail generalPolicyDetail = generalPolicyDetailRepository.findById(accomId).get();
+
+        accomPlace.setCancellationPolicy(CancellationPolicyEnum.valueOf(request.getCancellationPolicy()));
+        accomPlace.setCancellationFeeRate(request.getCancellationFeeRate());
+        accomPlaceRepository.save(accomPlace);
+
+        generalPolicyDetail.setAllowEvent(request.getAllowEvent());
+        generalPolicyDetail.setAllowPet(request.getAllowPet());
+        generalPolicyDetail.setAllowSmoking(request.getAllowSmoking());
+        generalPolicyDetailRepository.save(generalPolicyDetail);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    public BaseMessageData updatePayment(UpdatePaymentAccomRequest request, Long accomId) {
+        accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        Bank bank = bankRepository.findById(request.getBankId())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Bank")));
+        PaymentInfoDetail paymentInfoDetail = paymentInfoDetailRepository.findById(accomId).get();
+        paymentInfoDetail.setAccountNumber(request.getAccountNumber());
+        paymentInfoDetail.setAccountNameHost(request.getAccountNameHost());
+        paymentInfoDetail.setSwiftCode(request.getSwiftCode());
+        paymentInfoDetail.setBank(bank);
+        paymentInfoDetail.setBankId(bank.getId());
+        paymentInfoDetailRepository.save(paymentInfoDetail);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    public void checkPermission(String mailPartner, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom Place")));
-        User host = userRepository.findByUserId(accomPlace.getUserId())
+        User hostAccom = userRepository.findByUserId(accomPlace.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
-        host = (User) Hibernate.unproxy(host);
-        if (!host.getMail().equals(hostMail)) {
-            throw new NotCredentialException("Not permit to edit image for accom place");
-        }
-        if (!files.isEmpty()) {
-            for (int i = 0; i < files.size(); i++) {
-                String pathImg = cloudinaryService.store(files.get(i)).getImageUrl();
-                ImageAccom imageAccom = ImageAccom.builder().imgAccomLink(pathImg)
-                        .accomPlace(accomPlace).accomPlaceId(accomPlace.getId()).build();
-                imageAccomRepository.save(imageAccom);
-            }
-            GetAccomPlaceResponse response = accomPlaceMapper.toGetAccomPlaceResponse(accomPlace);
-            return response;
-        }
-        throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
+        Optional<User> partner = userRepository.findByMail(mailPartner);
+        if (partner.isEmpty())
+            throw new NotCredentialException("Unauthenticated");
+        hostAccom = (User) Hibernate.unproxy(hostAccom);
+        if (!hostAccom.getMail().equals(mailPartner))
+            throw new ForbiddenException("Forbidden");
     }
 
     @Override
@@ -339,191 +421,5 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace.setDeleted(true);
         accomPlaceRepository.save(accomPlace);
         return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("accom place"));
-    }
-
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateTitleAccom(UpdateTitleAccomRequest request, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        accomPlace.setAccomName(request.getNameAccom());
-        accomPlace.setDescription(request.getDescription());
-        accomPlace.setGuide(request.getGuide());
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateFacilityAccom(UpdateFacilityAccomRequest request, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        Set<Facility> facilitySet = new HashSet<>();
-        for (String facilityCode : request.getFacilityCodes()) {
-            Facility facility = facilityRepository.findByFacilityCode(facilityCode).get();
-            facilitySet.add(facility);
-        }
-        accomPlace.setFacilitySet(facilitySet);
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateRoomAccom(UpdateRoomAccomRequest request, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        AccommodationCategories accomCate = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom category")));
-
-        accomPlace.setNumBathRoom(request.getNumBathRoom());
-        accomPlace.setNumKitchen(request.getNumKitchen());
-        accomPlace.setAccommodationCategories(accomCate);
-        accomPlace.setAccomCateId(accomCate.getId());
-        accomPlace.setNumBedRoom(request.getTypeBedCodes().size());
-
-        bedRoomRepository.deleteByAccomId(accomPlace.getId());
-        Set<BedRoom> bedRoomSet = new HashSet<>();
-        for (String bedCode : request.getTypeBedCodes()) {
-            TypeBed typeBed = typeBedRepository.findByTypeBedCode(bedCode).get();
-            BedRoom bedRoom = BedRoom.builder()
-                    .accomPlace(accomPlace)
-                    .accomId(accomPlace.getId())
-                    .typeBed(typeBed)
-                    .typeBedCode(typeBed.getTypeBedCode())
-                    .build();
-            bedRoomRepository.save(bedRoom);
-            bedRoomSet.add(bedRoom);
-        }
-        accomPlace.setBedRoomSet(bedRoomSet);
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateImageAccom(UpdateImageAccomRequest request, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-
-        imageAccomRepository.deleteByAccomId(accomPlace.getId());
-        Set<ImageAccom> imageAccomSet = new HashSet<>();
-        for (String imageUrl : request.getImageAccomUrls()) {
-            ImageAccom imageAccom = ImageAccom.builder()
-                    .imgAccomLink(imageUrl)
-                    .accomPlace(accomPlace)
-                    .accomPlaceId(accomPlace.getId()).build();
-            imageAccomRepository.save(imageAccom);
-            imageAccomSet.add(imageAccom);
-        }
-        accomPlace.setImageAccoms(imageAccomSet);
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateVideoAccom(UpdateVideoAccomRequest request, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        String cldVideoid = request.getCldVideoId();
-        if (cldVideoid == null || cldVideoid.isBlank() || cldVideoid.isEmpty())
-            cldVideoid = null;
-        accomPlace.setCldVideoId(cldVideoid);
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateAddressAccom(UpdateAddressAccomRequest request, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-
-        Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
-        boolean districtExist = districtRepository.existsByDistrictCode(request.getDistrictCode());
-        boolean wardExist = wardRepository.existsByWardCode(request.getWardCode());
-
-        District district = districtRepository.findByDistrictCode(request.getDistrictCode()).get();
-        Ward ward = wardRepository.findByWardCode(request.getWardCode()).get();
-
-        if (!districtExist || !wardExist) {
-            throw new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district or ward"));
-        }
-        String addressDetail = request.getAddressDetail() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
-        accomPlace.setDistrictCode(request.getDistrictCode());
-        accomPlace.setWardCode(request.getWardCode());
-        accomPlace.setProvince(province);
-        accomPlace.setProvinceCode(request.getProvinceCode());
-        accomPlace.setAddressDetail(addressDetail);
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateSurchargeAccom(UpdateSurchargeAccomRequest request, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-
-        surchargeOfAccomRepository.deleteByAccomId(accomPlace.getId());
-
-        Set<SurchargeOfAccom> surchargeOfAccomSet = new HashSet<>();
-        for (ItemSurcharge itemSurcharge : request.getSurchargeList()) {
-            String surchargeCode = itemSurcharge.getSurchargeCode();
-            Double cost = itemSurcharge.getCost();
-            SurchargeCategory surchargeCategory = surchargeCategoryRepository.findSurchargeCategoryByCode(surchargeCode)
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge code")));
-            SurchargeOfAccom surcharge = SurchargeOfAccom.builder()
-                    .accomPlace(accomPlace)
-                    .accomPlaceId(accomPlace.getId())
-                    .surchargeCategory(surchargeCategory)
-                    .surchargeCateId(surchargeCategory.getId())
-                    .cost(cost).build();
-            surchargeOfAccomRepository.save(surcharge);
-            surchargeOfAccomSet.add(surcharge);
-        }
-        accomPlace = accomPlaceRepository.findById(accomId).get();
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse changePriceAccom(Double pricePerNight, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        accomPlace.setPricePerNight(pricePerNight);
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateDiscountAccom(Double discountPercent, Long accomId) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-//        Double newPrice = accomPlace.getPricePerNight() - ((accomPlace.getPricePerNight() * discountPercent) / 100);
-        accomPlace.setDiscount(discountPercent);
-//        accomPlace.setPricePerNight(newPrice);
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
-    }
-
-    @Override
-    @Transactional
-    public GetAccomPlaceDetailResponse updateCancellationPolicy(UpdateCancellationPolicyRequest request, Long accomId, String partnerMail) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-
-        User user = userRepository.findByMail(partnerMail).get();
-        if (!accomPlace.getUserId().equals(user.getId())) {
-            throw new ForbiddenException("Request is forbidden");
-        }
-        accomPlace.setCancellationPolicy(CancellationPolicyEnum.valueOf(request.getCancellationPolicy()));
-        accomPlace.setCancellationFeeRate(request.getCancellationFeeRate());
-        accomPlace = accomPlaceRepository.save(accomPlace);
-        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }
 }

@@ -1,13 +1,11 @@
 package com.mascara.oyo_booking_backend.controllers.admin;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.facility.UpdateFacilityRequest;
-import com.mascara.oyo_booking_backend.dtos.request.surcharge_category.AddSurchargeCategoryRequest;
-import com.mascara.oyo_booking_backend.dtos.request.surcharge_category.UpdateSurchargeCategoryRequest;
-import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategoryResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.request.AddSurchargeCategoryRequest;
+import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.request.UpdateSurchargeCategoryRequest;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.response.GetSurchargeCategoryResponse;
 import com.mascara.oyo_booking_backend.services.surcharge.SurchargeService;
 import com.mascara.oyo_booking_backend.utils.validation.Status;
 import io.swagger.v3.oas.annotations.tags.Tag;

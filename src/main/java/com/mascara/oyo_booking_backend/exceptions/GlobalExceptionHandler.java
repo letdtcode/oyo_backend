@@ -1,9 +1,5 @@
 package com.mascara.oyo_booking_backend.exceptions;
 
-import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
-import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.exceptions.TokenRefreshException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;

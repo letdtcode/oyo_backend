@@ -1,10 +1,10 @@
 package com.mascara.oyo_booking_backend.services.facility;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.facility.AddFacilityRequest;
-import com.mascara.oyo_booking_backend.dtos.request.facility.UpdateFacilityRequest;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.facility.request.AddFacilityRequest;
+import com.mascara.oyo_booking_backend.dtos.facility.request.UpdateFacilityRequest;
+import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
 
 /**

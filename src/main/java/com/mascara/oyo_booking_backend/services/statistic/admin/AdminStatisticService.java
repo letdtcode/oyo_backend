@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.services.statistic.admin;
 
-import com.mascara.oyo_booking_backend.dtos.request.statistic.admin.AdminStatisticRequest;
-import com.mascara.oyo_booking_backend.dtos.response.statistic.models.AdminStatisticResponse;
+import com.mascara.oyo_booking_backend.dtos.statistic.admin.AdminStatisticRequest;
+import com.mascara.oyo_booking_backend.dtos.statistic.admin.models.AdminStatisticResponse;
 
 /**
  * Created by: IntelliJ IDEA

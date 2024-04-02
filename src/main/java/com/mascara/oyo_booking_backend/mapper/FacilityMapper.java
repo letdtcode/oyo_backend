@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.mapper;
 
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
+import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;

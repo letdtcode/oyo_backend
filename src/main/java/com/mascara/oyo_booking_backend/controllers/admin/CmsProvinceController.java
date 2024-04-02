@@ -1,14 +1,13 @@
 package com.mascara.oyo_booking_backend.controllers.admin;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.province.AddProvinceRequest;
-import com.mascara.oyo_booking_backend.dtos.request.province.UpdateProvinceRequest;
-import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.location.UpdateProvinceResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.province.request.AddProvinceRequest;
+import com.mascara.oyo_booking_backend.dtos.province.request.UpdateProvinceRequest;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.location.response.locationDTO.UpdateProvinceResponse;
 import com.mascara.oyo_booking_backend.services.province.ProvinceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

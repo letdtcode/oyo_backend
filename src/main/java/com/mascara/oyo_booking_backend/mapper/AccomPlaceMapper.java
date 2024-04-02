@@ -1,11 +1,11 @@
 package com.mascara.oyo_booking_backend.mapper;
 
-import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
-import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.response.facility.GetFacilityResponse;
-import com.mascara.oyo_booking_backend.dtos.response.facility_category.GetFacilityCategorWithFacilityListResponse;
-import com.mascara.oyo_booking_backend.dtos.response.surcharge.GetSurchargeOfAccomResponse;
-import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
+import com.mascara.oyo_booking_backend.dtos.facility_category.response.GetFacilityCategorWithFacilityListResponse;
+import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_accom.response.GetSurchargeOfAccomResponse;
+import com.mascara.oyo_booking_backend.dtos.type_bed.response.GetTypeBedResponse;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccommodationCategories;
 import com.mascara.oyo_booking_backend.entities.accommodation.ImageAccom;

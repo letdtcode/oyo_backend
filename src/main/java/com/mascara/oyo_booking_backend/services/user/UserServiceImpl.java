@@ -1,13 +1,13 @@
 package com.mascara.oyo_booking_backend.services.user;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.auth.RegisterRequest;
-import com.mascara.oyo_booking_backend.dtos.request.auth.TokenRefreshRequest;
-import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
-import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
-import com.mascara.oyo_booking_backend.dtos.response.auth.TokenRefreshResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
+import com.mascara.oyo_booking_backend.dtos.auth.request.TokenRefreshRequest;
+import com.mascara.oyo_booking_backend.dtos.user.request.ChangePasswordRequest;
+import com.mascara.oyo_booking_backend.dtos.user.request.UpdateInfoPersonalRequest;
+import com.mascara.oyo_booking_backend.dtos.auth.response.TokenRefreshResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.user.response.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.authentication.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.authentication.Role;
 import com.mascara.oyo_booking_backend.entities.authentication.User;

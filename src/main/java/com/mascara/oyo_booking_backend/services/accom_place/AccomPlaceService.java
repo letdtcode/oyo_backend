@@ -1,14 +1,11 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.accom_place.*;
-import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
-import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 /**
  * Created by: IntelliJ IDEA
@@ -19,12 +16,30 @@ import java.util.List;
  */
 public interface AccomPlaceService {
     @Transactional
-    Long registrationAccomPlace(Long categoryId, String mailPartner);
+    Long registerAccomPlace(String accomCateName, String mailPartner);
 
     @Transactional
-    GetAccomPlaceResponse addAccomPlace(AddAccomPlaceRequest request, String mailPartner);
+    BaseMessageData updateGeneralInfo(UpdateGeneralInfoRequest request, Long accomId);
 
-    GetAccomPlaceResponse addImageAccomPlace(List<MultipartFile> files, Long id, String hostMail);
+    @Transactional
+    BaseMessageData updateAddress(UpdateAddressAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateFacilities(UpdateFacilityAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateImages(UpdateImageAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateRooms(UpdateRoomAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updatePolicy(UpdatePolicyAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updatePayment(UpdatePaymentAccomRequest request, Long accomId);
+
+    void checkPermission(String mailPartner, Long accomId);
 
     @Transactional
     BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
@@ -49,34 +64,4 @@ public interface AccomPlaceService {
 
     @Transactional
     BaseMessageData deleteAccomPlace(Long id);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateTitleAccom(UpdateTitleAccomRequest request, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateFacilityAccom(UpdateFacilityAccomRequest request, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateRoomAccom(UpdateRoomAccomRequest request, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateImageAccom(UpdateImageAccomRequest request, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateVideoAccom(UpdateVideoAccomRequest request, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateAddressAccom(UpdateAddressAccomRequest request, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateSurchargeAccom(UpdateSurchargeAccomRequest request, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse changePriceAccom(Double pricePerNight, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateDiscountAccom(Double discountPercent, Long accomId);
-
-    @Transactional
-    GetAccomPlaceDetailResponse updateCancellationPolicy(UpdateCancellationPolicyRequest request, Long accomId, String partnerMail);
 }

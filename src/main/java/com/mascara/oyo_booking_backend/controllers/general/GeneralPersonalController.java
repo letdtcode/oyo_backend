@@ -1,10 +1,10 @@
 package com.mascara.oyo_booking_backend.controllers.general;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.user.ChangePasswordRequest;
-import com.mascara.oyo_booking_backend.dtos.request.user.UpdateInfoPersonalRequest;
-import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.user.InfoUserResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.user.request.ChangePasswordRequest;
+import com.mascara.oyo_booking_backend.dtos.user.request.UpdateInfoPersonalRequest;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.user.response.InfoUserResponse;
 import com.mascara.oyo_booking_backend.services.user.UserService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;

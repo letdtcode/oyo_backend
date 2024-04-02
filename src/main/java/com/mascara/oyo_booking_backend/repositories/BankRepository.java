@@ -1,7 +1,8 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.bank.Bank;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by: IntelliJ IDEA
@@ -10,5 +11,6 @@ import org.springframework.data.repository.Repository;
  * Time      : 7:18 CH
  * Filename  : BankRepository
  */
-public interface BankRepository extends Repository<Bank,Long> {
+@Repository
+public interface BankRepository extends JpaRepository<Bank,Long> {
 }

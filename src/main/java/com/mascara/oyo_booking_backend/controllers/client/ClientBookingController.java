@@ -1,11 +1,11 @@
 package com.mascara.oyo_booking_backend.controllers.client;
 
 import com.mascara.oyo_booking_backend.constant.BookingConstant;
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.booking.BookingRequest;
-import com.mascara.oyo_booking_backend.dtos.request.booking.CancelBookingRequest;
-import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.booking.request.BookingRequest;
+import com.mascara.oyo_booking_backend.dtos.booking.request.CancelBookingRequest;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;

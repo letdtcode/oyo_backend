@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.mapper;
 
-import com.mascara.oyo_booking_backend.dtos.response.booking.GetBookingResponse;
-import com.mascara.oyo_booking_backend.dtos.response.booking.GetHistoryBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.booking.response.GetBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.booking.response.GetHistoryBookingResponse;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.accommodation.ImageAccom;
 import com.mascara.oyo_booking_backend.entities.authentication.User;

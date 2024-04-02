@@ -1,11 +1,11 @@
 package com.mascara.oyo_booking_backend.controllers.admin;
 
-import com.mascara.oyo_booking_backend.dtos.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.request.type_bed.AddTypeBedRequest;
-import com.mascara.oyo_booking_backend.dtos.request.type_bed.UpdateTypeBedRequest;
-import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.dtos.response.type_bed.GetTypeBedResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.type_bed.request.AddTypeBedRequest;
+import com.mascara.oyo_booking_backend.dtos.type_bed.request.UpdateTypeBedRequest;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.type_bed.response.GetTypeBedResponse;
 import com.mascara.oyo_booking_backend.services.type_bed.TypeBedService;
 import com.mascara.oyo_booking_backend.utils.validation.Status;
 import io.swagger.v3.oas.annotations.tags.Tag;

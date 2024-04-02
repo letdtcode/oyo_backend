@@ -1,14 +1,14 @@
 package com.mascara.oyo_booking_backend.controllers.publics;
 
-import com.mascara.oyo_booking_backend.dtos.request.accom_place.GetAccomPlaceFilterRequest;
-import com.mascara.oyo_booking_backend.dtos.request.booking.CheckBookingRequest;
-import com.mascara.oyo_booking_backend.dtos.response.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.response.accom_category.GetAccomCategoryResponse;
-import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceDetailResponse;
-import com.mascara.oyo_booking_backend.dtos.response.accommodation.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.response.booking.CheckBookingResponse;
-import com.mascara.oyo_booking_backend.dtos.response.paging.BasePagingData;
-import com.mascara.oyo_booking_backend.dtos.response.review.GetReviewResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.request.GetAccomPlaceFilterRequest;
+import com.mascara.oyo_booking_backend.dtos.booking.request.CheckBookingRequest;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_category.response.GetAccomCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.booking.response.CheckBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.review.response.GetReviewResponse;
 import com.mascara.oyo_booking_backend.services.accom_category.AccomCategoryService;
 import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;

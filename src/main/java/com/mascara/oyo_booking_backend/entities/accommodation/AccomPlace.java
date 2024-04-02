@@ -99,10 +99,10 @@ public class AccomPlace extends BasePesistence {
     private String slugs;
 
     @Column(name = "check_in_from")
-    private LocalTime checkInFrom;
+    private String checkInFrom;
 
     @Column(name = "check_out_to")
-    private LocalTime checkOutTo;
+    private String checkOutTo;
 
     @Column(name = "cancellation_policy")
     @Enumerated(EnumType.STRING)
