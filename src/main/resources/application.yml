@@ -59,7 +59,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/oyo?createDatabaseIfNotExist=true
     username: root
-    password: 20021223
+    password: baohuy
     driverClassName: com.mysql.cj.jdbc.Driver
   sql:
     init:
