@@ -510,7 +510,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             responseList.add(AccomPlaceWaitingResponse.builder()
                     .accomId(place.getId())
                     .accomName(place.getAccomName())
-                    .logo(imageAccoms.stream().findFirst().get().getImgAccomLink())
+                    .logo(imageAccoms.size() > 0 ? imageAccoms.stream().findFirst().get().getImgAccomLink() : null)
                     .progress(percentProgess.getPercent())
                     .status(place.getStatus())
                     .build());
