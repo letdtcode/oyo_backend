@@ -477,7 +477,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                                                                                     String field) {
         User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
-        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), AccomStatusEnum.APPROVED, paging);
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), AccomStatusEnum.APPROVED.toString(), paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream()
                 .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
@@ -499,7 +499,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(
                 user.getId(),
-                AccomStatusEnum.WAITING,
+                AccomStatusEnum.WAITING.toString(),
                 paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<AccomPlaceWaitingResponse> responseList = new LinkedList<>();

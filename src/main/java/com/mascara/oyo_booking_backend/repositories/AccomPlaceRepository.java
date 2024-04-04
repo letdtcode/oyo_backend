@@ -81,7 +81,7 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
             countQuery = "select count(id) from accom_place ap where ap.user_id = :host_id and ap.deleted = false and ap.status= :status",
             nativeQuery = true)
     Page<AccomPlace> getListAccomPlaceOfPartner(@Param("host_id") Long hostId,
-                                                @Param("status") AccomStatusEnum status,
+                                                @Param("status") String status,
                                                 Pageable pageable);
 
 
