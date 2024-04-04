@@ -1,8 +1,10 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
 import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.AccomPlaceWaitingResponse;
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.PercentCreateAccomResponse;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.accommodation.*;
@@ -15,6 +17,7 @@ import com.mascara.oyo_booking_backend.entities.booking.Booking;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
+import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ForbiddenException;
 import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
@@ -23,6 +26,7 @@ import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.Cloud
 import com.mascara.oyo_booking_backend.mapper.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +38,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -287,6 +290,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     }
 
     @Override
+    @Transactional
     public BaseMessageData updatePayment(UpdatePaymentAccomRequest request, Long accomId) {
         accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
@@ -317,12 +321,82 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     }
 
     @Override
+    public PercentCreateAccomResponse getPercentCreateAccom(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+        GeneralPolicyDetail generalPolicyDetail = generalPolicyDetailRepository.findById(accomPlace.getId()).get();
+        PaymentInfoDetail paymentInfoDetail = paymentInfoDetailRepository.findById(accomPlace.getId()).get();
+
+        Float valuePercentPerStep = Float.valueOf(100 / 7);
+        Float valuePercentAll = 0F;
+        boolean isDoneGeneralInfo = false;
+        boolean isDoneAddress = false;
+        boolean isDoneFacility = false;
+        boolean isDoneGallery = false;
+        boolean isDoneRoomSetting = false;
+        boolean isDonePolicy = false;
+        boolean isDonePayment = false;
+
+
+        String accomName = accomPlace.getAccomName();
+        String addressDetail = accomPlace.getAddressDetail();
+        Set<Facility> facilitiesOfAccom = accomPlace.getFacilitySet();
+        Set<ImageAccom> imageAccoms = accomPlace.getImageAccoms();
+        Integer numBedRoom = accomPlace.getNumBedRoom();
+
+        if (accomName != null && !accomName.isBlank()) {
+            isDoneGeneralInfo = true;
+            valuePercentAll += valuePercentPerStep;
+        }
+        if (addressDetail != null && !addressDetail.isBlank()) {
+            isDoneAddress = true;
+            valuePercentAll += valuePercentPerStep;
+        }
+        if (!facilitiesOfAccom.isEmpty()) {
+            isDoneFacility = true;
+            valuePercentAll += valuePercentPerStep;
+        }
+        if (!imageAccoms.isEmpty()) {
+            isDoneGallery = true;
+            valuePercentAll += valuePercentPerStep;
+        }
+        if (numBedRoom != null && numBedRoom > 0) {
+            isDoneRoomSetting = true;
+            valuePercentAll += valuePercentPerStep;
+        }
+        if (generalPolicyDetail.getAllowPet() != null &&
+                generalPolicyDetail.getAllowEvent() != null &&
+                generalPolicyDetail.getAllowSmoking() != null) {
+            isDonePolicy = true;
+            valuePercentAll += valuePercentPerStep;
+        }
+        if (paymentInfoDetail.getAccountNameHost() != null &&
+                paymentInfoDetail.getAccountNumber() != null &&
+                paymentInfoDetail.getSwiftCode() != null) {
+            isDonePayment = true;
+            valuePercentAll += valuePercentPerStep;
+        }
+        PercentCreateAccomResponse percentCreateAccomResponse = PercentCreateAccomResponse.builder()
+                .isDoneGeneralInfo(isDoneGeneralInfo)
+                .isDoneAddress(isDoneAddress)
+                .isDoneFacility(isDoneFacility)
+                .isDoneGallery(isDoneGallery)
+                .isDoneRoomSetting(isDoneRoomSetting)
+                .isDonePolicy(isDonePolicy)
+                .isDonePayment(isDonePayment)
+                .percent(Utilities.getInstance().roundNearestMultipleOf10(valuePercentAll))
+                .build();
+        return percentCreateAccomResponse;
+    }
+
+    @Override
     @Transactional
     public BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
         Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
-        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace)).collect(Collectors.toList());
+        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
+                .collect(Collectors.toList());
         return new BasePagingData<>(responseList, accomPlacePage.getNumber(), accomPlacePage.getSize(), accomPlacePage.getTotalElements());
     }
 
@@ -332,7 +406,8 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
         Page<AccomPlace> accomPlacePage = accomPlaceRepository.getFilterByKeyWord(keyword, paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
-        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace)).collect(Collectors.toList());
+        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
+                .collect(Collectors.toList());
         return new BasePagingData<>(responseList, accomPlacePage.getNumber(), accomPlacePage.getSize(), accomPlacePage.getTotalElements());
     }
 
@@ -350,7 +425,8 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<AccomPlace> accomPlacePage = accomPlaceRepository.getPageWithFullFilter(filter.getAccomCateName(), filter.getProvinceCode(), filter.getDistrictCode(), filter.getWardCode(), filter.getPriceFrom(), filter.getPriceTo(), filter.getFacilityCode(), length, filter.getNumBathroom(), filter.getNumPeople(), filter.getNumBedRoom(), paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
-        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace)).collect(Collectors.toList());
+        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
+                .collect(Collectors.toList());
         return new BasePagingData<>(responseList, accomPlacePage.getNumber(), accomPlacePage.getSize(), accomPlacePage.getTotalElements());
     }
 
@@ -383,7 +459,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
-        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace)).collect(Collectors.toList());
+        List<GetAccomPlaceResponse> responseList = accomPlaceList.stream()
+                .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
+                .collect(Collectors.toList());
         return new BasePagingData<>(responseList,
                 accomPlacePage.getNumber(),
                 accomPlacePage.getSize(),
@@ -392,13 +470,50 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public BasePagingData<GetAccomPlaceResponse> getListAccomPlaceOfPartner(String hostMail, Integer pageNum, Integer pageSize, String sortType, String field) {
+    public BasePagingData<GetAccomPlaceResponse> getListAccomPlaceApprovedOfPartner(String hostMail,
+                                                                                    Integer pageNum,
+                                                                                    Integer pageSize,
+                                                                                    String sortType,
+                                                                                    String field) {
         User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
-        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), paging);
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), AccomStatusEnum.APPROVED, paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream()
-                .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace)).collect(Collectors.toList());
+                .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
+                .collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                accomPlacePage.getNumber(),
+                accomPlacePage.getSize(),
+                accomPlacePage.getTotalElements());
+    }
+
+    @Override
+    @Transactional
+    public BasePagingData<AccomPlaceWaitingResponse> getListAccomPlaceWaitingOfPartner(String hostMail,
+                                                                                       Integer pageNum,
+                                                                                       Integer pageSize,
+                                                                                       String sortType,
+                                                                                       String field) {
+        User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(
+                user.getId(),
+                AccomStatusEnum.WAITING,
+                paging);
+        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
+        List<AccomPlaceWaitingResponse> responseList = new LinkedList<>();
+        for (AccomPlace place : accomPlaceList) {
+            PercentCreateAccomResponse percentProgess = getPercentCreateAccom(place.getId());
+            Set<ImageAccom> imageAccoms = place.getImageAccoms();
+            responseList.add(AccomPlaceWaitingResponse.builder()
+                    .accomId(place.getId())
+                    .accomName(place.getAccomName())
+                    .logo(imageAccoms.stream().findFirst().get().getImgAccomLink())
+                    .progress(percentProgess.getPercent())
+                    .status(place.getStatus())
+                    .build());
+        }
         return new BasePagingData<>(responseList,
                 accomPlacePage.getNumber(),
                 accomPlacePage.getSize(),

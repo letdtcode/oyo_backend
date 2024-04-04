@@ -1,6 +1,7 @@
 package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
+import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,7 +33,7 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
             "AND IF(:size > 0, f.faci_code IN :facilityCode,true) AND " +
             "(:numBathroom is null or ap.num_bathroom = :numBathroom) " +
             "AND (:numPeople is null or ap.num_people = :numPeople) AND " +
-            "(:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id having (:size > 0 AND COUNT(DISTINCT f.faci_code) = :size) OR (:size = 0)",
+            "(:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'APPROVED' and ap.deleted = false group by ap.id having (:size > 0 AND COUNT(DISTINCT f.faci_code) = :size) OR (:size = 0)",
             countQuery = "SELECT distinct count(ap.id) FROM accom_place ap LEFT JOIN facility_accom fa ON " +
                     "ap.id = fa.accom_id LEFT JOIN facility f ON " + "fa.facility_id = f.id " +
                     "WHERE (:provinceCode is null or ap.province_code = :provinceCode) AND " +
@@ -41,7 +42,7 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
                     ":priceTo is null or (ap.price_per_night BETWEEN :priceFrom AND :priceTo)) " +
                     "AND IF(:size > 0, f.faci_code IN :facilityCode,true) AND (:numBathroom is " +
                     "null or ap.num_bathroom = :numBathroom) AND (:numPeople is null or ap.num_people = :numPeople) " +
-                    "AND (:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'ENABLE' and ap.deleted = false group by ap.id having (:size > 0 AND COUNT(DISTINCT f.faci_code) = :size) OR (:size = 0)",
+                    "AND (:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'APPROVED' and ap.deleted = false group by ap.id having (:size > 0 AND COUNT(DISTINCT f.faci_code) = :size) OR (:size = 0)",
             nativeQuery = true)
     Page<AccomPlace> getPageWithFullFilter(
             @Param("accomCateName") String accomCateName,
@@ -71,15 +72,17 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
     @Query(value = "select ap.* from accom_place ap limit 1", nativeQuery = true)
     List<AccomPlace> checkExistData();
 
-    @Query(value = "select ap.* from accom_place ap where ap.deleted = false and ap.status = 'ENABLE'",
-            countQuery = "select count(id) from accom_place ap where ap.deleted = false and ap.status = 'ENABLE'",
+    @Query(value = "select ap.* from accom_place ap where ap.deleted = false and ap.status = 'APPROVED'",
+            countQuery = "select count(id) from accom_place ap where ap.deleted = false and ap.status = 'APPROVED'",
             nativeQuery = true)
     Page<AccomPlace> getAllWithPaging(Pageable pageable);
 
-    @Query(value = "select ap.* from accom_place ap where ap.user_id = :host_id and ap.deleted = false",
-            countQuery = "select count(id) from accom_place ap where ap.user_id = :host_id and ap.deleted = false",
+    @Query(value = "select ap.* from accom_place ap where ap.user_id = :host_id and ap.deleted = false and ap.status= :status",
+            countQuery = "select count(id) from accom_place ap where ap.user_id = :host_id and ap.deleted = false and ap.status= :status",
             nativeQuery = true)
-    Page<AccomPlace> getListAccomPlaceOfPartner(@Param("host_id") Long hostId, Pageable pageable);
+    Page<AccomPlace> getListAccomPlaceOfPartner(@Param("host_id") Long hostId,
+                                                @Param("status") AccomStatusEnum status,
+                                                Pageable pageable);
 
 
     @Query(value = "select ap.* from accom_place ap join wish_item wi on ap.id = wi.accom_id where wi.wish_id = :wish_id and wi.deleted is false",

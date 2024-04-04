@@ -1,7 +1,9 @@
 package com.mascara.oyo_booking_backend.controllers.partner;
 
 import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.AccomPlaceWaitingResponse;
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.PercentCreateAccomResponse;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
@@ -54,12 +56,12 @@ public class PartnerManageAccomController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @Operation(summary = "Add Accom Place For Rent", description = "Partner Api for add accom place")
+    @Operation(summary = "Get list accom place approved", description = "Partner Api for get list accom place approved")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @GetMapping("/pages")
+    @GetMapping("/approved")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getListAccomPlaceOfPartner(@RequestParam("pageNumber")
                                                         @NotNull(message = "Page number must not be null")
@@ -73,7 +75,35 @@ public class PartnerManageAccomController {
         String hostMail = principal.getName();
         String sortType = "DESC";
         String field = "created_date";
-        BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getListAccomPlaceOfPartner(hostMail, pageNumber, pageSize, sortType, field);
+        BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getListAccomPlaceApprovedOfPartner(hostMail, pageNumber, pageSize, sortType, field);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Get list accom place waiting", description = "Partner Api for get list accom place waiting")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/waiting")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getListAccomPlaceWaitingOfPartner() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String hostMail = principal.getName();
+        String sortType = "DESC";
+        String field = "created_date";
+        BasePagingData<AccomPlaceWaitingResponse> response = accomPlaceService.getListAccomPlaceWaitingOfPartner(hostMail, 0, 20, sortType, field);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Get list accom place waiting", description = "Partner Api for get list accom place waiting")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/percent-create-accom")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getPercentCreateAccom(@RequestParam("accomId") Long accomId) {
+        PercentCreateAccomResponse response = accomPlaceService.getPercentCreateAccom(accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

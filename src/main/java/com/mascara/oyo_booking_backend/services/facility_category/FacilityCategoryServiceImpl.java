@@ -1,12 +1,12 @@
 package com.mascara.oyo_booking_backend.services.facility_category;
 
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.dtos.facility_category.request.AddFacilityCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.facility_category.request.UpdateFacilityCategoryRequest;
-import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.dtos.facility_category.response.GetFacilityCategorWithFacilityListResponse;
 import com.mascara.oyo_booking_backend.dtos.facility_category.response.GetFacilityCategoryResponse;
-import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
@@ -14,7 +14,7 @@ import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import com.mascara.oyo_booking_backend.utils.GenerateCodeUtils;
+import com.mascara.oyo_booking_backend.utils.Utilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -81,7 +81,7 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
     }
 
 
-//    Mot bo cai nay
+    //    Mot bo cai nay
     @Override
     @Transactional
     public List<GetFacilityCategorWithFacilityListResponse> getAllDataFacility() {
@@ -104,7 +104,7 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
         int count = (int) facilityCategoriesRepository.count();
         FacilityCategories facilityCategories = FacilityCategories.builder()
                 .faciCateName(request.getFaciCateName())
-                .faciCateCode(GenerateCodeUtils.generateCode(AliasUtils.FACILITY_CATEGORY, count))
+                .faciCateCode(Utilities.getInstance().generateCode(AliasUtils.FACILITY_CATEGORY, count))
                 .description(request.getDescription())
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();

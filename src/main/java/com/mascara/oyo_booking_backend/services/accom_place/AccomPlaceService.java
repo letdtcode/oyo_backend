@@ -1,8 +1,10 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
 import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.AccomPlaceWaitingResponse;
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.PercentCreateAccomResponse;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +43,8 @@ public interface AccomPlaceService {
 
     void checkPermission(String mailPartner, Long accomId);
 
+    PercentCreateAccomResponse getPercentCreateAccom(Long accomId);
+
     @Transactional
     BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
 
@@ -57,7 +61,18 @@ public interface AccomPlaceService {
     BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
-    BasePagingData<GetAccomPlaceResponse> getListAccomPlaceOfPartner(String hostMail, Integer pageNum, Integer pageSize, String sortType, String field);
+    BasePagingData<GetAccomPlaceResponse> getListAccomPlaceApprovedOfPartner(String hostMail,
+                                                                             Integer pageNum,
+                                                                             Integer pageSize,
+                                                                             String sortType,
+                                                                             String field);
+
+    @Transactional
+    BasePagingData<AccomPlaceWaitingResponse> getListAccomPlaceWaitingOfPartner(String hostMail,
+                                                                                Integer pageNum,
+                                                                                Integer pageSize,
+                                                                                String sortType,
+                                                                                String field);
 
     @Transactional
     BaseMessageData changeStatusAccomPlace(Long id, String status);

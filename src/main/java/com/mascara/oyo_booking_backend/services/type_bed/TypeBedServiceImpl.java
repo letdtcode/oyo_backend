@@ -1,9 +1,9 @@
 package com.mascara.oyo_booking_backend.services.type_bed;
 
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.type_bed.request.AddTypeBedRequest;
 import com.mascara.oyo_booking_backend.dtos.type_bed.request.UpdateTypeBedRequest;
-import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.type_bed.response.GetTypeBedResponse;
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
@@ -11,7 +11,7 @@ import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.TypeBedRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import com.mascara.oyo_booking_backend.utils.GenerateCodeUtils;
+import com.mascara.oyo_booking_backend.utils.Utilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -74,7 +74,7 @@ public class TypeBedServiceImpl implements TypeBedService {
         int count = (int) typeBedRepository.count();
         TypeBed typeBed = TypeBed.builder()
                 .typeBedName(request.getTypeBedName())
-                .typeBedCode(GenerateCodeUtils.generateCode(AliasUtils.TYPE_BED, count))
+                .typeBedCode(Utilities.getInstance().generateCode(AliasUtils.TYPE_BED, count))
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         typeBed = typeBedRepository.save(typeBed);

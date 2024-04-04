@@ -118,7 +118,7 @@ public class InitAccomPlaceService {
                 .facilitySet(facilitySet)
                 .user(user)
                 .userId(user.getId())
-                .status(AccomStatusEnum.ENABLE).build();
+                .status(AccomStatusEnum.APPROVED).build();
 
         String guide = request.getGuide();
         String cldVideoId = request.getCldVideoId();

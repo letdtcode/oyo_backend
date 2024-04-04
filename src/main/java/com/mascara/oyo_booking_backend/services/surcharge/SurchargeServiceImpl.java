@@ -1,9 +1,9 @@
 package com.mascara.oyo_booking_backend.services.surcharge;
 
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.request.AddSurchargeCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.request.UpdateSurchargeCategoryRequest;
-import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.response.GetSurchargeCategoryResponse;
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
@@ -11,7 +11,7 @@ import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.SurchargeCategoryRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import com.mascara.oyo_booking_backend.utils.GenerateCodeUtils;
+import com.mascara.oyo_booking_backend.utils.Utilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,7 +68,7 @@ public class SurchargeServiceImpl implements SurchargeService {
         int count = (int) surchargeCategoryRepository.count();
         SurchargeCategory surchargeCategory = SurchargeCategory.builder()
                 .surchargeCateName(request.getSurchargeCateName())
-                .surchargeCode(GenerateCodeUtils.generateCode(AliasUtils.SURCHARGE_CATEGORY, count))
+                .surchargeCode(Utilities.getInstance().generateCode(AliasUtils.SURCHARGE_CATEGORY, count))
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         surchargeCategory = surchargeCategoryRepository.save(surchargeCategory);
@@ -77,7 +77,7 @@ public class SurchargeServiceImpl implements SurchargeService {
 
     @Override
     @Transactional
-    public GetSurchargeCategoryResponse updateSurchargeCategory(UpdateSurchargeCategoryRequest request,Long id) {
+    public GetSurchargeCategoryResponse updateSurchargeCategory(UpdateSurchargeCategoryRequest request, Long id) {
         SurchargeCategory surchargeCategory = surchargeCategoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge category")));
         surchargeCategory.setSurchargeCateName(request.getSurchargeCateName());

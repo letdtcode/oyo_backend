@@ -8,7 +8,7 @@ package com.mascara.oyo_booking_backend.enums;
  * Filename  : AccomStatusEnum
  */
 public enum AccomStatusEnum {
-    ENABLE,
+    APPROVED,
     BANNED,
-    DISABLE
+    WAITING
 }

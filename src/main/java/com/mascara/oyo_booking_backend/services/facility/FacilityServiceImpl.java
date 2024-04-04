@@ -1,10 +1,10 @@
 package com.mascara.oyo_booking_backend.services.facility;
 
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.facility.request.AddFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.facility.request.UpdateFacilityRequest;
 import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
-import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
@@ -15,7 +15,7 @@ import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository
 import com.mascara.oyo_booking_backend.repositories.FacilityRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import com.mascara.oyo_booking_backend.utils.GenerateCodeUtils;
+import com.mascara.oyo_booking_backend.utils.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -73,7 +73,7 @@ public class FacilityServiceImpl implements FacilityService {
         Facility facility = Facility.builder()
                 .facilityName(request.getFacilityName())
                 .facilityCateCode(request.getFacilityCateCode())
-                .facilityCode(GenerateCodeUtils.generateCode(AliasUtils.FACILITY, count))
+                .facilityCode(Utilities.getInstance().generateCode(AliasUtils.FACILITY, count))
                 .facilityCategories(facilityCategories)
                 .imageUrl(request.getImageUrl())
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
