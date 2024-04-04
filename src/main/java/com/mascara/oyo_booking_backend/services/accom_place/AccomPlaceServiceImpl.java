@@ -119,6 +119,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .userId(user.getId())
                 .accommodationCategories(accomCategories)
                 .accomCateId(accomCategories.getId())
+                .status(AccomStatusEnum.WAITING)
                 .build();
         accomPlace = accomPlaceRepository.save(accomPlace);
 
