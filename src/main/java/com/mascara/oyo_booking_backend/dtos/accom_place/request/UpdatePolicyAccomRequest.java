@@ -37,5 +37,4 @@ public class UpdatePolicyAccomRequest {
 
     @NotNull
     private Boolean allowSmoking;
-
 }

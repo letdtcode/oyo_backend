@@ -1,10 +1,7 @@
 package com.mascara.oyo_booking_backend.entities.bank;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "bank")
 public class Bank extends BasePesistence {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column(name = "name_bank")

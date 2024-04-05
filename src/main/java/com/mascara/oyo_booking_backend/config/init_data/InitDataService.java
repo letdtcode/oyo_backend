@@ -14,6 +14,7 @@ import com.mascara.oyo_booking_backend.entities.address.Province;
 import com.mascara.oyo_booking_backend.entities.address.Ward;
 import com.mascara.oyo_booking_backend.entities.authentication.Role;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
+import com.mascara.oyo_booking_backend.entities.bank.Bank;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
@@ -92,6 +93,8 @@ public class InitDataService implements CommandLineRunner {
 
     @Autowired
     private ImageAccomRepository imageAccomRepository;
+    @Autowired
+    private BankRepository bankRepository;
 
     public void initDataUser() {
         Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString());
@@ -328,7 +331,7 @@ public class InitDataService implements CommandLineRunner {
                 });
                 List<InitAccomPlaceModel> accomPlaceRequestList = initModel.getData();
                 for (InitAccomPlaceModel accomPlace : accomPlaceRequestList) {
-                    initAccomPlaceService.addAccomPlace (accomPlace, "client1@gmail.com");
+                    initAccomPlaceService.addAccomPlace(accomPlace, "client1@gmail.com");
                 }
             }
         } catch (Exception e) {
@@ -392,6 +395,24 @@ public class InitDataService implements CommandLineRunner {
         }
     }
 
+    public void implementInitDataBankInfo() {
+        List<Bank> checkList = bankRepository.checkExistData();
+        try {
+            if (checkList.isEmpty()) {
+                File file = new File(
+                        Objects.requireNonNull(this.getClass().getClassLoader().getResource("initData/json/initDbBank.json")).getFile()
+                );
+                ObjectMapper mapper = new ObjectMapper();
+                InitDbModel<Bank> initModel = mapper.readValue(file, new TypeReference<>() {
+                });
+                List<Bank> bankList = initModel.getData();
+                bankRepository.saveAll(bankList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run(String... args) throws Exception {
         initDataUser();
@@ -405,5 +426,6 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionSurcharge();
         implementInitDataAccomPlace();
         implementInitDataMenuActionImageAccom();
+        implementInitDataBankInfo();
     }
 }

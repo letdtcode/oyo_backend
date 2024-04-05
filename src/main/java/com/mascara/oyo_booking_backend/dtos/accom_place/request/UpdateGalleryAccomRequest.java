@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateImageAccomRequest {
+public class UpdateGalleryAccomRequest {
     @NotNull
     private List<String> imageAccomUrls;
     private String cldVideoId;

@@ -169,7 +169,6 @@ public class InitAccomPlaceService {
 
 //        Create payment info detail for accom place
         PaymentInfoDetail paymentInfoDetail = PaymentInfoDetail.builder()
-//                .id(accomPlace.getId())
                 .accomPlace(accomPlace)
                 .build();
         paymentInfoDetailRepository.save(paymentInfoDetail);
