@@ -1,10 +1,7 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
 import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.AccomPlaceWaitingResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.PercentCreateAccomResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.*;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +27,7 @@ public interface AccomPlaceService {
     BaseMessageData updateFacilities(UpdateFacilityAccomRequest request, Long accomId);
 
     @Transactional
-    BaseMessageData updateImages(UpdateImageAccomRequest request, Long accomId);
+    BaseMessageData updateGallery(UpdateGalleryAccomRequest request, Long accomId);
 
     @Transactional
     BaseMessageData updateRooms(UpdateRoomAccomRequest request, Long accomId);
@@ -79,4 +76,12 @@ public interface AccomPlaceService {
 
     @Transactional
     BaseMessageData deleteAccomPlace(Long id);
+
+    GetGeneralInfoAccomResponse getGeneralInfoAccom(Long accomId);
+    GetAddressAccomResponse getAddressAccom(Long accomId);
+    GetFacilityAccomResponse getFacilityAccom(Long accomId);
+    GetGalleryAccomResponse getGalleryAccom(Long accomId);
+    GetRoomSettingAccomResponse getRoomSettingAccom(Long accomId);
+    GetPolicyAccomResponse getPolicyAccom(Long accomId);
+    GetPaymentAccomResponse getPaymentAccom(Long accomId);
 }

@@ -1,9 +1,7 @@
 package com.mascara.oyo_booking_backend.controllers.partner;
 
 import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.AccomPlaceWaitingResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.PercentCreateAccomResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.*;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
@@ -160,14 +158,14 @@ public class PartnerManageAccomController {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
-    @PutMapping("/images")
+    @PutMapping("/gallery")
     @PreAuthorize("hasRole('PARTNER')")
-    public ResponseEntity<?> updateImagesAccom(@RequestBody @Valid UpdateImageAccomRequest request,
+    public ResponseEntity<?> updateImagesAccom(@RequestBody @Valid UpdateGalleryAccomRequest request,
                                                @RequestParam("accomId") Long accomId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String hostMail = principal.getName();
         accomPlaceService.checkPermission(hostMail, accomId);
-        BaseMessageData response = accomPlaceService.updateImages(request, accomId);
+        BaseMessageData response = accomPlaceService.updateGallery(request, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -216,6 +214,90 @@ public class PartnerManageAccomController {
         String hostMail = principal.getName();
         accomPlaceService.checkPermission(hostMail, accomId);
         BaseMessageData response = accomPlaceService.updatePayment(request, accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update payment accom place", description = "Update payment accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/general-info")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getGeneralInfoAccom(@RequestParam("accomId") Long accomId) {
+        GetGeneralInfoAccomResponse response = accomPlaceService.getGeneralInfoAccom(accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update payment accom place", description = "Update payment accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/address")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getAddressAccom(@RequestParam("accomId") Long accomId) {
+        GetAddressAccomResponse response = accomPlaceService.getAddressAccom(accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update payment accom place", description = "Update payment accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/facilities")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getFacilityAccom(@RequestParam("accomId") Long accomId) {
+        GetFacilityAccomResponse response = accomPlaceService.getFacilityAccom(accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update payment accom place", description = "Update payment accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/gallery")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getGalleryAccom(@RequestParam("accomId") Long accomId) {
+        GetGalleryAccomResponse response = accomPlaceService.getGalleryAccom(accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update payment accom place", description = "Update payment accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/room-setting")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getRoomSettingAccom(@RequestParam("accomId") Long accomId) {
+        GetRoomSettingAccomResponse response = accomPlaceService.getRoomSettingAccom(accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update payment accom place", description = "Update payment accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/policies")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getPolicyAccom(@RequestParam("accomId") Long accomId) {
+        GetPolicyAccomResponse response = accomPlaceService.getPolicyAccom(accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update payment accom place", description = "Update payment accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/payment")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> getPaymentAccom(@RequestParam("accomId") Long accomId) {
+        GetPaymentAccomResponse response = accomPlaceService.getPaymentAccom(accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

@@ -1,12 +1,10 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
 import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.AccomPlaceWaitingResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.PercentCreateAccomResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.*;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.facility.response.FacilityResponse;
 import com.mascara.oyo_booking_backend.entities.accommodation.*;
 import com.mascara.oyo_booking_backend.entities.address.District;
 import com.mascara.oyo_booking_backend.entities.address.Province;
@@ -22,13 +20,13 @@ import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ForbiddenException;
 import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
 import com.mascara.oyo_booking_backend.mapper.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -77,9 +75,6 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     private AccomPlaceMapper accomPlaceMapper;
 
     @Autowired
-    private CloudinaryService cloudinaryService;
-
-    @Autowired
     private ImageAccomRepository imageAccomRepository;
 
     @Autowired
@@ -105,6 +100,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Autowired
     private BankRepository bankRepository;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     @Transactional
@@ -221,7 +219,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public BaseMessageData updateImages(UpdateImageAccomRequest request, Long accomId) {
+    public BaseMessageData updateGallery(UpdateGalleryAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
 
@@ -537,5 +535,146 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace.setDeleted(true);
         accomPlaceRepository.save(accomPlace);
         return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("accom place"));
+    }
+
+    @Override
+    @Transactional
+    public GetGeneralInfoAccomResponse getGeneralInfoAccom(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        AccommodationCategories categories = accommodationCategoriesRepository.findById(accomPlace.getAccomCateId()).get();
+
+//        Lấy danh sách phụ phí của accom place
+        List<SurchargeOfAccom> surchargeOfAccoms = surchargeOfAccomRepository.findByAccomPlaceId(accomId);
+        List<ItemSurcharge> surcharges = new ArrayList<>();
+        for (SurchargeOfAccom surchargeOfAccom : surchargeOfAccoms) {
+            surcharges.add(ItemSurcharge.builder()
+                    .surchargeCode(surchargeOfAccom.getSurchargeCategory().getSurchargeCode())
+                    .cost(surchargeOfAccom.getCost()).build());
+        }
+
+        GetGeneralInfoAccomResponse response = GetGeneralInfoAccomResponse.builder()
+                .nameAccom(accomPlace.getAccomName())
+                .accomCateName(categories.getAccomCateName())
+                .description(accomPlace.getDescription())
+                .guide(accomPlace.getGuide())
+                .acreage(accomPlace.getAcreage())
+                .pricePerNight(accomPlace.getPricePerNight())
+                .checkInFrom(accomPlace.getCheckInFrom())
+                .checkOutTo(accomPlace.getCheckOutTo())
+                .surchargeList(surcharges)
+                .discountPercent(accomPlace.getDiscount())
+                .build();
+        return response;
+    }
+
+    @Override
+    @Transactional
+    public GetAddressAccomResponse getAddressAccom(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        District district = districtRepository.findByDistrictCode(accomPlace.getDistrictCode()).get();
+        Ward ward = wardRepository.findByWardCode(accomPlace.getWardCode()).get();
+        Province province = provinceRepository.findByProvinceCode(accomPlace.getProvinceCode()).get();
+
+        String addressDetail = accomPlace.getAddressDetail();
+        String[] arrSplitAddress = addressDetail.split(",");
+        GetAddressAccomResponse response = new GetAddressAccomResponse(arrSplitAddress[0],
+                district.getDistrictCode(),
+                district.getDistrictName(),
+                ward.getWardCode(),
+                ward.getWardName(),
+                province.getProvinceCode(),
+                province.getProvinceName(),
+                accomPlace.getLongitude(),
+                accomPlace.getLatitude()
+        );
+        return response;
+    }
+
+    @Override
+    @Transactional
+    public GetFacilityAccomResponse getFacilityAccom(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        List<Facility> facilities = accomPlace.getFacilitySet().stream().toList();
+        List<FacilityResponse> facilityResponses = facilities.stream().map(
+                facility -> mapper.map(facility, FacilityResponse.class)).collect(Collectors.toList());
+        GetFacilityAccomResponse response = GetFacilityAccomResponse.builder()
+                .total(facilityResponses.size())
+                .facilities(facilityResponses)
+                .build();
+        return response;
+    }
+
+    @Override
+    @Transactional
+    public GetGalleryAccomResponse getGalleryAccom(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        List<ImageAccom> imageAccoms = accomPlace.getImageAccoms().stream().toList();
+        List<String> imageAccomUrls = new LinkedList<>();
+        for (ImageAccom imageAccom : imageAccoms) {
+            imageAccomUrls.add(imageAccom.getImgAccomLink());
+        }
+        return GetGalleryAccomResponse.builder()
+                .imageAccomUrls(imageAccomUrls)
+                .cldVideoId(accomPlace.getCldVideoId())
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public GetRoomSettingAccomResponse getRoomSettingAccom(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        AccommodationCategories accommodationCategories = accommodationCategoriesRepository.findById(accomId).get();
+        String accomCateName = accommodationCategories.getAccomCateName();
+        List<BedRoom> bedRooms = accomPlace.getBedRoomSet().stream().toList();
+        List<TypeBedOfRoom> typeBedOfRooms = new LinkedList<>();
+        for (BedRoom bedRoom : bedRooms) {
+            TypeBed typeBedOfRoom = typeBedRepository.findByTypeBedCode(bedRoom.getTypeBedCode()).get();
+            TypeBedOfRoom bedOfRoom = mapper.map(typeBedOfRoom, TypeBedOfRoom.class);
+            typeBedOfRooms.add(bedOfRoom);
+        }
+        BedRoomResponse bedRoomResponse = BedRoomResponse.builder()
+                .total(typeBedOfRooms.size())
+                .typeBeds(typeBedOfRooms)
+                .build();
+        return GetRoomSettingAccomResponse.builder()
+                .accomCateName(accomCateName)
+                .numKitchen(accomPlace.getNumKitchen())
+                .numBathRoom(accomPlace.getNumBathRoom())
+                .bedRooms(bedRoomResponse)
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public GetPolicyAccomResponse getPolicyAccom(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        GeneralPolicyDetail generalPolicyDetail = generalPolicyDetailRepository.findById(accomId).get();
+        GetPolicyAccomResponse response = new GetPolicyAccomResponse(
+                accomPlace.getCancellationPolicy().toString(),
+                accomPlace.getCancellationFeeRate(),
+                generalPolicyDetail.getAllowEvent(),
+                generalPolicyDetail.getAllowPet(),
+                generalPolicyDetail.getAllowSmoking());
+        return response;
+    }
+
+    @Override
+    @Transactional
+    public GetPaymentAccomResponse getPaymentAccom(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        PaymentInfoDetail paymentInfoDetail = paymentInfoDetailRepository.findById(accomId).get();
+        return GetPaymentAccomResponse.builder()
+                .bankId(paymentInfoDetail.getBankId())
+                .accountNumber(paymentInfoDetail.getAccountNumber())
+                .accountNameHost(paymentInfoDetail.getAccountNameHost())
+                .swiftCode(paymentInfoDetail.getSwiftCode())
+                .build();
     }
 }
