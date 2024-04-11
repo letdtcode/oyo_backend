@@ -3,9 +3,7 @@ package com.mascara.oyo_booking_backend.config.init_data.models;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -19,7 +17,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InitAccomPlaceModel {
+public
+class InitAccomPlaceModel {
     @NotBlank
     @NotNull
     private String accomName;
@@ -77,4 +76,10 @@ public class InitAccomPlaceModel {
     private List<String> facilityNameList;
 
     private String guide;
+
+    private GeneralPolicyModel generalPolicy;
+
+    private PaymentInfoModel paymentInfo;
 }
+
+

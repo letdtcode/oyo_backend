@@ -416,6 +416,7 @@ public class InitDataService implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         initDataUser();
+        implementInitDataBankInfo();
         implementInitDataMenuActionProvince();
         implementInitDataMenuActionDistrict();
         implementInitDataMenuActionWard();
@@ -426,6 +427,5 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionSurcharge();
         implementInitDataAccomPlace();
         implementInitDataMenuActionImageAccom();
-        implementInitDataBankInfo();
     }
 }

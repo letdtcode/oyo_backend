@@ -1,11 +1,13 @@
 package com.mascara.oyo_booking_backend.config.init_data.service;
 
 import com.mascara.oyo_booking_backend.config.init_data.models.InitAccomPlaceModel;
+import com.mascara.oyo_booking_backend.config.init_data.models.PaymentInfoModel;
 import com.mascara.oyo_booking_backend.entities.accommodation.*;
 import com.mascara.oyo_booking_backend.entities.address.District;
 import com.mascara.oyo_booking_backend.entities.address.Province;
 import com.mascara.oyo_booking_backend.entities.address.Ward;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
+import com.mascara.oyo_booking_backend.entities.bank.Bank;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
@@ -71,6 +73,8 @@ public class InitAccomPlaceService {
 
     @Autowired
     private PaymentInfoDetailRepository paymentInfoDetailRepository;
+    @Autowired
+    private BankRepository bankRepository;
 
     @Transactional
     public String addAccomPlace(InitAccomPlaceModel request, String mailPartner) {
@@ -159,17 +163,26 @@ public class InitAccomPlaceService {
             surchargeOfAccomRepository.save(surcharge);
         }
 
-
 //        Create general policy detail for accom place
         GeneralPolicyDetail generalPolicyDetail = GeneralPolicyDetail.builder()
 //                .Id(accomPlace.getId())
+                .allowEvent(request.getGeneralPolicy().getAllowEvent())
+                .allowPet(request.getGeneralPolicy().getAllowPet())
+                .allowSmoking(request.getGeneralPolicy().getAllowSmoking())
                 .accomPlace(accomPlace)
                 .build();
         generalPolicyDetailRepository.save(generalPolicyDetail);
 
+        PaymentInfoModel paymentInfoModel = request.getPaymentInfo();
+        Bank bank = bankRepository.findById(paymentInfoModel.getBankId()).get();
 //        Create payment info detail for accom place
         PaymentInfoDetail paymentInfoDetail = PaymentInfoDetail.builder()
                 .accomPlace(accomPlace)
+                .bank(bank)
+                .bankId(bank.getId())
+                .accountNumber(paymentInfoModel.getAccountNumber())
+                .accountNameHost(paymentInfoModel.getAccountNameHost())
+                .swiftCode(paymentInfoModel.getSwiftCode())
                 .build();
         paymentInfoDetailRepository.save(paymentInfoDetail);
         return "Success";

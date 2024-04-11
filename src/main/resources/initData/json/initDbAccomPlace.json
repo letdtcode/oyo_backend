@@ -20,7 +20,18 @@
         "Internet miễn phí",
         "Ăn sáng miễn phí"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Khách sạn Super OYO Capital",
@@ -44,7 +55,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Căn hộ 2 phòng ngủ rộng rãi yên bình gần bãi biển, phố cổ",
@@ -68,7 +90,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Bungalow riêng ở Sapa/Mountain & Ricefield",
@@ -92,7 +125,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ biệt thự tại Nha Trang, Việt Nam",
@@ -116,7 +160,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ biệt thự cao cấp tại Thành phố Đà Lạt, Việt Nam",
@@ -140,7 +195,18 @@
         "Bếp nướng",
         "Hệ thống âm thanh"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ căn hộ chung cư cao cấp tại Nguyễn Cư Trinh, Việt Nam",
@@ -164,7 +230,18 @@
         "Wifi tính phí",
         "Wi-Fi [cho thuê loại xách tay]"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ nhà tại Thành phố Phú Quốc, Việt Nam",
@@ -188,7 +265,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ bungalow tại Thành phố Phú Quốc, Việt Nam",
@@ -212,7 +300,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ biệt thự tại Ngũ Hành Sơn, Việt Nam",
@@ -236,7 +335,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ nhà khách tại Thành phố Phú Quốc, Việt Nam",
@@ -260,7 +370,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ nhà tại Hải Châu, Việt Nam",
@@ -284,7 +405,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Phòng tại khách sạn boutique tại Thành phố Đà Lạt, Việt Nam",
@@ -308,7 +440,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Phòng riêng tại nhà khách tại Hoi An, Việt Nam",
@@ -332,7 +475,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Phòng riêng tại lều tại Thành phố Hội An, Việt Nam",
@@ -356,7 +510,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ biệt thự tại Phu Quoc, Việt Nam",
@@ -380,7 +545,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Phòng riêng tại cabin tại Sa Pa, Việt Nam",
@@ -404,7 +580,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Toàn bộ biệt thự tại Thành phố Phú Quốc, Việt Nam",
@@ -428,7 +615,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Biệt thự hiện đại tuyệt vời trong rừng thông Đà Lạt",
@@ -452,7 +650,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     },
     {
       "accomName": "Nhà mái vòm tại San Sả Hồ, Việt Nam",
@@ -476,7 +685,18 @@
         "Bếp nướng",
         "Trò chơi bàn cờ"
       ],
-      "guide": "Đến là đón"
+      "guide": "Đến là đón",
+      "generalPolicy": {
+        "allowEvent": true,
+        "allowPet": true,
+        "allowSmoking": true
+      },
+      "paymentInfo": {
+        "bankId": 1,
+        "accountNumber": "1234567000",
+        "accountNameHost": "Nguyen Quang Thanh",
+        "swiftCode": "BFTVVNVX"
+      }
     }
   ]
 }
