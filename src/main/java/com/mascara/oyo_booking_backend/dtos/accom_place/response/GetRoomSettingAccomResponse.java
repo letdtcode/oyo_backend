@@ -21,23 +21,5 @@ public class GetRoomSettingAccomResponse {
     private Integer numBathRoom;
     private Integer numKitchen;
     private String accomCateName;
-
-//    @Data
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    @Builder
-//    class BedRoom {
-//        private Integer total;
-//        private List<TypeBedOfRoom> typeBeds;
-//    }
-//
-//    @Data
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    @Builder
-//    class TypeBedOfRoom {
-//        private Long id;
-//        private String typeBedName;
-//        private String typeBedCode;
-//    }
+    private Long accomCateId;
 }

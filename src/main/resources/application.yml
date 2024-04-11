@@ -92,7 +92,7 @@ logging:
   level:
     org:
       hibernate:
-        jdbc:
+        jdbc: info
           
 
       springframework:

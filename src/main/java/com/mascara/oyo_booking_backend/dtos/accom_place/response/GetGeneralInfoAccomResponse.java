@@ -1,6 +1,5 @@
 package com.mascara.oyo_booking_backend.dtos.accom_place.response;
 
-import com.mascara.oyo_booking_backend.dtos.accom_place.request.ItemSurcharge;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +27,8 @@ public class GetGeneralInfoAccomResponse {
     private Double pricePerNight;
     private String checkInFrom;
     private String checkOutTo;
-    private List<ItemSurcharge> surchargeList;
+    private List<ItemSurchargeResponse> surchargeList;
     private Double discountPercent;
 }
+
+

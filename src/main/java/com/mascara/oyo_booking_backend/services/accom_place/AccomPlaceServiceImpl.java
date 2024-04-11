@@ -546,9 +546,10 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
 //        Lấy danh sách phụ phí của accom place
         List<SurchargeOfAccom> surchargeOfAccoms = surchargeOfAccomRepository.findByAccomPlaceId(accomId);
-        List<ItemSurcharge> surcharges = new ArrayList<>();
+        List<ItemSurchargeResponse> surcharges = new ArrayList<>();
         for (SurchargeOfAccom surchargeOfAccom : surchargeOfAccoms) {
-            surcharges.add(ItemSurcharge.builder()
+            surcharges.add(ItemSurchargeResponse.builder()
+                    .surchargeName(surchargeOfAccom.getSurchargeCategory().getSurchargeCateName())
                     .surchargeCode(surchargeOfAccom.getSurchargeCategory().getSurchargeCode())
                     .cost(surchargeOfAccom.getCost()).build());
         }
@@ -628,8 +629,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     public GetRoomSettingAccomResponse getRoomSettingAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        AccommodationCategories accommodationCategories = accommodationCategoriesRepository.findById(accomId).get();
+        AccommodationCategories accommodationCategories = accommodationCategoriesRepository.findById(accomPlace.getAccomCateId()).get();
         String accomCateName = accommodationCategories.getAccomCateName();
+        Long accomCateId = accommodationCategories.getId();
         List<BedRoom> bedRooms = accomPlace.getBedRoomSet().stream().toList();
         List<TypeBedOfRoom> typeBedOfRooms = new LinkedList<>();
         for (BedRoom bedRoom : bedRooms) {
@@ -642,6 +644,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .typeBeds(typeBedOfRooms)
                 .build();
         return GetRoomSettingAccomResponse.builder()
+                .accomCateId(accomCateId)
                 .accomCateName(accomCateName)
                 .numKitchen(accomPlace.getNumKitchen())
                 .numBathRoom(accomPlace.getNumBathRoom())
