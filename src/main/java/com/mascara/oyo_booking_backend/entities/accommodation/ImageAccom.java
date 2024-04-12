@@ -2,7 +2,10 @@ package com.mascara.oyo_booking_backend.entities.accommodation;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
@@ -17,7 +20,7 @@ public class ImageAccom extends BasePesistence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "img_accom_link")
+    @Column(name = "img_accom_link", columnDefinition = "TEXT")
     private String imgAccomLink;
 
 

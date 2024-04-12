@@ -574,19 +574,26 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     public GetAddressAccomResponse getAddressAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        District district = districtRepository.findByDistrictCode(accomPlace.getDistrictCode()).get();
-        Ward ward = wardRepository.findByWardCode(accomPlace.getWardCode()).get();
-        Province province = provinceRepository.findByProvinceCode(accomPlace.getProvinceCode()).get();
+        Optional<District> district = districtRepository.findByDistrictCode(accomPlace.getDistrictCode());
+        Optional<Ward> ward = wardRepository.findByWardCode(accomPlace.getWardCode());
+        Optional<Province> province = provinceRepository.findByProvinceCode(accomPlace.getProvinceCode());
 
+        String districtCode = district.isPresent() ? district.get().getDistrictCode() : null;
+        String districtName = district.isPresent() ? district.get().getDistrictName() : null;
+        String wardCode = ward.isPresent() ? ward.get().getWardCode() : null;
+        String wardName = ward.isPresent() ? ward.get().getWardName() : null;
+        String provinceCode = province.isPresent() ? province.get().getProvinceCode() : null;
+        String provinceName = province.isPresent() ? province.get().getProvinceName() : null;
         String addressDetail = accomPlace.getAddressDetail();
-        String[] arrSplitAddress = addressDetail.split(",");
-        GetAddressAccomResponse response = new GetAddressAccomResponse(arrSplitAddress[0],
-                district.getDistrictCode(),
-                district.getDistrictName(),
-                ward.getWardCode(),
-                ward.getWardName(),
-                province.getProvinceCode(),
-                province.getProvinceName(),
+
+        String[] arrSplitAddress = addressDetail != null ? addressDetail.split(",") : null;
+        GetAddressAccomResponse response = new GetAddressAccomResponse(arrSplitAddress != null ? arrSplitAddress[0] : null,
+                districtCode,
+                districtName,
+                wardCode,
+                wardName,
+                provinceCode,
+                provinceName,
                 accomPlace.getLongitude(),
                 accomPlace.getLatitude()
         );
@@ -657,9 +664,11 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     public GetPolicyAccomResponse getPolicyAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+
+        String cancelPolicyCode = accomPlace.getCancellationPolicy() != null ? accomPlace.getCancellationPolicy().toString() : null;
         GeneralPolicyDetail generalPolicyDetail = generalPolicyDetailRepository.findById(accomId).get();
         GetPolicyAccomResponse response = new GetPolicyAccomResponse(
-                accomPlace.getCancellationPolicy().toString(),
+                cancelPolicyCode,
                 accomPlace.getCancellationFeeRate(),
                 generalPolicyDetail.getAllowEvent(),
                 generalPolicyDetail.getAllowPet(),
