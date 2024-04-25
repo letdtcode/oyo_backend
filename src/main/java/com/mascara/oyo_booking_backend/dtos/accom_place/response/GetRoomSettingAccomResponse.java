@@ -21,5 +21,6 @@ public class GetRoomSettingAccomResponse {
     private Integer numBathRoom;
     private Integer numKitchen;
     private String accomCateName;
+    private Integer numPeople;
     private Long accomCateId;
 }

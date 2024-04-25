@@ -32,6 +32,10 @@ public class UpdateRoomAccomRequest {
     private Integer numKitchen;
 
     @NotNull
+    @Min(value = 0, message = "Num numPeople should not be less than 0")
+    private Integer numPeople;
+
+    @NotNull
     @NotBlank
     private String accomCateName;
 }
