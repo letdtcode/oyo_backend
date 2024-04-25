@@ -248,6 +248,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
         accomPlace.setNumBathRoom(request.getNumBathRoom());
         accomPlace.setNumKitchen(request.getNumKitchen());
+        accomPlace.setNumPeople(request.getNumPeople());
         accomPlace.setAccommodationCategories(accomCate);
         accomPlace.setAccomCateId(accomCate.getId());
         accomPlace.setNumBedRoom(request.getTypeBedCodes().size());
@@ -656,6 +657,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .numKitchen(accomPlace.getNumKitchen())
                 .numBathRoom(accomPlace.getNumBathRoom())
                 .bedRooms(bedRoomResponse)
+                .numPeople(accomPlace.getNumPeople())
                 .build();
     }
 
