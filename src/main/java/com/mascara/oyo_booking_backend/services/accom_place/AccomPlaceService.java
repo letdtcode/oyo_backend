@@ -6,6 +6,8 @@ import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -38,6 +40,9 @@ public interface AccomPlaceService {
     @Transactional
     BaseMessageData updatePayment(UpdatePaymentAccomRequest request, Long accomId);
 
+    @Transactional
+    BaseMessageData updatePriceCustom(List<UpdatePriceCustomAccomPlaceRequest> updatePriceCustomAccomPlaceRequests);
+
     void checkPermission(String mailPartner, Long accomId);
 
     PercentCreateAccomResponse getPercentCreateAccom(Long accomId);
@@ -65,6 +70,20 @@ public interface AccomPlaceService {
                                                                              String field);
 
     @Transactional
+    BasePagingData<GetPriceCustomAccomResponse> getListPriceCustomAccomOfPartner(String hostMail,
+                                                                                 Integer pageNum,
+                                                                                 Integer pageSize,
+                                                                                 String sortType,
+                                                                                 String field);
+
+    @Transactional
+    BasePagingData<GetRangeDateBookingAccomResponse> getListRangeDateAccomOfPartner(String hostMail,
+                                                                                    Integer pageNum,
+                                                                                    Integer pageSize,
+                                                                                    String sortType,
+                                                                                    String field);
+
+    @Transactional
     BasePagingData<AccomPlaceWaitingResponse> getListAccomPlaceWaitingOfPartner(String hostMail,
                                                                                 Integer pageNum,
                                                                                 Integer pageSize,
@@ -78,10 +97,16 @@ public interface AccomPlaceService {
     BaseMessageData deleteAccomPlace(Long id);
 
     GetGeneralInfoAccomResponse getGeneralInfoAccom(Long accomId);
+
     GetAddressAccomResponse getAddressAccom(Long accomId);
+
     GetFacilityAccomResponse getFacilityAccom(Long accomId);
+
     GetGalleryAccomResponse getGalleryAccom(Long accomId);
+
     GetRoomSettingAccomResponse getRoomSettingAccom(Long accomId);
+
     GetPolicyAccomResponse getPolicyAccom(Long accomId);
+
     GetPaymentAccomResponse getPaymentAccom(Long accomId);
 }

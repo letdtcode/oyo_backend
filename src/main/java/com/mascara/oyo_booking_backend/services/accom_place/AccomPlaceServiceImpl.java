@@ -102,6 +102,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     private BankRepository bankRepository;
 
     @Autowired
+    private PriceCustomRepository priceCustomRepository;
+
+    @Autowired
     private ModelMapper mapper;
 
     @Override
@@ -307,6 +310,37 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     }
 
     @Override
+    public BaseMessageData updatePriceCustom(List<UpdatePriceCustomAccomPlaceRequest> updatePriceCustomAccomPlaceRequests) {
+        Long accomId = null;
+        LocalDate dateApply = null;
+        Double priceApply = null;
+
+        for (UpdatePriceCustomAccomPlaceRequest request : updatePriceCustomAccomPlaceRequests) {
+            accomId = request.getAccomId();
+            dateApply = request.getDateApply();
+            priceApply = request.getPriceApply();
+            AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+            Optional<PriceCustom> priceCustomOptional = priceCustomRepository.findByAccomIdAndDateApply(accomId, dateApply);
+
+            if (priceCustomOptional.isPresent()) {
+                PriceCustom priceCustom = priceCustomOptional.get();
+                priceCustom.setPriceApply(priceApply);
+                priceCustomRepository.save(priceCustom);
+            } else {
+                PriceCustom priceCustomCreate = PriceCustom.builder()
+                        .accomPlace(accomPlace)
+                        .accomId(accomId)
+                        .dateApply(dateApply)
+                        .priceApply(priceApply)
+                        .build();
+                priceCustomRepository.save(priceCustomCreate);
+            }
+        }
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
     public void checkPermission(String mailPartner, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom Place")));
@@ -481,6 +515,46 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream()
                 .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
+                .collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                accomPlacePage.getNumber(),
+                accomPlacePage.getSize(),
+                accomPlacePage.getTotalElements());
+    }
+
+    @Override
+    @Transactional
+    public BasePagingData<GetPriceCustomAccomResponse> getListPriceCustomAccomOfPartner(String hostMail,
+                                                                                        Integer pageNum,
+                                                                                        Integer pageSize,
+                                                                                        String sortType,
+                                                                                        String field) {
+        User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), AccomStatusEnum.APPROVED.toString(), paging);
+        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
+        List<GetPriceCustomAccomResponse> responseList = accomPlaceList.stream()
+                .map(accomPlace -> accomPlaceMapper.toGetPriceCustomAccom(accomPlace))
+                .collect(Collectors.toList());
+        return new BasePagingData<>(responseList,
+                accomPlacePage.getNumber(),
+                accomPlacePage.getSize(),
+                accomPlacePage.getTotalElements());
+    }
+
+    @Override
+    @Transactional
+    public BasePagingData<GetRangeDateBookingAccomResponse> getListRangeDateAccomOfPartner(String hostMail,
+                                                                                           Integer pageNum,
+                                                                                           Integer pageSize,
+                                                                                           String sortType,
+                                                                                           String field) {
+        User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), AccomStatusEnum.APPROVED.toString(), paging);
+        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
+        List<GetRangeDateBookingAccomResponse> responseList = accomPlaceList.stream()
+                .map(accomPlace -> accomPlaceMapper.toGetRangeDateBookingAccomResponse(accomPlace))
                 .collect(Collectors.toList());
         return new BasePagingData<>(responseList,
                 accomPlacePage.getNumber(),
