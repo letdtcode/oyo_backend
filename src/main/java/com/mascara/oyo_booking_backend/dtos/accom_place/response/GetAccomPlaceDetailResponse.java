@@ -53,4 +53,8 @@ public class GetAccomPlaceDetailResponse {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private List<LocalDate> bookedDates;
     private String status;
+
+    private Double latitude;
+    private Double longitude;
+
 }

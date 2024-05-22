@@ -20,5 +20,6 @@ import java.util.List;
 public class GetPriceCustomAccomResponse {
     private Long accomId;
     private String accomName;
+    private Double pricePerNight;
     private List<PriceCustomForAccom> priceCustomForAccomList;
 }
