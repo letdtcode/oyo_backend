@@ -1,7 +1,6 @@
 package com.mascara.oyo_booking_backend.mapper;
 
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDetailResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.*;
 import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.dtos.facility_category.response.GetFacilityCategorWithFacilityListResponse;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_accom.response.GetSurchargeOfAccomResponse;
@@ -27,6 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -68,6 +68,44 @@ public class AccomPlaceMapper {
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private PriceCustomRepository priceCustomRepository;
+
+    //    Covert list price custom
+    private final Converter<Long, List<PriceCustomForAccom>> idAccomPlaceToListPriceCustom = context -> {
+        Long id = context.getSource();
+        AccomPlace accomPlace = accomPlaceRepository.findById(id).get();
+
+        List<PriceCustomForAccom> priceCustomForAccoms = new LinkedList<>();
+        List<PriceCustom> priceCustoms = priceCustomRepository.findByAccomId(accomPlace.getId());
+
+        for (PriceCustom priceCustom : priceCustoms) {
+            priceCustomForAccoms.add(PriceCustomForAccom.builder()
+                    .priceApply(priceCustom.getPriceApply())
+                    .dateApply(priceCustom.getDateApply())
+                    .build());
+        }
+        return id != null ? priceCustomForAccoms : null;
+    };
+
+    //    Covert list range date booking
+    private final Converter<Long, List<RangeDateBooking>> idAccomPlaceToListRangeDateBooking = context -> {
+        Long id = context.getSource();
+        AccomPlace accomPlace = accomPlaceRepository.findById(id).get();
+
+        List<RangeDateBooking> rangeDateBookings = new LinkedList<>();
+        List<Booking> bookings = bookingRepository.findByAccomId(accomPlace.getId());
+
+        for (Booking booking : bookings) {
+            rangeDateBookings.add(RangeDateBooking.builder()
+                    .nameCustomer(booking.getNameCustomer())
+                    .dateStart(booking.getCheckIn())
+                    .dateEnd(booking.getCheckOut())
+                    .build());
+        }
+        return id != null ? rangeDateBookings : null;
+    };
 
     //    Covert Address General
     private final Converter<Long, String> idAccomPlaceToAddressGeneral = context -> {
@@ -248,11 +286,37 @@ public class AccomPlaceMapper {
 
                 .addMappings(mapper -> mapper.using(idAccomPlaceToListOfBookedDates)
                         .map(AccomPlace::getId, GetAccomPlaceDetailResponse::setBookedDates));
+
+        mapper.createTypeMap(AccomPlace.class, GetPriceCustomAccomResponse.class)
+                .addMappings(mapper -> {
+                    mapper.using(idAccomPlaceToListPriceCustom)
+                            .map(AccomPlace::getId, GetPriceCustomAccomResponse::setPriceCustomForAccomList);
+                    mapper.map(AccomPlace::getId, GetPriceCustomAccomResponse::setAccomId);
+                });
+
+        mapper.createTypeMap(AccomPlace.class, GetRangeDateBookingAccomResponse.class)
+                .addMappings(mapper -> {
+                    mapper.using(idAccomPlaceToListRangeDateBooking)
+                            .map(AccomPlace::getId, GetRangeDateBookingAccomResponse::setRangeDateBookingList);
+                    mapper.map(AccomPlace::getId, GetRangeDateBookingAccomResponse::setAccomId);
+                });
     }
 
     public GetAccomPlaceResponse toGetAccomPlaceResponse(AccomPlace accomPlace) {
         GetAccomPlaceResponse accomPlaceResponse;
         accomPlaceResponse = mapper.map(accomPlace, GetAccomPlaceResponse.class);
+        return accomPlaceResponse;
+    }
+
+    public GetPriceCustomAccomResponse toGetPriceCustomAccom(AccomPlace accomPlace) {
+        GetPriceCustomAccomResponse accomPlaceResponse;
+        accomPlaceResponse = mapper.map(accomPlace, GetPriceCustomAccomResponse.class);
+        return accomPlaceResponse;
+    }
+
+    public GetRangeDateBookingAccomResponse toGetRangeDateBookingAccomResponse(AccomPlace accomPlace) {
+        GetRangeDateBookingAccomResponse accomPlaceResponse;
+        accomPlaceResponse = mapper.map(accomPlace, GetRangeDateBookingAccomResponse.class);
         return accomPlaceResponse;
     }
 

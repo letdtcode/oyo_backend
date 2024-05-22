@@ -8,8 +8,15 @@ package com.mascara.oyo_booking_backend.enums;
  * Filename  : BookingStatusEnum
  */
 public enum BookingStatusEnum {
+//    Đợi duyệt
     WAITING,
+
+//    Đã nhận phòng
     CHECK_IN,
+
+//    Đã rời đi
     CHECK_OUT,
+
+//    Hủy đặt phòng
     CANCELED
 }

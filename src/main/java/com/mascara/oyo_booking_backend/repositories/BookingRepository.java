@@ -50,4 +50,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Modifying
     @Query(value = "update booking b set b.status = :status where b.booking_code = :booking_code", nativeQuery = true)
     void changeStatusBooking(@Param("booking_code") String bookingCode, @Param("status") String status);
+
+    List<Booking> findByAccomId(Long accomId);
 }

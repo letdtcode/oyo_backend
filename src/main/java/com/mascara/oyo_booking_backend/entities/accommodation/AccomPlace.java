@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import java.time.LocalTime;
 import java.util.Set;
 
 @SuperBuilder
@@ -129,7 +128,6 @@ public class AccomPlace extends BasePesistence {
 
     @Column(name = "user_id")
     private Long userId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "accom_cate_id",
