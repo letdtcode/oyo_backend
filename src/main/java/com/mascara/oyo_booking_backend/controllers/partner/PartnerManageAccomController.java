@@ -55,6 +55,22 @@ public class PartnerManageAccomController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
+    @Operation(summary = "Add Accom Place For Rent", description = "Partner Api for add accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @PostMapping("/request-approval")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> requestApproval(@RequestParam("accomId")
+                                             @NotNull(message = "Accom id must not be null")
+                                             Long accomId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String mailPartner = principal.getName();
+        BaseMessageData response = accomPlaceService.requestApproval(accomId, mailPartner);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
     @Operation(summary = "Get list accom place approved", description = "Partner Api for get list accom place approved")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
@@ -90,7 +106,7 @@ public class PartnerManageAccomController {
         String hostMail = principal.getName();
         String sortType = "DESC";
         String field = "created_date";
-        BasePagingData<AccomPlaceWaitingResponse> response = accomPlaceService.getListAccomPlaceWaitingOfPartner(hostMail, 0, 20, sortType, field);
+        BasePagingData<AccomPlaceGeneralResponse> response = accomPlaceService.getListAccomPlaceWaitingOfPartner(hostMail, 0, 20, sortType, field);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -345,13 +361,13 @@ public class PartnerManageAccomController {
     @GetMapping("/range-date-booking")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getListRangeDateBookingAccom(@RequestParam("pageNumber")
-                                                     @NotNull(message = "Page number must not be null")
-                                                     @Min(value = 0, message = "Page number must greater or equal 0")
-                                                     Integer pageNumber,
-                                                     @RequestParam("pageSize")
-                                                     @NotNull(message = "Page size must not be null")
-                                                     @Min(value = 1, message = "Page size must greater or equal 1")
-                                                     Integer pageSize) {
+                                                          @NotNull(message = "Page number must not be null")
+                                                          @Min(value = 0, message = "Page number must greater or equal 0")
+                                                          Integer pageNumber,
+                                                          @RequestParam("pageSize")
+                                                          @NotNull(message = "Page size must not be null")
+                                                          @Min(value = 1, message = "Page size must greater or equal 1")
+                                                          Integer pageSize) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String hostMail = principal.getName();
         String sortType = "DESC";

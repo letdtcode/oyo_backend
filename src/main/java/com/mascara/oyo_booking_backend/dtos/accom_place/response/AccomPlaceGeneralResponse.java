@@ -17,10 +17,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AccomPlaceWaitingResponse {
+public class AccomPlaceGeneralResponse {
     private Long accomId;
     private String accomName;
     private String logo;
     private Integer progress;
+    private String addressDetail;
     private AccomStatusEnum status;
 }

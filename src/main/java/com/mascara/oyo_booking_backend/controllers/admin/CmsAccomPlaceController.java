@@ -1,9 +1,9 @@
 package com.mascara.oyo_booking_backend.controllers.admin;
 
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
 import com.mascara.oyo_booking_backend.utils.validation.Status;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,10 +42,17 @@ public class CmsAccomPlaceController {
                                                         @RequestParam("pageSize")
                                                         @NotNull(message = "Page size must not be null")
                                                         @Min(value = 1, message = "Page size must greater or equal 1")
-                                                        Integer pageSize) {
+                                                        Integer pageSize,
+                                                        @RequestParam("status") AccomStatusEnum status) {
         String sortType = "DESC";
         String field = "created_date";
-        BasePagingData<GetAccomPlaceResponse> response = accomPlaceService.getAllAccomPlaceWithPaging(pageNumber, pageSize, sortType, field);
+        BasePagingData<?> response = null;
+        switch (status) {
+            case APPROVED ->
+                    response = accomPlaceService.getAllAccomPlaceWithPaging(pageNumber, pageSize, sortType, field);
+            case WAITING_FOR_APPROVAL ->
+                    response = accomPlaceService.getAllAcommPlaceWaitingApprovalWithPaging(pageNumber, pageSize, sortType, field);
+        }
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -57,10 +64,33 @@ public class CmsAccomPlaceController {
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
+    @PostMapping("/{id}/approve-accom")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> approveAccom(@PathVariable("id") @NotNull Long id) {
+        BaseMessageData messageReponse = accomPlaceService.approveAccomPlace(id);
+        return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
+    }
+
     @DeleteMapping("/{id}/delete")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAccomPlace(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = accomPlaceService.deleteAccomPlace(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
+
+//    @GetMapping("/waiting-approval/pages")
+//    @PreAuthorize("hasRole('ADMIN')")
+//    public ResponseEntity<?> getAllAcommPlaceWaitingApprovalWithPaging(@RequestParam("pageNumber")
+//                                                                       @NotNull(message = "Page number must not be null")
+//                                                                       @Min(value = 0, message = "Page number must greater or equal 0")
+//                                                                       Integer pageNumber,
+//                                                                       @RequestParam("pageSize")
+//                                                                       @NotNull(message = "Page size must not be null")
+//                                                                       @Min(value = 1, message = "Page size must greater or equal 1")
+//                                                                       Integer pageSize) {
+//        String sortType = "DESC";
+//        String field = "created_date";
+//        BasePagingData<AccomPlaceGeneralResponse> response = accomPlaceService.getAllAcommPlaceWaitingApprovalWithPaging(pageNumber, pageSize, sortType, field);
+//        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+//    }
 }

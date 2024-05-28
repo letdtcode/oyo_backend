@@ -120,7 +120,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .userId(user.getId())
                 .accommodationCategories(accomCategories)
                 .accomCateId(accomCategories.getId())
-                .status(AccomStatusEnum.WAITING)
+                .status(AccomStatusEnum.WAITING_FOR_COMPLETE)
                 .build();
         accomPlace = accomPlaceRepository.save(accomPlace);
 
@@ -134,6 +134,27 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .build();
         paymentInfoDetailRepository.save(paymentInfoDetail);
         return accomPlace.getId();
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData requestApproval(Long accomId, String mailPartner) {
+        AccomPlace place = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+        User host = userRepository.findByMail(mailPartner)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+
+        if (place.getUserId() != host.getId()) {
+            throw new ForbiddenException("Forbidden");
+        }
+
+        int percentComplete = getPercentCreateAccom(accomId).getPercent();
+        if (place.getStatus().equals(AccomStatusEnum.WAITING_FOR_COMPLETE) && percentComplete == 100) {
+            place.setStatus(AccomStatusEnum.WAITING_FOR_APPROVAL);
+            accomPlaceRepository.save(place);
+            return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        }
+        throw new ForbiddenException("Forbidden");
     }
 
     @Override
@@ -201,6 +222,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace.setAddressDetail(addressDetail);
         accomPlace.setLongitude(request.getLongitude());
         accomPlace.setLatitude(request.getLatitude());
+        accomPlace.setGuide(request.getGuide());
         accomPlaceRepository.save(accomPlace);
         return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
@@ -427,7 +449,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
-        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging);
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging, AccomStatusEnum.APPROVED);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream().map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
                 .collect(Collectors.toList());
@@ -491,7 +513,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum, Integer pageSize, String sortType, String field) {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
-        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging);
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging, AccomStatusEnum.APPROVED);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream()
                 .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))
@@ -564,7 +586,36 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public BasePagingData<AccomPlaceWaitingResponse> getListAccomPlaceWaitingOfPartner(String hostMail,
+    public BasePagingData<AccomPlaceGeneralResponse> getAllAcommPlaceWaitingApprovalWithPaging(Integer pageNum,
+                                                                                               Integer pageSize,
+                                                                                               String sortType,
+                                                                                               String field) {
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(
+                paging, AccomStatusEnum.WAITING_FOR_APPROVAL);
+        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
+        List<AccomPlaceGeneralResponse> responseList = new LinkedList<>();
+        for (AccomPlace place : accomPlaceList) {
+            PercentCreateAccomResponse percentProgess = getPercentCreateAccom(place.getId());
+            Set<ImageAccom> imageAccoms = place.getImageAccoms();
+            responseList.add(AccomPlaceGeneralResponse.builder()
+                    .accomId(place.getId())
+                    .accomName(place.getAccomName())
+                    .logo(imageAccoms.size() > 0 ? imageAccoms.stream().findFirst().get().getImgAccomLink() : null)
+                    .progress(percentProgess.getPercent())
+                    .addressDetail(place.getAddressDetail())
+                    .status(place.getStatus())
+                    .build());
+        }
+        return new BasePagingData<>(responseList,
+                accomPlacePage.getNumber(),
+                accomPlacePage.getSize(),
+                accomPlacePage.getTotalElements());
+    }
+
+    @Override
+    @Transactional
+    public BasePagingData<AccomPlaceGeneralResponse> getListAccomPlaceWaitingOfPartner(String hostMail,
                                                                                        Integer pageNum,
                                                                                        Integer pageSize,
                                                                                        String sortType,
@@ -573,18 +624,19 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(
                 user.getId(),
-                AccomStatusEnum.WAITING.toString(),
+                AccomStatusEnum.WAITING_FOR_COMPLETE.toString(),
                 paging);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
-        List<AccomPlaceWaitingResponse> responseList = new LinkedList<>();
+        List<AccomPlaceGeneralResponse> responseList = new LinkedList<>();
         for (AccomPlace place : accomPlaceList) {
             PercentCreateAccomResponse percentProgess = getPercentCreateAccom(place.getId());
             Set<ImageAccom> imageAccoms = place.getImageAccoms();
-            responseList.add(AccomPlaceWaitingResponse.builder()
+            responseList.add(AccomPlaceGeneralResponse.builder()
                     .accomId(place.getId())
                     .accomName(place.getAccomName())
                     .logo(imageAccoms.size() > 0 ? imageAccoms.stream().findFirst().get().getImgAccomLink() : null)
                     .progress(percentProgess.getPercent())
+                    .addressDetail(place.getAddressDetail())
                     .status(place.getStatus())
                     .build());
         }
@@ -600,6 +652,17 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
         accomPlaceRepository.changeStatusAccomPlace(id, status);
         return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("accom place"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData approveAccomPlace(Long id) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        if (accomPlace.getStatus().equals(AccomStatusEnum.WAITING_FOR_APPROVAL)) {
+            accomPlaceRepository.changeStatusAccomPlace(id, AccomStatusEnum.APPROVED.toString());
+            return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("accom place"));
+        }
+        throw new ForbiddenException("Accom place is approved");
     }
 
     @Override
@@ -670,7 +733,8 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 provinceCode,
                 provinceName,
                 accomPlace.getLongitude(),
-                accomPlace.getLatitude()
+                accomPlace.getLatitude(),
+                accomPlace.getGuide()
         );
         return response;
     }

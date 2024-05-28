@@ -23,6 +23,8 @@ public class GetAddressAccomResponse {
     private Double longitude;
     private Double latitude;
 
+    private String guide;
+
     public GetAddressAccomResponse(String numHouseAndStreetName,
                                    String districtCode,
                                    String districtName,
@@ -31,7 +33,8 @@ public class GetAddressAccomResponse {
                                    String provinceCode,
                                    String provinceName,
                                    Double longitude,
-                                   Double latitude) {
+                                   Double latitude,
+                                   String guide) {
         this.numHouseAndStreetName = numHouseAndStreetName;
 
         this.districtAddress = DistrictAddress.builder()
@@ -48,6 +51,7 @@ public class GetAddressAccomResponse {
                 .build();
         this.longitude = longitude;
         this.latitude = latitude;
+        this.guide = guide;
     }
 
     @Data

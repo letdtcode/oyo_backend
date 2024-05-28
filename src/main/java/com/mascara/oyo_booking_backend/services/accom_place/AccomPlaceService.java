@@ -20,6 +20,9 @@ public interface AccomPlaceService {
     Long registerAccomPlace(String accomCateName, String mailPartner);
 
     @Transactional
+    BaseMessageData requestApproval(Long accomId, String mailPartner);
+
+    @Transactional
     BaseMessageData updateGeneralInfo(UpdateGeneralInfoRequest request, Long accomId);
 
     @Transactional
@@ -84,7 +87,13 @@ public interface AccomPlaceService {
                                                                                     String field);
 
     @Transactional
-    BasePagingData<AccomPlaceWaitingResponse> getListAccomPlaceWaitingOfPartner(String hostMail,
+    BasePagingData<AccomPlaceGeneralResponse> getAllAcommPlaceWaitingApprovalWithPaging(Integer pageNum,
+                                                                                        Integer pageSize,
+                                                                                        String sortType,
+                                                                                        String field);
+
+    @Transactional
+    BasePagingData<AccomPlaceGeneralResponse> getListAccomPlaceWaitingOfPartner(String hostMail,
                                                                                 Integer pageNum,
                                                                                 Integer pageSize,
                                                                                 String sortType,
@@ -92,6 +101,8 @@ public interface AccomPlaceService {
 
     @Transactional
     BaseMessageData changeStatusAccomPlace(Long id, String status);
+
+    BaseMessageData approveAccomPlace(Long id);
 
     @Transactional
     BaseMessageData deleteAccomPlace(Long id);

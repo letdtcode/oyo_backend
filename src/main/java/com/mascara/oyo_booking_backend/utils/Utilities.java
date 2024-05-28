@@ -23,10 +23,6 @@ public class Utilities {
     }
 
     public int roundNearestMultipleOf10(float number) {
-        int smaller = (int) ((number / 10) * 10);
-        // Larger multiple
-        int larger = (int) (number + 10);
-        // Return of closest of two
-        return (number - smaller > larger - number) ? larger : smaller;
+        return (int) Math.round(number/100.0) * 100;
     }
 }

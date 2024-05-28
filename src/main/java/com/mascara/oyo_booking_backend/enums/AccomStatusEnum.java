@@ -10,5 +10,6 @@ package com.mascara.oyo_booking_backend.enums;
 public enum AccomStatusEnum {
     APPROVED,
     BANNED,
-    WAITING
+    WAITING_FOR_COMPLETE,
+    WAITING_FOR_APPROVAL
 }

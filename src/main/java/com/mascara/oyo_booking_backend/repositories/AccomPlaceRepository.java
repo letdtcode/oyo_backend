@@ -72,10 +72,10 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
     @Query(value = "select ap.* from accom_place ap limit 1", nativeQuery = true)
     List<AccomPlace> checkExistData();
 
-    @Query(value = "select ap.* from accom_place ap where ap.deleted = false and ap.status = 'APPROVED'",
-            countQuery = "select count(id) from accom_place ap where ap.deleted = false and ap.status = 'APPROVED'",
+    @Query(value = "select ap.* from accom_place ap where ap.deleted = false and ap.status = :#{#status.toString()}",
+            countQuery = "select count(id) from accom_place ap where ap.deleted = false and ap.status = :#{#status.toString()}",
             nativeQuery = true)
-    Page<AccomPlace> getAllWithPaging(Pageable pageable);
+    Page<AccomPlace> getAllWithPaging(Pageable pageable, @Param("status") AccomStatusEnum status);
 
     @Query(value = "select ap.* from accom_place ap where ap.user_id = :host_id and ap.deleted = false and ap.status= :status",
             countQuery = "select count(id) from accom_place ap where ap.user_id = :host_id and ap.deleted = false and ap.status= :status",

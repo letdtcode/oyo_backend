@@ -38,4 +38,6 @@ public class UpdateAddressAccomRequest {
 
     @NotNull
     private Double latitude;
+    
+    private String guide;
 }
