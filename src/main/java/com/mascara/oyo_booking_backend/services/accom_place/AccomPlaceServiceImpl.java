@@ -433,6 +433,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             valuePercentAll += valuePercentPerStep;
         }
         PercentCreateAccomResponse percentCreateAccomResponse = PercentCreateAccomResponse.builder()
+                .accomId(accomId)
                 .isDoneGeneralInfo(isDoneGeneralInfo)
                 .isDoneAddress(isDoneAddress)
                 .isDoneFacility(isDoneFacility)

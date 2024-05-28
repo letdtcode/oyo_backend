@@ -23,6 +23,6 @@ public class Utilities {
     }
 
     public int roundNearestMultipleOf10(float number) {
-        return (int) Math.round(number/100.0) * 100;
+        return (int) Math.round(number / 10.0) * 10;
     }
 }
