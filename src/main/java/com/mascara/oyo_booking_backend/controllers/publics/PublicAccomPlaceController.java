@@ -107,7 +107,7 @@ public class PublicAccomPlaceController {
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/{id}/detail")
     public ResponseEntity<?> getInfoAccomPlaceDetails(@PathVariable("id") Long id) {
-        GetAccomPlaceDetailResponse response = accomPlaceService.getAccomPlaceDetails(id);
+        GetAccomPlaceDetailResponse response = accomPlaceService.getAccomPlaceApprovedDetails(id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

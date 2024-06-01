@@ -489,9 +489,13 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public GetAccomPlaceDetailResponse getAccomPlaceDetails(Long id) {
+    public GetAccomPlaceDetailResponse getAccomPlaceApprovedDetails(Long id) {
         AccomPlace accomPlace = accomPlaceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+
+        if (!accomPlace.getStatus().equals(AccomStatusEnum.APPROVED))
+            throw new ForbiddenException("Forbidden");
+
         LocalDate dateNow = LocalDate.now();
         List<Booking> bookingOfRangeDate = bookingRepository.findBookingByRangeDateStartFromCurrent(accomPlace.getId(), dateNow);
         List<LocalDate> datesBooked = new ArrayList<>();
@@ -507,6 +511,27 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         Long numView = accomPlace.getNumView();
         accomPlace.setNumView(numView + 1);
         accomPlace = accomPlaceRepository.save(accomPlace);
+        return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
+    }
+
+    @Override
+    @Transactional
+    public GetAccomPlaceDetailResponse getAccomPlaceDetails(Long id) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+
+        LocalDate dateNow = LocalDate.now();
+        List<Booking> bookingOfRangeDate = bookingRepository.findBookingByRangeDateStartFromCurrent(accomPlace.getId(), dateNow);
+        List<LocalDate> datesBooked = new ArrayList<>();
+        if (!bookingOfRangeDate.isEmpty() && bookingOfRangeDate != null) {
+            for (Booking booking : bookingOfRangeDate) {
+                LocalDate currentDate = booking.getCheckIn();
+                while (!currentDate.isAfter(booking.getCheckOut()) && !datesBooked.contains(currentDate)) {
+                    datesBooked.add(currentDate);
+                    currentDate = currentDate.plusDays(1);
+                }
+            }
+        }
         return accomPlaceMapper.toGetAccomPlaceDetailResponse(accomPlace);
     }
 

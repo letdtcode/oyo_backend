@@ -60,6 +60,9 @@ public interface AccomPlaceService {
     BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum, Integer pageSize, String sortType, String field);
 
     @Transactional
+    GetAccomPlaceDetailResponse getAccomPlaceApprovedDetails(Long id);
+
+    @Transactional
     GetAccomPlaceDetailResponse getAccomPlaceDetails(Long id);
 
     @Transactional
