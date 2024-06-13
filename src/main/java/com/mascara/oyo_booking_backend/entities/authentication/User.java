@@ -3,6 +3,7 @@ package com.mascara.oyo_booking_backend.entities.authentication;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.entities.booking.BookingList;
+import com.mascara.oyo_booking_backend.entities.notification.Notification;
 import com.mascara.oyo_booking_backend.entities.review.ReviewList;
 import com.mascara.oyo_booking_backend.entities.wish.WishList;
 import com.mascara.oyo_booking_backend.enums.AuthProviderEnum;
@@ -76,6 +77,10 @@ public class User extends BasePesistence {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Fetch(FetchMode.SUBSELECT)
     private Set<AccomPlace> accomPlace;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipient")
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<Notification> notifications;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private WishList wishList;
