@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 public class Bank extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "name_bank")
     private String nameBank;

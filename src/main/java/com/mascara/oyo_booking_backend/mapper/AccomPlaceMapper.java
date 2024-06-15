@@ -189,6 +189,16 @@ public class AccomPlaceMapper {
         return null;
     };
 
+    private final Converter<Long, String> userIdToHostMail = context -> {
+        Long userId = context.getSource();
+        if (userId != null) {
+            User host = userRepository.findByUserId(userId)
+                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+            return host.getMail();
+        }
+        return null;
+    };
+
     //    Convert Set Facility
     private final Converter<Set<Facility>, List<GetFacilityCategorWithFacilityListResponse>> setFacilityToFacilityCateDetails = context -> {
         Set<Facility> facilitySet = context.getSource();
@@ -275,8 +285,12 @@ public class AccomPlaceMapper {
                 .addMappings(mapper -> mapper.using(accomCategoryToAccomCategoryName)
                         .map(AccomPlace::getAccommodationCategories, GetAccomPlaceDetailResponse::setAccomCateName))
 
-                .addMappings(mapper -> mapper.using(userIdToNameHost)
-                        .map(AccomPlace::getUserId, GetAccomPlaceDetailResponse::setNameHost))
+                .addMappings(mapper -> {
+                    mapper.using(userIdToNameHost)
+                            .map(AccomPlace::getUserId, GetAccomPlaceDetailResponse::setNameHost);
+                    mapper.using(userIdToHostMail)
+                            .map(AccomPlace::getUserId, GetAccomPlaceDetailResponse::setHostMail);
+                })
 
                 .addMappings(mapper -> mapper.using(idAccomPlaceToSurchargeList)
                         .map(AccomPlace::getId, GetAccomPlaceDetailResponse::setSurchargeList))

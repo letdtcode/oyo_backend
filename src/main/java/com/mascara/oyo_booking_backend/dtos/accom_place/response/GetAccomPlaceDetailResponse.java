@@ -43,6 +43,7 @@ public class GetAccomPlaceDetailResponse {
     private Integer cancellationFeeRate;
     private List<String> imageAccomsUrls;
     private Long userId;
+    private String hostMail;
 
     //    Addtion fields
     private String nameHost;
@@ -53,7 +54,6 @@ public class GetAccomPlaceDetailResponse {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private List<LocalDate> bookedDates;
     private String status;
-
     private Double latitude;
     private Double longitude;
 

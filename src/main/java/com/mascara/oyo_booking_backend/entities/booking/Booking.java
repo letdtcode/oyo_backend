@@ -23,7 +23,7 @@ import java.time.LocalDate;
 public class Booking extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "booking_code", columnDefinition = "VARCHAR(255)", nullable = false, unique = true)
     private String bookingCode;

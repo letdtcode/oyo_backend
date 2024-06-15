@@ -26,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 public class PartnerEarning extends BasePesistence {
 
     @Id
-    private Long Id;
+    private Long id;
 
     @Column(name = "partner_id")
     private Long partnerId;

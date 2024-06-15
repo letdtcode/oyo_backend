@@ -21,7 +21,7 @@ import java.util.Set;
 public class Review extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "title")
     private String title;

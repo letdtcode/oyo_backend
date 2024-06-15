@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 public class Ward extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "ward_code", unique = true)
     private String wardCode;

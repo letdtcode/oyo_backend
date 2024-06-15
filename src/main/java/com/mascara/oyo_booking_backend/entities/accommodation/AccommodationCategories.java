@@ -23,7 +23,7 @@ import java.util.Set;
 public class AccommodationCategories extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "accom_cate_name", columnDefinition = "VARCHAR(255) NOT NULL", unique = true)
     private String accomCateName;

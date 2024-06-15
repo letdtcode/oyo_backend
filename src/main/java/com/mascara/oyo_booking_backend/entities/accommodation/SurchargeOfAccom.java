@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 public class SurchargeOfAccom extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "cost")
     private Double cost;

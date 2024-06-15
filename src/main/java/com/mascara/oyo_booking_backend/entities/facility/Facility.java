@@ -22,7 +22,7 @@ import java.util.Set;
 public class Facility extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "facility_name", unique = true)
     private String facilityName;

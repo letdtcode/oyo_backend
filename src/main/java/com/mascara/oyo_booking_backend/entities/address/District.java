@@ -29,7 +29,7 @@ import java.util.Set;
 public class District extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "district_code", unique = true)
     private String districtCode;

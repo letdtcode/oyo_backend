@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class ImageAccom extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "img_accom_link", columnDefinition = "TEXT")
     private String imgAccomLink;

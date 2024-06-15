@@ -31,7 +31,7 @@ import java.util.Set;
 public class SurchargeCategory extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "surcharge_cate_name", unique = true)
     private String surchargeCateName;

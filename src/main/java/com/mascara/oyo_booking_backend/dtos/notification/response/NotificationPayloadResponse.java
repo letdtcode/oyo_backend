@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -16,12 +18,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NotificationResponse {
-    //    private Long Id;
-//    private Long senderId;
-//    private Long recipientId;
-//    private String content;
-//    private String title;
-//    private String imageUrl;
-    private String message;
+public class NotificationPayloadResponse {
+    private Long Id;
+    private String title;
+    private String content;
+    private String recipientMail;
+    private LocalDateTime dateTime;
 }

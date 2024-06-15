@@ -3,22 +3,23 @@ package com.mascara.oyo_booking_backend.services.booking;
 import com.mascara.oyo_booking_backend.constant.BookingConstant;
 import com.mascara.oyo_booking_backend.constant.FeeRateOfAdminConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.booking.request.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.request.CancelBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.request.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.response.CheckBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetHistoryBookingResponse;
-import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
+import com.mascara.oyo_booking_backend.entities.accommodation.SurchargeOfAccom;
 import com.mascara.oyo_booking_backend.entities.address.Province;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.entities.booking.Booking;
 import com.mascara.oyo_booking_backend.entities.booking.BookingList;
+import com.mascara.oyo_booking_backend.entities.notification.Notification;
 import com.mascara.oyo_booking_backend.entities.order.AdminEarning;
 import com.mascara.oyo_booking_backend.entities.order.PartnerEarning;
 import com.mascara.oyo_booking_backend.entities.order.Payment;
-import com.mascara.oyo_booking_backend.entities.accommodation.SurchargeOfAccom;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
@@ -27,14 +28,16 @@ import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.mapper.BookingMapper;
+import com.mascara.oyo_booking_backend.mapper.NotificationMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,43 +59,47 @@ import java.util.stream.Collectors;
  * Filename  : BookingServiceImpl
  */
 @Service
+@RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
+    private final AccomPlaceRepository accomPlaceRepository;
 
-    @Autowired
-    private AccomPlaceRepository accomPlaceRepository;
 
-    @Autowired
-    private BookingListRepository bookingListRepository;
+    private final BookingListRepository bookingListRepository;
 
-    @Autowired
-    private BookingRepository bookingRepository;
 
-    @Autowired
-    private PaymentRepository paymentRepository;
+    private final BookingRepository bookingRepository;
 
-    @Autowired
-    private PartnerEarningRepository partnerEarningRepository;
 
-    @Autowired
-    private AdminEarningRepository adminEarningRepository;
+    private final PaymentRepository paymentRepository;
 
-    @Autowired
-    private ModelMapper mapper;
 
-    @Autowired
-    private ProvinceRepository provinceRepository;
+    private final PartnerEarningRepository partnerEarningRepository;
 
-    @Autowired
-    private BookingMapper bookingMapper;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final AdminEarningRepository adminEarningRepository;
 
-    @Autowired
-    private SurchargeOfAccomRepository surchargeOfAccomRepository;
 
-    @Autowired
-    private EmailService emailService;
+    private final ModelMapper mapper;
+
+
+    private final ProvinceRepository provinceRepository;
+
+
+    private final BookingMapper bookingMapper;
+
+
+    private final UserRepository userRepository;
+
+    private final NotificationRepository notificationRepository;
+
+
+    private final SurchargeOfAccomRepository surchargeOfAccomRepository;
+
+    private final SimpMessagingTemplate messagingTemplate;
+
+    private final NotificationMapper notificationMapper;
+
+    private final EmailService emailService;
 
     @Override
     @Transactional
@@ -194,6 +201,28 @@ public class BookingServiceImpl implements BookingService {
                 .recipient(mailUser)
                 .subject("Đặt phòng thành công").build();
         emailService.sendMailWithTemplate(emailDetails, "Email_Booking_Success.ftl", model);
+
+//        Send queue message socket
+        StringBuilder content = new StringBuilder("Khách hàng ");
+        content.append(booking.getNameCustomer());
+        content.append(" vừa mới đặt chỗ ở " + accomPlace.getAccomName() + " của bạn");
+        Notification notification = Notification.builder()
+                .senderMail(mailUser)
+                .recipient(host)
+                .recipientMail(host.getMail())
+                .title("Bạn có đơn đặt phòng mới")
+                .content(content.toString())
+                .imageUrl(null)
+                .build();
+
+        notification = notificationRepository.save(notification);
+
+        int numNotiUnviewOfUser = notificationRepository.countByRecipientMailAndViewAndDeleted(host.getMail(), false, false);
+//        NotificationPayloadResponse payloadResponse = notificationMapper.toNotificationPayloadResponse(notification);
+        messagingTemplate.convertAndSendToUser(
+                host.getMail(), "/queue/messages",
+                numNotiUnviewOfUser
+        );
         return new BaseMessageData(BookingConstant.BOOKING_SUCESS);
     }
 
@@ -308,7 +337,7 @@ public class BookingServiceImpl implements BookingService {
         PartnerEarning partnerEarning = partnerEarningRepository.findById(booking.getId()).get();
         AdminEarning adminEarning = adminEarningRepository.findById(booking.getId()).get();
         CancellationPolicyEnum cancellationPolicy = accomHost.getCancellationPolicy();
-        
+
         LocalDate today = LocalDate.now();
         long days = ChronoUnit.DAYS.between(booking.getCheckIn(), today);
         double cancellationFee = (accomHost.getCancellationFeeRate() * payment.getTotalBill()) / 100;

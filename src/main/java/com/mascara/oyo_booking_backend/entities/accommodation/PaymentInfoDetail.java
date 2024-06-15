@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "payment_info_detail")
 public class PaymentInfoDetail extends BasePesistence {
     @Id
-    private Long Id;
+    private Long id;
 
     @Column(name = "account_number")
     private String accountNumber;

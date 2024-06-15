@@ -28,7 +28,7 @@ import java.util.Set;
 public class TypeBed extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "type_bed_name", columnDefinition = "NVARCHAR(255) NOT NULL")
     private String typeBedName;
