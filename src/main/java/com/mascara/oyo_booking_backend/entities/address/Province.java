@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -24,7 +21,7 @@ import java.util.Set;
 public class Province extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "province_name", unique = true)
     private String provinceName;
@@ -42,6 +39,7 @@ public class Province extends BasePesistence {
     private String slugs;
 
     @Column(name = "num_booking", nullable = false, columnDefinition = "bigint")
+    @Builder.Default()
     private Long numBooking = 0L;
 
     //    @JsonIgnore

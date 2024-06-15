@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 public class RefreshToken extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "token", nullable = false, unique = true)
     @NaturalId(mutable = true)

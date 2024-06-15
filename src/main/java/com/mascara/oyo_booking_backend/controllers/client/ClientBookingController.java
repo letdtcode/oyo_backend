@@ -2,10 +2,10 @@ package com.mascara.oyo_booking_backend.controllers.client;
 
 import com.mascara.oyo_booking_backend.constant.BookingConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.request.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.request.CancelBookingRequest;
-import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
-import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +18,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +40,10 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api/v1/client/booking")
 @RequiredArgsConstructor
+@Slf4j
 public class ClientBookingController {
-    @Autowired
-    private BookingService bookingService;
+
+    private final BookingService bookingService;
 
     @Operation(summary = "Check accom place is in wish list or not", description = "Client Api for check accom place is in wish list or not")
     @ApiResponses({

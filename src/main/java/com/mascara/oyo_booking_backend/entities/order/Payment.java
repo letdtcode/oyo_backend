@@ -29,7 +29,7 @@ import java.time.LocalDateTime;
 @Table(name = "payment")
 public class Payment extends BasePesistence {
     @Id
-    private Long Id;
+    private Long id;
 
     @Column(name = "origin_pay", nullable = false)
     private Double originPay;

@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "admin_earning")
 public class AdminEarning extends BasePesistence {
     @Id
-    private Long Id;
+    private Long id;
 
     @Column(name = "earning_amount")
     private Double earningAmount;

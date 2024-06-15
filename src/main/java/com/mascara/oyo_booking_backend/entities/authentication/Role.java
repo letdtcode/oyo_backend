@@ -21,7 +21,7 @@ import java.util.Set;
 public class Role extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "role_name", unique = true)
     @Enumerated(EnumType.STRING)

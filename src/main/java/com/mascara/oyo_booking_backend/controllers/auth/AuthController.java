@@ -1,17 +1,18 @@
 package com.mascara.oyo_booking_backend.controllers.auth;
 
-import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.auth.request.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.TokenRefreshRequest;
-import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.auth.response.LoginResponse;
 import com.mascara.oyo_booking_backend.dtos.auth.response.TokenRefreshResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.user.response.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.authentication.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.authentication.Role;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
+import com.mascara.oyo_booking_backend.mapper.UserMapper;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
@@ -31,7 +32,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -86,7 +86,7 @@ public class AuthController {
     private VerifyTokenService verifyTokenService;
 
     @Autowired
-    private ModelMapper mapper;
+    private UserMapper userMapper;
 
 //    @Value("${avatar.default}")
 //    private String avatar_default;
@@ -136,7 +136,7 @@ public class AuthController {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-        InfoUserResponse infoUser = mapper.map(user, InfoUserResponse.class);
+        InfoUserResponse infoUser = userMapper.toInfoUserResponse(user);
 //        if (infoUser.getAvatarUrl() == null) {
 //            infoUser.setAvatarUrl(avatar_default);
 //        }

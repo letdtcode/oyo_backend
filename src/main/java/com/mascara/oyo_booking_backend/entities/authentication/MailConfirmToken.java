@@ -30,7 +30,7 @@ public class MailConfirmToken extends BasePesistence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "date_expired", columnDefinition = "TIMESTAMP")
     private LocalDateTime dateExpired;

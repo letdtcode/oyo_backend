@@ -2,11 +2,10 @@ package com.mascara.oyo_booking_backend.dtos.user.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
@@ -22,6 +21,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InfoUserResponse {
+    private Long userId;
     private String userName;
     private String firstName;
     private String lastName;

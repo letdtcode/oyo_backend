@@ -21,7 +21,7 @@ import java.util.Set;
 public class FacilityCategories extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "faci_cate_name")
     private String faciCateName;

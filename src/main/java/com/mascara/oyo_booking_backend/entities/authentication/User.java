@@ -30,8 +30,7 @@ import java.util.Set;
 public class User extends BasePesistence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long Id;
+    private Long id;
 
     @Column(name = "user_name")
     private String userName;
@@ -51,7 +50,7 @@ public class User extends BasePesistence {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @Column(name = "mail")
+    @Column(name = "mail", unique = true)
     private String mail;
 
     @Column(name = "address")
