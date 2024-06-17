@@ -8,7 +8,7 @@ import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.entities.wish.WishItem;
 import com.mascara.oyo_booking_backend.entities.wish.WishList;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.AccomPlaceMapper;
+import com.mascara.oyo_booking_backend.mapper.accommodation.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.AccomPlaceRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.repositories.WishItemRepository;

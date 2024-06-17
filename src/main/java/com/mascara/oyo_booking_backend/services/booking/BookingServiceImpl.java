@@ -27,8 +27,8 @@ import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
-import com.mascara.oyo_booking_backend.mapper.BookingMapper;
-import com.mascara.oyo_booking_backend.mapper.NotificationMapper;
+import com.mascara.oyo_booking_backend.mapper.booking.BookingMapper;
+import com.mascara.oyo_booking_backend.mapper.notification.NotificationMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import lombok.RequiredArgsConstructor;
@@ -218,7 +218,6 @@ public class BookingServiceImpl implements BookingService {
         notification = notificationRepository.save(notification);
 
         int numNotiUnviewOfUser = notificationRepository.countByRecipientMailAndViewAndDeleted(host.getMail(), false, false);
-//        NotificationPayloadResponse payloadResponse = notificationMapper.toNotificationPayloadResponse(notification);
         messagingTemplate.convertAndSendToUser(
                 host.getMail(), "/queue/messages",
                 numNotiUnviewOfUser

@@ -1,12 +1,12 @@
 package com.mascara.oyo_booking_backend.services.user;
 
-import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.TokenRefreshRequest;
+import com.mascara.oyo_booking_backend.dtos.auth.response.TokenRefreshResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.user.request.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.user.request.UpdateInfoPersonalRequest;
-import com.mascara.oyo_booking_backend.dtos.auth.response.TokenRefreshResponse;
-import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.user.response.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.authentication.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.authentication.Role;
@@ -23,6 +23,7 @@ import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.external_modules.mail.model_mail.ResetPasswordInfo;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
+import com.mascara.oyo_booking_backend.mapper.authentication.UserMapper;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
@@ -30,7 +31,6 @@ import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
 import com.mascara.oyo_booking_backend.securities.oauth2.user.OAuth2UserInfo;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.RandomStringUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private ModelMapper mapper;
+    private UserMapper userMapper;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -263,7 +263,7 @@ public class UserServiceImpl implements UserService {
         user.setAddress(request.getAddress());
         user.setPhone(request.getPhone());
         user = userRepository.save(user);
-        return mapper.map(user, InfoUserResponse.class);
+        return userMapper.toInfoUserResponse(user);
     }
 
     @Override
@@ -274,7 +274,7 @@ public class UserServiceImpl implements UserService {
             String pathImg = cloudinaryService.store(file).getImageUrl();
             user.setAvatarUrl(pathImg);
             userRepository.save(user);
-            return mapper.map(user, InfoUserResponse.class);
+            return userMapper.toInfoUserResponse(user);
         }
         throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
     }
@@ -306,8 +306,7 @@ public class UserServiceImpl implements UserService {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
         Page<User> userPage = userRepository.getAllWithPaging(paging);
         List<User> userList = userPage.stream().toList();
-        List<InfoUserResponse> responseList = userList.stream().map(user -> mapper.map(user,
-                InfoUserResponse.class)).collect(Collectors.toList());
+        List<InfoUserResponse> responseList = userList.stream().map(user -> userMapper.toInfoUserResponse(user)).collect(Collectors.toList());
         return new BasePagingData<>(responseList,
                 userPage.getNumber(),
                 userPage.getSize(),

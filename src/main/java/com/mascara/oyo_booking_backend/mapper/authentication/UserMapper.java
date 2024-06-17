@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.mapper;
+package com.mascara.oyo_booking_backend.mapper.authentication;
 
 import com.mascara.oyo_booking_backend.dtos.user.response.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.authentication.User;

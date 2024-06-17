@@ -104,6 +104,8 @@ public class InitAccomPlaceService {
                 .accomName(request.getAccomName())
                 .description(request.getDescription())
                 .addressDetail(addressDetail)
+                .longitude(request.getLongitude())
+                .latitude(request.getLatitude())
                 .slugs(slugs)
                 .accommodationCategories(accomCategories)
                 .accomCateId(accomCategories.getId())

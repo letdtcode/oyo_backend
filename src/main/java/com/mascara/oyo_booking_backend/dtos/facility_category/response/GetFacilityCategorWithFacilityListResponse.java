@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.dtos.facility_category.response;
 
 import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class GetFacilityCategorWithFacilityListResponse {
     private String faciCateName;
     private String faciCateCode;
