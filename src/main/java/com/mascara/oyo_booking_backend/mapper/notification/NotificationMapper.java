@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.mapper;
+package com.mascara.oyo_booking_backend.mapper.notification;
 
 import com.mascara.oyo_booking_backend.dtos.notification.response.NotificationPayloadResponse;
 import com.mascara.oyo_booking_backend.entities.notification.Notification;

@@ -56,5 +56,4 @@ public class GetAccomPlaceDetailResponse {
     private String status;
     private Double latitude;
     private Double longitude;
-
 }

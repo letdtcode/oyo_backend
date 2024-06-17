@@ -20,14 +20,15 @@ import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ForbiddenException;
 import com.mascara.oyo_booking_backend.exceptions.NotCredentialException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.AccomPlaceMapper;
+import com.mascara.oyo_booking_backend.mapper.accommodation.AccomPlaceMapper;
+import com.mascara.oyo_booking_backend.mapper.facility.FacilityMapper;
+import com.mascara.oyo_booking_backend.mapper.type_bed.TypeBedMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -48,64 +49,47 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class AccomPlaceServiceImpl implements AccomPlaceService {
+    private final AccomPlaceRepository accomPlaceRepository;
 
-    @Autowired
-    private AccomPlaceRepository accomPlaceRepository;
+    private final AccommodationCategoriesRepository accommodationCategoriesRepository;
 
-    @Autowired
-    private AccommodationCategoriesRepository accommodationCategoriesRepository;
+    private final ProvinceRepository provinceRepository;
 
-    @Autowired
-    private ProvinceRepository provinceRepository;
+    private final DistrictRepository districtRepository;
 
-    @Autowired
-    private DistrictRepository districtRepository;
+    private final WardRepository wardRepository;
 
-    @Autowired
-    private WardRepository wardRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final FacilityRepository facilityRepository;
 
-    @Autowired
-    private FacilityRepository facilityRepository;
+    private final ImageAccomRepository imageAccomRepository;
 
-    @Autowired
-    private AccomPlaceMapper accomPlaceMapper;
+    private final TypeBedRepository typeBedRepository;
 
-    @Autowired
-    private ImageAccomRepository imageAccomRepository;
+    private final BedRoomRepository bedRoomRepository;
 
-    @Autowired
-    private TypeBedRepository typeBedRepository;
+    private final SurchargeOfAccomRepository surchargeOfAccomRepository;
 
-    @Autowired
-    private BedRoomRepository bedRoomRepository;
+    private final SurchargeCategoryRepository surchargeCategoryRepository;
 
-    @Autowired
-    private SurchargeOfAccomRepository surchargeOfAccomRepository;
+    private final BookingRepository bookingRepository;
 
-    @Autowired
-    private SurchargeCategoryRepository surchargeCategoryRepository;
+    private final GeneralPolicyDetailRepository generalPolicyDetailRepository;
 
-    @Autowired
-    private BookingRepository bookingRepository;
+    private final PaymentInfoDetailRepository paymentInfoDetailRepository;
 
-    @Autowired
-    private GeneralPolicyDetailRepository generalPolicyDetailRepository;
+    private final BankRepository bankRepository;
 
-    @Autowired
-    private PaymentInfoDetailRepository paymentInfoDetailRepository;
+    private final PriceCustomRepository priceCustomRepository;
 
-    @Autowired
-    private BankRepository bankRepository;
+    private final AccomPlaceMapper accomPlaceMapper;
 
-    @Autowired
-    private PriceCustomRepository priceCustomRepository;
+    private final TypeBedMapper typeBedMapper;
 
-    @Autowired
-    private ModelMapper mapper;
+    private final FacilityMapper facilityMapper;
 
     @Override
     @Transactional
@@ -772,7 +756,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
         List<Facility> facilities = accomPlace.getFacilitySet().stream().toList();
         List<FacilityResponse> facilityResponses = facilities.stream().map(
-                facility -> mapper.map(facility, FacilityResponse.class)).collect(Collectors.toList());
+                facilityMapper::toFacilityResponse).collect(Collectors.toList());
         GetFacilityAccomResponse response = GetFacilityAccomResponse.builder()
                 .total(facilityResponses.size())
                 .facilities(facilityResponses)
@@ -808,7 +792,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         List<TypeBedOfRoom> typeBedOfRooms = new LinkedList<>();
         for (BedRoom bedRoom : bedRooms) {
             TypeBed typeBedOfRoom = typeBedRepository.findByTypeBedCode(bedRoom.getTypeBedCode()).get();
-            TypeBedOfRoom bedOfRoom = mapper.map(typeBedOfRoom, TypeBedOfRoom.class);
+            TypeBedOfRoom bedOfRoom = typeBedMapper.toTypeBedOfRoom(typeBedOfRoom);
             typeBedOfRooms.add(bedOfRoom);
         }
         BedRoomResponse bedRoomResponse = BedRoomResponse.builder()

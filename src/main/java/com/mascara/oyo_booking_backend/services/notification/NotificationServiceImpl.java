@@ -4,7 +4,7 @@ import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.notification.response.NotificationPayloadResponse;
 import com.mascara.oyo_booking_backend.entities.notification.Notification;
-import com.mascara.oyo_booking_backend.mapper.NotificationMapper;
+import com.mascara.oyo_booking_backend.mapper.notification.NotificationMapper;
 import com.mascara.oyo_booking_backend.repositories.NotificationRepository;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import lombok.RequiredArgsConstructor;

@@ -10,13 +10,13 @@ import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.FacilityMapper;
+import com.mascara.oyo_booking_backend.mapper.facility.FacilityMapper;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
 import com.mascara.oyo_booking_backend.repositories.FacilityRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,15 +35,11 @@ import java.util.stream.Collectors;
  * Filename  : FacilAccomServiceImpl
  */
 @Service
+@RequiredArgsConstructor
 public class FacilityServiceImpl implements FacilityService {
-    @Autowired
-    private FacilityRepository facilityRepository;
-
-    @Autowired
-    private FacilityCategoriesRepository facilityCategoriesRepository;
-
-    @Autowired
-    private FacilityMapper facilityMapper;
+    private final FacilityRepository facilityRepository;
+    private final FacilityCategoriesRepository facilityCategoriesRepository;
+    private final FacilityMapper facilityMapper;
 
     @Override
     @Transactional

@@ -12,7 +12,7 @@ import com.mascara.oyo_booking_backend.entities.authentication.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.authentication.Role;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
-import com.mascara.oyo_booking_backend.mapper.UserMapper;
+import com.mascara.oyo_booking_backend.mapper.authentication.UserMapper;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;

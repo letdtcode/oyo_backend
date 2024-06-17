@@ -1,6 +1,12 @@
 {
   "data": [
     {
+      "accomCateName": "Tất cả",
+      "description": "Tất cả loại hình cho thuê",
+      "icon": "https://img.icons8.com/dotty/25/1A1A1A/home.png",
+      "status": "ENABLE"
+    },
+    {
       "accomCateName": "Phòng",
       "description": "Phòng nhỏ căn hộ",
       "icon": "https://img.icons8.com/ios/25/room.png",
