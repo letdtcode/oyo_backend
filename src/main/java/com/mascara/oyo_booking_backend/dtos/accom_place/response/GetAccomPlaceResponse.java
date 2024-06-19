@@ -36,13 +36,6 @@ public class GetAccomPlaceResponse {
     private Float gradeRate;
     private Long numReview;
     private Double pricePerNight;
-
-    //    Danh sách giá nhà theo đổi theo ngày do chủ nhà đặt
-    private List<PriceCustomForAccom> priceCustomForAccoms;
-
-    //    Danh sách khoảng thời gian đặt phòng
-    private List<RangeDateBooking> rangeDateBookings;
-
     private String guide;
     private String lastModifiedDate;
     private String status;
