@@ -32,7 +32,6 @@ import com.mascara.oyo_booking_backend.mapper.notification.NotificationMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -79,14 +78,8 @@ public class BookingServiceImpl implements BookingService {
     private final AdminEarningRepository adminEarningRepository;
 
 
-    private final ModelMapper mapper;
-
-
     private final ProvinceRepository provinceRepository;
-
-
     private final BookingMapper bookingMapper;
-
 
     private final UserRepository userRepository;
 
@@ -96,8 +89,6 @@ public class BookingServiceImpl implements BookingService {
     private final SurchargeOfAccomRepository surchargeOfAccomRepository;
 
     private final SimpMessagingTemplate messagingTemplate;
-
-    private final NotificationMapper notificationMapper;
 
     private final EmailService emailService;
 
@@ -145,7 +136,7 @@ public class BookingServiceImpl implements BookingService {
             default -> totalTrasfer = totalBill;
         }
 
-        Booking booking = mapper.map(request, Booking.class);
+        Booking booking = bookingMapper.toEntity(request);
         booking.setAccomPlace(accomPlace);
         booking.setAccomId(accomPlace.getId());
         booking.setBookingList(bookingList);

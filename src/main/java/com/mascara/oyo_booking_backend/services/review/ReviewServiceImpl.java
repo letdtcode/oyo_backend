@@ -12,10 +12,10 @@ import com.mascara.oyo_booking_backend.entities.review.ReviewList;
 import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.mapper.review.ReviewMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,28 +30,15 @@ import java.util.List;
  * Filename  : ReviewService
  */
 @Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
-
-    @Autowired
-    private ReviewRepository reviewRepository;
-
-    @Autowired
-    public UserRepository userRepository;
-
-    @Autowired
-    private AccomPlaceRepository accomPlaceRepository;
-
-    @Autowired
-    private ReviewListRepository reviewListRepository;
-
-    @Autowired
-    private ImageReviewRepository imageReviewRepository;
-
-    @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
-    private ModelMapper mapper;
+    private final ReviewRepository reviewRepository;
+    public final UserRepository userRepository;
+    private final AccomPlaceRepository accomPlaceRepository;
+    private final ReviewListRepository reviewListRepository;
+    private final ImageReviewRepository imageReviewRepository;
+    private final BookingRepository bookingRepository;
+    private final ReviewMapper reviewMapper;
 
     @Override
     @Transactional
@@ -59,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
         List<Review> reviewListOfAccomplace = reviewRepository.findByAccomPlaceId(id);
         List<GetReviewResponse> reviewResponseList = new ArrayList<>();
         for (Review review : reviewListOfAccomplace) {
-            GetReviewResponse reviewResponse = mapper.map(review, GetReviewResponse.class);
+            GetReviewResponse reviewResponse = reviewMapper.toGetReviewResponse(review);
             User user = userRepository.findByUserId(review.getReviewListId())
                     .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
             reviewResponse.setAvatarUserUrl(user.getAvatarUrl());
@@ -85,14 +72,12 @@ public class ReviewServiceImpl implements ReviewService {
         ReviewList reviewList = reviewListRepository.findByUserId(user.getId()).get();
         Booking booking = bookingRepository.findBookingByCode(request.getBookingCode())
                 .orElseThrow(() -> new ResourceNotFoundException("Booking code"));
-        if(!booking.getStatus().equals(BookingStatusEnum.CHECK_OUT)) {
+        if (!booking.getStatus().equals(BookingStatusEnum.CHECK_OUT)) {
             return new BaseMessageData(AppContants.REVIEW_IS_NOT_AVAILABLE);
         }
         AccomPlace accomPlace = accomPlaceRepository.findById(booking.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
-        Review review = mapper.map(request, Review.class);
-//        review.setAccomPlace(accomPlace);
-//        review.setAccomPlaceId(accomPlace.getId());
+        Review review = reviewMapper.toEntity(request);
         review.setReviewList(reviewList);
         review.setBooking(booking);
         review.setReviewListId(reviewList.getId());

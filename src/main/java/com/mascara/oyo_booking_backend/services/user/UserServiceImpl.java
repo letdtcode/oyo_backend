@@ -31,6 +31,7 @@ import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
 import com.mascara.oyo_booking_backend.securities.oauth2.user.OAuth2UserInfo;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.RandomStringUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -56,31 +57,16 @@ import java.util.stream.Collectors;
  * Filename  : UserService
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
-
-    @Autowired
-    private JwtUtils jwtUtils;
-
-    @Autowired
-    private PasswordEncoder encoder;
-
-    @Autowired
-    private CloudinaryService cloudinaryService;
-
-    @Autowired
-    private EmailService emailService;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final JwtUtils jwtUtils;
+    private final PasswordEncoder encoder;
+    private final CloudinaryService cloudinaryService;
+    private final EmailService emailService;
 
     @Override
     @Transactional
@@ -131,8 +117,6 @@ public class UserServiceImpl implements UserService {
 
         ReviewList reviewList = ReviewList.builder().user(user).build();
 
-//        RevenueList revenueList = RevenueList.builder().discount(10F).user(user).build();
-
         int desiredLength = 7;
         String randomUsername = UUID.randomUUID()
                 .toString()
@@ -143,7 +127,6 @@ public class UserServiceImpl implements UserService {
         user.setWishList(wishList);
         user.setBookingList(bookingList);
         user.setReviewList(reviewList);
-//        user.setRevenueList(revenueList);
         return userRepository.save(user);
     }
 
@@ -193,8 +176,6 @@ public class UserServiceImpl implements UserService {
 
         ReviewList reviewList = ReviewList.builder().user(user).build();
 
-//        RevenueList revenueList = RevenueList.builder().discount(10F).user(user).build();
-
         int desiredLength = 7;
         String randomUsername = UUID.randomUUID()
                 .toString()
@@ -208,14 +189,11 @@ public class UserServiceImpl implements UserService {
             bookingList.setLastModifiedBy("dev");
             reviewList.setCreatedBy("dev");
             reviewList.setLastModifiedBy("dev");
-//            revenueList.setCreatedBy("dev");
-//            revenueList.setLastModifiedBy("dev");
 
             user.setCreatedBy("dev");
             user.setLastModifiedBy("dev");
             user.setStatus(UserStatusEnum.ENABLE);
             user.setAddress("Tp.HCM");
-//            user.setAvatarUrl("https://res.cloudinary.com/dyv5zrsgj/image/upload/v1698163058/oyo_booking/nqxq12lb5gazvph6rwf7.png");
             user.setDateOfBirth(LocalDate.ofEpochDay(23 / 12 / 2002));
         }
         user.setUserName("user-" + randomUsername);
@@ -223,7 +201,6 @@ public class UserServiceImpl implements UserService {
         user.setWishList(wishList);
         user.setBookingList(bookingList);
         user.setReviewList(reviewList);
-//        user.setRevenueList(revenueList);
         return userRepository.save(user);
     }
 

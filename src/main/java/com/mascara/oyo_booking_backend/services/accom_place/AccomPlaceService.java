@@ -82,12 +82,12 @@ public interface AccomPlaceService {
                                                                                  String sortType,
                                                                                  String field);
 
-    @Transactional
-    BasePagingData<GetRangeDateBookingAccomResponse> getListRangeDateAccomOfPartner(String hostMail,
-                                                                                    Integer pageNum,
-                                                                                    Integer pageSize,
-                                                                                    String sortType,
-                                                                                    String field);
+//    @Transactional
+//    BasePagingData<GetRangeDateBookingAccomResponse> getListRangeDateAccomOfPartner(String hostMail,
+//                                                                                    Integer pageNum,
+//                                                                                    Integer pageSize,
+//                                                                                    String sortType,
+//                                                                                    String field);
 
     @Transactional
     BasePagingData<AccomPlaceGeneralResponse> getAllAcommPlaceWaitingApprovalWithPaging(Integer pageNum,

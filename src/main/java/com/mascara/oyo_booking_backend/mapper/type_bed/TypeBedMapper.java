@@ -1,8 +1,10 @@
 package com.mascara.oyo_booking_backend.mapper.type_bed;
 
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.TypeBedOfRoom;
+import com.mascara.oyo_booking_backend.dtos.type_bed.response.GetTypeBedResponse;
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 /**
  * Created by: IntelliJ IDEA
@@ -12,7 +14,9 @@ import org.mapstruct.Mapper;
  * Filename  : TypeBedMapper
  */
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TypeBedMapper {
     TypeBedOfRoom toTypeBedOfRoom(TypeBed typeBed);
+
+    GetTypeBedResponse toGetTypeBedResponse(TypeBed typeBed);
 }

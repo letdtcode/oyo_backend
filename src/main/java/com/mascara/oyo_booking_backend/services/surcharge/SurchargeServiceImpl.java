@@ -8,12 +8,12 @@ import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.respons
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.mapper.surcharge.SurchargeCategoryMapper;
 import com.mascara.oyo_booking_backend.repositories.SurchargeCategoryRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,13 +32,11 @@ import java.util.stream.Collectors;
  * Filename  : SurchargeServiceImpl
  */
 @Service
+@RequiredArgsConstructor
 public class SurchargeServiceImpl implements SurchargeService {
 
-    @Autowired
-    private SurchargeCategoryRepository surchargeCategoryRepository;
-
-    @Autowired
-    private ModelMapper mapper;
+    private final SurchargeCategoryRepository surchargeCategoryRepository;
+    private final SurchargeCategoryMapper surchargeCategoryMapper;
 
     @Override
     @Transactional
@@ -46,8 +44,9 @@ public class SurchargeServiceImpl implements SurchargeService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<SurchargeCategory> surchargeCategoryPage = surchargeCategoryRepository.getAllWithPaging(paging);
         List<SurchargeCategory> surchargeCategoryList = surchargeCategoryPage.stream().toList();
-        List<GetSurchargeCategoryResponse> responseList = surchargeCategoryList.stream().map(surchargeCategory -> mapper.map(surchargeCategory,
-                GetSurchargeCategoryResponse.class)).collect(Collectors.toList());
+        List<GetSurchargeCategoryResponse> responseList = surchargeCategoryList.stream()
+                .map(surchargeCategory -> surchargeCategoryMapper.toGetSurchargeCategoryResponse(surchargeCategory))
+                .collect(Collectors.toList());
         return new BasePagingData<>(responseList,
                 surchargeCategoryPage.getNumber(),
                 surchargeCategoryPage.getSize(),
@@ -58,7 +57,8 @@ public class SurchargeServiceImpl implements SurchargeService {
     @Transactional
     public List<GetSurchargeCategoryResponse> getAllSurchargeCategoryByStatus(String status) {
         List<SurchargeCategory> surchargeCategoryList = surchargeCategoryRepository.findAllByStatus(status);
-        return surchargeCategoryList.stream().map(surchargeCategory -> mapper.map(surchargeCategory, GetSurchargeCategoryResponse.class)).toList();
+        return surchargeCategoryList.stream()
+                .map(surchargeCategory -> surchargeCategoryMapper.toGetSurchargeCategoryResponse(surchargeCategory)).toList();
     }
 
 
@@ -72,7 +72,7 @@ public class SurchargeServiceImpl implements SurchargeService {
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         surchargeCategory = surchargeCategoryRepository.save(surchargeCategory);
-        return mapper.map(surchargeCategory, GetSurchargeCategoryResponse.class);
+        return surchargeCategoryMapper.toGetSurchargeCategoryResponse(surchargeCategory);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class SurchargeServiceImpl implements SurchargeService {
         surchargeCategory.setSurchargeCateName(request.getSurchargeCateName());
         surchargeCategory.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
         surchargeCategory = surchargeCategoryRepository.save(surchargeCategory);
-        return mapper.map(surchargeCategory, GetSurchargeCategoryResponse.class);
+        return surchargeCategoryMapper.toGetSurchargeCategoryResponse(surchargeCategory);
     }
 
     @Override

@@ -22,4 +22,5 @@ public class GetPriceCustomAccomResponse {
     private String accomName;
     private Double pricePerNight;
     private List<PriceCustomForAccom> priceCustomForAccomList;
+    private List<RangeDateBooking> rangeDateBookingList;
 }

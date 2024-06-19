@@ -1,18 +1,18 @@
 package com.mascara.oyo_booking_backend.services.accom_category;
 
-import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.accom_category.request.AddAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.accom_category.request.UpdateAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.accom_category.response.GetAccomCategoryResponse;
+import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccommodationCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.mapper.accommodation.AccommodationCategoriesMapper;
 import com.mascara.oyo_booking_backend.repositories.AccommodationCategoriesRepository;
 import com.mascara.oyo_booking_backend.utils.AppContants;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,13 +31,12 @@ import java.util.stream.Collectors;
  * Filename  : AccomCategoryServiceImpl
  */
 @Service
+@RequiredArgsConstructor
 public class AccomCategoryServiceImpl implements AccomCategoryService {
 
-    @Autowired
-    private AccommodationCategoriesRepository accomCategoriesRepository;
+    private final AccommodationCategoriesRepository accomCategoriesRepository;
 
-    @Autowired
-    private ModelMapper mapper;
+    private final AccommodationCategoriesMapper accommodationCategoriesMapper;
 
     @Override
     @Transactional
@@ -45,8 +44,8 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
         Page<AccommodationCategories> accomCategoriesPage = accomCategoriesRepository.getAllWithPaging(paging);
         List<AccommodationCategories> accomCategoriesList = accomCategoriesPage.stream().toList();
-        List<GetAccomCategoryResponse> responseList = accomCategoriesList.stream().map(accomCate -> mapper.map(accomCate,
-                GetAccomCategoryResponse.class)).collect(Collectors.toList());
+        List<GetAccomCategoryResponse> responseList = accomCategoriesList.stream()
+                .map(accomCate -> accommodationCategoriesMapper.toGetAccomCategoryResponse(accomCate)).collect(Collectors.toList());
         return new BasePagingData<>(responseList,
                 accomCategoriesPage.getNumber(),
                 accomCategoriesPage.getSize(),
@@ -57,8 +56,8 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
     @Transactional
     public List<GetAccomCategoryResponse> getAllAccomCategory() {
         List<AccommodationCategories> accomCategoryList = accomCategoriesRepository.findAll();
-        List<GetAccomCategoryResponse> responseList = accomCategoryList.stream().map(accomCate -> mapper.map(accomCate,
-                GetAccomCategoryResponse.class)).collect(Collectors.toList());
+        List<GetAccomCategoryResponse> responseList = accomCategoryList.stream()
+                .map(accomCate -> accommodationCategoriesMapper.toGetAccomCategoryResponse(accomCate)).collect(Collectors.toList());
         return responseList;
     }
 
@@ -76,7 +75,7 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         accommodationCategories = accomCategoriesRepository.save(accommodationCategories);
-        return mapper.map(accommodationCategories, GetAccomCategoryResponse.class);
+        return accommodationCategoriesMapper.toGetAccomCategoryResponse(accommodationCategories);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
         accommodationCategories.setIcon(request.getIcon());
         accommodationCategories.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
         accommodationCategories = accomCategoriesRepository.save(accommodationCategories);
-        return mapper.map(accommodationCategories, GetAccomCategoryResponse.class);
+        return accommodationCategoriesMapper.toGetAccomCategoryResponse(accommodationCategories);
     }
 
     @Override

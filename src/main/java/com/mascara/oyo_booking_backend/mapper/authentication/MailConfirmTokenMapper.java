@@ -1,6 +1,7 @@
 package com.mascara.oyo_booking_backend.mapper.authentication;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 /**
  * Created by: IntelliJ IDEA
@@ -10,6 +11,6 @@ import org.mapstruct.Mapper;
  * Filename  : MailConfirmTokenMapper
  */
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MailConfirmTokenMapper {
 }
