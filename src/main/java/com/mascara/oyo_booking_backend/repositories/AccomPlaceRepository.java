@@ -34,7 +34,7 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
             "(:numBathroom is null or ap.num_bathroom = :numBathroom) " +
             "AND (:numPeople is null or ap.num_people = :numPeople) AND " +
             "(:numBedRoom is null or ap.num_bed_room = :numBedRoom) and ap.status = 'APPROVED' and ap.deleted = false group by ap.id having (:size > 0 AND COUNT(DISTINCT f.faci_code) = :size) OR (:size = 0)",
-            countQuery = "SELECT distinct count(ap.id) FROM accom_place ap LEFT JOIN facility_accom fa " +
+            countQuery = "SELECT count(ap.id) FROM accom_place ap LEFT JOIN facility_accom fa " +
                     "ON ap.id = fa.accom_id LEFT JOIN facility f ON fa.facility_id = f.id LEFT JOIN accommodation_categories ac on  ap.accom_cate_id = ac.id " +
                     "where (:accomCateName is null or ac.accom_cate_name = :accomCateName) and (:provinceCode is null or ap.province_code = :provinceCode) AND " +
                     "(:districtCode is null or ap.district_code = :districtCode) AND (:wardCode is null or ap.ward_code = :wardCode) AND (:priceFrom is null or :priceTo is null or " +
