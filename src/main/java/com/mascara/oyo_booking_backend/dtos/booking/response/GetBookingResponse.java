@@ -39,7 +39,7 @@ public class GetBookingResponse {
     private Integer numBornChild;
     private BookingStatusEnum status;
     private Long accomId;
-    private Double commisionMoney;
-    private Double totalRevenue;
+    private Double adminEarning;
+    private Double partnerEarning;
     private String nameAccom;
 }

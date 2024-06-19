@@ -14,6 +14,7 @@ import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.repositories.WishItemRepository;
 import com.mascara.oyo_booking_backend.repositories.WishListRepository;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,21 +35,13 @@ import java.util.stream.Collectors;
  * Filename  : WishServiceImpl
  */
 @Service
+@RequiredArgsConstructor
 public class WishServiceImpl implements WishService {
-    @Autowired
-    private WishItemRepository wishItemRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private AccomPlaceRepository accomPlaceRepository;
-
-    @Autowired
-    private WishListRepository wishListRepository;
-
-    @Autowired
-    private AccomPlaceMapper accomPlaceMapper;
+    private final WishItemRepository wishItemRepository;
+    private final UserRepository userRepository;
+    private final AccomPlaceRepository accomPlaceRepository;
+    private final WishListRepository wishListRepository;
+    private final AccomPlaceMapper accomPlaceMapper;
 
     @Override
     @Transactional

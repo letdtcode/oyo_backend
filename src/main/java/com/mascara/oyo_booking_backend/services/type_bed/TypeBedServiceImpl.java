@@ -8,12 +8,12 @@ import com.mascara.oyo_booking_backend.dtos.type_bed.response.GetTypeBedResponse
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.mapper.type_bed.TypeBedMapper;
 import com.mascara.oyo_booking_backend.repositories.TypeBedRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,13 +32,10 @@ import java.util.stream.Collectors;
  * Filename  : TypeBedServiceImpl
  */
 @Service
+@RequiredArgsConstructor
 public class TypeBedServiceImpl implements TypeBedService {
-
-    @Autowired
-    private TypeBedRepository typeBedRepository;
-
-    @Autowired
-    private ModelMapper mapper;
+    private final TypeBedRepository typeBedRepository;
+    private final TypeBedMapper typeBedMapper;
 
     @Override
     @Transactional
@@ -46,8 +43,9 @@ public class TypeBedServiceImpl implements TypeBedService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<TypeBed> typeBedPage = typeBedRepository.getAllWithPaging(paging);
         List<TypeBed> typeBedList = typeBedPage.stream().toList();
-        List<GetTypeBedResponse> responseList = typeBedList.stream().map(typeBed -> mapper.map(typeBed,
-                GetTypeBedResponse.class)).collect(Collectors.toList());
+        List<GetTypeBedResponse> responseList = typeBedList.stream()
+                .map(typeBed -> typeBedMapper.toGetTypeBedResponse(typeBed))
+                .collect(Collectors.toList());
         return new BasePagingData<>(responseList,
                 typeBedPage.getNumber(),
                 typeBedPage.getSize(),
@@ -60,8 +58,9 @@ public class TypeBedServiceImpl implements TypeBedService {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
         Page<TypeBed> typeBedPage = typeBedRepository.getAllWithPagingByStatus(status, paging);
         List<TypeBed> typeBedList = typeBedPage.stream().toList();
-        List<GetTypeBedResponse> responseList = typeBedList.stream().map(typeBed -> mapper.map(typeBed,
-                GetTypeBedResponse.class)).collect(Collectors.toList());
+        List<GetTypeBedResponse> responseList = typeBedList.stream()
+                .map(typeBed -> typeBedMapper.toGetTypeBedResponse(typeBed))
+                .collect(Collectors.toList());
         return new BasePagingData<>(responseList,
                 typeBedPage.getNumber(),
                 typeBedPage.getSize(),
@@ -78,7 +77,7 @@ public class TypeBedServiceImpl implements TypeBedService {
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         typeBed = typeBedRepository.save(typeBed);
-        return mapper.map(typeBed, GetTypeBedResponse.class);
+        return typeBedMapper.toGetTypeBedResponse(typeBed);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class TypeBedServiceImpl implements TypeBedService {
         typeBed.setTypeBedName(request.getTypeBedName());
         typeBed.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
         typeBed = typeBedRepository.save(typeBed);
-        return mapper.map(typeBed, GetTypeBedResponse.class);
+        return typeBedMapper.toGetTypeBedResponse(typeBed);
     }
 
     @Override

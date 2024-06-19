@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mascara.oyo_booking_backend.dtos.facility_category.response.GetFacilityCategorWithFacilityListResponse;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_accom.response.GetSurchargeOfAccomResponse;
 import com.mascara.oyo_booking_backend.dtos.type_bed.response.GetTypeBedResponse;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,8 @@ public class GetAccomPlaceDetailResponse {
     private Double pricePerNight;
     private Double discount;
     private String guide;
+    private String checkInFrom;
+    private String checkOutTo;
     private String cancellationPolicy;
     private Integer cancellationFeeRate;
     private List<String> imageAccomsUrls;

@@ -11,13 +11,13 @@ import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.mapper.facility.FacilityCategoriesMapper;
 import com.mascara.oyo_booking_backend.mapper.facility.FacilityMapper;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,8 +39,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FacilityCategoryServiceImpl implements FacilityCategoryService {
     private final FacilityCategoriesRepository facilityCategoriesRepository;
-    private final ModelMapper mapper;
-
+    private final FacilityCategoriesMapper facilityCategoriesMapper;
     private final FacilityMapper facilityMapper;
 
     @Override
@@ -51,8 +50,8 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 
         List<FacilityCategories> facilityCategoriesList = facilityCategoriesPage.stream().toList();
         List<GetFacilityCategorWithFacilityListResponse> responses = facilityCategoriesList.stream()
-                .map(facilityCate -> mapper.map(facilityCate,
-                        GetFacilityCategorWithFacilityListResponse.class)).collect(Collectors.toList());
+                .map(facilityCate -> facilityCategoriesMapper.toGetFacilityCategorWithFacilityListResponse(facilityCate))
+                .collect(Collectors.toList());
         for (int i = 0; i < facilityCategoriesList.size(); i++) {
             List<Facility> facilities = facilityCategoriesList.get(i).getFacilitySet().stream().toList();
             List<GetFacilityResponse> infoFacilityResponseList = facilities.stream().map(facility -> facilityMapper.toGetFacilityResponse(facility))
@@ -73,8 +72,8 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 
         List<FacilityCategories> facilityCategoriesList = facilityCategoriesPage.stream().toList();
         List<GetFacilityCategoryResponse> responses = facilityCategoriesList.stream()
-                .map(facilityCate -> mapper.map(facilityCate,
-                        GetFacilityCategoryResponse.class)).collect(Collectors.toList());
+                .map(facilityCate -> facilityCategoriesMapper.toGetFacilityCategoryResponse(facilityCate))
+                .collect(Collectors.toList());
         return new BasePagingData<>(responses,
                 facilityCategoriesPage.getNumber(),
                 facilityCategoriesPage.getSize(),
@@ -88,7 +87,7 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
     public List<GetFacilityCategorWithFacilityListResponse> getAllDataFacility() {
         List<FacilityCategories> facilityCategoriesList = facilityCategoriesRepository.findAll();
         List<GetFacilityCategorWithFacilityListResponse> facilityCategoryResponses = facilityCategoriesList.stream()
-                .map(facilityCate -> mapper.map(facilityCate, GetFacilityCategorWithFacilityListResponse.class))
+                .map(facilityCate -> facilityCategoriesMapper.toGetFacilityCategorWithFacilityListResponse(facilityCate))
                 .collect(Collectors.toList());
         for (int i = 0; i < facilityCategoriesList.size(); i++) {
             List<Facility> facilities = facilityCategoriesList.get(i).getFacilitySet().stream().toList();
@@ -110,7 +109,7 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
                 .status(CommonStatusEnum.valueOf(request.getStatus()))
                 .build();
         facilityCategories = facilityCategoriesRepository.save(facilityCategories);
-        return mapper.map(facilityCategories, GetFacilityCategoryResponse.class);
+        return facilityCategoriesMapper.toGetFacilityCategoryResponse(facilityCategories);
     }
 
 
@@ -123,7 +122,7 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
         facilityCategories.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
         facilityCategories.setDescription(request.getDescription());
         facilityCategories = facilityCategoriesRepository.save(facilityCategories);
-        return mapper.map(facilityCategories, GetFacilityCategoryResponse.class);
+        return facilityCategoriesMapper.toGetFacilityCategoryResponse(facilityCategories);
     }
 
     @Override

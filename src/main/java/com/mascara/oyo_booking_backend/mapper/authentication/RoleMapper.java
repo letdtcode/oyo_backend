@@ -1,6 +1,7 @@
 package com.mascara.oyo_booking_backend.mapper.authentication;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 /**
  * Created by: IntelliJ IDEA
@@ -9,6 +10,6 @@ import org.mapstruct.Mapper;
  * Time      : 6:02 CH
  * Filename  : RoleMapper
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RoleMapper {
 }

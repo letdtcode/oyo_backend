@@ -4,6 +4,7 @@ import com.mascara.oyo_booking_backend.dtos.notification.response.NotificationPa
 import com.mascara.oyo_booking_backend.entities.notification.Notification;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 /**
  * Created by: IntelliJ IDEA
@@ -12,7 +13,7 @@ import org.mapstruct.Mapping;
  * Time      : 4:57 CH
  * Filename  : NotificationMapper
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface NotificationMapper {
     @Mapping(source = "createdDate", target = "dateTime")
     @Mapping(source = "id", target = "Id")

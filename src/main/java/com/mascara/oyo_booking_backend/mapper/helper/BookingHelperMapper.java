@@ -1,9 +1,13 @@
 package com.mascara.oyo_booking_backend.mapper.helper;
 
 import com.mascara.oyo_booking_backend.entities.booking.Booking;
+import com.mascara.oyo_booking_backend.entities.order.AdminEarning;
+import com.mascara.oyo_booking_backend.entities.order.PartnerEarning;
 import com.mascara.oyo_booking_backend.entities.order.Payment;
 import com.mascara.oyo_booking_backend.entities.review.Review;
+import com.mascara.oyo_booking_backend.repositories.AdminEarningRepository;
 import com.mascara.oyo_booking_backend.repositories.BookingRepository;
+import com.mascara.oyo_booking_backend.repositories.PartnerEarningRepository;
 import com.mascara.oyo_booking_backend.repositories.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
@@ -21,6 +25,9 @@ import org.springframework.stereotype.Component;
 public class BookingHelperMapper {
     private final PaymentRepository paymentRepository;
     private final BookingRepository bookingRepository;
+
+    private final AdminEarningRepository adminEarningRepository;
+    private final PartnerEarningRepository partnerEarningRepository;
 
     //        Covert booking id to origin pay
     @Named("bookingIdToOriginPay")
@@ -48,6 +55,26 @@ public class BookingHelperMapper {
         if (bookingId != null) {
             Payment payment = paymentRepository.findById(bookingId).get();
             return payment.getTotalBill();
+        }
+        return null;
+    }
+
+    //        Covert booking id to total bill
+    @Named("bookingIdToAdminEarning")
+    public Double bookingIdToAdminEarning(Long bookingId) {
+        if (bookingId != null) {
+            AdminEarning adminEarning = adminEarningRepository.findById(bookingId).get();
+            return adminEarning.getEarningAmount();
+        }
+        return null;
+    }
+
+    //        Covert booking id to total bill
+    @Named("bookingIdToPartnerEarning")
+    public Double bookingIdToPartnerEarning(Long bookingId) {
+        if (bookingId != null) {
+            PartnerEarning partnerEarning = partnerEarningRepository.findById(bookingId).get();
+            return partnerEarning.getEarningAmount();
         }
         return null;
     }

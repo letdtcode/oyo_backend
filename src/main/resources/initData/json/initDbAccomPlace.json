@@ -23,6 +23,8 @@
         "Ăn sáng miễn phí"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -61,6 +63,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -99,6 +103,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -137,6 +143,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -175,6 +183,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -213,6 +223,8 @@
         "Hệ thống âm thanh"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -251,6 +263,8 @@
         "Wi-Fi [cho thuê loại xách tay]"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -289,6 +303,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -327,6 +343,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -365,6 +383,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -403,6 +423,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -441,6 +463,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -479,6 +503,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -517,6 +543,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -555,6 +583,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -593,6 +623,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -631,6 +663,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -669,6 +703,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -707,6 +743,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,
@@ -745,6 +783,8 @@
         "Trò chơi bàn cờ"
       ],
       "guide": "Đến là đón",
+      "checkInFrom": "06:00",
+      "checkOutTo": "23:00",
       "generalPolicy": {
         "allowEvent": true,
         "allowPet": true,

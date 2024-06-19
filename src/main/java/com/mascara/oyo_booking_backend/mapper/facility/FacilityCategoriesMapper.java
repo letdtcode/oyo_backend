@@ -1,6 +1,10 @@
 package com.mascara.oyo_booking_backend.mapper.facility;
 
+import com.mascara.oyo_booking_backend.dtos.facility_category.response.GetFacilityCategorWithFacilityListResponse;
+import com.mascara.oyo_booking_backend.dtos.facility_category.response.GetFacilityCategoryResponse;
+import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 /**
  * Created by: IntelliJ IDEA
@@ -10,6 +14,10 @@ import org.mapstruct.Mapper;
  * Filename  : FacilityCategoriesMapper
  */
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface FacilityCategoriesMapper {
+
+    GetFacilityCategoryResponse toGetFacilityCategoryResponse(FacilityCategories facilityCategories);
+
+    GetFacilityCategorWithFacilityListResponse toGetFacilityCategorWithFacilityListResponse(FacilityCategories facilityCategories);
 }

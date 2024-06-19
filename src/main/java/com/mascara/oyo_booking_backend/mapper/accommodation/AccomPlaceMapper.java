@@ -11,6 +11,7 @@ import com.mascara.oyo_booking_backend.mapper.helper.TypeBedHelperMapper;
 import com.mascara.oyo_booking_backend.mapper.helper.UserHelperMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 /**
  * Created by: IntelliJ IDEA
@@ -20,7 +21,7 @@ import org.mapstruct.Mapping;
  * Filename  : AccomPlaceMapperMapstruts
  */
 
-@Mapper(componentModel = "spring", uses = {AccommodationHelperMapper.class,
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {AccommodationHelperMapper.class,
         UserHelperMapper.class,
         FacilityHelperMapper.class, TypeBedHelperMapper.class})
 public interface AccomPlaceMapper {
@@ -34,6 +35,7 @@ public interface AccomPlaceMapper {
 
     @Mapping(source = "id", target = "priceCustomForAccomList", qualifiedByName = "idAccomPlaceToListPriceCustom")
     @Mapping(source = "id", target = "accomId")
+    @Mapping(source = "id", target = "rangeDateBookingList", qualifiedByName = "idAccomPlaceToListRangeDateBooking")
     GetPriceCustomAccomResponse toGetPriceCustomAccom(AccomPlace accomPlace);
 
 

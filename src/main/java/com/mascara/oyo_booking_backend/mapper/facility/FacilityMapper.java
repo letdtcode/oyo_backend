@@ -6,6 +6,7 @@ import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.mapper.helper.FacilityHelperMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 /**
  * Created by: IntelliJ IDEA
@@ -15,7 +16,8 @@ import org.mapstruct.Mapping;
  * Filename  : FacilityMapper
  */
 
-@Mapper(componentModel = "spring", uses = {FacilityHelperMapper.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = {FacilityHelperMapper.class})
 public interface FacilityMapper {
     FacilityResponse toFacilityResponse(Facility facility);
 

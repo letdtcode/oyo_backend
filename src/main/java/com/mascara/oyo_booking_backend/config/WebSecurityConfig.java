@@ -83,7 +83,7 @@ public class WebSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://oyo-nine.vercel.app/"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://oyo-nine.vercel.app/","http://localhost:5174"));
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

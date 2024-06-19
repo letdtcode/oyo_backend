@@ -86,6 +86,14 @@ class InitAccomPlaceModel {
 
     private String guide;
 
+    @NotNull
+    @NotBlank
+    private String checkInFrom;
+
+    @NotNull
+    @NotBlank
+    private String checkOutTo;
+
     private GeneralPolicyModel generalPolicy;
 
     private PaymentInfoModel paymentInfo;

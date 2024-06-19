@@ -34,6 +34,9 @@ public class AccommodationCategories extends BasePesistence {
     @Column(name = "icon", unique = true, nullable = false)
     private String icon;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodationCategories")
     @Fetch(FetchMode.SUBSELECT)
     private Set<AccomPlace> accomPlaces;

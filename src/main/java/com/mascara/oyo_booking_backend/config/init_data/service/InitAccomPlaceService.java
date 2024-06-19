@@ -116,6 +116,8 @@ public class InitAccomPlaceService {
                 .cancellationPolicy(CancellationPolicyEnum.CANCEL_24H)
                 .cancellationFeeRate(10)
                 .acreage(request.getAcreage())
+                .checkInFrom(request.getCheckInFrom())
+                .checkOutTo(request.getCheckOutTo())
                 .numPeople(request.getNumPeople())
                 .numBathRoom(request.getNumBathRoom())
                 .numBedRoom(request.getNumBedRoom())

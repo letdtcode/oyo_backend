@@ -574,25 +574,25 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 accomPlacePage.getTotalElements());
     }
 
-    @Override
-    @Transactional
-    public BasePagingData<GetRangeDateBookingAccomResponse> getListRangeDateAccomOfPartner(String hostMail,
-                                                                                           Integer pageNum,
-                                                                                           Integer pageSize,
-                                                                                           String sortType,
-                                                                                           String field) {
-        User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
-        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
-        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), AccomStatusEnum.APPROVED.toString(), paging);
-        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
-        List<GetRangeDateBookingAccomResponse> responseList = accomPlaceList.stream()
-                .map(accomPlace -> accomPlaceMapper.toGetRangeDateBookingAccomResponse(accomPlace))
-                .collect(Collectors.toList());
-        return new BasePagingData<>(responseList,
-                accomPlacePage.getNumber(),
-                accomPlacePage.getSize(),
-                accomPlacePage.getTotalElements());
-    }
+//    @Override
+//    @Transactional
+//    public BasePagingData<GetRangeDateBookingAccomResponse> getListRangeDateAccomOfPartner(String hostMail,
+//                                                                                           Integer pageNum,
+//                                                                                           Integer pageSize,
+//                                                                                           String sortType,
+//                                                                                           String field) {
+//        User user = userRepository.findByMail(hostMail).orElseThrow(() -> new ResourceNotFoundException("user"));
+//        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
+//        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getListAccomPlaceOfPartner(user.getId(), AccomStatusEnum.APPROVED.toString(), paging);
+//        List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
+//        List<GetRangeDateBookingAccomResponse> responseList = accomPlaceList.stream()
+//                .map(accomPlace -> accomPlaceMapper.toGetRangeDateBookingAccomResponse(accomPlace))
+//                .collect(Collectors.toList());
+//        return new BasePagingData<>(responseList,
+//                accomPlacePage.getNumber(),
+//                accomPlacePage.getSize(),
+//                accomPlacePage.getTotalElements());
+//    }
 
     @Override
     @Transactional
