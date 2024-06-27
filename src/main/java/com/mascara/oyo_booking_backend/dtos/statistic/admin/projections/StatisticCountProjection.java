@@ -11,5 +11,5 @@ public interface StatisticCountProjection {
     Long getNumberOfGuest();
     Long getNumberOfOwner();
     Long getNumberOfBooking();
-    Long getNumberOfRevenue();
+    Double getTotalRevenue();
 }

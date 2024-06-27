@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
+import com.mascara.oyo_booking_backend.dtos.statistic.admin.projections.InfoAccomPlaceStatisticProjection;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,5 +94,24 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
 
     @Modifying
     @Query(value = "update accom_place ap set ap.status = :status where ap.id = :id", nativeQuery = true)
-    void changeStatusAccomPlace(@Param("id") Long id, @Param("status") String status);
+    void changeStatusAccomPlace(@Param("id") Long id,
+                                @Param("status") String status);
+
+    @Query(nativeQuery = true,
+    value = "select c.id as accomId," +
+            "c.accom_name as accomName, " +
+            "c.first_name as hostFirstName, " +
+            "c.last_name as hostLastName, " +
+            "c.num_view as numberOfView, " +
+            "c.num_booking as numberOfBooking, " +
+            "coalesce(sum(p.total_bill),0) as totalRevenue," +
+            "c.num_review as numberOfReview, " +
+            "c.grade_rate as averageGradeRate " +
+            "from ( select a.*, b.id as book_id from (select ap.*, u.first_name, u.last_name from " +
+            "accom_place ap join users u on ap.user_id = u.id where ap.status = 'APPROVED') a left join booking b on a.id = b.accom_id) c " +
+            "left join payment p on c.book_id = p.id where (DATE(p.created_date) is null or DATE(p.created_date) " +
+            "between :date_start and :date_end) group by c.id order by c.num_booking desc")
+    Page<InfoAccomPlaceStatisticProjection> getStatisticForAccomPlaceOfAdmin(@Param("date_start") LocalDate dateStart,
+                                                                             @Param("date_end") LocalDate dateEnd,
+                                                                             Pageable pageable);
 }

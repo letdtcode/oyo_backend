@@ -16,7 +16,7 @@ public class AdminStatisticForGuestResponse {
     private Long userId;
     private String fullName;
     private String email;
-    private Float rate;
-    private Double totalExpense;
+    private String phoneNumber;
     private Long numberOfBooking;
+    private Double totalCost;
 }

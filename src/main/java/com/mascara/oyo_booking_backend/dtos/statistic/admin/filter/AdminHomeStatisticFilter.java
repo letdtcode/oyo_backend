@@ -1,5 +1,6 @@
-package com.mascara.oyo_booking_backend.dtos.statistic.admin;
+package com.mascara.oyo_booking_backend.dtos.statistic.admin.filter;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
  * Filename  : AdminStatisticRequest
  */
 @Data
-public class AdminStatisticRequest {
+public class AdminHomeStatisticFilter {
+    @NotNull
     private Integer year;
 }

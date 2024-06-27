@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.repositories;
 
+import com.mascara.oyo_booking_backend.dtos.statistic.admin.projections.InfoTransactionStatisticProjection;
 import com.mascara.oyo_booking_backend.entities.booking.Booking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,4 +53,21 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     void changeStatusBooking(@Param("booking_code") String bookingCode, @Param("status") String status);
 
     List<Booking> findByAccomId(Long accomId);
+
+    @Query(nativeQuery = true,
+            value = "select c.booking_id as bookingId," +
+                    "c.customerName, " +
+                    "c.hostFirstName as ownerFirstName, " +
+                    "c.hostLastName as ownerLastName, " +
+                    "c.total_bill as totalCost, " +
+                    "c.adminCost," +
+                    "c.homeName, " +
+                    "c.created_date as createdDate " +
+                    "from (select a.*, ae.earning_amount as adminCost, p.total_bill from " +
+                    "(select b.id as booking_id, b.created_date, ap.accom_name as homeName, u.first_name as hostFirstName, u.last_name as hostLastName, b.name_customer as customerName " +
+                    "from booking b left join accom_place ap on b.accom_id = ap.id left join users u on ap.user_id = u.id where (date(b.created_date) is null) or (date(b.created_date) between :date_start and :date_end)) a left join payment p on a.booking_id = p.id " +
+                    "left join admin_earning ae on a.booking_id = ae.id) c order by c.total_bill desc")
+    Page<InfoTransactionStatisticProjection> getStatisticForTransactionOfAdmin(@Param("date_start") LocalDate dateStart,
+                                                                               @Param("date_end") LocalDate dateEnd,
+                                                                               Pageable pageable);
 }

@@ -12,10 +12,11 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class AdminStatisticForOwnerResponse {
-    private String ownerName;
+public class AdminStatisticForHostResponse {
+    private Long userId;
+    private String fullName;
     private String email;
-    private Long numberOfAccomForRent;
+    private Long numberOfAccom;
     private Long numberOfBooking;
-    private Double totalRevenueOfOwner;
+    private Double totalRevenue;
 }

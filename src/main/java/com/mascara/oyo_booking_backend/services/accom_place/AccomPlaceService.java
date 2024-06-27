@@ -43,6 +43,8 @@ public interface AccomPlaceService {
     @Transactional
     BaseMessageData updatePayment(UpdatePaymentAccomRequest request, Long accomId);
 
+    BaseMessageData deleteAccomPlaceWaitingForComplete(Long accomId, String mailPartner);
+
     @Transactional
     BaseMessageData updatePriceCustom(List<UpdatePriceCustomAccomPlaceRequest> updatePriceCustomAccomPlaceRequests);
 
@@ -51,13 +53,24 @@ public interface AccomPlaceService {
     PercentCreateAccomResponse getPercentCreateAccom(Long accomId);
 
     @Transactional
-    BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize, String sortType, String field);
+    BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum,
+                                                                     Integer pageSize,
+                                                                     String sortType,
+                                                                     String field);
 
     @Transactional
-    BasePagingData<GetAccomPlaceResponse> getFilterByKeyWord(String keyword, Integer pageNum, Integer pageSize, String sortType, String field);
+    BasePagingData<GetAccomPlaceResponse> getFilterByKeyWord(String keyword,
+                                                             Integer pageNum,
+                                                             Integer pageSize,
+                                                             String sortType,
+                                                             String field);
 
     @Transactional
-    BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter, Integer pageNum, Integer pageSize, String sortType, String field);
+    BasePagingData<GetAccomPlaceResponse> getAccomPlaceFilterWithPaging(GetAccomPlaceFilterRequest filter,
+                                                                        Integer pageNum,
+                                                                        Integer pageSize,
+                                                                        String sortType,
+                                                                        String field);
 
     @Transactional
     GetAccomPlaceDetailResponse getAccomPlaceApprovedDetails(Long id);
@@ -66,7 +79,10 @@ public interface AccomPlaceService {
     GetAccomPlaceDetailResponse getAccomPlaceDetails(Long id);
 
     @Transactional
-    BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum, Integer pageSize, String sortType, String field);
+    BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum,
+                                                                  Integer pageSize,
+                                                                  String sortType,
+                                                                  String field);
 
     @Transactional
     BasePagingData<GetAccomPlaceResponse> getListAccomPlaceApprovedOfPartner(String hostMail,
@@ -81,13 +97,6 @@ public interface AccomPlaceService {
                                                                                  Integer pageSize,
                                                                                  String sortType,
                                                                                  String field);
-
-//    @Transactional
-//    BasePagingData<GetRangeDateBookingAccomResponse> getListRangeDateAccomOfPartner(String hostMail,
-//                                                                                    Integer pageNum,
-//                                                                                    Integer pageSize,
-//                                                                                    String sortType,
-//                                                                                    String field);
 
     @Transactional
     BasePagingData<AccomPlaceGeneralResponse> getAllAcommPlaceWaitingApprovalWithPaging(Integer pageNum,
@@ -108,7 +117,10 @@ public interface AccomPlaceService {
     BaseMessageData approveAccomPlace(Long id);
 
     @Transactional
-    BaseMessageData deleteAccomPlace(Long id);
+    BaseMessageData deleteAccomPlaceForAdmin(Long id);
+
+    @Transactional
+    void deleteAccomPlaceCommon(Long accomId);
 
     GetGeneralInfoAccomResponse getGeneralInfoAccom(Long accomId);
 

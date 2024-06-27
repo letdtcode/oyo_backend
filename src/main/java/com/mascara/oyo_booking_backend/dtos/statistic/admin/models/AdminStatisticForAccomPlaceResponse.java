@@ -12,13 +12,13 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class AdminStatisticForHomeResponse {
-    private String ownerName;
-    private String titleAccom;
-    private Long numBooking;
-    private Long numView;
-    private Long numReview;
-    private Float averageRate;
-    private Float bookingSuccessPercent;
+public class AdminStatisticForAccomPlaceResponse {
+    private Long accomId;
+    private String accomName;
+    private String hostName;
+    private Long numberOfView;
+    private Long numberOfBooking;
     private Double totalRevenue;
+    private Long numberOfReview;
+    private Float averageGradeRate;
 }

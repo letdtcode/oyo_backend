@@ -13,8 +13,8 @@ import lombok.Data;
 @Data
 @Builder
 public class AdminStatisticResponse {
-    private Long totalNumberOfGuests;
-    private Long totalNumberOfOwner;
-    private Long totalNumberOfBooking;
-    private Double totalNumberOfRevenue;
+    private Long numberOfGuest;
+    private Long numberOfOwner;
+    private Long numberOfBooking;
+    private Double totalOfRevenue;
 }

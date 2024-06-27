@@ -15,10 +15,11 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class AdminStatisticTransactionResponse {
-    private String ownerName;
+    private Long transactionId;
     private String customerName;
-    private String titleAccom;
-    private LocalDateTime createDate;
-    private Double totalBill;
-    private Double totalAdminCommision;
+    private String ownerName;
+    private Double totalCost;
+    private Double adminCost;
+    private String homeName;
+    private LocalDateTime createdDate;
 }

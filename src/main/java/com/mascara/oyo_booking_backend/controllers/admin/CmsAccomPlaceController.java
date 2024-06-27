@@ -77,10 +77,10 @@ public class CmsAccomPlaceController {
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAccomPlace(@PathVariable("id") @NotNull Long id) {
-        BaseMessageData messageReponse = accomPlaceService.deleteAccomPlace(id);
+        BaseMessageData messageReponse = accomPlaceService.deleteAccomPlaceForAdmin(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 

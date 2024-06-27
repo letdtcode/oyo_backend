@@ -20,5 +20,6 @@ import java.util.List;
 public class UpdateGalleryAccomRequest {
     @NotNull
     private List<String> imageAccomUrls;
+
     private String cldVideoId;
 }

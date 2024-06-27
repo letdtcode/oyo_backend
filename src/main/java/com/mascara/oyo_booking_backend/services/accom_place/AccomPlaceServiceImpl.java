@@ -25,6 +25,7 @@ import com.mascara.oyo_booking_backend.mapper.facility.FacilityMapper;
 import com.mascara.oyo_booking_backend.mapper.type_bed.TypeBedMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -159,6 +160,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace.setCheckInFrom(request.getCheckInFrom());
         accomPlace.setCheckOutTo(request.getCheckOutTo());
         accomPlace.setDiscount(request.getDiscountPercent());
+        accomPlace.setSlugs(SlugsUtils.toSlug(accomPlace.getAccomName()));
         accomPlaceRepository.save(accomPlace);
 
 //        Set surcharge list for accom
@@ -243,6 +245,11 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             imageAccomSet.add(imageAccom);
         }
         accomPlace.setImageAccoms(imageAccomSet);
+        if (request.getCldVideoId() == null || request.getCldVideoId().isBlank()) {
+            accomPlace.setCldVideoId(null);
+        } else {
+            accomPlace.setCldVideoId(request.getCldVideoId());
+        }
         accomPlaceRepository.save(accomPlace);
         return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
@@ -312,6 +319,19 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         paymentInfoDetail.setBank(bank);
         paymentInfoDetail.setBankId(bank.getId());
         paymentInfoDetailRepository.save(paymentInfoDetail);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    public BaseMessageData deleteAccomPlaceWaitingForComplete(Long accomId, String mailPartner) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        User host = userRepository.findByMail(mailPartner)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+        if (accomPlace.getUserId() != host.getId()) {
+            throw new ForbiddenException("Forbidden");
+        }
+        deleteAccomPlaceCommon(accomId);
         return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
@@ -406,7 +426,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         }
         if (generalPolicyDetail.getAllowPet() != null &&
                 generalPolicyDetail.getAllowEvent() != null &&
-                generalPolicyDetail.getAllowSmoking() != null) {
+                generalPolicyDetail.getAllowSmoking() != null &&
+                accomPlace.getCancellationPolicy() != null &&
+                accomPlace.getCancellationFeeRate() != null) {
             isDonePolicy = true;
             valuePercentAll += valuePercentPerStep;
         }
@@ -432,7 +454,10 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum, Integer pageSize, String sortType, String field) {
+    public BasePagingData<GetAccomPlaceResponse> getAllAccomPlaceWithPaging(Integer pageNum,
+                                                                            Integer pageSize,
+                                                                            String sortType,
+                                                                            String field) {
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.fromString(sortType), field));
         Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging, AccomStatusEnum.APPROVED);
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
@@ -677,12 +702,18 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public BaseMessageData deleteAccomPlace(Long id) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(id)
+    public BaseMessageData deleteAccomPlaceForAdmin(Long id) {
+        deleteAccomPlaceCommon(id);
+        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("accom place"));
+    }
+
+    @Override
+    @Transactional
+    public void deleteAccomPlaceCommon(Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
         accomPlace.setDeleted(true);
         accomPlaceRepository.save(accomPlace);
-        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("accom place"));
     }
 
     @Override

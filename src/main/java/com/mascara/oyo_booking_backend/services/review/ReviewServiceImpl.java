@@ -75,8 +75,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (!booking.getStatus().equals(BookingStatusEnum.CHECK_OUT)) {
             return new BaseMessageData(AppContants.REVIEW_IS_NOT_AVAILABLE);
         }
-        AccomPlace accomPlace = accomPlaceRepository.findById(booking.getAccomId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+
         Review review = reviewMapper.toEntity(request);
         review.setReviewList(reviewList);
         review.setBooking(booking);
@@ -97,6 +96,14 @@ public class ReviewServiceImpl implements ReviewService {
             review.setHaveImage(false);
             reviewRepository.save(review);
         }
+
+        AccomPlace accomPlace = accomPlaceRepository.findById(booking.getAccomId())
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+        long numCurrentReview = accomPlace.getNumReview();
+        float currentGradeRate = accomPlace.getGradeRate();
+        accomPlace.setNumReview(numCurrentReview + 1);
+        accomPlace.setGradeRate((currentGradeRate * numCurrentReview + review.getRateStar()) / (currentGradeRate + 1));
+        accomPlaceRepository.save(accomPlace);
         return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("Review"));
     }
 }
