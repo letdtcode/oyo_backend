@@ -60,6 +60,9 @@ public class Payment extends BasePesistence {
     @Column(name = "cancel_period", columnDefinition = "TIMESTAMP")
     private LocalDateTime cancelPeriod;
 
+//    @Column(name = "paypal_order_status")
+//    private String paypalOrderStatus;
+
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
