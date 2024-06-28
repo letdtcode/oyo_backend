@@ -1,10 +1,15 @@
 package com.mascara.oyo_booking_backend.services.statistic.admin;
 
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminHomeChartFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminHomeStatisticFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminStatisticDateFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.models.*;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.projections.*;
+import com.mascara.oyo_booking_backend.dtos.statistic.common.RevenueStatistic;
+import com.mascara.oyo_booking_backend.enums.AdminChartTypeEnum;
+import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.MonthEnum;
 import com.mascara.oyo_booking_backend.repositories.AccomPlaceRepository;
 import com.mascara.oyo_booking_backend.repositories.BookingRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
@@ -13,7 +18,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +42,7 @@ public class AdminStatisticServiceImpl implements AdminStatisticService {
     private final BookingRepository bookingRepository;
 
     @Override
+    @Transactional
     public AdminStatisticResponse getStatisticOfAdmin(AdminHomeStatisticFilter request) {
         StatisticCountProjection statisticCountProjection = userRepository.getStatisticCountOfAdmin(request.getYear());
         return AdminStatisticResponse.builder()
@@ -45,6 +54,7 @@ public class AdminStatisticServiceImpl implements AdminStatisticService {
     }
 
     @Override
+    @Transactional
     public BasePagingData<AdminStatisticForGuestResponse> getStatisticForGuestOfAdmin(AdminStatisticDateFilter request, Integer pageNumber, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNumber, pageSize);
         Page<InfoGuestBookingProjection> projections = userRepository
@@ -66,6 +76,7 @@ public class AdminStatisticServiceImpl implements AdminStatisticService {
     }
 
     @Override
+    @Transactional
     public BasePagingData<AdminStatisticForHostResponse> getStatisticForHostOfAdmin(AdminStatisticDateFilter request, Integer pageNumber, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNumber, pageSize);
         Page<InfoHostStatisticProjection> projections = userRepository
@@ -87,6 +98,7 @@ public class AdminStatisticServiceImpl implements AdminStatisticService {
     }
 
     @Override
+    @Transactional
     public BasePagingData<AdminStatisticForAccomPlaceResponse> getStatisticForAccomPlaceOfAdmin(AdminStatisticDateFilter request, Integer pageNumber, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNumber, pageSize);
         Page<InfoAccomPlaceStatisticProjection> projections = accomPlaceRepository
@@ -110,6 +122,7 @@ public class AdminStatisticServiceImpl implements AdminStatisticService {
     }
 
     @Override
+    @Transactional
     public BasePagingData<AdminStatisticTransactionResponse> getStatisticForTransactionOfAdmin(AdminStatisticDateFilter request, Integer pageNumber, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNumber, pageSize);
         Page<InfoTransactionStatisticProjection> projections = bookingRepository
@@ -131,5 +144,46 @@ public class AdminStatisticServiceImpl implements AdminStatisticService {
                 projections.getTotalElements());
     }
 
+    private List<RevenueStatistic> getStatisticBookingChartOfAdmin(Integer year) {
+        if (year == null)
+            year = LocalDate.now().getYear();
 
+        List<RevenueStatistic> result = new LinkedList<>();
+        List<AdminChartProjection> projections = bookingRepository.getStatisticBookingChartOfAdmin(year);
+
+        for (MonthEnum item : MonthEnum.values()) {
+            result.add(RevenueStatistic.builder()
+                    .amount(projections.get(item.getMonthValue() - 1).getValue())
+                    .month(item.getMonthName())
+                    .build());
+        }
+        return result;
+    }
+
+    private List<RevenueStatistic> getStatisticRevenueChartOfAdmin(Integer year) {
+        if (year == null)
+            year = LocalDate.now().getYear();
+
+        List<RevenueStatistic> result = new LinkedList<>();
+        List<AdminChartProjection> projections = bookingRepository.getStatisticRevenueChartOfAdmin(year,
+                BookingStatusEnum.CHECK_OUT.name());
+        for (MonthEnum item : MonthEnum.values()) {
+            result.add(RevenueStatistic.builder()
+                    .amount(projections.get(item.getMonthValue() - 1).getValue())
+                    .month(item.getMonthName())
+                    .build());
+        }
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public AdminStatisticChartResponse getStatistiChartAdmin(AdminHomeChartFilter filter) {
+        if (filter.getType().equals(AdminChartTypeEnum.BOOKING))
+            return AdminStatisticChartResponse.builder()
+                    .revenueStatistics(getStatisticBookingChartOfAdmin(filter.getYear()))
+                    .build();
+        return AdminStatisticChartResponse.builder()
+                .revenueStatistics(getStatisticRevenueChartOfAdmin(filter.getYear())).build();
+    }
 }

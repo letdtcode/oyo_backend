@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.controllers.admin;
 
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminHomeChartFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminHomeStatisticFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminStatisticDateFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.models.*;
@@ -66,6 +67,13 @@ public class CmsStatisticController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getStatisticForTransactionOfAdmin(@ParameterObject @Valid AdminStatisticDateFilter request) {
         BasePagingData<AdminStatisticTransactionResponse> response = adminStatisticService.getStatisticForTransactionOfAdmin(request, 0, 200);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @GetMapping("/chart")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getStatisticChart(@ParameterObject @Valid AdminHomeChartFilter request) {
+        AdminStatisticChartResponse response = adminStatisticService.getStatistiChartAdmin(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 }

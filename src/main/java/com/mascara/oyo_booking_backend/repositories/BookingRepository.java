@@ -1,7 +1,9 @@
 package com.mascara.oyo_booking_backend.repositories;
 
+import com.mascara.oyo_booking_backend.dtos.statistic.admin.projections.AdminChartProjection;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.projections.InfoTransactionStatisticProjection;
 import com.mascara.oyo_booking_backend.entities.booking.Booking;
+import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -70,4 +72,105 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     Page<InfoTransactionStatisticProjection> getStatisticForTransactionOfAdmin(@Param("date_start") LocalDate dateStart,
                                                                                @Param("date_end") LocalDate dateEnd,
                                                                                Pageable pageable);
+
+    @Query(nativeQuery = true,
+            value = "(select count(b.id) as value, " +
+                    "1 as month from booking b " +
+                    "where month(b.date_check_in) = 1 and year(b.date_check_in) = :year) " +
+                    "union all" +
+                    "(select count(b.id) as value, " +
+                    "2 as month from booking b " +
+                    "where month(b.date_check_in) = 2 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "3 as month from booking b " +
+                    "where month(b.date_check_in) = 3 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "4 as month from booking b " +
+                    "where month(b.date_check_in) = 4 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "5 as month from booking b " +
+                    "where month(b.date_check_in) = 5 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "6 as month from booking b " +
+                    "where month(b.date_check_in) = 6 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "7 as month from booking b " +
+                    "where month(b.date_check_in) = 7 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "8 as month from booking b " +
+                    "where month(b.date_check_in) = 8 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "9 as month from booking b " +
+                    "where month(b.date_check_in) = 9 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "10 as month from booking b " +
+                    "where month(b.date_check_in) = 10 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "11 as month from booking b " +
+                    "where month(b.date_check_in) = 11 and year(b.date_check_in) = :year) " +
+                    "union all " +
+                    "(select count(b.id) as value, " +
+                    "12 as month from booking b " +
+                    "where month(b.date_check_in) = 12 and year(b.date_check_in) = :year) ")
+    List<AdminChartProjection> getStatisticBookingChartOfAdmin(@Param("year") Integer year);
+
+    @Query(nativeQuery = true,
+    value = "(select coalesce(sum(p.total_bill),0) as value, " +
+            "1 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 1 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "2 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 2 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "3 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 3 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "4 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 4 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "5 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 5 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "6 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 6 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "7 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 7 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "8 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 8 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "9 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 9 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "10 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 10 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "11 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 11 " +
+            "and year(b.created_date) = :year and b.status = :status) " +
+            "union " +
+            "(select coalesce(sum(p.total_bill),0) as value, " +
+            "12 as month from booking b left join payment p on b.id = p.id where month(b.created_date) = 12 " +
+            "and year(b.created_date) = :year and b.status = :status)")
+    List<AdminChartProjection> getStatisticRevenueChartOfAdmin(@Param("year") Integer year,
+                                                               @Param("status") String status);
 }

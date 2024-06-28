@@ -1,6 +1,5 @@
 server:
   forward-headers-strategy: framework
-
 spring:
   profiles:
     active: ${ENV:dev}
@@ -24,8 +23,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     properties:
       hibernate:
-        format_sql: true
-#    defer-datasource-initialization: true
+        format_sql: false
+        show_sql: true
+  #    defer-datasource-initialization: true
   security:
     oauth2:
       client:
@@ -92,6 +92,8 @@ logging:
   level:
     org:
       hibernate:
+        sql: debug
+        type: trace
         jdbc: info
           
 

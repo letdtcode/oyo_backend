@@ -1,6 +1,7 @@
 package com.mascara.oyo_booking_backend.services.statistic.admin;
 
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
+import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminHomeChartFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminHomeStatisticFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminStatisticDateFilter;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.models.*;
@@ -26,4 +27,6 @@ public interface AdminStatisticService {
     BasePagingData<AdminStatisticForAccomPlaceResponse> getStatisticForAccomPlaceOfAdmin(AdminStatisticDateFilter request, Integer pageNumber, Integer pageSize);
 
     BasePagingData<AdminStatisticTransactionResponse> getStatisticForTransactionOfAdmin(AdminStatisticDateFilter request, Integer pageNumber, Integer pageSize);
+
+    AdminStatisticChartResponse getStatistiChartAdmin(AdminHomeChartFilter filter);
 }
