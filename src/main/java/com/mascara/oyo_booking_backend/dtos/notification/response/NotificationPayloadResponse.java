@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
  * Filename  : NotificationResponse
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class NotificationPayloadResponse {
     private Long Id;
