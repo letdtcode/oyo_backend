@@ -41,8 +41,7 @@ import java.security.Principal;
 @Validated
 public class PartnerManageBookingController {
 
-    @Autowired
-    private BookingService bookingService;
+    private final BookingService bookingService;
 
     @Operation(summary = "Add Accom Place For Rent", description = "Partner Api for add accom place")
     @ApiResponses({

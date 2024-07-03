@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.repositories;
 
 import com.mascara.oyo_booking_backend.dtos.recommender_system.projections.AccomPlaceRecommendProjection;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.projections.InfoAccomPlaceStatisticProjection;
+import com.mascara.oyo_booking_backend.dtos.statistic.partner.projections.HostHomeStatisticProjection;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import org.springframework.data.domain.Page;
@@ -117,100 +118,137 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
                                                                              Pageable pageable);
 
     @Query(nativeQuery = true,
-    value = "with priceRangeOfHost as (" +
-            "    select avg(ap.price_per_night) as avg_price from booking b join accom_place ap on b.accom_id = ap.id where b.booking_list_id = :user_id), " +
-            "     homestay_range as (" +
-            "         select ap1.id as item_id1, ap2.id as item_id2, " +
-            "                case" +
-            "                    when (ap1.accom_cate_id = ap2.accom_cate_id and ap1.province_code = ap2.province_code) then 0.0826" +
-            "                    when (ap1.accom_cate_id != ap2.accom_cate_id and ap1.province_code = ap2.province_code) then 0.0156" +
-            "                    when (ap1.accom_cate_id = ap2.accom_cate_id and ap1.province_code != ap2.province_code) then 0.067" +
-            "                    else 0" +
-            "                    end as similarity," +
-            "                case" +
-            "                    when ap2.price_per_night <= 350000 then 'low_price'" +
-            "                    when ap2.price_per_night <= 500000 then 'mid_price'" +
-            "                    else 'luxury_price'" +
-            "                    end as price_range" +
-            "         from accom_place ap1" +
-            "                  join accom_place ap2 on ap1.id != ap2.id" +
-            "         order by item_id1, similarity desc" +
-            "     ), " +
-            "     adjusted_similarity as (" +
-            "         select" +
-            "             hr.item_id1," +
-            "             hr.item_id2," +
-            "             hr.similarity + case" +
-            "                                 when hr.price_range =" +
-            "                                      (" +
-            "                                          select" +
-            "                                              case" +
-            "                                                  when pr.avg_price <= 350000 then 'low_price'" +
-            "                                                  when pr.avg_price <= 500000 then 'mid_price'" +
-            "                                                  else 'luxury_price'" +
-            "                                                  end" +
-            "                                          from priceRangeOfHost pr)" +
-            "                                     then 0.08" +
-            "                                 else 0" +
-            "                 end as adjusted_similarity" +
-            "         from homestay_range hr" +
-            "     )" +
-            "SELECT DISTINCT item_id2 AS accomId, avg(adjusted_similarity) AS similarity " +
-            "FROM adjusted_similarity " +
-            "WHERE adjusted_similarity.item_id1 IN (" +
-            "    SELECT b2.accom_id" +
-            "    FROM booking b2" +
-            "    WHERE b2.booking_list_id = :user_id" +
-            ") " +
-            "group by accomId " +
-            "ORDER BY similarity DESC",
-    countQuery = "with priceRangeOfHost as (" +
-            "    select avg(ap.price_per_night) as avg_price from booking b join accom_place ap on b.accom_id = ap.id where b.booking_list_id = :user_id), " +
-            "     homestay_range as (" +
-            "         select ap1.id as item_id1, ap2.id as item_id2, " +
-            "                case" +
-            "                    when (ap1.accom_cate_id = ap2.accom_cate_id and ap1.province_code = ap2.province_code) then 0.0826" +
-            "                    when (ap1.accom_cate_id != ap2.accom_cate_id and ap1.province_code = ap2.province_code) then 0.0156" +
-            "                    when (ap1.accom_cate_id = ap2.accom_cate_id and ap1.province_code != ap2.province_code) then 0.067" +
-            "                    else 0" +
-            "                    end as similarity," +
-            "                case" +
-            "                    when ap2.price_per_night <= 350000 then 'low_price'" +
-            "                    when ap2.price_per_night <= 500000 then 'mid_price'" +
-            "                    else 'luxury_price'" +
-            "                    end as price_range" +
-            "         from accom_place ap1" +
-            "                  join accom_place ap2 on ap1.id != ap2.id" +
-            "         order by item_id1, similarity desc" +
-            "     ), " +
-            "     adjusted_similarity as (" +
-            "         select" +
-            "             hr.item_id1," +
-            "             hr.item_id2," +
-            "             hr.similarity + case" +
-            "                                 when hr.price_range =" +
-            "                                      (" +
-            "                                          select" +
-            "                                              case" +
-            "                                                  when pr.avg_price <= 350000 then 'low_price'" +
-            "                                                  when pr.avg_price <= 500000 then 'mid_price'" +
-            "                                                  else 'luxury_price'" +
-            "                                                  end" +
-            "                                          from priceRangeOfHost pr)" +
-            "                                     then 0.08" +
-            "                                 else 0" +
-            "                 end as adjusted_similarity" +
-            "         from homestay_range hr" +
-            "     )" +
-            "SELECT count(adjusted_similarity.item_id1) " +
-            "FROM adjusted_similarity " +
-            "WHERE adjusted_similarity.item_id1 IN (" +
-            "    SELECT b2.accom_id" +
-            "    FROM booking b2" +
-            "    WHERE b2.booking_list_id = :user_id" +
-            ") " +
-            "group by item_id2 " +
-            "ORDER BY adjusted_similarity DESC")
+            value = "with priceRangeOfHost as (" +
+                    "    select avg(ap.price_per_night) as avg_price from booking b join accom_place ap on b.accom_id = ap.id where b.booking_list_id = :user_id), " +
+                    "     homestay_range as (" +
+                    "         select ap1.id as item_id1, ap2.id as item_id2, " +
+                    "                case" +
+                    "                    when (ap1.accom_cate_id = ap2.accom_cate_id and ap1.province_code = ap2.province_code) then 0.0826" +
+                    "                    when (ap1.accom_cate_id != ap2.accom_cate_id and ap1.province_code = ap2.province_code) then 0.0156" +
+                    "                    when (ap1.accom_cate_id = ap2.accom_cate_id and ap1.province_code != ap2.province_code) then 0.067" +
+                    "                    else 0" +
+                    "                    end as similarity," +
+                    "                case" +
+                    "                    when ap2.price_per_night <= 350000 then 'low_price'" +
+                    "                    when ap2.price_per_night <= 500000 then 'mid_price'" +
+                    "                    else 'luxury_price'" +
+                    "                    end as price_range" +
+                    "         from accom_place ap1" +
+                    "                  join accom_place ap2 on ap1.id != ap2.id" +
+                    "         order by item_id1, similarity desc" +
+                    "     ), " +
+                    "     adjusted_similarity as (" +
+                    "         select" +
+                    "             hr.item_id1," +
+                    "             hr.item_id2," +
+                    "             hr.similarity + case" +
+                    "                                 when hr.price_range =" +
+                    "                                      (" +
+                    "                                          select" +
+                    "                                              case" +
+                    "                                                  when pr.avg_price <= 350000 then 'low_price'" +
+                    "                                                  when pr.avg_price <= 500000 then 'mid_price'" +
+                    "                                                  else 'luxury_price'" +
+                    "                                                  end" +
+                    "                                          from priceRangeOfHost pr)" +
+                    "                                     then 0.08" +
+                    "                                 else 0" +
+                    "                 end as adjusted_similarity" +
+                    "         from homestay_range hr" +
+                    "     )" +
+                    "SELECT DISTINCT item_id2 AS accomId, avg(adjusted_similarity) AS similarity " +
+                    "FROM adjusted_similarity " +
+                    "WHERE adjusted_similarity.item_id1 IN (" +
+                    "    SELECT b2.accom_id" +
+                    "    FROM booking b2" +
+                    "    WHERE b2.booking_list_id = :user_id" +
+                    ") " +
+                    "group by accomId " +
+                    "ORDER BY similarity DESC",
+            countQuery = "with priceRangeOfHost as (" +
+                    "    select avg(ap.price_per_night) as avg_price from booking b join accom_place ap on b.accom_id = ap.id where b.booking_list_id = :user_id), " +
+                    "     homestay_range as (" +
+                    "         select ap1.id as item_id1, ap2.id as item_id2, " +
+                    "                case" +
+                    "                    when (ap1.accom_cate_id = ap2.accom_cate_id and ap1.province_code = ap2.province_code) then 0.0826" +
+                    "                    when (ap1.accom_cate_id != ap2.accom_cate_id and ap1.province_code = ap2.province_code) then 0.0156" +
+                    "                    when (ap1.accom_cate_id = ap2.accom_cate_id and ap1.province_code != ap2.province_code) then 0.067" +
+                    "                    else 0" +
+                    "                    end as similarity," +
+                    "                case" +
+                    "                    when ap2.price_per_night <= 350000 then 'low_price'" +
+                    "                    when ap2.price_per_night <= 500000 then 'mid_price'" +
+                    "                    else 'luxury_price'" +
+                    "                    end as price_range" +
+                    "         from accom_place ap1" +
+                    "                  join accom_place ap2 on ap1.id != ap2.id" +
+                    "         order by item_id1, similarity desc" +
+                    "     ), " +
+                    "     adjusted_similarity as (" +
+                    "         select" +
+                    "             hr.item_id1," +
+                    "             hr.item_id2," +
+                    "             hr.similarity + case" +
+                    "                                 when hr.price_range =" +
+                    "                                      (" +
+                    "                                          select" +
+                    "                                              case" +
+                    "                                                  when pr.avg_price <= 350000 then 'low_price'" +
+                    "                                                  when pr.avg_price <= 500000 then 'mid_price'" +
+                    "                                                  else 'luxury_price'" +
+                    "                                                  end" +
+                    "                                          from priceRangeOfHost pr)" +
+                    "                                     then 0.08" +
+                    "                                 else 0" +
+                    "                 end as adjusted_similarity" +
+                    "         from homestay_range hr" +
+                    "     )" +
+                    "SELECT count(adjusted_similarity.item_id1) " +
+                    "FROM adjusted_similarity " +
+                    "WHERE adjusted_similarity.item_id1 IN (" +
+                    "    SELECT b2.accom_id" +
+                    "    FROM booking b2" +
+                    "    WHERE b2.booking_list_id = :user_id" +
+                    ") " +
+                    "group by item_id2 " +
+                    "ORDER BY adjusted_similarity DESC")
     Page<AccomPlaceRecommendProjection> getAccomPlaceRecommend(@Param("user_id") Long userId,
                                                                Pageable pageable);
+
+    @Query(nativeQuery = true,
+    value = "with qr3 as (select count(b.id) as numBookingSuccess, " +
+            "ap.id as accomId " +
+            "from accom_place ap left join " +
+            "booking b on ap.id = b.accom_id where ap.user_id = :host_id and b.status != 'CANCELED' and month(b.created_date) = :month and year(b.created_date) = :year group by ap.id)," +
+            "qr2 as (select ap.id as accomId," +
+            "                    coalesce(sum(p.total_bill),0) as revenue " +
+            "from accom_place ap left join " +
+            "booking b on ap.id = b.accom_id left join payment p on b.id = p.id where ap.user_id = :host_id and (b.status != 'CANCELED' or b.status is null) and (month(b.created_date) = :month or month(b.created_date) is null) and (year(b.created_date) is null or year(b.created_date) = :year) group by ap.id)" +
+            "    " +
+            "select ap.id as accomId," +
+            "ap.accom_name as accomName," +
+            "        ap.num_view as numberOfView," +
+            "        ap.num_booking as numberOfBooking," +
+            "        qr2.revenue as revenue," +
+            "        ap.num_review as numberOfReview," +
+            "        ap.grade_rate as averageRate, " +
+            "        coalesce(coalesce(qr3.numBookingSuccess,0) / ap.num_booking,0) * 100 as reservationRate" +
+            "        from accom_place ap left join qr2 on ap.id = qr2.accomId left join qr3 on qr2.accomId = qr3.accomId where ap.user_id = :host_id order by revenue desc" +
+            "        ",
+    countQuery = "with qr3 as (select count(b.id) as numBookingSuccess, " +
+            "ap.id as accomId " +
+            "from accom_place ap left join " +
+            "booking b on ap.id = b.accom_id where ap.user_id = :host_id and b.status != 'CANCELED' and month(b.created_date) = :month and year(b.created_date) = :year group by ap.id)," +
+            "qr2 as (select ap.id as accomId," +
+            "                    coalesce(sum(p.total_bill),0) as revenue " +
+            "from accom_place ap left join " +
+            "booking b on ap.id = b.accom_id left join payment p on b.id = p.id where ap.user_id = :host_id and (b.status != 'CANCELED' or b.status is null) and (month(b.created_date) = :month or month(b.created_date) is null) and (year(b.created_date) is null or year(b.created_date) = :year) group by ap.id)" +
+            "    " +
+            "select count(ap.id)" +
+            "        from accom_place ap left join qr2 on ap.id = qr2.accomId left join qr3 on qr2.accomId = qr3.accomId where ap.user_id = :host_id order by revenue desc" +
+            "        ")
+    Page<HostHomeStatisticProjection> getStatisticHomeByMonthAndYearOfHost(@Param("host_id") Long hostId,
+                                                                           @Param("month") Integer month,
+                                                                           @Param("year") Integer year,
+                                                                           Pageable pageable);
 }

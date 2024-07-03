@@ -151,20 +151,6 @@ public class AccommodationHelperMapper {
         return null;
     }
 
-//    //    Covert Image Accom
-//    @Named("imageAccomToImageAccomUrl")
-//    public List<String> idAccomToImageAccomUrl(Long accomId) {
-//        if (accomId != null) {
-//            List<String> imageAccomUrl = new ArrayList();
-//            AccomPlace accomPlace = accomPlaceRepository.findById(accomId).get();
-//            for (ImageAccom imgAccom : accomPlace.getImageAccoms()) {
-//                imageAccomUrl.add(imgAccom.getImgAccomLink());
-//            }
-//            return imageAccomUrl;
-//        }
-//        return null;
-//    }
-
     //    Covert id accom place to name accom place
     @Named("idAccomPlaceToNameAccom")
     public String idAccomPlaceToNameAccom(Long accomId) {
@@ -174,16 +160,6 @@ public class AccommodationHelperMapper {
         }
         return null;
     }
-
-//    //    Covert id accom place to name accom place
-//    @Named("idAccomPlaceToNameAccom")
-//    public String idAccomPlaceToAccomCateName(Long accomId) {
-//        if (accomId != null) {
-//            AccomPlace accomPlace = accomPlaceRepository.findById(accomId).get();
-//            return accomPlace.getAccommodationCategories().getAccomCateName();
-//        }
-//        return null;
-//    }
 
     //        Covert accom place id to cancellation policy
     @Named("accomPlaceIdToCancellationPolicy")
