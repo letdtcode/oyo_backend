@@ -35,6 +35,12 @@ public interface AccomPlaceService {
     BaseMessageData updateGallery(UpdateGalleryAccomRequest request, Long accomId);
 
     @Transactional
+    BaseMessageData updateImages(UpdateImageAccomRequest request, Long accomId);
+
+    @Transactional
+    BaseMessageData updateVideo(UpdateVideoAccomRequest request, Long accomId);
+
+    @Transactional
     BaseMessageData updateRooms(UpdateRoomAccomRequest request, Long accomId);
 
     @Transactional

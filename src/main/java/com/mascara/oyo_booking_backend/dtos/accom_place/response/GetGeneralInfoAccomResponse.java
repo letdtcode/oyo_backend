@@ -22,13 +22,12 @@ public class GetGeneralInfoAccomResponse {
     private String accomCateName;
     private String nameAccom;
     private String description;
-    private String guide;
-    private Float acreage;
     private Double pricePerNight;
+    private Float acreage;
     private String checkInFrom;
     private String checkOutTo;
-    private List<ItemSurchargeResponse> surchargeList;
     private Double discountPercent;
+    private List<ItemSurchargeResponse> surchargeList;
 }
 
 

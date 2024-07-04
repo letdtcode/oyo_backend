@@ -36,7 +36,7 @@ import java.security.Principal;
 @RequestMapping("/api/v1/partner/statistic")
 @RequiredArgsConstructor
 @Validated
-public class PartnerStatistcController {
+public class PartnerStatisticController {
 
     private final PartnerStatisticService partnerStatisticService;
 
@@ -52,14 +52,14 @@ public class PartnerStatistcController {
     @GetMapping("/month")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getStatisticHomeByMonthAndYearOfHost(@ParameterObject @Valid HostHomeStatisticMonthFilter request,
-                                                @RequestParam("pageNumber")
-                                                @NotNull(message = "Page number must not be null")
-                                                @Min(value = 0, message = "Page number must greater or equal 0")
-                                                Integer pageNumber,
-                                                @RequestParam("pageSize")
-                                                @NotNull(message = "Page size must not be null")
-                                                @Min(value = 1, message = "Page size must greater or equal 1")
-                                                Integer pageSize) {
+                                                                  @RequestParam("pageNumber")
+                                                                  @NotNull(message = "Page number must not be null")
+                                                                  @Min(value = 0, message = "Page number must greater or equal 0")
+                                                                  Integer pageNumber,
+                                                                  @RequestParam("pageSize")
+                                                                  @NotNull(message = "Page size must not be null")
+                                                                  @Min(value = 1, message = "Page size must greater or equal 1")
+                                                                  Integer pageSize) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String hostMail = principal.getName();
         BasePagingData<HostHomeStatisticMonthResponse> response =

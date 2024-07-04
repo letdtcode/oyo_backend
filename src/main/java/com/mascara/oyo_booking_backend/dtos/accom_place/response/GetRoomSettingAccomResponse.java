@@ -20,6 +20,7 @@ public class GetRoomSettingAccomResponse {
     private BedRoomResponse bedRooms;
     private Integer numBathRoom;
     private Integer numKitchen;
+    private Integer numBedRoom;
     private String accomCateName;
     private Integer numPeople;
     private Long accomCateId;

@@ -18,6 +18,7 @@ import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,47 +35,48 @@ import java.util.Set;
  * Filename  : InitAccomPlaceService
  */
 @Component
+@RequiredArgsConstructor
 public class InitAccomPlaceService {
-    @Autowired
-    private AccomPlaceRepository accomPlaceRepository;
+    
+    private final AccomPlaceRepository accomPlaceRepository;
 
-    @Autowired
-    private ProvinceRepository provinceRepository;
+    
+    private final ProvinceRepository provinceRepository;
 
-    @Autowired
-    private DistrictRepository districtRepository;
+    
+    private final DistrictRepository districtRepository;
 
-    @Autowired
-    private WardRepository wardRepository;
+    
+    private final WardRepository wardRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    
+    private final UserRepository userRepository;
 
-    @Autowired
-    private AccommodationCategoriesRepository accommodationCategoriesRepository;
+    
+    private final AccommodationCategoriesRepository accommodationCategoriesRepository;
 
-    @Autowired
-    private FacilityRepository facilityRepository;
+    
+    private final FacilityRepository facilityRepository;
 
-    @Autowired
-    private BedRoomRepository bedRoomRepository;
+    
+    private final BedRoomRepository bedRoomRepository;
 
-    @Autowired
-    private TypeBedRepository typeBedRepository;
+    
+    private final TypeBedRepository typeBedRepository;
 
-    @Autowired
-    private SurchargeOfAccomRepository surchargeOfAccomRepository;
+    
+    private final SurchargeOfAccomRepository surchargeOfAccomRepository;
 
-    @Autowired
-    private SurchargeCategoryRepository surchargeCategoryRepository;
+    
+    private final SurchargeCategoryRepository surchargeCategoryRepository;
 
-    @Autowired
-    private GeneralPolicyDetailRepository generalPolicyDetailRepository;
+    
+    private final GeneralPolicyDetailRepository generalPolicyDetailRepository;
 
-    @Autowired
-    private PaymentInfoDetailRepository paymentInfoDetailRepository;
-    @Autowired
-    private BankRepository bankRepository;
+    
+    private final PaymentInfoDetailRepository paymentInfoDetailRepository;
+    
+    private final BankRepository bankRepository;
 
     @Transactional
     public String addAccomPlace(InitAccomPlaceModel request, String mailPartner) {

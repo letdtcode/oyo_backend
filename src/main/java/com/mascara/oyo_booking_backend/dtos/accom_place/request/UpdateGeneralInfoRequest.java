@@ -22,22 +22,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateGeneralInfoRequest {
-
     @NotNull
     @NotBlank
-    private String accomCateName;
-
-    @NotNull
-    @NotBlank
-    private String nameAccom;
+    private String accomName;
 
     @NotNull
     @NotBlank
     private String description;
-
-    @NotNull
-    @NotBlank
-    private String guide;
 
     @NotNull
     private Float acreage;

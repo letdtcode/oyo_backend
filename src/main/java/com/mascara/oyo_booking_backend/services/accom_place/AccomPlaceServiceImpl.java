@@ -145,16 +145,10 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Override
     @Transactional
     public BaseMessageData updateGeneralInfo(UpdateGeneralInfoRequest request, Long accomId) {
-        AccommodationCategories accomCategories = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
-
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        accomPlace.setAccommodationCategories(accomCategories);
-        accomPlace.setAccomCateId(accomCategories.getId());
-        accomPlace.setAccomName(request.getNameAccom());
+        accomPlace.setAccomName(request.getAccomName());
         accomPlace.setDescription(request.getDescription());
-        accomPlace.setGuide(request.getGuide());
         accomPlace.setAcreage(request.getAcreage());
         accomPlace.setPricePerNight(request.getPricePerNight());
         accomPlace.setCheckInFrom(request.getCheckInFrom());
@@ -245,6 +239,41 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             imageAccomSet.add(imageAccom);
         }
         accomPlace.setImageAccoms(imageAccomSet);
+        if (request.getCldVideoId() == null || request.getCldVideoId().isBlank()) {
+            accomPlace.setCldVideoId(null);
+        } else {
+            accomPlace.setCldVideoId(request.getCldVideoId());
+        }
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateImages(UpdateImageAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+
+        imageAccomRepository.deleteByAccomId(accomPlace.getId());
+        Set<ImageAccom> imageAccomSet = new HashSet<>();
+        for (String imageUrl : request.getImageAccomUrls()) {
+            ImageAccom imageAccom = ImageAccom.builder()
+                    .imgAccomLink(imageUrl)
+                    .accomPlace(accomPlace)
+                    .accomPlaceId(accomPlace.getId()).build();
+            imageAccomRepository.save(imageAccom);
+            imageAccomSet.add(imageAccom);
+        }
+        accomPlace.setImageAccoms(imageAccomSet);
+        accomPlaceRepository.save(accomPlace);
+        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+    }
+
+    @Override
+    @Transactional
+    public BaseMessageData updateVideo(UpdateVideoAccomRequest request, Long accomId) {
+        AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
         if (request.getCldVideoId() == null || request.getCldVideoId().isBlank()) {
             accomPlace.setCldVideoId(null);
         } else {
@@ -737,7 +766,6 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .nameAccom(accomPlace.getAccomName())
                 .accomCateName(categories.getAccomCateName())
                 .description(accomPlace.getDescription())
-                .guide(accomPlace.getGuide())
                 .acreage(accomPlace.getAcreage())
                 .pricePerNight(accomPlace.getPricePerNight())
                 .checkInFrom(accomPlace.getCheckInFrom())
@@ -835,6 +863,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 .accomCateName(accomCateName)
                 .numKitchen(accomPlace.getNumKitchen())
                 .numBathRoom(accomPlace.getNumBathRoom())
+                .numBedRoom(typeBedOfRooms.size())
                 .bedRooms(bedRoomResponse)
                 .numPeople(accomPlace.getNumPeople())
                 .build();

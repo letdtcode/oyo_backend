@@ -17,7 +17,6 @@ import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.entities.bank.Bank;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
-import com.mascara.oyo_booking_backend.entities.recommend.ItemFeature;
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
@@ -33,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.List;
@@ -66,7 +64,6 @@ public class InitDataService implements CommandLineRunner {
     private final SurchargeCategoryRepository surchargeCategoryRepository;
     private final ImageAccomRepository imageAccomRepository;
     private final BankRepository bankRepository;
-    private final ItemFeatureRepository itemFeatureRepository;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -314,37 +311,6 @@ public class InitDataService implements CommandLineRunner {
         }
     }
 
-    //    For recommendation
-    public void implementInitDataItemFeature() {
-        List<ItemFeature> checkList = itemFeatureRepository.checkExistData();
-        try {
-            if (checkList.isEmpty()) {
-                List<AccomPlace> accomPlaces = accomPlaceRepository.findAll();
-                for (AccomPlace item : accomPlaces) {
-                    String accomCategoryName = entityManager.createQuery("select ac.accomCateName from AccommodationCategories ac where ac.id = :accomCateId")
-                            .setParameter("accomCateId", item.getAccomCateId())
-                            .getSingleResult().
-                            toString();
-                    String provinceName = entityManager.createQuery("select p.provinceName from Province p where p.provinceCode = :provinceCode")
-                            .setParameter("provinceCode", item.getProvinceCode())
-                            .getSingleResult()
-                            .toString();
-                    double pricePerNight = item.getPricePerNight();
-
-                    ItemFeature itemFeature = ItemFeature.builder()
-                            .id(item.getId())
-                            .accomCategoryName(accomCategoryName)
-                            .provinceName(provinceName)
-                            .pricePerNight(pricePerNight)
-                            .build();
-                    itemFeatureRepository.save(itemFeature);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void implementInitDataMenuActionSurcharge() {
         List<SurchargeCategory> checkList = surchargeCategoryRepository.checkExistData();
         try {
@@ -433,6 +399,5 @@ public class InitDataService implements CommandLineRunner {
         implementInitDataMenuActionSurcharge();
         implementInitDataAccomPlace();
         implementInitDataMenuActionImageAccom();
-        implementInitDataItemFeature();
     }
 }

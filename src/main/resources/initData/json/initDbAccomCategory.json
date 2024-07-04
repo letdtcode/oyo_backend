@@ -1,13 +1,6 @@
 {
   "data": [
     {
-      "accomCateName": "Tất cả",
-      "description": "Tất cả loại hình cho thuê",
-      "icon": "https://img.icons8.com/dotty/25/1A1A1A/home.png",
-      "imageUrl": "https://res.cloudinary.com/dyv5zrsgj/image/upload/v1703612695/oyo_booking/accom_category/q3hohmoclks5q2ypfu6s",
-      "status": "ENABLE"
-    },
-    {
       "accomCateName": "Phòng",
       "description": "Phòng nhỏ căn hộ",
       "icon": "https://img.icons8.com/ios/25/room.png",

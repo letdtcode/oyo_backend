@@ -170,7 +170,7 @@ public class PartnerManageAccomController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @Operation(summary = "Update images accom place", description = "Update images accom place")
+    @Operation(summary = "Update gallery accom place", description = "Update gallery accom place")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
@@ -183,6 +183,38 @@ public class PartnerManageAccomController {
         String hostMail = principal.getName();
         accomPlaceService.checkPermission(hostMail, accomId);
         BaseMessageData response = accomPlaceService.updateGallery(request, accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update images accom place", description = "Update images accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @PutMapping("/images")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> updateImages(@RequestBody @Valid UpdateImageAccomRequest request,
+                                           @RequestParam("accomId") Long accomId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String hostMail = principal.getName();
+        accomPlaceService.checkPermission(hostMail, accomId);
+        BaseMessageData response = accomPlaceService.updateImages(request, accomId);
+        return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
+    }
+
+    @Operation(summary = "Update video accom place", description = "Update video accom place")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @PutMapping("/video")
+    @PreAuthorize("hasRole('PARTNER')")
+    public ResponseEntity<?> updateVideo(@RequestBody @Valid UpdateVideoAccomRequest request,
+                                          @RequestParam("accomId") Long accomId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String hostMail = principal.getName();
+        accomPlaceService.checkPermission(hostMail, accomId);
+        BaseMessageData response = accomPlaceService.updateVideo(request, accomId);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

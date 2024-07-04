@@ -6,8 +6,6 @@ import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.entities.booking.Booking;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
-import com.mascara.oyo_booking_backend.entities.recommend.ItemFeature;
-import com.mascara.oyo_booking_backend.entities.review.ReviewList;
 import com.mascara.oyo_booking_backend.entities.wish.WishItem;
 import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
