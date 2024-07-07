@@ -47,18 +47,6 @@ public class BookingRequest {
     private Integer numBornChild;
 
     @NotNull
-    @Min(0)
-    private Double originPay;
-
-    @NotNull
-    @Min(0)
-    private Double discount;
-
-    @NotNull
-    @Min(0)
-    private Double surcharge;
-
-    @NotNull
     @Pattern(regexp = "PAYMENT_FULL|PAYMENT_HALF", message = "Payment policy must be 'PAYMENT_FULL' or 'PAYMENT_HALF'")
     private String paymentPolicy;
 

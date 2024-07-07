@@ -153,7 +153,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace.setPricePerNight(request.getPricePerNight());
         accomPlace.setCheckInFrom(request.getCheckInFrom());
         accomPlace.setCheckOutTo(request.getCheckOutTo());
-        accomPlace.setDiscount(request.getDiscountPercent());
+        accomPlace.setDiscount(request.getDiscountPercent() / 100);
         accomPlace.setSlugs(SlugsUtils.toSlug(accomPlace.getAccomName()));
         accomPlaceRepository.save(accomPlace);
 

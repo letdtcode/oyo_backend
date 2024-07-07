@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.services.booking;
 
 import com.mascara.oyo_booking_backend.constant.BookingConstant;
 import com.mascara.oyo_booking_backend.constant.FeeRateOfAdminConstant;
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.PriceCustomForAccom;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.booking.request.BookingRequest;
@@ -11,6 +12,7 @@ import com.mascara.oyo_booking_backend.dtos.booking.response.CheckBookingRespons
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetHistoryBookingResponse;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
+import com.mascara.oyo_booking_backend.entities.accommodation.PriceCustom;
 import com.mascara.oyo_booking_backend.entities.accommodation.SurchargeOfAccom;
 import com.mascara.oyo_booking_backend.entities.address.Province;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
@@ -28,9 +30,9 @@ import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.mapper.booking.BookingMapper;
-import com.mascara.oyo_booking_backend.mapper.notification.NotificationMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
+import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,10 +46,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -92,6 +91,8 @@ public class BookingServiceImpl implements BookingService {
 
     private final EmailService emailService;
 
+    private final PriceCustomRepository priceCustomRepository;
+
     @Override
     @Transactional
     public BaseMessageData createOrderBookingAccom(BookingRequest request, String mailUser) {
@@ -121,12 +122,35 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
         String bookingCode = UUID.randomUUID().toString();
 
+        List<PriceCustom> priceCustoms = priceCustomRepository.findByAccomId(accomPlace.getId());
+
+
         Period p = Period.between(request.getCheckIn(), request.getCheckOut());
         int numNight = p.getDays() + 1;
-        Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
-        Double originPriceAfterPromotion = totalCostAccom - (totalCostAccom * request.getDiscount() / 100);
-        Double totalBill = originPriceAfterPromotion + request.getSurcharge();
+
+        Double costSurcharge = 0D;
+        List<SurchargeOfAccom> surchargeOfAccomList = surchargeOfAccomRepository.findByAccomPlaceId(request.getAccomId());
+        if (surchargeOfAccomList != null && !surchargeOfAccomList.isEmpty()) {
+            for (SurchargeOfAccom surcharge : surchargeOfAccomList) {
+                costSurcharge = costSurcharge + surcharge.getCost();
+            }
+        }
+
+        Double originPay = 0D;
+        for (PriceCustom priceCustom : priceCustoms) {
+            boolean priceCustomApply = Utilities.getInstance()
+                    .isWithinRange(priceCustom.getDateApply(), request.getCheckIn(), request.getCheckOut());
+            if (priceCustomApply) {
+                numNight--;
+                originPay += priceCustom.getPriceApply();
+            }
+        }
+
+        Double pricePerNightAfterPromotion = accomPlace.getPricePerNight() - (accomPlace.getPricePerNight() * accomPlace.getDiscount());
+        originPay = originPay + pricePerNightAfterPromotion * numNight;
+        Double totalBill = originPay + costSurcharge;
         Double totalTrasfer = 0D;
+
         switch (PaymentMethodEnum.valueOf(request.getPaymentMethod())) {
             case PAYPAL -> totalBill = (totalBill * PaymentMethodEnum.PAYPAL.getPercent()) / 100;
             default -> totalBill = (totalBill * PaymentMethodEnum.DIRECT.getPercent()) / 100;
@@ -146,9 +170,10 @@ public class BookingServiceImpl implements BookingService {
         booking = bookingRepository.save(booking);
 
         Payment payment = Payment.builder()
-                .originPay(originPriceAfterPromotion)
-                .totalBill(totalBill).totalTransfer(totalTrasfer)
-                .surchargePay(request.getSurcharge())
+                .originPay(originPay)
+                .totalBill(totalBill)
+                .totalTransfer(totalTrasfer)
+                .surchargePay(costSurcharge)
                 .paymentPolicy(PaymentPolicyEnum.valueOf(request.getPaymentPolicy()))
                 .paymentMethod(PaymentMethodEnum.valueOf(request.getPaymentMethod()))
                 .booking(booking)
@@ -182,8 +207,8 @@ public class BookingServiceImpl implements BookingService {
         model.put("ownerName", fullHostName);
         model.put("dateStart", request.getCheckIn());
         model.put("dateEnd", request.getCheckOut());
-        model.put("baseCost", request.getOriginPay());
-        model.put("surchargeCost", request.getSurcharge());
+        model.put("baseCost", originPay);
+        model.put("surchargeCost", costSurcharge);
         model.put("totalCost", totalBill);
         model.put("moneyPay", totalTrasfer);
         model.put("createdDate", booking.getCreatedDate());
@@ -226,18 +251,28 @@ public class BookingServiceImpl implements BookingService {
     public CheckBookingResponse checkBookingToGetPrice(CheckBookingRequest request) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
-        Double costSurcharge = 0D;
-        List<SurchargeOfAccom> surchargeOfAccomList = surchargeOfAccomRepository.findByAccomPlaceId(request.getAccomId());
-        if (surchargeOfAccomList != null && !surchargeOfAccomList.isEmpty()) {
-            for (SurchargeOfAccom surcharge : surchargeOfAccomList) {
-                costSurcharge = costSurcharge + surcharge.getCost();
+
+//        Period p = Period.between(request.getCheckIn(), request.getCheckOut());
+//        int numNight = p.getDays() + 1;
+//        Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
+//        Double totalBill = totalCostAccom + costSurcharge;
+        List<PriceCustomForAccom> priceCustomForAccoms = new LinkedList<>();
+        List<PriceCustom> priceCustoms = priceCustomRepository.findByAccomId(accomPlace.getId());
+
+        for (PriceCustom priceCustom : priceCustoms) {
+            boolean priceCustomApply = Utilities.getInstance()
+                    .isWithinRange(priceCustom.getDateApply(),
+                            request.getCheckIn(),
+                            request.getCheckOut());
+            if (priceCustomApply) {
+//                numNight--;
+                priceCustomForAccoms.add(
+                        PriceCustomForAccom.builder().priceApply(priceCustom.getPriceApply())
+                                .dateApply(priceCustom.getDateApply())
+                                .build()
+                );
             }
         }
-
-        Period p = Period.between(request.getCheckIn(), request.getCheckOut());
-        int numNight = p.getDays() + 1;
-        Double totalCostAccom = accomPlace.getPricePerNight() * numNight;
-        Double totalBill = totalCostAccom + costSurcharge;
 
         int maxPeople = accomPlace.getNumPeople();
         boolean isCanBooking = true;
@@ -254,7 +289,8 @@ public class BookingServiceImpl implements BookingService {
             isCanBooking = false;
             message = "Num people is out max num people allow";
         }
-        return new CheckBookingResponse(isCanBooking, totalCostAccom, costSurcharge, totalBill, message);
+//        return new CheckBookingResponse(isCanBooking, totalCostAccom, costSurcharge, totalBill, message);
+        return new CheckBookingResponse(isCanBooking, priceCustomForAccoms, message);
     }
 
     @Override

@@ -39,6 +39,7 @@ public class GetAccomPlaceDetailResponse {
     private Long numReview;
     private Double pricePerNight;
     private Double discount;
+//    private List<PriceCustomForAccom> priceCustomForAccomList;
     private String guide;
     private String checkInFrom;
     private String checkOutTo;

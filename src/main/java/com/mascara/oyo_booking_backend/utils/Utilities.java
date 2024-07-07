@@ -1,5 +1,7 @@
 package com.mascara.oyo_booking_backend.utils;
 
+import java.time.LocalDate;
+
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
@@ -24,5 +26,14 @@ public class Utilities {
 
     public int roundNearestMultipleOf10(float number) {
         return (int) Math.round(number / 10.0) * 10;
+    }
+
+    public boolean isWithinRange(LocalDate testDate, LocalDate startDate, LocalDate endDate) {
+        // exclusive startDate and endDate
+        //return testDate.isBefore(endDate) && testDate.isAfter(startDate);
+        // inclusive startDate and endDate
+        return (testDate.isEqual(startDate) || testDate.isEqual(endDate))
+                || (testDate.isBefore(endDate) && testDate.isAfter(startDate));
+
     }
 }

@@ -1,8 +1,11 @@
 package com.mascara.oyo_booking_backend.dtos.booking.response;
 
+import com.mascara.oyo_booking_backend.dtos.accom_place.response.PriceCustomForAccom;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * Created by: IntelliJ IDEA
@@ -16,8 +19,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CheckBookingResponse {
     private boolean isCanBooking;
-    private Double totalCostAccom;
-    private Double costSurcharge;
-    private Double totalBill;
+//    private Double totalCostAccom;
+//    private Double cost;
+//    private Double totalBill;
+    private List<PriceCustomForAccom> priceCustomForAccomList;
     private String message;
 }
