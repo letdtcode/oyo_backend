@@ -98,6 +98,8 @@ public class BookingServiceImpl implements BookingService {
     public BaseMessageData createOrderBookingAccom(BookingRequest request, String mailUser) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
                 .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+        Long hostId = accomPlace.getUserId();
+        User host = userRepository.findByUserId(hostId).get();
         boolean isAvailable = checkAvailableAccom(accomPlace.getId(), request.getCheckIn(), request.getCheckOut());
 
         if (!isAvailable) {
@@ -184,7 +186,8 @@ public class BookingServiceImpl implements BookingService {
         Double moneyForPartner = totalBill - moneyForAdmin;
 
         PartnerEarning partnerEarning = PartnerEarning.builder()
-                .partnerId(accomPlace.getUserId())
+//                .partner(host)
+                .partnerId(hostId)
                 .earningAmount(moneyForPartner)
                 .payment(payment)
                 .build();
@@ -198,8 +201,6 @@ public class BookingServiceImpl implements BookingService {
         adminEarningRepository.save(adminEarning);
 
         //        Send mail booking success
-        Long hostId = accomPlace.getUserId();
-        User host = userRepository.findByUserId(hostId).get();
         String fullHostName = host.getFirstName() + " " + host.getLastName();
         Map<String, Object> model = new HashMap<>();
         model.put("billId", bookingCode);

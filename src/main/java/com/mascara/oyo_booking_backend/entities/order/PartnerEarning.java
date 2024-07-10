@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.entities.order;
 
-import com.mascara.oyo_booking_backend.entities.order.Payment;
+import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +27,13 @@ public class PartnerEarning extends BasePesistence {
 
     @Id
     private Long id;
+
+//    @Column(name = "partner_id")
+//    private Long partnerId;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "partner_id", insertable = false, updatable = false)
+    private User partner;
 
     @Column(name = "partner_id")
     private Long partnerId;
