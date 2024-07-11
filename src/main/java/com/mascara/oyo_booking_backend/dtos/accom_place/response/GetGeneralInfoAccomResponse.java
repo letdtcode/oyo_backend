@@ -20,7 +20,7 @@ import java.util.List;
 @Builder
 public class GetGeneralInfoAccomResponse {
     private String accomCateName;
-    private String nameAccom;
+    private String accomName;
     private String description;
     private Double pricePerNight;
     private Float acreage;

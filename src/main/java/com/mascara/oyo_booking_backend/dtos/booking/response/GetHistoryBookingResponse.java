@@ -21,7 +21,7 @@ public class GetHistoryBookingResponse {
     private Long accomId;
     private String bookingCode;
     private String fullNameHost;
-    private String nameAccom;
+    private String accomName;
     private String generalAddress;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkIn;

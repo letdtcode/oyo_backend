@@ -763,7 +763,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         }
 
         GetGeneralInfoAccomResponse response = GetGeneralInfoAccomResponse.builder()
-                .nameAccom(accomPlace.getAccomName())
+                .accomName(accomPlace.getAccomName())
                 .accomCateName(categories.getAccomCateName())
                 .description(accomPlace.getDescription())
                 .acreage(accomPlace.getAcreage())

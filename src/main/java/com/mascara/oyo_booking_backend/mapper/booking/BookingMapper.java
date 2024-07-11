@@ -22,7 +22,7 @@ import org.mapstruct.ReportingPolicy;
         uses = {BookingHelperMapper.class, AccommodationHelperMapper.class})
 public interface BookingMapper {
 
-    @Mapping(source = "accomId", target = "nameAccom", qualifiedByName = "idAccomPlaceToNameAccom")
+    @Mapping(source = "accomId", target = "accomName", qualifiedByName = "idAccomPlaceToNameAccom")
     @Mapping(source = "id", target = "originPay", qualifiedByName = "bookingIdToOriginPay")
     @Mapping(source = "id", target = "surcharge", qualifiedByName = "bookingIdToSurchargePay")
     @Mapping(source = "id", target = "totalBill", qualifiedByName = "bookingIdToTotalBill")
@@ -34,7 +34,7 @@ public interface BookingMapper {
     GetBookingResponse toGetBookingResponse(Booking booking);
 
     @Mapping(source = "accomId", target = "fullNameHost", qualifiedByName = "idAccomToFullNameHost")
-    @Mapping(source = "accomId", target = "nameAccom", qualifiedByName = "idAccomPlaceToNameAccom")
+    @Mapping(source = "accomId", target = "accomName", qualifiedByName = "idAccomPlaceToNameAccom")
     @Mapping(source = "accomId", target = "generalAddress", qualifiedByName = "idAccomToGeneralAddress")
     @Mapping(source = "accomId", target = "imageUrl", qualifiedByName = "idAccomToImageUrlDefaul")
     @Mapping(source = "id", target = "originPay", qualifiedByName = "bookingIdToOriginPay")

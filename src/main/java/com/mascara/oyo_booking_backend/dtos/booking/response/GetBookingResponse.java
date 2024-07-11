@@ -41,5 +41,5 @@ public class GetBookingResponse {
     private Long accomId;
     private Double adminEarning;
     private Double partnerEarning;
-    private String nameAccom;
+    private String accomName;
 }
