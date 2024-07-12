@@ -366,7 +366,7 @@ public class BookingServiceImpl implements BookingService {
         CancellationPolicyEnum cancellationPolicy = accomHost.getCancellationPolicy();
 
         LocalDate today = LocalDate.now();
-        long days = ChronoUnit.DAYS.between(booking.getCheckIn(), today);
+        long days = ChronoUnit.DAYS.between(today, booking.getCheckIn());
         double cancellationFee = (accomHost.getCancellationFeeRate() * payment.getTotalBill()) / 100;
         double adminEarn = (cancellationFee * FeeRateOfAdminConstant.FEE_RATE_OF_ADMIN) / 100;
         double partnerEarn = cancellationFee - adminEarn;

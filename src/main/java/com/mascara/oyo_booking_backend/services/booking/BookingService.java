@@ -45,6 +45,4 @@ public interface BookingService {
     @Transactional
     BaseMessageData cancelBooking(String userMail, CancelBookingRequest request);
 
-//    @Transactional
-//    BaseMessageData changeStatusBookingByUser(String userMail, String bookingCode, String status);
 }
