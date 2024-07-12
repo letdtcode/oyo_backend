@@ -5,8 +5,6 @@
       "lastName": "Adam",
       "email": "admin@gmail.com",
       "role": [
-        "Client",
-        "Partner",
         "Admin"
       ],
       "password": "123456"
@@ -14,7 +12,7 @@
     {
       "firstName": "Nguyen Duc",
       "lastName": "Thanh",
-      "email": "client1@gmail.com",
+      "email": "ndtforword@gmail.com",
       "role": [
         "Client",
         "Partner"
@@ -24,7 +22,7 @@
     {
       "firstName": "Mai Bao",
       "lastName": "Huy",
-      "email": "client2@gmail.com",
+      "email": "maihuy7622@gmail.com",
       "role": [
         "Client",
         "Partner"

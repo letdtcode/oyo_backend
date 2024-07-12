@@ -10,11 +10,12 @@
       "wardCode": "00445",
       "latitude": 10.8485734,
       "longitude": 106.7695806,
-      "numKitchen": 3,
       "acreage": 1264.5,
       "numPeople": 7,
       "numBathRoom": 5,
       "numBedRoom": 3,
+      "numKitchen": 3,
+      "numView": 50,
       "pricePerNight": 260000,
       "facilityNameList": [
         "Bàn ủi (bàn là)",
@@ -53,6 +54,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 55,
       "pricePerNight": 280000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -93,6 +95,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 60,
       "pricePerNight": 470000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -133,6 +136,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 65,
       "pricePerNight": 300000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -173,6 +177,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 70,
       "pricePerNight": 300000,
       "facilityNameList": [
         "Vườn hoặc sân sau",
@@ -213,6 +218,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 75,
       "pricePerNight": 300000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -253,6 +259,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 80,
       "pricePerNight": 300000,
       "facilityNameList": [
         "Đồ che mặt bảo vệ cho nhân viên",
@@ -293,6 +300,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 85,
       "pricePerNight": 600000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -333,6 +341,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 90,
       "pricePerNight": 300000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -373,6 +382,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 95,
       "pricePerNight": 150000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -413,6 +423,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 100,
       "pricePerNight": 170000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -453,6 +464,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 150,
       "pricePerNight": 300000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -493,6 +505,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 200,
       "pricePerNight": 300000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -533,6 +546,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 250,
       "pricePerNight": 700000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -573,6 +587,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 300,
       "pricePerNight": 550000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -613,6 +628,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 350,
       "pricePerNight": 450000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -653,6 +669,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 400,
       "pricePerNight": 350000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -693,6 +710,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 450,
       "pricePerNight": 275000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -733,6 +751,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 500,
       "pricePerNight": 300000,
       "facilityNameList": [
         "Máy pha cà phê/trà",
@@ -773,6 +792,7 @@
       "numPeople": 4,
       "numBathRoom": 2,
       "numBedRoom": 2,
+      "numView": 550,
       "pricePerNight": 140000,
       "facilityNameList": [
         "Máy pha cà phê/trà",

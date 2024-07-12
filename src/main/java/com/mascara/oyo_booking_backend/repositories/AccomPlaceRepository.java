@@ -219,11 +219,11 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
             value = "with qr3 as (select count(b.id) as numBookingSuccess, " +
                     "ap.id as accomId " +
                     "from accom_place ap left join " +
-                    "booking b on ap.id = b.accom_id where ap.user_id = :host_id and b.status != 'CANCELED' and month(b.created_date) = :month and year(b.created_date) = :year group by ap.id)," +
+                    "booking b on ap.id = b.accom_id where ap.user_id = :host_id and ap.status = 'APPROVED' and b.status != 'CANCELED' and month(b.created_date) = :month and year(b.created_date) = :year group by ap.id)," +
                     "qr2 as (select ap.id as accomId," +
                     "                    coalesce(sum(p.total_bill),0) as revenue " +
                     "from accom_place ap left join " +
-                    "booking b on ap.id = b.accom_id left join payment p on b.id = p.id where ap.user_id = :host_id and (b.status != 'CANCELED' or b.status is null) and (month(b.created_date) = :month or month(b.created_date) is null) and (year(b.created_date) is null or year(b.created_date) = :year) group by ap.id)" +
+                    "booking b on ap.id = b.accom_id left join payment p on b.id = p.id where ap.user_id = :host_id and ap.status = 'APPROVED' and (b.status != 'CANCELED' or b.status is null) and (month(b.created_date) = :month or month(b.created_date) is null) and (year(b.created_date) is null or year(b.created_date) = :year) group by ap.id)" +
                     "    " +
                     "select ap.id as accomId," +
                     "ap.accom_name as accomName," +
@@ -233,19 +233,19 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
                     "        ap.num_review as numberOfReview," +
                     "        ap.grade_rate as averageRate, " +
                     "        coalesce(coalesce(qr3.numBookingSuccess,0) / ap.num_booking,0) * 100 as reservationRate" +
-                    "        from accom_place ap left join qr2 on ap.id = qr2.accomId left join qr3 on qr2.accomId = qr3.accomId where ap.user_id = :host_id order by revenue desc" +
+                    "        from accom_place ap left join qr2 on ap.id = qr2.accomId left join qr3 on qr2.accomId = qr3.accomId where ap.user_id = :host_id and ap.status = 'APPROVED' order by revenue desc" +
                     "        ",
             countQuery = "with qr3 as (select count(b.id) as numBookingSuccess, " +
                     "ap.id as accomId " +
                     "from accom_place ap left join " +
-                    "booking b on ap.id = b.accom_id where ap.user_id = :host_id and b.status != 'CANCELED' and month(b.created_date) = :month and year(b.created_date) = :year group by ap.id)," +
+                    "booking b on ap.id = b.accom_id where ap.user_id = :host_id and ap.status = 'APPROVED' and b.status != 'CANCELED' and month(b.created_date) = :month and year(b.created_date) = :year group by ap.id)," +
                     "qr2 as (select ap.id as accomId," +
                     "                    coalesce(sum(p.total_bill),0) as revenue " +
                     "from accom_place ap left join " +
-                    "booking b on ap.id = b.accom_id left join payment p on b.id = p.id where ap.user_id = :host_id and (b.status != 'CANCELED' or b.status is null) and (month(b.created_date) = :month or month(b.created_date) is null) and (year(b.created_date) is null or year(b.created_date) = :year) group by ap.id)" +
+                    "booking b on ap.id = b.accom_id left join payment p on b.id = p.id where ap.user_id = :host_id and ap.status = 'APPROVED' and (b.status != 'CANCELED' or b.status is null) and (month(b.created_date) = :month or month(b.created_date) is null) and (year(b.created_date) is null or year(b.created_date) = :year) group by ap.id)" +
                     "    " +
                     "select count(ap.id)" +
-                    "        from accom_place ap left join qr2 on ap.id = qr2.accomId left join qr3 on qr2.accomId = qr3.accomId where ap.user_id = :host_id order by revenue desc" +
+                    "        from accom_place ap left join qr2 on ap.id = qr2.accomId left join qr3 on qr2.accomId = qr3.accomId where ap.user_id = :host_id and order by revenue desc" +
                     "        ")
     Page<HostHomeStatisticProjection> getStatisticHomeByMonthAndYearOfHost(@Param("host_id") Long hostId,
                                                                            @Param("month") Integer month,

@@ -124,6 +124,7 @@ public class InitAccomPlaceService {
                 .numBathRoom(request.getNumBathRoom())
                 .numBedRoom(request.getNumBedRoom())
                 .numKitchen(request.getNumKitchen())
+                .numView(request.getNumView())
                 .pricePerNight(request.getPricePerNight())
                 .facilitySet(facilitySet)
                 .user(user)

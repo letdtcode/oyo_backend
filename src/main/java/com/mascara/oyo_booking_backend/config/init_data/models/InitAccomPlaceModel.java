@@ -77,6 +77,8 @@ class InitAccomPlaceModel {
     @Min(value = 0, message = "Num kitchen should not be less than 0")
     private Integer numKitchen;
 
+    private Long numView;
+
     @NotNull
     @Min(value = 0, message = "Price per night should not be less than 0")
     private Double pricePerNight;
