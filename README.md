@@ -2,4 +2,4 @@
 NGHỈ TRỰC TUYẾN
 #### Lược đồ class diagram tổng quan
 ![Class diagram](ClassDiagram_TongQuan.png)
-*Dự án này có thể vẫn sẽ được bổ sung thêm một số tính năng trong tương lai khi tôi có thời gian và có cảm hứng. Xin cảm ơn !*
+*Dự án này có thể sẽ được bổ sung thêm một số tính năng trong tương lai khi tôi có thời gian. Tôi rất sẵn lòng nếu nhận được sự review code và đóng góp của mọi người. Xin cảm ơn !*
