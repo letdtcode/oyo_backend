@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +66,7 @@ public class CmsAccomPlaceController {
     @PutMapping("/{id}/change-status")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusAccomPlace(@PathVariable("id") @NotNull Long id,
-                                                    @RequestParam("status") @NotBlank @Status String status) {
+                                                    @RequestParam("status") @NotBlank @Pattern(regexp = "(?i)APPROVED|BANNED|WAITING_FOR_COMPLETE|WAITING_FOR_APPROVAL", message = "Status not be accepted") String status) {
         BaseMessageData messageReponse = accomPlaceService.changeStatusAccomPlace(id, status);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }

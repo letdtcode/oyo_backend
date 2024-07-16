@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mascara.oyo_booking_backend.config.init_data.models.InitAccomPlaceModel;
 import com.mascara.oyo_booking_backend.config.init_data.models.InitDbModel;
+import com.mascara.oyo_booking_backend.config.init_data.models.InitImageAccomModel;
 import com.mascara.oyo_booking_backend.config.init_data.service.InitAccomPlaceService;
 import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
@@ -34,6 +35,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -347,20 +349,27 @@ public class InitDataService implements CommandLineRunner {
                 );
 
                 ObjectMapper mapper = new ObjectMapper();
-                InitDbModel<ImageAccom> initModel = mapper.readValue(file, new TypeReference<>() {
+                InitDbModel<InitImageAccomModel> initModel = mapper.readValue(file, new TypeReference<>() {
                 });
 
-                List<ImageAccom> imageAccomList = initModel.getData();
+                List<InitImageAccomModel> imageAccomList = initModel.getData();
+                List<ImageAccom> imageAccoms = new LinkedList<>();
                 for (int i = 0; i < imageAccomList.size(); i++) {
-                    Long accomId = imageAccomList.get(i).getAccomPlaceId();
-                    AccomPlace accomPlace = accomPlaceRepository.findById(accomId).get();
-                    ImageAccom imageAccom = imageAccomList.get(i);
-                    imageAccom.setAccomPlace(accomPlace);
-                    imageAccom.setCreatedBy("dev");
-                    imageAccom.setLastModifiedBy("dev");
-                    imageAccomList.set(i, imageAccom);
+//                    Long accomId = imageAccomList.get(i).getAccomPlaceId();
+                    InitImageAccomModel initImageAccomModel = imageAccomList.get(i);
+//                    AccomPlace accomPlace = accomPlaceRepository.findById(accomId).get();
+                    for (String imgUrl : initImageAccomModel.getImgAccomLink()) {
+                        ImageAccom imageAccom = ImageAccom.builder()
+                                .imgAccomLink(imgUrl)
+                                .accomPlaceId(initImageAccomModel.getAccomPlaceId())
+                                .build();
+//                    imageAccom.setAccomPlace(accomPlace);
+                        imageAccom.setCreatedBy("dev");
+                        imageAccom.setLastModifiedBy("dev");
+                        imageAccoms.add(imageAccom);
+                    }
                 }
-                imageAccomRepository.saveAll(imageAccomList);
+                imageAccomRepository.saveAll(imageAccoms);
             }
         } catch (Exception e) {
             e.printStackTrace();

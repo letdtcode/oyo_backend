@@ -81,7 +81,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                     "t.phone as phoneNumber, " +
                     "coalesce(sum(p.total_bill),0) as totalCost, " +
                     "count(p.id) as numberOfBooking " +
-                    "from (select u.*, b.id as booking_id from users u left join booking b on u.id = b.booking_list_id) t left join " +
+                    "from (select u.*, b.id as booking_id from users u left join booking b on u.id = b.booking_list_id where u.id != 1) t left join " +
                     "payment p on t.booking_id = p.id where (DATE(p.created_date) is null or DATE(p.created_date) between :date_start and :date_end) group by t.id order by p.total_bill desc")
     Page<InfoGuestBookingProjection> getStatisticForGuestOfAdmin(@Param("date_start") LocalDate dateStart,
                                                                  @Param("date_end") LocalDate dateEnd,
@@ -95,7 +95,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "count(ap.id) as numberOfAccom, " +
             "temp.numberOfBooking, " +
             "temp.totalRevenue " +
-            "from (select u.*, pe.earning_amount, count(pe.id) as numberOfBooking, coalesce(sum(pe.earning_amount),0) as totalRevenue from users u left join partner_earning pe on u.id = pe.partner_id where (DATE(pe.created_date) is null or DATE(pe.created_date) between :date_start and :date_end) " +
+            "from (select u.*, pe.earning_amount, count(pe.id) as numberOfBooking, coalesce(sum(pe.earning_amount),0) as totalRevenue from users u left join partner_earning pe on u.id = pe.partner_id where (DATE(pe.created_date) is null or DATE(pe.created_date) between :date_start and :date_end) and u.id != 1 " +
             "group by u.id order by pe.earning_amount desc) temp " +
             "left join accom_place ap on temp.id = ap.user_id group by temp.id")
     Page<InfoHostStatisticProjection> getStatisticForHostOfAdmin(@Param("date_start") LocalDate dateStart,
