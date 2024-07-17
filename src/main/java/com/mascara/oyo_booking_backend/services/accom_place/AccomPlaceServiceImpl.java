@@ -575,9 +575,17 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
 
     @Override
     @Transactional
-    public BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum, Integer pageSize, String sortType, String field) {
+    public BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum, Integer pageSize, String sortType, String field, String userMail) {
+        Long userId = userMail.equals("anonymousUser") ? null : userRepository.findByMail(userMail).get().getId();
+
         Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.valueOf(sortType), field));
-        Page<AccomPlace> accomPlacePage = accomPlaceRepository.getAllWithPaging(paging, AccomStatusEnum.APPROVED);
+        Page<AccomPlace> accomPlacePage = null;
+        if (userId != null) {
+            accomPlacePage = accomPlaceRepository.getAllWithPagingExceptAccomOfHost(paging, AccomStatusEnum.APPROVED.toString(), userId
+            );
+        } else {
+            accomPlacePage = accomPlaceRepository.getAllWithPaging(paging, AccomStatusEnum.APPROVED);
+        }
         List<AccomPlace> accomPlaceList = accomPlacePage.stream().toList();
         List<GetAccomPlaceResponse> responseList = accomPlaceList.stream()
                 .map(accomPlace -> accomPlaceMapper.toGetAccomPlaceResponse(accomPlace))

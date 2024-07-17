@@ -27,8 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -139,9 +141,11 @@ public class PublicAccomPlaceController {
                                                      @NotNull(message = "Page size must not be null")
                                                      @Min(value = 1, message = "Page size must greater or equal 1")
                                                      Integer pageSize) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String userMail = principal.getName();
         String sortType = "DESC";
         String fieldSort = "num_view";
-        BasePagingData response = accomPlaceService.getTopAccomPlaceByField(pageNumber, pageSize, sortType, fieldSort);
+        BasePagingData response = accomPlaceService.getTopAccomPlaceByField(pageNumber, pageSize, sortType, fieldSort, userMail);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 

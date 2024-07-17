@@ -68,7 +68,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                     "c.numberOfBooking, " +
                     "d.numberOfOwner from (select count(*) as numberOfGuest from " +
                     "users where users.deleted is false and year(users.created_date) = :year) as a , (select coalesce(sum(p.total_bill),0) as totalRevenue from " +
-                    "payment p where year(p.created_date) = :year) as b ,(select count(*) as numberOfBooking from payment p where year(p.created_date) = :year) as c, " +
+                    "payment p join booking b on p.id = b.id where year(p.created_date) = :year and b.status = 'CHECK_OUT') as b ,(select count(*) as numberOfBooking from payment p where year(p.created_date) = :year) as c, " +
                     "(select count(*) as numberOfOwner from (select distinct u.id from users u join accom_place ap on u.id = ap.user_id where ap.deleted is false and year(ap.created_date) = :year) " +
                     "as user_partner) as d")
     StatisticCountProjection getStatisticCountOfAdmin(@Param("year") Integer year);

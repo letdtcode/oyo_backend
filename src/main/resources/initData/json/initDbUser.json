@@ -28,6 +28,16 @@
         "Partner"
       ],
       "password": "123456"
+    },
+    {
+      "firstName": "Nguyen",
+      "lastName": "Thanh",
+      "email": "boynguyenducthanh@gmail.com",
+      "role": [
+        "Client",
+        "Partner"
+      ],
+      "password": "123456"
     }
   ]
 }

@@ -81,6 +81,11 @@ public interface AccomPlaceRepository extends JpaRepository<AccomPlace, Long>, J
             nativeQuery = true)
     Page<AccomPlace> getAllWithPaging(Pageable pageable, @Param("status") AccomStatusEnum status);
 
+    @Query(value = "select ap.* from accom_place ap where ap.deleted = false and ap.status = :status and ap.user_id != :user_id",
+            countQuery = "select count(id) from accom_place ap where ap.deleted = false and ap.status = :status and ap.user_id != :user_id",
+            nativeQuery = true)
+    Page<AccomPlace> getAllWithPagingExceptAccomOfHost(Pageable pageable, @Param("status") String status, @Param("user_id") Long userId);
+
     @Query(value = "select ap.* from accom_place ap where ap.user_id = :host_id and ap.deleted = false and ap.status= :status",
             countQuery = "select count(id) from accom_place ap where ap.user_id = :host_id and ap.deleted = false and ap.status= :status",
             nativeQuery = true)

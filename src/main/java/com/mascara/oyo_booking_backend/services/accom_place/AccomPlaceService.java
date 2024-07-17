@@ -88,7 +88,8 @@ public interface AccomPlaceService {
     BasePagingData<GetAccomPlaceResponse> getTopAccomPlaceByField(Integer pageNum,
                                                                   Integer pageSize,
                                                                   String sortType,
-                                                                  String field);
+                                                                  String field,
+                                                                  String userMail);
 
     @Transactional
     BasePagingData<GetAccomPlaceResponse> getListAccomPlaceApprovedOfPartner(String hostMail,

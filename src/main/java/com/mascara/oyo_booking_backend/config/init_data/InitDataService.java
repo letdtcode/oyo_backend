@@ -304,8 +304,14 @@ public class InitDataService implements CommandLineRunner {
                 InitDbModel<InitAccomPlaceModel> initModel = mapper.readValue(file, new TypeReference<>() {
                 });
                 List<InitAccomPlaceModel> accomPlaceRequestList = initModel.getData();
+                int numAccom = 0;
                 for (InitAccomPlaceModel accomPlace : accomPlaceRequestList) {
-                    initAccomPlaceService.addAccomPlace(accomPlace, "ndtforword@gmail.com");
+                    numAccom++;
+                    if (numAccom > 20) {
+                        initAccomPlaceService.addAccomPlace(accomPlace, "maihuy7622@gmail.com");
+                    } else {
+                        initAccomPlaceService.addAccomPlace(accomPlace, "ndtforword@gmail.com");
+                    }
                 }
             }
         } catch (Exception e) {
