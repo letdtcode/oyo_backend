@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.payment;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
 import lombok.Data;
 
 import java.util.List;

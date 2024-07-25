@@ -2,8 +2,9 @@ package com.mascara.oyo_booking_backend.entities.order;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.entities.booking.Booking;
-import com.mascara.oyo_booking_backend.enums.PaymentMethodEnum;
-import com.mascara.oyo_booking_backend.enums.PaymentPolicyEnum;
+import com.mascara.oyo_booking_backend.enums.order.PaymentMethodEnum;
+import com.mascara.oyo_booking_backend.enums.order.PaymentPolicyEnum;
+import com.mascara.oyo_booking_backend.enums.order.PaymentStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,14 +44,6 @@ public class Payment extends BasePesistence {
     @Column(name = "total_transfer", nullable = false)
     private Double totalTransfer;
 
-    @Column(name = "payment_policy", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PaymentPolicyEnum paymentPolicy;
-
-    @Column(name = "payment_method", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PaymentMethodEnum paymentMethod;
-
     @Column(name = "cancellation_fee")
     private Double cancellationFee;
 
@@ -60,11 +53,26 @@ public class Payment extends BasePesistence {
     @Column(name = "cancel_period", columnDefinition = "TIMESTAMP")
     private LocalDateTime cancelPeriod;
 
-//    @Column(name = "paypal_order_status")
-//    private String paypalOrderStatus;
+    @Column(name = "payment_policy", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentPolicyEnum paymentPolicy;
+
+    @Column(name = "payment_method", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentMethodEnum paymentMethod;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
     private Booking booking;
+
+    @Column(name = "paypal_order_status", columnDefinition = "VARCHAR(255)")
+    private String paypalOrderStatus;
+
+    @Column(name = "paypal_order_id")
+    private String paypalOrderId;
+
+    @Column(name = "payment_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentStatusEnum paymentStatus;
 }

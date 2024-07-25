@@ -9,7 +9,7 @@ import com.mascara.oyo_booking_backend.entities.booking.Booking;
 import com.mascara.oyo_booking_backend.entities.review.ImageReview;
 import com.mascara.oyo_booking_backend.entities.review.Review;
 import com.mascara.oyo_booking_backend.entities.review.ReviewList;
-import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mapper.review.ReviewMapper;

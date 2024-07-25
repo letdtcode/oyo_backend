@@ -3,7 +3,7 @@ package com.mascara.oyo_booking_backend.entities.booking;
 import com.mascara.oyo_booking_backend.entities.review.Review;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
-import com.mascara.oyo_booking_backend.enums.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

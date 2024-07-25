@@ -11,15 +11,14 @@ import com.mascara.oyo_booking_backend.entities.bank.Bank;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
-import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
-import com.mascara.oyo_booking_backend.enums.CancellationPolicyEnum;
+import com.mascara.oyo_booking_backend.enums.homestay.AccomStatusEnum;
+import com.mascara.oyo_booking_backend.enums.homestay.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

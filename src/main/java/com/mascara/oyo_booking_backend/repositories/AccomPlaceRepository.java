@@ -4,7 +4,7 @@ import com.mascara.oyo_booking_backend.dtos.recommender_system.projections.Accom
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.projections.InfoAccomPlaceStatisticProjection;
 import com.mascara.oyo_booking_backend.dtos.statistic.partner.projections.HostHomeStatisticProjection;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
-import com.mascara.oyo_booking_backend.enums.AccomStatusEnum;
+import com.mascara.oyo_booking_backend.enums.homestay.AccomStatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

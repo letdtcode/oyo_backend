@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.user.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mascara.oyo_booking_backend.enums.UserStatusEnum;
+import com.mascara.oyo_booking_backend.enums.user.UserStatusEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;

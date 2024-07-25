@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.entities.authentication;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
-import com.mascara.oyo_booking_backend.enums.RoleEnum;
+import com.mascara.oyo_booking_backend.enums.user.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

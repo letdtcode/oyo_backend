@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.enums;
+package com.mascara.oyo_booking_backend.enums.order;
 
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.securities.oauth2;
 
 import com.mascara.oyo_booking_backend.entities.authentication.User;
-import com.mascara.oyo_booking_backend.enums.AuthProviderEnum;
+import com.mascara.oyo_booking_backend.enums.user.AuthProviderEnum;
 import com.mascara.oyo_booking_backend.exceptions.OAuth2AuthenticationProcessingException;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.oauth2.user.OAuth2UserInfo;

@@ -128,7 +128,7 @@ app:
     paypal:
       baseUrl: https://api-m.sandbox.paypal.com
       clientId: AYE5cyLWOZZW2-PLHdIrxPT14X70Y9ku_EWu2ACcK8M465uFy1qDtcwGE75uB4g-Lb4G1FTQCK8r-dQq
-      secret: AYE5cyLWOZZW2-PLHdIrxPT14X70Y9ku_EWu2ACcK8M465uFy1qDtcwGE75uB4g-Lb4G1FTQCK8r-dQq
+      secret: EHXkNzS1tjCDNPKFg6a6urwd6HIx0gnuh0yvd2Q1p4154y8Q6WKZ0x7IMSKt5kS5TqZvvidLdpIApbTh
 
   auth:
     jwt:
