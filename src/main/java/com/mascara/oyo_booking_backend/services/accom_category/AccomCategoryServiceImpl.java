@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.accom_category;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.accom_category.request.AddAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.accom_category.request.UpdateAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.accom_category.response.GetAccomCategoryResponse;
@@ -11,7 +12,6 @@ import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mapper.accommodation.AccommodationCategoriesMapper;
 import com.mascara.oyo_booking_backend.repositories.AccommodationCategoriesRepository;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -65,9 +65,9 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
     @Transactional
     public GetAccomCategoryResponse addAccomCategory(AddAccomCategoryRequest request) {
         if (accomCategoriesRepository.existsByAccomCateName(request.getAccomCateName()))
-            throw new ResourceExistException(AppContants.FIELD_EXIST_WHEN_ADD_ENTITY("Accom category", "accomCategoryName"));
+            throw new ResourceExistException(MessageConstant.FIELD_EXIST_WHEN_ADD_ENTITY("Accom category", "accomCategoryName"));
         if (accomCategoriesRepository.existsByIcon(request.getIcon()))
-            throw new ResourceExistException(AppContants.FIELD_EXIST_WHEN_ADD_ENTITY("Accom category", "icon"));
+            throw new ResourceExistException(MessageConstant.FIELD_EXIST_WHEN_ADD_ENTITY("Accom category", "icon"));
         AccommodationCategories accommodationCategories = AccommodationCategories.builder()
                 .accomCateName(request.getAccomCateName())
                 .description(request.getDescription())
@@ -82,7 +82,7 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
     @Transactional
     public GetAccomCategoryResponse updateAccomCategory(UpdateAccomCategoryRequest request, Long id) {
         AccommodationCategories accommodationCategories = accomCategoriesRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom category")));
         accommodationCategories.setAccomCateName(request.getAccomCateName());
         accommodationCategories.setDescription(request.getDescription());
         accommodationCategories.setIcon(request.getIcon());
@@ -95,19 +95,19 @@ public class AccomCategoryServiceImpl implements AccomCategoryService {
     @Transactional
     public BaseMessageData changeStatusAccomCategory(Long id, String status) {
         AccommodationCategories accommodationCategories = accomCategoriesRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom category")));
         accommodationCategories.setStatus(CommonStatusEnum.valueOf(status));
         accomCategoriesRepository.save(accommodationCategories);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("accom category"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("accom category"));
     }
 
     @Override
     @Transactional
     public BaseMessageData deleteAccomCategory(Long id) {
         AccommodationCategories accommodationCategories = accomCategoriesRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom category")));
         accommodationCategories.setDeleted(true);
         accomCategoriesRepository.save(accommodationCategories);
-        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("accommodation category"));
+        return new BaseMessageData(MessageConstant.DELETE_SUCCESS_MESSAGE("accommodation category"));
     }
 }

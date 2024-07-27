@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.facility;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.facility.request.AddFacilityRequest;
@@ -14,7 +15,6 @@ import com.mascara.oyo_booking_backend.mapper.facility.FacilityMapper;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
 import com.mascara.oyo_booking_backend.repositories.FacilityRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -65,7 +65,7 @@ public class FacilityServiceImpl implements FacilityService {
         }
         int count = (int) facilityRepository.count();
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Facility category")));
         Facility facility = Facility.builder()
                 .facilityName(request.getFacilityName())
                 .facilityCateCode(request.getFacilityCateCode())
@@ -87,9 +87,9 @@ public class FacilityServiceImpl implements FacilityService {
             throw new ResourceExistException(String.format("Facility have name: %s is already exist", request.getFacilityName()));
         }
         Facility facility = facilityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Facility")));
         FacilityCategories facilityCategories = facilityCategoriesRepository.findByFaciCateCode(request.getFacilityCateCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Facility category")));
         facility.setFacilityName(request.getFacilityName());
         facility.setFacilityCateCode(request.getFacilityCateCode());
         facility.setFacilityCategories(facilityCategories);
@@ -103,19 +103,19 @@ public class FacilityServiceImpl implements FacilityService {
     @Transactional
     public BaseMessageData changeStatusFacility(Long id, String status) {
         Facility facility = facilityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Facility")));
         facility.setStatus(CommonStatusEnum.valueOf(status));
         facilityRepository.save(facility);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Facility"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Facility"));
     }
 
     @Override
     @Transactional
     public BaseMessageData deletedFacility(Long id) {
         Facility facility = facilityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Facility")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Facility")));
         facility.setDeleted(true);
         facilityRepository.save(facility);
-        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("Facility"));
+        return new BaseMessageData(MessageConstant.DELETE_SUCCESS_MESSAGE("Facility"));
     }
 }

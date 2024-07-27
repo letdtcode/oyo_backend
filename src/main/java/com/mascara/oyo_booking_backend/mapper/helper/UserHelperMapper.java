@@ -1,9 +1,9 @@
 package com.mascara.oyo_booking_backend.mapper.helper;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class UserHelperMapper {
     public String userIdToNameHost(Long userId) {
         if (userId != null) {
             User host = userRepository.findByUserId(userId)
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+                    .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("User")));
             return host.getFirstName() + " " + host.getLastName();
         }
         return null;
@@ -36,7 +36,7 @@ public class UserHelperMapper {
     public String userIdToHostMail(Long userId) {
         if (userId != null) {
             User host = userRepository.findByUserId(userId)
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+                    .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("User")));
             return host.getMail();
         }
         return null;

@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.user;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.TokenRefreshRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.response.TokenRefreshResponse;
@@ -29,7 +30,6 @@ import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
 import com.mascara.oyo_booking_backend.securities.oauth2.user.OAuth2UserInfo;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.RandomStringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -210,13 +210,13 @@ public class UserServiceImpl implements UserService {
         if (jwtUtils.isTokenExpired(refreshToken))
             throw new TokenRefreshException("Refresh token is expired");
         RefreshToken token = refreshTokenRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("refresh token")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("refresh token")));
         String emailUser = jwtUtils.getUsernameFromToken(refreshToken);
         token.incrementRefreshCount();
         refreshTokenRepository.save(token);
 
         User user = userRepository.findByMail(emailUser)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("user")));
         Set<Role> rolesOfUser = user.getRoleSet();
         Set<String> rolesName = rolesOfUser.stream().map(role -> role.getRoleName().toString())
                 .collect(Collectors.toSet());
@@ -230,7 +230,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public InfoUserResponse updateInfoPersonal(UpdateInfoPersonalRequest request, String email) {
         User user = userRepository.findByMail(email)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("user")));
         user.setUserName(request.getUserName());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -246,31 +246,31 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public InfoUserResponse updateAvatar(MultipartFile file, String mail) {
         if (!file.isEmpty()) {
-            User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+            User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("user")));
             String pathImg = cloudinaryService.store(file).getImageUrl();
             user.setAvatarUrl(pathImg);
             userRepository.save(user);
             return userMapper.toInfoUserResponse(user);
         }
-        throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
+        throw new ResourceNotFoundException(MessageConstant.FILE_IS_NULL);
     }
 
     @Override
     @Transactional
     public BaseMessageData changePassword(ChangePasswordRequest request, String mailUser) {
         if (!request.getEmail().equals(mailUser)) {
-            return new BaseMessageData(AppContants.NOT_PERMIT);
+            return new BaseMessageData(MessageConstant.NOT_PERMIT);
         }
         User user = userRepository.findByMail(request.getEmail())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("user")));
         String oldPassRequest = request.getOldPassword();
         if (encoder.matches(oldPassRequest, user.getPassword())) {
             String newPassEncoded = encoder.encode(request.getNewPassword());
             user.setPassword(newPassEncoded);
             userRepository.save(user);
-            return new BaseMessageData(AppContants.CHANGE_PASSWORD_SUCCESS);
+            return new BaseMessageData(MessageConstant.CHANGE_PASSWORD_SUCCESS);
         }
-        return new BaseMessageData(AppContants.PASSWORD_INCORRECT);
+        return new BaseMessageData(MessageConstant.PASSWORD_INCORRECT);
     }
 
     @Override
@@ -293,16 +293,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public BaseMessageData changeStatusUser(String email, String status) {
         User user = userRepository.findByMail(email)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("User")));
         userRepository.changeStatusUser(email, status);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("user"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("user"));
     }
 
     @Override
     @Transactional
     public BaseMessageData<String> resetPasswordUser(String mail) {
         User user = userRepository.findByMail(mail)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("User")));
         String newPassword = RandomStringUtils.generateRandomString();
         String hasedPassword = encoder.encode(newPassword);
         user.setPassword(hasedPassword);
@@ -320,16 +320,16 @@ public class UserServiceImpl implements UserService {
                 .subject("Khôi phục mật khẩu")
                 .build();
         emailService.sendMailWithTemplate(emailDetails, "Email_Reset_Password.ftl", model);
-        return new BaseMessageData(AppContants.RESET_PASSWORD_SUCESS);
+        return new BaseMessageData(MessageConstant.RESET_PASSWORD_SUCESS);
     }
 
     @Override
     @Transactional
     public BaseMessageData deleteUser(String email) {
         User user = userRepository.findByMail(email)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("User")));
         user.setDeleted(true);
         userRepository.save(user);
-        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("user"));
+        return new BaseMessageData(MessageConstant.DELETE_SUCCESS_MESSAGE("user"));
     }
 }

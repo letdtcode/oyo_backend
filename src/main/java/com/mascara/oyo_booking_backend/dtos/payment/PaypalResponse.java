@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.dtos.payment;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.dtos.payment.enums.PaypalOrderStatus;
 import lombok.Data;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class PaypalResponse {
     @JsonProperty("id")
     private String id;
     @JsonProperty("status")
-    private BookingStatusEnum status;
+    private PaypalOrderStatus status;
     @JsonProperty("links")
     private List<Link> links;
 

@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.config.init_data.service;
 
 import com.mascara.oyo_booking_backend.config.init_data.models.InitAccomPlaceModel;
 import com.mascara.oyo_booking_backend.config.init_data.models.PaymentInfoModel;
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.entities.accommodation.*;
 import com.mascara.oyo_booking_backend.entities.address.District;
 import com.mascara.oyo_booking_backend.entities.address.Province;
@@ -15,7 +16,6 @@ import com.mascara.oyo_booking_backend.enums.homestay.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.enums.homestay.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -36,67 +36,67 @@ import java.util.Set;
 @Component
 @RequiredArgsConstructor
 public class InitAccomPlaceService {
-    
+
     private final AccomPlaceRepository accomPlaceRepository;
 
-    
+
     private final ProvinceRepository provinceRepository;
 
-    
+
     private final DistrictRepository districtRepository;
 
-    
+
     private final WardRepository wardRepository;
 
-    
+
     private final UserRepository userRepository;
 
-    
+
     private final AccommodationCategoriesRepository accommodationCategoriesRepository;
 
-    
+
     private final FacilityRepository facilityRepository;
 
-    
+
     private final BedRoomRepository bedRoomRepository;
 
-    
+
     private final TypeBedRepository typeBedRepository;
 
-    
+
     private final SurchargeOfAccomRepository surchargeOfAccomRepository;
 
-    
+
     private final SurchargeCategoryRepository surchargeCategoryRepository;
 
-    
+
     private final GeneralPolicyDetailRepository generalPolicyDetailRepository;
 
-    
+
     private final PaymentInfoDetailRepository paymentInfoDetailRepository;
-    
+
     private final BankRepository bankRepository;
 
     @Transactional
     public String addAccomPlace(InitAccomPlaceModel request, String mailPartner) {
         Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("province")));
 
         District district = districtRepository.findByDistrictCode(request.getDistrictCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("district")));
 
         Ward ward = wardRepository.findByWardCode(request.getWardCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("ward")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("ward")));
 
         User user = userRepository.findByMail(mailPartner).get();
 
         AccommodationCategories accomCategories = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("accommodation category")));
 
         Set<Facility> facilitySet = new HashSet<>();
         for (String facilityName : request.getFacilityNameList()) {
             facilitySet.add(facilityRepository.findByFacilityName(facilityName)
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility"))));
+                    .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("facility"))));
         }
 
         String addressDetail = request.getNumHouseAndStreetName() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
@@ -143,7 +143,7 @@ public class InitAccomPlaceService {
 //        Create type bed for number of bed room
         int numRoom = request.getNumBedRoom();
         TypeBed typeBedDefault = typeBedRepository.findByTypeBedCode("TYPE_BED_003")
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Type bed")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Type bed")));
         List<BedRoom> bedRooms = new ArrayList<>();
         for (int i = 0; i < numRoom; i++) {
             BedRoom bedRoom = BedRoom.builder()

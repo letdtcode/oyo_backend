@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.surcharge;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.request.AddSurchargeCategoryRequest;
@@ -11,7 +12,6 @@ import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mapper.surcharge.SurchargeCategoryMapper;
 import com.mascara.oyo_booking_backend.repositories.SurchargeCategoryRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -79,7 +79,7 @@ public class SurchargeServiceImpl implements SurchargeService {
     @Transactional
     public GetSurchargeCategoryResponse updateSurchargeCategory(UpdateSurchargeCategoryRequest request, Long id) {
         SurchargeCategory surchargeCategory = surchargeCategoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Surcharge category")));
         surchargeCategory.setSurchargeCateName(request.getSurchargeCateName());
         surchargeCategory.setStatus(CommonStatusEnum.valueOf(request.getStatus()));
         surchargeCategory = surchargeCategoryRepository.save(surchargeCategory);
@@ -90,19 +90,19 @@ public class SurchargeServiceImpl implements SurchargeService {
     @Transactional
     public BaseMessageData changeStatusSurchargeCategory(Long id, String status) {
         SurchargeCategory surchargeCategory = surchargeCategoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Surcharge category")));
         surchargeCategory.setStatus(CommonStatusEnum.valueOf(status));
         surchargeCategoryRepository.save(surchargeCategory);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Surcharge category"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Surcharge category"));
     }
 
     @Override
     @Transactional
     public BaseMessageData deletedSurchargeCategory(Long id) {
         SurchargeCategory surchargeCategory = surchargeCategoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Surcharge category")));
         surchargeCategory.setDeleted(true);
         surchargeCategoryRepository.save(surchargeCategory);
-        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("Surcharge category"));
+        return new BaseMessageData(MessageConstant.DELETE_SUCCESS_MESSAGE("Surcharge category"));
     }
 }

@@ -1,13 +1,13 @@
-package com.mascara.oyo_booking_backend.utils;
+package com.mascara.oyo_booking_backend.constant;
 
 /**
  * Created by: IntelliJ IDEA
  * User      : boyng
  * Date      : 01/10/2023
  * Time      : 4:27 CH
- * Filename  : AppContants
+ * Filename  : MessageConstant
  */
-public class AppContants {
+public class MessageConstant {
     public static final String SEND_MAIL_SUCCESS = "Send mail success";
     public static final String ACTIVE_USER_SUCCESS = "Active User thành công";
     public static final String TOKEN_ACTIVE_MAIL_INVALID = "Token không hợp lệ hoặc đã hết hạn";
@@ -21,7 +21,6 @@ public class AppContants {
     public static final Object CHANGE_STATUS_BOOKING_SUCCESS = "Change status booking success";
     public static final String ADD_WISH_ITEM_SUCCESS = "Add wish item success";
     public static final String REMOVE_WISH_ITEM_SUCCESS = "Remove wish item success";
-//    public static final Object BOOKING_SUCESSFUL = "B";
 
     public static final String BOOKING_NOT_AVAILABLE_TIME(Long accomId, String dateCheckIn, String dateCheckOut) {
         return "Booking not available for accom " + accomId + "from " + dateCheckIn + " to " + dateCheckOut;

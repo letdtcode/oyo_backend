@@ -1,13 +1,14 @@
 package com.mascara.oyo_booking_backend.controllers.client;
 
 import com.mascara.oyo_booking_backend.constant.BookingConstant;
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.request.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.request.CancelBookingRequest;
+import com.mascara.oyo_booking_backend.dtos.booking.response.ClientConfirmBookingResponse;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -55,14 +55,14 @@ public class ClientBookingController {
     public ResponseEntity<?> createOrderBooking(@RequestBody @Valid BookingRequest request) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
-        BaseMessageData response = bookingService.createOrderBookingAccom(request, userMail);
-        if (response.getMessage().equals(AppContants.BOOKING_NOT_AVAILABLE_TIME(
-                request.getAccomId(),
-                request.getCheckIn().toString(),
-                request.getCheckOut().toString())))
-            return ResponseEntity.status(210).body(new BaseResponse<>(true, 210, response));
-        if (response.getMessage().equals(AppContants.BOOKING_NOT_AVAILABLE_PEOPLE))
-            return ResponseEntity.status(211).body(new BaseResponse<>(true, 211, response));
+        ClientConfirmBookingResponse response = bookingService.createOrderBookingAccom(request, userMail);
+//        if (response.getMessage().equals(MessageConstant.BOOKING_NOT_AVAILABLE_TIME(
+//                request.getAccomId(),
+//                request.getCheckIn().toString(),
+//                request.getCheckOut().toString())))
+//            return ResponseEntity.status(210).body(new BaseResponse<>(true, 210, response));
+//        if (response.getMessage().equals(MessageConstant.BOOKING_NOT_AVAILABLE_PEOPLE))
+//            return ResponseEntity.status(211).body(new BaseResponse<>(true, 211, response));
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
@@ -100,7 +100,7 @@ public class ClientBookingController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
         BaseMessageData response = bookingService.cancelBooking(userMail, request);
-        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
+        if (response.getMessage().equals(MessageConstant.NOT_PERMIT)) {
             return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }
         if (response.getMessage().equals(BookingConstant.CANCEL_BOOKING_UNSUCCESS)) {

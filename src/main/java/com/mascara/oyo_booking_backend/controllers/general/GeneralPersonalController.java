@@ -1,12 +1,12 @@
 package com.mascara.oyo_booking_backend.controllers.general;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.user.request.ChangePasswordRequest;
 import com.mascara.oyo_booking_backend.dtos.user.request.UpdateInfoPersonalRequest;
-import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.user.response.InfoUserResponse;
 import com.mascara.oyo_booking_backend.services.user.UserService;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -65,7 +65,7 @@ public class GeneralPersonalController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
         BaseMessageData response = userService.changePassword(changePasswordRequest, userMail);
-        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
+        if (response.getMessage().equals(MessageConstant.NOT_PERMIT)) {
             return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));

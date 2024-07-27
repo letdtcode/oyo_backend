@@ -1,10 +1,10 @@
 package com.mascara.oyo_booking_backend.controllers.client;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
-import com.mascara.oyo_booking_backend.dtos.review.request.ReviewBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
+import com.mascara.oyo_booking_backend.dtos.review.request.ReviewBookingRequest;
 import com.mascara.oyo_booking_backend.services.review.ReviewService;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -51,7 +51,7 @@ public class ClientReviewController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
         BaseMessageData response = reviewService.createReviewForBooking(request, userMail);
-        if (response.getMessage().equals(AppContants.REVIEW_IS_NOT_AVAILABLE)) {
+        if (response.getMessage().equals(MessageConstant.REVIEW_IS_NOT_AVAILABLE)) {
             return ResponseEntity.status(HttpStatusCode.valueOf(210)).body(new BaseResponse<>(true, 210, response));
         }
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));

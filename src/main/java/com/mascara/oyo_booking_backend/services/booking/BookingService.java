@@ -5,6 +5,7 @@ import com.mascara.oyo_booking_backend.dtos.booking.request.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.request.CancelBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.request.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.response.CheckBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.booking.response.ClientConfirmBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetHistoryBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface BookingService {
     @Transactional
-    BaseMessageData createOrderBookingAccom(BookingRequest request, String userMail);
+    ClientConfirmBookingResponse createOrderBookingAccom(BookingRequest request, String userMail);
 
     @Transactional
     CheckBookingResponse checkBookingToGetPrice(CheckBookingRequest request);

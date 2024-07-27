@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.province;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.location.response.locationDTO.GetProvinceResponse;
@@ -10,7 +11,6 @@ import com.mascara.oyo_booking_backend.entities.address.Province;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mapper.address.ProvinceMapper;
 import com.mascara.oyo_booking_backend.repositories.ProvinceRepository;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,14 +52,14 @@ public class ProvinceServiceImpl implements ProvinceService {
                 .slugs(SlugsUtils.toSlug(request.getProvinceName()))
                 .build();
         provinceRepository.save(province);
-        return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("province"));
+        return new BaseMessageData(MessageConstant.ADD_SUCCESS_MESSAGE("province"));
     }
 
     @Override
     @Transactional
     public UpdateProvinceResponse updateProvince(UpdateProvinceRequest request, Long id) {
         Province province = provinceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("province")));
         province.setProvinceName(request.getProvinceName());
         province.setThumbnail(request.getThumbnailLink());
         province.setSlugs(SlugsUtils.toSlug(request.getProvinceName()));
@@ -71,9 +71,9 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Transactional
     public BaseMessageData deleteProvince(Long id) {
         Province province = provinceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("province")));
         provinceRepository.delete(province);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Province"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Province"));
     }
 
     @Override

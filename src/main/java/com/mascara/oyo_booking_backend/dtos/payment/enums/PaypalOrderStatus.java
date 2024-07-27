@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.config.payment.paypal;
+package com.mascara.oyo_booking_backend.dtos.payment.enums;
 
 /**
  * Created by: IntelliJ IDEA

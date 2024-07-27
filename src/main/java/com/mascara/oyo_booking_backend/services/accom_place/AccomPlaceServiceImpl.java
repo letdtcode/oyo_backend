@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.accom_place;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.accom_place.request.*;
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.*;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
@@ -24,7 +25,6 @@ import com.mascara.oyo_booking_backend.mapper.accommodation.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.mapper.facility.FacilityMapper;
 import com.mascara.oyo_booking_backend.mapper.type_bed.TypeBedMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.RequiredArgsConstructor;
@@ -96,9 +96,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public Long registerAccomPlace(String accomCateName, String mailPartner) {
         User user = userRepository.findByMail(mailPartner)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("User")));
         AccommodationCategories accomCategories = accommodationCategoriesRepository.findByAccomCateName(accomCateName)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accommodation category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("accommodation category")));
 
         AccomPlace accomPlace = AccomPlace.builder()
                 .user(user)
@@ -125,9 +125,9 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public BaseMessageData requestApproval(Long accomId, String mailPartner) {
         AccomPlace place = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("accom place")));
         User host = userRepository.findByMail(mailPartner)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("User")));
 
         if (place.getUserId() != host.getId()) {
             throw new ForbiddenException("Forbidden");
@@ -137,7 +137,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         if (place.getStatus().equals(AccomStatusEnum.WAITING_FOR_COMPLETE) && percentComplete == 100) {
             place.setStatus(AccomStatusEnum.WAITING_FOR_APPROVAL);
             accomPlaceRepository.save(place);
-            return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+            return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
         }
         throw new ForbiddenException("Forbidden");
     }
@@ -146,7 +146,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public BaseMessageData updateGeneralInfo(UpdateGeneralInfoRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         accomPlace.setAccomName(request.getAccomName());
         accomPlace.setDescription(request.getDescription());
         accomPlace.setAcreage(request.getAcreage());
@@ -164,7 +164,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             String surchargeCode = itemSurcharge.getSurchargeCode();
             Double cost = itemSurcharge.getCost();
             SurchargeCategory surchargeCategory = surchargeCategoryRepository.findSurchargeCategoryByCode(surchargeCode)
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Surcharge code")));
+                    .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Surcharge code")));
             SurchargeOfAccom surcharge = SurchargeOfAccom.builder()
                     .accomPlace(accomPlace)
                     .accomPlaceId(accomPlace.getId())
@@ -174,17 +174,17 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             surchargeOfAccomRepository.save(surcharge);
             surchargeOfAccomSet.add(surcharge);
         }
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData updateAddress(UpdateAddressAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
 
         Province province = provinceRepository.findByProvinceCode(request.getProvinceCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("province")));
         boolean districtExist = districtRepository.existsByDistrictCode(request.getDistrictCode());
         boolean wardExist = wardRepository.existsByWardCode(request.getWardCode());
 
@@ -192,7 +192,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         Ward ward = wardRepository.findByWardCode(request.getWardCode()).get();
 
         if (!districtExist || !wardExist) {
-            throw new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district or ward"));
+            throw new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("district or ward"));
         }
         String addressDetail = request.getNumHouseAndStreetName() + ", " + ward.getWardName() + ", " + district.getDistrictName() + ", " + province.getProvinceName();
         accomPlace.setDistrictCode(request.getDistrictCode());
@@ -204,14 +204,14 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         accomPlace.setLatitude(request.getLatitude());
         accomPlace.setGuide(request.getGuide());
         accomPlaceRepository.save(accomPlace);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData updateFacilities(UpdateFacilityAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         Set<Facility> facilitySet = new HashSet<>();
         for (String facilityCode : request.getFacilityCodes()) {
             Facility facility = facilityRepository.findByFacilityCode(facilityCode).get();
@@ -219,14 +219,14 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         }
         accomPlace.setFacilitySet(facilitySet);
         accomPlaceRepository.save(accomPlace);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData updateGallery(UpdateGalleryAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
 
         imageAccomRepository.deleteByAccomId(accomPlace.getId());
         Set<ImageAccom> imageAccomSet = new HashSet<>();
@@ -245,14 +245,14 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             accomPlace.setCldVideoId(request.getCldVideoId());
         }
         accomPlaceRepository.save(accomPlace);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData updateImages(UpdateImageAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
 
         imageAccomRepository.deleteByAccomId(accomPlace.getId());
         Set<ImageAccom> imageAccomSet = new HashSet<>();
@@ -266,30 +266,30 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         }
         accomPlace.setImageAccoms(imageAccomSet);
         accomPlaceRepository.save(accomPlace);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData updateVideo(UpdateVideoAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         if (request.getCldVideoId() == null || request.getCldVideoId().isBlank()) {
             accomPlace.setCldVideoId(null);
         } else {
             accomPlace.setCldVideoId(request.getCldVideoId());
         }
         accomPlaceRepository.save(accomPlace);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData updateRooms(UpdateRoomAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         AccommodationCategories accomCate = accommodationCategoriesRepository.findByAccomCateName(request.getAccomCateName())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom category")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom category")));
 
         accomPlace.setNumBathRoom(request.getNumBathRoom());
         accomPlace.setNumKitchen(request.getNumKitchen());
@@ -313,14 +313,14 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         }
         accomPlace.setBedRoomSet(bedRoomSet);
         accomPlaceRepository.save(accomPlace);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData updatePolicy(UpdatePolicyAccomRequest request, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         GeneralPolicyDetail generalPolicyDetail = generalPolicyDetailRepository.findById(accomId).get();
 
         accomPlace.setCancellationPolicy(CancellationPolicyEnum.valueOf(request.getCancellationPolicy()));
@@ -331,16 +331,16 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         generalPolicyDetail.setAllowPet(request.getAllowPet());
         generalPolicyDetail.setAllowSmoking(request.getAllowSmoking());
         generalPolicyDetailRepository.save(generalPolicyDetail);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData updatePayment(UpdatePaymentAccomRequest request, Long accomId) {
         accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         Bank bank = bankRepository.findById(request.getBankId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Bank")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Bank")));
         PaymentInfoDetail paymentInfoDetail = paymentInfoDetailRepository.findById(accomId).get();
         paymentInfoDetail.setAccountNumber(request.getAccountNumber());
         paymentInfoDetail.setAccountNameHost(request.getAccountNameHost());
@@ -348,20 +348,20 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
         paymentInfoDetail.setBank(bank);
         paymentInfoDetail.setBankId(bank.getId());
         paymentInfoDetailRepository.save(paymentInfoDetail);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     public BaseMessageData deleteAccomPlaceWaitingForComplete(Long accomId, String mailPartner) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         User host = userRepository.findByMail(mailPartner)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("User")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("User")));
         if (accomPlace.getUserId() != host.getId()) {
             throw new ForbiddenException("Forbidden");
         }
         deleteAccomPlaceCommon(accomId);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
@@ -375,7 +375,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
             dateApply = request.getDateApply();
             priceApply = request.getPriceApply();
             AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                    .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
             Optional<PriceCustom> priceCustomOptional = priceCustomRepository.findByAccomIdAndDateApply(accomId, dateApply);
 
             if (priceCustomOptional.isPresent()) {
@@ -392,15 +392,15 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
                 priceCustomRepository.save(priceCustomCreate);
             }
         }
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("Accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("Accom place"));
     }
 
     @Override
     public void checkPermission(String mailPartner, Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom Place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom Place")));
         User hostAccom = userRepository.findByUserId(accomPlace.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("user")));
         Optional<User> partner = userRepository.findByMail(mailPartner);
         if (partner.isEmpty())
             throw new NotCredentialException("Unauthenticated");
@@ -412,7 +412,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Override
     public PercentCreateAccomResponse getPercentCreateAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("accom place")));
         GeneralPolicyDetail generalPolicyDetail = generalPolicyDetailRepository.findById(accomPlace.getId()).get();
         PaymentInfoDetail paymentInfoDetail = paymentInfoDetailRepository.findById(accomPlace.getId()).get();
 
@@ -529,7 +529,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetAccomPlaceDetailResponse getAccomPlaceApprovedDetails(Long id) {
         AccomPlace accomPlace = accomPlaceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("accom place")));
 
         if (!accomPlace.getStatus().equals(AccomStatusEnum.APPROVED))
             throw new ForbiddenException("Forbidden");
@@ -556,7 +556,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetAccomPlaceDetailResponse getAccomPlaceDetails(Long id) {
         AccomPlace accomPlace = accomPlaceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("accom place")));
 
         LocalDate dateNow = LocalDate.now();
         List<Booking> bookingOfRangeDate = bookingRepository.findBookingByRangeDateStartFromCurrent(accomPlace.getId(), dateNow);
@@ -721,18 +721,18 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Override
     @Transactional
     public BaseMessageData changeStatusAccomPlace(Long id, String status) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         accomPlaceRepository.changeStatusAccomPlace(id, status);
-        return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("accom place"));
+        return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("accom place"));
     }
 
     @Override
     @Transactional
     public BaseMessageData approveAccomPlace(Long id) {
-        AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+        AccomPlace accomPlace = accomPlaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         if (accomPlace.getStatus().equals(AccomStatusEnum.WAITING_FOR_APPROVAL)) {
             accomPlaceRepository.changeStatusAccomPlace(id, AccomStatusEnum.APPROVED.toString());
-            return new BaseMessageData(AppContants.UPDATE_SUCCESS_MESSAGE("accom place"));
+            return new BaseMessageData(MessageConstant.UPDATE_SUCCESS_MESSAGE("accom place"));
         }
         throw new ForbiddenException("Accom place is approved");
     }
@@ -741,14 +741,14 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public BaseMessageData deleteAccomPlaceForAdmin(Long id) {
         deleteAccomPlaceCommon(id);
-        return new BaseMessageData(AppContants.DELETE_SUCCESS_MESSAGE("accom place"));
+        return new BaseMessageData(MessageConstant.DELETE_SUCCESS_MESSAGE("accom place"));
     }
 
     @Override
     @Transactional
     public void deleteAccomPlaceCommon(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         accomPlace.setDeleted(true);
         accomPlaceRepository.save(accomPlace);
     }
@@ -757,7 +757,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetGeneralInfoAccomResponse getGeneralInfoAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         AccommodationCategories categories = accommodationCategoriesRepository.findById(accomPlace.getAccomCateId()).get();
 
 //        Lấy danh sách phụ phí của accom place
@@ -788,7 +788,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetAddressAccomResponse getAddressAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         Optional<District> district = districtRepository.findByDistrictCode(accomPlace.getDistrictCode());
         Optional<Ward> ward = wardRepository.findByWardCode(accomPlace.getWardCode());
         Optional<Province> province = provinceRepository.findByProvinceCode(accomPlace.getProvinceCode());
@@ -820,7 +820,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetFacilityAccomResponse getFacilityAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         List<Facility> facilities = accomPlace.getFacilitySet().stream().toList();
         List<FacilityResponse> facilityResponses = facilities.stream().map(
                 facilityMapper::toFacilityResponse).collect(Collectors.toList());
@@ -835,7 +835,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetGalleryAccomResponse getGalleryAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         List<ImageAccom> imageAccoms = accomPlace.getImageAccoms().stream().toList();
         List<String> imageAccomUrls = new LinkedList<>();
         for (ImageAccom imageAccom : imageAccoms) {
@@ -851,7 +851,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetRoomSettingAccomResponse getRoomSettingAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         AccommodationCategories accommodationCategories = accommodationCategoriesRepository.findById(accomPlace.getAccomCateId()).get();
         String accomCateName = accommodationCategories.getAccomCateName();
         Long accomCateId = accommodationCategories.getId();
@@ -881,7 +881,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetPolicyAccomResponse getPolicyAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
 
         String cancelPolicyCode = accomPlace.getCancellationPolicy() != null ? accomPlace.getCancellationPolicy().toString() : null;
         GeneralPolicyDetail generalPolicyDetail = generalPolicyDetailRepository.findById(accomId).get();
@@ -898,7 +898,7 @@ public class AccomPlaceServiceImpl implements AccomPlaceService {
     @Transactional
     public GetPaymentAccomResponse getPaymentAccom(Long accomId) {
         AccomPlace accomPlace = accomPlaceRepository.findById(accomId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
         PaymentInfoDetail paymentInfoDetail = paymentInfoDetailRepository.findById(accomId).get();
         return GetPaymentAccomResponse.builder()
                 .bankId(paymentInfoDetail.getBankId())

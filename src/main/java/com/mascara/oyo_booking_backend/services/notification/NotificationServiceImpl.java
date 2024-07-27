@@ -1,12 +1,12 @@
 package com.mascara.oyo_booking_backend.services.notification;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.notification.response.NotificationPayloadResponse;
 import com.mascara.oyo_booking_backend.entities.notification.Notification;
 import com.mascara.oyo_booking_backend.mapper.notification.NotificationMapper;
 import com.mascara.oyo_booking_backend.repositories.NotificationRepository;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,6 +55,6 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional
     public BaseMessageData<String> resetAllNotification(String userMail) {
         notificationRepository.updateViewNotificationForUser(true, userMail);
-        return new BaseMessageData<>(AppContants.UPDATE_SUCCESS_MESSAGE("Notification"));
+        return new BaseMessageData<>(MessageConstant.UPDATE_SUCCESS_MESSAGE("Notification"));
     }
 }

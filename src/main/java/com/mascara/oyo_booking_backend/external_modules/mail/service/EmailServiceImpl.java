@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.external_modules.mail.service;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
@@ -46,7 +46,7 @@ public class EmailServiceImpl implements EmailService {
         message.setSubject(emailDetails.getSubject());
         message.setText(emailDetails.getMsgBody());
         emailSender.send(message);
-        return AppContants.SEND_MAIL_SUCCESS;
+        return MessageConstant.SEND_MAIL_SUCCESS;
     }
 
     @Override

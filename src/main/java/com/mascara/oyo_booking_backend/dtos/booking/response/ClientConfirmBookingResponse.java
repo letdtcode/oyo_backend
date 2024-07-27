@@ -2,6 +2,7 @@ package com.mascara.oyo_booking_backend.dtos.booking.response;
 
 import com.mascara.oyo_booking_backend.enums.order.PaymentMethodEnum;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -14,6 +15,7 @@ import org.springframework.lang.Nullable;
  * Filename  : ClientConfirmBookingResponse
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientConfirmBookingResponse {

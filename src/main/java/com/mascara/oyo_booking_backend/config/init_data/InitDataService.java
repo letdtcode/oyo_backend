@@ -6,6 +6,7 @@ import com.mascara.oyo_booking_backend.config.init_data.models.InitAccomPlaceMod
 import com.mascara.oyo_booking_backend.config.init_data.models.InitDbModel;
 import com.mascara.oyo_booking_backend.config.init_data.models.InitImageAccomModel;
 import com.mascara.oyo_booking_backend.config.init_data.service.InitAccomPlaceService;
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccommodationCategories;
@@ -25,7 +26,6 @@ import com.mascara.oyo_booking_backend.enums.user.RoleEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.repositories.*;
 import com.mascara.oyo_booking_backend.services.user.UserService;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -127,7 +127,7 @@ public class InitDataService implements CommandLineRunner {
                 for (int i = 0; i < districtList.size(); i++) {
                     District district = districtList.get(i);
                     district.setProvince(provinceRepository.findByProvinceCode(district.getProvinceCode())
-                            .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province"))));
+                            .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("province"))));
                     district.setCreatedBy("dev");
                     district.setLastModifiedBy("dev");
                     districtList.set(i, district);
@@ -179,7 +179,7 @@ public class InitDataService implements CommandLineRunner {
                 for (int i = 0; i < wardList.size(); i++) {
                     Ward ward = wardList.get(i);
                     ward.setDistrict(districtRepository.findByDistrictCode(ward.getDistrictCode())
-                            .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("district"))));
+                            .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("district"))));
                     ward.setCreatedBy("dev");
                     ward.setLastModifiedBy("dev");
                     wardList.set(i, ward);
@@ -231,7 +231,7 @@ public class InitDataService implements CommandLineRunner {
                 for (int i = 0; i < facilityList.size(); i++) {
                     Facility facility = facilityList.get(i);
                     facility.setFacilityCategories(facilityCategoriesRepository.findByFaciCateCode(facility.getFacilityCateCode())
-                            .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("facility category"))));
+                            .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("facility category"))));
                     facility.setStatus(CommonStatusEnum.ENABLE);
                     facility.setCreatedBy("dev");
                     facility.setLastModifiedBy("dev");

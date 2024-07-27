@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.controllers.auth;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.auth.request.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.TokenRefreshRequest;
@@ -19,7 +20,6 @@ import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;
 import com.mascara.oyo_booking_backend.securities.service.CustomUserDetails;
 import com.mascara.oyo_booking_backend.services.mail_verify_token.VerifyTokenService;
 import com.mascara.oyo_booking_backend.services.user.UserService;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import freemarker.template.TemplateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -183,9 +183,9 @@ public class AuthController {
                                              @RequestParam("token") String token) throws MessagingException, TemplateException, IOException {
         BaseMessageData<String> messageResponse = verifyTokenService.verifyMailUser(email, token);
         switch (messageResponse.getMessage()) {
-            case AppContants.TOKEN_ACTIVE_MAIL_INVALID:
+            case MessageConstant.TOKEN_ACTIVE_MAIL_INVALID:
                 return ResponseEntity.status(HttpStatusCode.valueOf(407)).body(new BaseResponse(false, 407, messageResponse));
-            case AppContants.ACTIVE_USER_TOKEN_EXPIRED:
+            case MessageConstant.ACTIVE_USER_TOKEN_EXPIRED:
                 return ResponseEntity.status(HttpStatusCode.valueOf(408)).body(new BaseResponse(false, 408, messageResponse));
         }
         return ResponseEntity.ok(new BaseResponse(true, 200, messageResponse));

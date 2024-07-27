@@ -1,7 +1,10 @@
 package com.mascara.oyo_booking_backend.services.booking;
 
+import com.mascara.oyo_booking_backend.config.payment.paypal.PayPalHttpClient;
+import com.mascara.oyo_booking_backend.constant.AppConstant;
 import com.mascara.oyo_booking_backend.constant.BookingConstant;
 import com.mascara.oyo_booking_backend.constant.FeeRateOfAdminConstant;
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.PriceCustomForAccom;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
@@ -9,8 +12,13 @@ import com.mascara.oyo_booking_backend.dtos.booking.request.BookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.request.CancelBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.request.CheckBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.booking.response.CheckBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.booking.response.ClientConfirmBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetBookingResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetHistoryBookingResponse;
+import com.mascara.oyo_booking_backend.dtos.payment.PaypalRequest;
+import com.mascara.oyo_booking_backend.dtos.payment.PaypalResponse;
+import com.mascara.oyo_booking_backend.dtos.payment.enums.OrderIntent;
+import com.mascara.oyo_booking_backend.dtos.payment.enums.PaymentLandingPage;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.accommodation.PriceCustom;
 import com.mascara.oyo_booking_backend.entities.accommodation.SurchargeOfAccom;
@@ -26,12 +34,12 @@ import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.homestay.CancellationPolicyEnum;
 import com.mascara.oyo_booking_backend.enums.order.PaymentMethodEnum;
 import com.mascara.oyo_booking_backend.enums.order.PaymentPolicyEnum;
+import com.mascara.oyo_booking_backend.enums.order.PaymentStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.mapper.booking.BookingMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import com.mascara.oyo_booking_backend.utils.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -42,6 +50,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -93,35 +103,37 @@ public class BookingServiceImpl implements BookingService {
 
     private final PriceCustomRepository priceCustomRepository;
 
+    private final PayPalHttpClient payPalHttpClient;
+
+    private static final int USD_VND_RATE = 23_000;
+
     @Override
     @Transactional
-    public BaseMessageData createOrderBookingAccom(BookingRequest request, String mailUser) {
+    public ClientConfirmBookingResponse createOrderBookingAccom(BookingRequest request, String mailUser) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("accom place")));
         Long hostId = accomPlace.getUserId();
         User host = userRepository.findByUserId(hostId).get();
         boolean isAvailable = checkAvailableAccom(accomPlace.getId(), request.getCheckIn(), request.getCheckOut());
 
         if (!isAvailable) {
-            return new BaseMessageData(AppContants.BOOKING_NOT_AVAILABLE_TIME(
-                    request.getAccomId(),
-                    request.getCheckIn().toString(),
-                    request.getCheckOut().toString()));
+            throw new RuntimeException("Booking not available on range time");
         }
+
         int maxPeople = accomPlace.getNumPeople();
         if (request.getNumAdult() > maxPeople) {
-            return new BaseMessageData(AppContants.BOOKING_NOT_AVAILABLE_PEOPLE);
+            throw new RuntimeException("Num people over range of homestay");
         }
 
         accomPlace.setNumBooking(accomPlace.getNumBooking() + 1L);
         Province province = provinceRepository.findByProvinceCode(accomPlace.getProvinceCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("province")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("province")));
         province.setNumBooking(province.getNumBooking() + 1L);
         accomPlaceRepository.save(accomPlace);
         provinceRepository.save(province);
 
         BookingList bookingList = bookingListRepository.findByUserMail(mailUser)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("user")));
         String bookingCode = UUID.randomUUID().toString();
 
         List<PriceCustom> priceCustoms = priceCustomRepository.findByAccomId(accomPlace.getId());
@@ -171,6 +183,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatusEnum.WAITING);
         booking = bookingRepository.save(booking);
 
+        // (1) Tạo thông tin hóa đơn
         Payment payment = Payment.builder()
                 .originPay(originPay)
                 .totalBill(totalBill)
@@ -179,14 +192,61 @@ public class BookingServiceImpl implements BookingService {
                 .paymentPolicy(PaymentPolicyEnum.valueOf(request.getPaymentPolicy()))
                 .paymentMethod(PaymentMethodEnum.valueOf(request.getPaymentMethod()))
                 .booking(booking)
+                .paymentStatus(PaymentStatusEnum.UNPAID)
                 .build();
-        paymentRepository.save(payment);
 
+        // (2) Tạo response
+        ClientConfirmBookingResponse response = ClientConfirmBookingResponse.builder()
+                .bookingCode(bookingCode)
+                .paymentMethod(PaymentMethodEnum.valueOf(request.getPaymentMethod()))
+                .build();
+
+        // (3) Kiểm tra hình thức thanh toán
+        if (request.getPaymentMethod().equals(PaymentMethodEnum.PAYPAL.name())) {
+            try {
+                // (3.1.1) Đổi tiền sang USD
+                BigDecimal totalPayUSD = BigDecimal.valueOf(totalTrasfer)
+                        .divide(BigDecimal.valueOf(USD_VND_RATE), 0, RoundingMode.HALF_UP);
+
+                // (3.1.2) Tạo một yêu cầu giao dịch Paypal
+                PaypalRequest paypalRequest = new PaypalRequest();
+                paypalRequest.setIntent(OrderIntent.CAPTURE);
+                paypalRequest.setPurchaseUnits(List.of(
+                        new PaypalRequest.PurchaseUnit(
+                                new PaypalRequest.PurchaseUnit.Money("USD", totalPayUSD.toString())
+                        )
+                ));
+
+                paypalRequest.setApplicationContext(new PaypalRequest.PayPalAppContext()
+                        .setBrandName("OYO")
+                        .setLandingPage(PaymentLandingPage.BILLING)
+                        .setReturnUrl(AppConstant.BACKEND_HOST + "/api/v1/client/booking/success")
+                        .setCancelUrl(AppConstant.BACKEND_HOST + "/api/v1/client/booking/cancel"));
+
+                PaypalResponse paypalResponse = payPalHttpClient.createPaypalTransaction(paypalRequest);
+
+                // (3.1.3) Lưu thông tin thanh toán paypal
+                payment.setPaypalOrderId(paypalResponse.getId());
+                payment.setPaypalOrderStatus(paypalResponse.getStatus().toString());
+                paymentRepository.save(payment);
+
+                for (PaypalResponse.Link link : paypalResponse.getLinks()) {
+                    if ("approve".equals(link.getRel())) {
+                        response.setBookingPaypalCheckoutLink(link.getHref());
+                    }
+                }
+            } catch (Exception ex) {
+                throw new RuntimeException("Can not create Paypal transaction request !" + ex);
+            }
+        } else if (request.getPaymentMethod().equals(PaymentMethodEnum.VNPAY.name())) {
+
+        } else {
+            throw new RuntimeException("Can not identify payment method");
+        }
         Double moneyForAdmin = (FeeRateOfAdminConstant.FEE_RATE_OF_ADMIN * totalBill) / 100;
         Double moneyForPartner = totalBill - moneyForAdmin;
 
         PartnerEarning partnerEarning = PartnerEarning.builder()
-//                .partner(host)
                 .partnerId(hostId)
                 .earningAmount(moneyForPartner)
                 .payment(payment)
@@ -200,7 +260,7 @@ public class BookingServiceImpl implements BookingService {
                 .build();
         adminEarningRepository.save(adminEarning);
 
-        //        Send mail booking success
+        //        Gửi mail thông tin đặt phòng cho người dùng
         String fullHostName = host.getFirstName() + " " + host.getLastName();
         Map<String, Object> model = new HashMap<>();
         model.put("billId", bookingCode);
@@ -219,7 +279,7 @@ public class BookingServiceImpl implements BookingService {
                 .subject("Đặt phòng thành công").build();
         emailService.sendMailWithTemplate(emailDetails, "Email_Booking_Success.ftl", model);
 
-//        Send queue message socket
+        //        Bắn message thông báo notification cho chủ nhà
         StringBuilder content = new StringBuilder("Khách hàng ");
         content.append(booking.getNameCustomer());
         content.append(" vừa mới đặt chỗ ở " + accomPlace.getAccomName() + " của bạn");
@@ -234,12 +294,14 @@ public class BookingServiceImpl implements BookingService {
 
         notification = notificationRepository.save(notification);
 
-        int numNotiUnviewOfUser = notificationRepository.countByRecipientMailAndViewAndDeleted(host.getMail(), false, false);
+        int numNotiUnviewOfUser = notificationRepository.countByRecipientMailAndViewAndDeleted(
+                host.getMail(),
+                false, false);
         messagingTemplate.convertAndSendToUser(
                 host.getMail(), "/queue/messages",
                 numNotiUnviewOfUser
         );
-        return new BaseMessageData(BookingConstant.BOOKING_SUCESS);
+        return response;
     }
 
     public boolean checkAvailableAccom(Long accomId, LocalDate checkIn, LocalDate checkOut) {
@@ -251,7 +313,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public CheckBookingResponse checkBookingToGetPrice(CheckBookingRequest request) {
         AccomPlace accomPlace = accomPlaceRepository.findById(request.getAccomId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Accom place")));
 
 //        Period p = Period.between(request.getCheckIn(), request.getCheckOut());
 //        int numNight = p.getDays() + 1;
@@ -340,10 +402,10 @@ public class BookingServiceImpl implements BookingService {
     public BaseMessageData changeStatusBookingByHost(String hostMail, String bookingCode, String status) {
         User host = userRepository.findHostOfAccomByBookingCode(bookingCode).get();
         if (!host.getMail().equals(hostMail)) {
-            return new BaseMessageData(AppContants.NOT_PERMIT);
+            return new BaseMessageData(MessageConstant.NOT_PERMIT);
         }
         bookingRepository.changeStatusBooking(bookingCode, status);
-        return new BaseMessageData(AppContants.CHANGE_STATUS_BOOKING_SUCCESS);
+        return new BaseMessageData(MessageConstant.CHANGE_STATUS_BOOKING_SUCCESS);
     }
 
     @Override
@@ -351,13 +413,13 @@ public class BookingServiceImpl implements BookingService {
     public BaseMessageData cancelBooking(String userMail, CancelBookingRequest request) {
         User user = userRepository.findUserByBookingCode(request.getBookingCode()).get();
         if (!user.getMail().equals(userMail)) {
-            return new BaseMessageData(AppContants.NOT_PERMIT);
+            return new BaseMessageData(MessageConstant.NOT_PERMIT);
         }
         Booking booking = bookingRepository.findBookingByCode(request.getBookingCode())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("Booking code")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("Booking code")));
         Payment payment = paymentRepository.findById(booking.getId()).get();
         if (!booking.getStatus().equals(BookingStatusEnum.WAITING)) {
-            return new BaseMessageData(AppContants.NOT_PERMIT);
+            return new BaseMessageData(MessageConstant.NOT_PERMIT);
         }
 
         AccomPlace accomHost = accomPlaceRepository.findById(booking.getAccomId()).get();

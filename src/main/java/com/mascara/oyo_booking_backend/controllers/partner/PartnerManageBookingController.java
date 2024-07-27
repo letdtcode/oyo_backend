@@ -1,12 +1,12 @@
 package com.mascara.oyo_booking_backend.controllers.partner;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
+import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetBookingResponse;
-import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -83,7 +83,7 @@ public class PartnerManageBookingController {
         String hostMail = principal.getName();
         String status = BookingStatusEnum.CHECK_IN.toString();
         BaseMessageData response = bookingService.changeStatusBookingByHost(hostMail, bookingCode, status);
-        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
+        if (response.getMessage().equals(MessageConstant.NOT_PERMIT)) {
             return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }
         response.setMessage("Check in booking sucessful");
@@ -98,13 +98,13 @@ public class PartnerManageBookingController {
     @PutMapping("/check-out")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> checkOutBooking(@RequestParam("bookingCode")
-                                            @NotNull(message = "Booking code must not null")
-                                            String bookingCode) {
+                                             @NotNull(message = "Booking code must not null")
+                                             String bookingCode) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String hostMail = principal.getName();
         String status = BookingStatusEnum.CHECK_OUT.toString();
         BaseMessageData response = bookingService.changeStatusBookingByHost(hostMail, bookingCode, status);
-        if (response.getMessage().equals(AppContants.NOT_PERMIT)) {
+        if (response.getMessage().equals(MessageConstant.NOT_PERMIT)) {
             return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(new BaseResponse<>(false, 403, response));
         }
         response.setMessage("Check out booking sucessful");

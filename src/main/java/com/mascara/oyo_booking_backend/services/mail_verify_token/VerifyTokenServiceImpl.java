@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.mail_verify_token;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.entities.authentication.MailConfirmToken;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
@@ -9,7 +10,6 @@ import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.repositories.MailConfirmTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -57,22 +57,22 @@ public class VerifyTokenServiceImpl implements VerifyTokenService {
     @Override
     public BaseMessageData verifyMailUser(String mail, String token) {
         MailConfirmToken mailConfirmToken = mailConfirmTokenRepository.findByVerifyToken(token)
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("confirm token")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("confirm token")));
         User user = userRepository.findByMailConfirmTokenId(mailConfirmToken.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("user")));
         if (!mailConfirmToken.getDateExpired().isBefore(LocalDateTime.now())) {
             if (user.getMail().equals(mail)) {
                 user.setStatus(UserStatusEnum.ENABLE);
                 userRepository.save(user);
-                return new BaseMessageData(AppContants.ACTIVE_USER_SUCCESS);
+                return new BaseMessageData(MessageConstant.ACTIVE_USER_SUCCESS);
             }
-            return new BaseMessageData(AppContants.TOKEN_ACTIVE_MAIL_INVALID);
+            return new BaseMessageData(MessageConstant.TOKEN_ACTIVE_MAIL_INVALID);
         }
         if (user.getStatus().equals(UserStatusEnum.ENABLE)) {
-            return new BaseMessageData(AppContants.TOKEN_ACTIVE_MAIL_INVALID);
+            return new BaseMessageData(MessageConstant.TOKEN_ACTIVE_MAIL_INVALID);
         }
         sendMailVerifyToken(user);
-        return new BaseMessageData(AppContants.ACTIVE_USER_TOKEN_EXPIRED);
+        return new BaseMessageData(MessageConstant.ACTIVE_USER_TOKEN_EXPIRED);
     }
 
     @Override

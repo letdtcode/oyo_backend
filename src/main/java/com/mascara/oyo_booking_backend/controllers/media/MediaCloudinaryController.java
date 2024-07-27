@@ -1,10 +1,10 @@
 package com.mascara.oyo_booking_backend.controllers.media;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudUploader;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -47,7 +47,7 @@ public class MediaCloudinaryController {
     @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
-            throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
+            throw new ResourceNotFoundException(MessageConstant.FILE_IS_NULL);
         }
         CloudUploader cloudUploader = cloudinaryService.store(file);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, cloudUploader));
@@ -62,7 +62,7 @@ public class MediaCloudinaryController {
     @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
     public ResponseEntity<?> uploadMultipleFile(@RequestParam("files") List<MultipartFile> files) {
         if (files.isEmpty()) {
-            throw new ResourceNotFoundException(AppContants.FILE_IS_NULL);
+            throw new ResourceNotFoundException(MessageConstant.FILE_IS_NULL);
         }
         List<CloudUploader> cloudUploaders = cloudinaryService.storeMultiple(files);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, cloudUploaders));

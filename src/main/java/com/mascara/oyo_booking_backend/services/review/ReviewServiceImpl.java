@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.services.review;
 
+import com.mascara.oyo_booking_backend.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.review.request.ReviewBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.review.response.GetReviewResponse;
@@ -9,12 +10,11 @@ import com.mascara.oyo_booking_backend.entities.booking.Booking;
 import com.mascara.oyo_booking_backend.entities.review.ImageReview;
 import com.mascara.oyo_booking_backend.entities.review.Review;
 import com.mascara.oyo_booking_backend.entities.review.ReviewList;
-import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.mapper.review.ReviewMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
-import com.mascara.oyo_booking_backend.utils.AppContants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
         for (Review review : reviewListOfAccomplace) {
             GetReviewResponse reviewResponse = reviewMapper.toGetReviewResponse(review);
             User user = userRepository.findByUserId(review.getReviewListId())
-                    .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("user")));
+                    .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("user")));
             reviewResponse.setAvatarUserUrl(user.getAvatarUrl());
             reviewResponse.setAccomPlaceId(id);
             reviewResponse.setFirstName(user.getFirstName());
@@ -73,7 +73,7 @@ public class ReviewServiceImpl implements ReviewService {
         Booking booking = bookingRepository.findBookingByCode(request.getBookingCode())
                 .orElseThrow(() -> new ResourceNotFoundException("Booking code"));
         if (!booking.getStatus().equals(BookingStatusEnum.CHECK_OUT)) {
-            return new BaseMessageData(AppContants.REVIEW_IS_NOT_AVAILABLE);
+            return new BaseMessageData(MessageConstant.REVIEW_IS_NOT_AVAILABLE);
         }
 
         Review review = reviewMapper.toEntity(request);
@@ -98,12 +98,12 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         AccomPlace accomPlace = accomPlaceRepository.findById(booking.getAccomId())
-                .orElseThrow(() -> new ResourceNotFoundException(AppContants.NOT_FOUND_MESSAGE("accom place")));
+                .orElseThrow(() -> new ResourceNotFoundException(MessageConstant.NOT_FOUND_MESSAGE("accom place")));
         long numCurrentReview = accomPlace.getNumReview();
         float currentGradeRate = accomPlace.getGradeRate();
         accomPlace.setNumReview(numCurrentReview + 1);
         accomPlace.setGradeRate((currentGradeRate * numCurrentReview + review.getRateStar()) / (currentGradeRate + 1));
         accomPlaceRepository.save(accomPlace);
-        return new BaseMessageData(AppContants.ADD_SUCCESS_MESSAGE("Review"));
+        return new BaseMessageData(MessageConstant.ADD_SUCCESS_MESSAGE("Review"));
     }
 }
