@@ -1,15 +1,15 @@
 package com.mascara.oyo_booking_backend.services.type_bed;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.type_bed.request.AddTypeBedRequest;
 import com.mascara.oyo_booking_backend.dtos.type_bed.request.UpdateTypeBedRequest;
 import com.mascara.oyo_booking_backend.dtos.type_bed.response.GetTypeBedResponse;
 import com.mascara.oyo_booking_backend.entities.type_bed.TypeBed;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.type_bed.TypeBedMapper;
+import com.mascara.oyo_booking_backend.common.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.mapper.type_bed.TypeBedMapper;
 import com.mascara.oyo_booking_backend.repositories.TypeBedRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.Utilities;

@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.services.review;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.review.request.ReviewBookingRequest;
 import com.mascara.oyo_booking_backend.dtos.review.response.GetReviewResponse;
@@ -10,10 +10,10 @@ import com.mascara.oyo_booking_backend.entities.booking.Booking;
 import com.mascara.oyo_booking_backend.entities.review.ImageReview;
 import com.mascara.oyo_booking_backend.entities.review.Review;
 import com.mascara.oyo_booking_backend.entities.review.ReviewList;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
-import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.review.ReviewMapper;
+import com.mascara.oyo_booking_backend.common.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.booking.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.mapper.review.ReviewMapper;
 import com.mascara.oyo_booking_backend.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

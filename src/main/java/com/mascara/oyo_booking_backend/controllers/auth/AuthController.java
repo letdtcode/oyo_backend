@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.controllers.auth;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.auth.request.LoginRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.TokenRefreshRequest;
@@ -12,8 +12,8 @@ import com.mascara.oyo_booking_backend.dtos.user.response.InfoUserResponse;
 import com.mascara.oyo_booking_backend.entities.authentication.RefreshToken;
 import com.mascara.oyo_booking_backend.entities.authentication.Role;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
-import com.mascara.oyo_booking_backend.enums.user.UserStatusEnum;
-import com.mascara.oyo_booking_backend.mapper.authentication.UserMapper;
+import com.mascara.oyo_booking_backend.common.enums.user.UserStatusEnum;
+import com.mascara.oyo_booking_backend.common.mapper.authentication.UserMapper;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.securities.jwt.JwtUtils;

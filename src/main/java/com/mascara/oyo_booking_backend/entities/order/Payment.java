@@ -2,9 +2,9 @@ package com.mascara.oyo_booking_backend.entities.order;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.entities.booking.Booking;
-import com.mascara.oyo_booking_backend.enums.order.PaymentMethodEnum;
-import com.mascara.oyo_booking_backend.enums.order.PaymentPolicyEnum;
-import com.mascara.oyo_booking_backend.enums.order.PaymentStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.order.PaymentMethodEnum;
+import com.mascara.oyo_booking_backend.common.enums.order.PaymentPolicyEnum;
+import com.mascara.oyo_booking_backend.common.enums.order.PaymentStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.services.province;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.location.response.locationDTO.GetProvinceResponse;
@@ -8,8 +8,8 @@ import com.mascara.oyo_booking_backend.dtos.location.response.locationDTO.Update
 import com.mascara.oyo_booking_backend.dtos.province.request.AddProvinceRequest;
 import com.mascara.oyo_booking_backend.dtos.province.request.UpdateProvinceRequest;
 import com.mascara.oyo_booking_backend.entities.address.Province;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.address.ProvinceMapper;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.mapper.address.ProvinceMapper;
 import com.mascara.oyo_booking_backend.repositories.ProvinceRepository;
 import com.mascara.oyo_booking_backend.utils.SlugsUtils;
 import lombok.RequiredArgsConstructor;

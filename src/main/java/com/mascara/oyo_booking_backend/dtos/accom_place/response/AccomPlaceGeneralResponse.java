@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.dtos.accom_place.response;
 
-import com.mascara.oyo_booking_backend.enums.homestay.AccomStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.homestay.AccomStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

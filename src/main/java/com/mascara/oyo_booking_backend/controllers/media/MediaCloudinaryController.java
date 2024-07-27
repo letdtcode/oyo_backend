@@ -1,8 +1,8 @@
 package com.mascara.oyo_booking_backend.controllers.media;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudUploader;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
 import io.swagger.v3.oas.annotations.Operation;

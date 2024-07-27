@@ -1,11 +1,11 @@
 package com.mascara.oyo_booking_backend.services.mail_verify_token;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.entities.authentication.MailConfirmToken;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
-import com.mascara.oyo_booking_backend.enums.user.UserStatusEnum;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.enums.user.UserStatusEnum;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.repositories.MailConfirmTokenRepository;

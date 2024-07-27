@@ -1,11 +1,11 @@
 package com.mascara.oyo_booking_backend.controllers.partner;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.booking.response.GetBookingResponse;
-import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.booking.BookingStatusEnum;
 import com.mascara.oyo_booking_backend.services.booking.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

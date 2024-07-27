@@ -4,7 +4,7 @@ import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceDe
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
-import com.mascara.oyo_booking_backend.enums.homestay.AccomStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.homestay.AccomStatusEnum;
 import com.mascara.oyo_booking_backend.services.accom_place.AccomPlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

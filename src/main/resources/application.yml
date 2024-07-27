@@ -129,6 +129,9 @@ app:
       baseUrl: https://api-m.sandbox.paypal.com
       clientId: AYE5cyLWOZZW2-PLHdIrxPT14X70Y9ku_EWu2ACcK8M465uFy1qDtcwGE75uB4g-Lb4G1FTQCK8r-dQq
       secret: EHXkNzS1tjCDNPKFg6a6urwd6HIx0gnuh0yvd2Q1p4154y8Q6WKZ0x7IMSKt5kS5TqZvvidLdpIApbTh
+    vnpay:
+      tmnCode: 0GGR6X6G
+      secret: PBNDL6GNNEPFHAO8JY5IGHD15RGNPMOI
 
   auth:
     jwt:

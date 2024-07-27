@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.controllers.client;
 
-import com.mascara.oyo_booking_backend.constant.BookingConstant;
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.BookingConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;

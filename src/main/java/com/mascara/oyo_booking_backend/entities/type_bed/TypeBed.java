@@ -2,7 +2,7 @@ package com.mascara.oyo_booking_backend.entities.type_bed;
 
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
 import com.mascara.oyo_booking_backend.entities.accommodation.BedRoom;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

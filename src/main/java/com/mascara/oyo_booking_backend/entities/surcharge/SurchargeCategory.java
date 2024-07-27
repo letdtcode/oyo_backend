@@ -2,7 +2,7 @@ package com.mascara.oyo_booking_backend.entities.surcharge;
 
 import com.mascara.oyo_booking_backend.entities.accommodation.SurchargeOfAccom;
 import com.mascara.oyo_booking_backend.entities.base.BasePesistence;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.CommonStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

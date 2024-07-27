@@ -7,9 +7,9 @@ import com.mascara.oyo_booking_backend.dtos.statistic.admin.filter.AdminStatisti
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.models.*;
 import com.mascara.oyo_booking_backend.dtos.statistic.admin.projections.*;
 import com.mascara.oyo_booking_backend.dtos.statistic.common.RevenueStatistic;
-import com.mascara.oyo_booking_backend.enums.AdminChartTypeEnum;
-import com.mascara.oyo_booking_backend.enums.booking.BookingStatusEnum;
-import com.mascara.oyo_booking_backend.enums.MonthEnum;
+import com.mascara.oyo_booking_backend.common.enums.AdminChartTypeEnum;
+import com.mascara.oyo_booking_backend.common.enums.booking.BookingStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.MonthEnum;
 import com.mascara.oyo_booking_backend.repositories.AccomPlaceRepository;
 import com.mascara.oyo_booking_backend.repositories.BookingRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;

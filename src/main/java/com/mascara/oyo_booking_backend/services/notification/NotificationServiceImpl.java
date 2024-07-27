@@ -1,11 +1,11 @@
 package com.mascara.oyo_booking_backend.services.notification;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.notification.response.NotificationPayloadResponse;
 import com.mascara.oyo_booking_backend.entities.notification.Notification;
-import com.mascara.oyo_booking_backend.mapper.notification.NotificationMapper;
+import com.mascara.oyo_booking_backend.common.mapper.notification.NotificationMapper;
 import com.mascara.oyo_booking_backend.repositories.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

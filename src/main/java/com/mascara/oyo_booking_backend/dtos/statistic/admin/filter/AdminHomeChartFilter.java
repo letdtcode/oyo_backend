@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.dtos.statistic.admin.filter;
 
-import com.mascara.oyo_booking_backend.enums.AdminChartTypeEnum;
+import com.mascara.oyo_booking_backend.common.enums.AdminChartTypeEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

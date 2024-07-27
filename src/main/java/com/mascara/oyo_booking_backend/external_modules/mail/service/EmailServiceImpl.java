@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.external_modules.mail.service;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

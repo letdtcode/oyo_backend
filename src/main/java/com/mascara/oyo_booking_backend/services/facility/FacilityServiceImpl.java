@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.services.facility;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.facility.request.AddFacilityRequest;
@@ -8,10 +8,10 @@ import com.mascara.oyo_booking_backend.dtos.facility.request.UpdateFacilityReque
 import com.mascara.oyo_booking_backend.dtos.facility.response.GetFacilityResponse;
 import com.mascara.oyo_booking_backend.entities.facility.Facility;
 import com.mascara.oyo_booking_backend.entities.facility.FacilityCategories;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
-import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.facility.FacilityMapper;
+import com.mascara.oyo_booking_backend.common.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceExistException;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.mapper.facility.FacilityMapper;
 import com.mascara.oyo_booking_backend.repositories.FacilityCategoriesRepository;
 import com.mascara.oyo_booking_backend.repositories.FacilityRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;

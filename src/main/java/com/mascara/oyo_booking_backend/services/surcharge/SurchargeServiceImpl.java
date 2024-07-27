@@ -1,15 +1,15 @@
 package com.mascara.oyo_booking_backend.services.surcharge;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.request.AddSurchargeCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.request.UpdateSurchargeCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.response.GetSurchargeCategoryResponse;
 import com.mascara.oyo_booking_backend.entities.surcharge.SurchargeCategory;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.surcharge.SurchargeCategoryMapper;
+import com.mascara.oyo_booking_backend.common.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.mapper.surcharge.SurchargeCategoryMapper;
 import com.mascara.oyo_booking_backend.repositories.SurchargeCategoryRepository;
 import com.mascara.oyo_booking_backend.utils.AliasUtils;
 import com.mascara.oyo_booking_backend.utils.Utilities;

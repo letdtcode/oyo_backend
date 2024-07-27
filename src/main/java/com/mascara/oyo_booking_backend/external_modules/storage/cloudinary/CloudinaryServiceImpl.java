@@ -2,7 +2,7 @@ package com.mascara.oyo_booking_backend.external_modules.storage.cloudinary;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.mascara.oyo_booking_backend.exceptions.StorageException;
+import com.mascara.oyo_booking_backend.common.exceptions.StorageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

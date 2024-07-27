@@ -1,7 +1,7 @@
 package com.mascara.oyo_booking_backend.external_modules.storage.file_system;
 
 import com.mascara.oyo_booking_backend.config.StorageProperties;
-import com.mascara.oyo_booking_backend.exceptions.StorageException;
+import com.mascara.oyo_booking_backend.common.exceptions.StorageException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

@@ -4,7 +4,7 @@ import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.dtos.recommender_system.projections.AccomPlaceRecommendProjection;
 import com.mascara.oyo_booking_backend.dtos.recommender_system.response.RecommenderAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
-import com.mascara.oyo_booking_backend.mapper.accommodation.AccomPlaceMapper;
+import com.mascara.oyo_booking_backend.common.mapper.accommodation.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.AccomPlaceRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

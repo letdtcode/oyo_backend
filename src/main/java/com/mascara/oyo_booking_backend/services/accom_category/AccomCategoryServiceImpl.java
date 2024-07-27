@@ -1,16 +1,16 @@
 package com.mascara.oyo_booking_backend.services.accom_category;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.accom_category.request.AddAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.accom_category.request.UpdateAccomCategoryRequest;
 import com.mascara.oyo_booking_backend.dtos.accom_category.response.GetAccomCategoryResponse;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
 import com.mascara.oyo_booking_backend.entities.accommodation.AccommodationCategories;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
-import com.mascara.oyo_booking_backend.exceptions.ResourceExistException;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.accommodation.AccommodationCategoriesMapper;
+import com.mascara.oyo_booking_backend.common.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceExistException;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.mapper.accommodation.AccommodationCategoriesMapper;
 import com.mascara.oyo_booking_backend.repositories.AccommodationCategoriesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

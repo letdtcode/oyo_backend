@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.services.wish;
 
-import com.mascara.oyo_booking_backend.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.accom_place.response.GetAccomPlaceResponse;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
 import com.mascara.oyo_booking_backend.dtos.base.BasePagingData;
@@ -8,8 +8,8 @@ import com.mascara.oyo_booking_backend.entities.accommodation.AccomPlace;
 import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.entities.wish.WishItem;
 import com.mascara.oyo_booking_backend.entities.wish.WishList;
-import com.mascara.oyo_booking_backend.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.mapper.accommodation.AccomPlaceMapper;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.mapper.accommodation.AccomPlaceMapper;
 import com.mascara.oyo_booking_backend.repositories.AccomPlaceRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
 import com.mascara.oyo_booking_backend.repositories.WishItemRepository;

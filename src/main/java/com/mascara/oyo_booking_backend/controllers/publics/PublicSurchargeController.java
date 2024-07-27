@@ -2,7 +2,7 @@ package com.mascara.oyo_booking_backend.controllers.publics;
 
 import com.mascara.oyo_booking_backend.dtos.base.BaseResponse;
 import com.mascara.oyo_booking_backend.dtos.surcharge.surcharge_category.response.GetSurchargeCategoryResponse;
-import com.mascara.oyo_booking_backend.enums.CommonStatusEnum;
+import com.mascara.oyo_booking_backend.common.enums.CommonStatusEnum;
 import com.mascara.oyo_booking_backend.services.surcharge.SurchargeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
