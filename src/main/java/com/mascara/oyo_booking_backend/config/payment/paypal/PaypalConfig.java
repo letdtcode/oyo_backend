@@ -25,5 +25,4 @@ public class PaypalConfig {
 
     @Value("${app.payment.paypal.secret}")
     private String secret;
-
 }

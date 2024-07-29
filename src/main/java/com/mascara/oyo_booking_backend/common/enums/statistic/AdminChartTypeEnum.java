@@ -1,4 +1,4 @@
-package com.mascara.oyo_booking_backend.common.enums;
+package com.mascara.oyo_booking_backend.common.enums.statistic;
 
 /**
  * Created by: IntelliJ IDEA

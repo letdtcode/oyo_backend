@@ -1,6 +1,6 @@
 package com.mascara.oyo_booking_backend.dtos.booking.response;
 
-import com.mascara.oyo_booking_backend.common.enums.order.PaymentMethodEnum;
+import com.mascara.oyo_booking_backend.common.enums.payment.PaymentMethodEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

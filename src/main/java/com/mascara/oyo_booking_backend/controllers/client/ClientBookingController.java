@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.controllers.client;
 
+import com.mascara.oyo_booking_backend.common.constant.AppConstant;
 import com.mascara.oyo_booking_backend.common.constant.BookingConstant;
 import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
 import com.mascara.oyo_booking_backend.dtos.base.BaseMessageData;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 
@@ -56,21 +59,21 @@ public class ClientBookingController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
         ClientConfirmBookingResponse response = bookingService.createOrderBookingAccom(request, userMail);
-//        if (response.getMessage().equals(MessageConstant.BOOKING_NOT_AVAILABLE_TIME(
-//                request.getAccomId(),
-//                request.getCheckIn().toString(),
-//                request.getCheckOut().toString())))
-//            return ResponseEntity.status(210).body(new BaseResponse<>(true, 210, response));
-//        if (response.getMessage().equals(MessageConstant.BOOKING_NOT_AVAILABLE_PEOPLE))
-//            return ResponseEntity.status(211).body(new BaseResponse<>(true, 211, response));
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @Operation(summary = "Check accom place is in wish list or not", description = "Client Api for check accom place is in wish list or not")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = BaseResponse.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
-            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping("/success")
+    @PreAuthorize("hasRole('CLIENT')")
+    public RedirectView paymentSuccessAndCaptureTransaction(HttpServletRequest request) {
+        String paypalOrderId = request.getParameter("token");
+        String payerId = request.getParameter("PayerID");
+        bookingService.captureTransactionBooking(paypalOrderId, payerId);
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(AppConstant.FRONTEND_HOST + "/payment/success");
+        return redirectView;
+    }
+
     @GetMapping("/history")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> showHistoryBooking(@RequestParam("pageNumber")

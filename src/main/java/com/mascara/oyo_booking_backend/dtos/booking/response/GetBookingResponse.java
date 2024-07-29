@@ -2,8 +2,8 @@ package com.mascara.oyo_booking_backend.dtos.booking.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mascara.oyo_booking_backend.common.enums.booking.BookingStatusEnum;
-import com.mascara.oyo_booking_backend.common.enums.order.PaymentMethodEnum;
-import com.mascara.oyo_booking_backend.common.enums.order.PaymentPolicyEnum;
+import com.mascara.oyo_booking_backend.common.enums.payment.PaymentMethodEnum;
+import com.mascara.oyo_booking_backend.common.enums.payment.PaymentPolicyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -9,7 +9,7 @@ import com.mascara.oyo_booking_backend.dtos.statistic.partner.models.HostHomeSta
 import com.mascara.oyo_booking_backend.dtos.statistic.partner.models.HostStatisticResponse;
 import com.mascara.oyo_booking_backend.dtos.statistic.partner.projections.HostHomeStatisticProjection;
 import com.mascara.oyo_booking_backend.common.enums.booking.BookingStatusEnum;
-import com.mascara.oyo_booking_backend.common.enums.MonthEnum;
+import com.mascara.oyo_booking_backend.common.enums.statistic.MonthEnum;
 import com.mascara.oyo_booking_backend.repositories.AccomPlaceRepository;
 import com.mascara.oyo_booking_backend.repositories.BookingRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;

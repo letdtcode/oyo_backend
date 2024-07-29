@@ -23,18 +23,6 @@ import java.util.*;
 @Data
 @Configuration
 public class VnpayConfig {
-    private static VnpayConfig instance = null;
-
-    private VnpayConfig() {
-
-    }
-
-    public VnpayConfig getInstance() {
-        if (instance == null)
-            instance = new VnpayConfig();
-        return instance;
-    }
-
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
     public static String orderType = "other";
@@ -47,7 +35,6 @@ public class VnpayConfig {
     private String vnp_TmnCode;
     @Value("${app.payment.vnpay.secret}")
     private String secretKey;
-
 
     public String md5(String message) {
         String digest = null;
