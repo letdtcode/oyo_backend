@@ -1,0 +1,114 @@
+.bell-ring {
+    position: relative;
+    z-index: 99;
+    margin-top: 6px;
+
+    .dropdown__toggle {
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .dropdown__toggle > i {
+        font-size: 25px;
+        color: var(--txt-color);
+    }
+
+    .dropdown__toggle-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -8px;
+        right: -6px;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background-color: var(--main-color);
+        color: var(--txt-white);
+        font-size: 0.8rem;
+    }
+
+    .dropdown__content {
+        border: 1px solid white;
+        border-top: 1px solid #9e9e9e;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+        position: absolute;
+        z-index: 99;
+        top: calc(100% + 5px);
+        right: 0;
+        width: max-content;
+        max-width: 400px;
+        background-color: vaR(--main-bg);
+        border-radius: 5px;
+        overflow: hidden;
+        transform-origin: top right; // Hiện dropdown từ trên bên phải xuống
+        transform: scale(0); // Ẩn dropdown
+        transition: transform 0.3s ease 0s; // Set time cho hiện dropdown transform 0.3s
+
+        .header__noti {
+            padding-left: 18px;
+            padding-top: 10px;
+        }
+    }
+
+    .all-noti {
+        overflow: scroll;
+        overflow-x: hidden;
+        height: 450px;
+    }
+
+    .all-noti::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+
+    .dropdown__content.active {
+        width: 400px;
+        max-width: 400px;
+        transform: scale(1);
+        transition: transform 0.5s var(--transition-cubic);
+    }
+
+    .dropdown__footer {
+        width: 100%;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 1px 18px 4px 18px;
+
+        .btn-read-all {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: #2979ff;
+            font-family: serif;
+            cursor: pointer;
+        }
+
+        .btn-view {
+            text-align: center;
+            cursor: pointer;
+            background-color: #2979ff;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            margin: 7px 0px;
+
+            p {
+                margin: 0;
+                padding: 10px 24px;
+                font-family: serif;
+            }
+        }
+
+        .btn-view:hover {
+            background-color: #2962ff;
+        }
+    }
+}

@@ -1,0 +1,55 @@
+.card-info {
+    border-radius: 7px;
+    width: 250px;
+    height: 400px;
+    .user-info {
+        align-items: center;
+        padding: 12px;
+        display: flex;
+        .MuiAvatar-root {
+            width: 75px;
+            height: 75px;
+        }
+        .user-details {
+            padding-left: 5px;
+            word-wrap: break-word;
+            // white-space: nowrap;
+            overflow: hidden;
+
+            .user-name {
+                font-size: large;
+                margin-bottom: 10px;
+                margin-top: 0px;
+            }
+            .user-email {
+                font-size: 12px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    .options-card {
+        height: 300px;
+        padding-top: 10px;
+        .option {
+            color: var(--mainColor-contrastText);
+            font-size: medium;
+            font-weight: 600;
+            display: flex;
+            position: relative;
+            padding-top: 15px;
+            text-decoration: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 5px;
+            .option-icon {
+                color: var(--info-main);
+                padding-right: 10px;
+            }
+        }
+        .option:hover {
+            background-color: var(--background-default);
+            color: var(--info-main);
+        }
+    }
+}

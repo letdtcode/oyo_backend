@@ -1,0 +1,49 @@
+.dashboard__admin {
+    .page-header {
+        margin-bottom: 20px;
+        text-transform: capitalize;
+        font-size: 18px;
+    }
+
+    .choose-year {
+        display: flex;
+        padding-left: 20px;
+        margin-bottom: 7px;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+
+        h2 {
+            margin: 0;
+            margin-right: 10px;
+        }
+
+        .input-year {
+            padding: 8px 20px 8px 10px;
+            width: 150px;
+            margin-right: 10px;
+        }
+    }
+
+    .card-admin-chart {
+        padding: 15px;
+        width: 100%;
+        background-color: var(--main-bg);
+        box-shadow: var(--box-shadow);
+        border-radius: var(--border-radius);
+        height: 100%;
+    }
+
+    .card__header {
+        display: flex;
+        h3 {
+            margin-top: 0;
+            font-size: 14px;
+        }
+    }
+
+    .MuiTabPanel-root {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}

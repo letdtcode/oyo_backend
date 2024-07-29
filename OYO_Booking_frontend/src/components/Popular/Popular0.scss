@@ -1,0 +1,145 @@
+.web-content {
+    position: relative;
+    margin: 0 100px;
+    .package {
+        height: 150px;
+    }
+}
+
+.package-menu {
+
+    .package-menu__head {
+        z-index: 90;
+
+        p {
+            font-size: 2.5rem;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Droid Sans, Helvetica Neue, Helvetica,
+                Arial, sans-serif;
+        }
+
+        img {
+            width: 27px;
+        }
+
+        .package-menu__heading {
+            font-size: 2.2rem;
+            position: relative;
+            color: black;
+            width: -webkit-fit-content;
+            width: -moz-fit-content;
+            width: fit-content;
+            margin: auto;
+            letter-spacing: 2px;
+            text-transform: none;
+        }
+    }
+
+    .package-img {
+        padding: 0;
+        // padding-top: 80%;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        transition: all ease-out 0.6s;
+    }
+
+    .package-overlay {
+        position: absolute;
+
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            to bottom,
+            rgba(101, 100, 96, 0) 0%,
+            rgba(101, 100, 96, 0.1) 60%,
+            rgba(101, 100, 96, 0.65) 100%
+        );
+        opacity: 1;
+        transition: all ease-out 0.6s;
+        border-radius: 5px;
+
+        .package-thumbnail {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            // background: rgba(80, 80, 80, 0.5);
+            // opacity: 0.8;  // làm mờ ảnh
+        }
+
+        .package-info {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: white;
+
+            .package-heading {
+                text-transform: capitalize;
+                font-size: 1.8rem;
+                font-weight: 600;
+                letter-spacing: 2px;
+                margin-bottom: 10px;
+            }
+
+            .package-desc {
+                font-size: 1.4rem;
+                font-weight: 400;
+                letter-spacing: 2px;
+            }
+        }
+    }
+
+    .mobile-package__link {
+        display: none;
+    }
+
+    .package-cover {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: blue;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        opacity: 0;
+        transition: opacity ease-out 0.6s;
+        border-radius: 5px;
+
+        .package-btn {
+            --height: 30px;
+            text-align: center;
+            background-color: white;
+            border-radius: 100px;
+
+            .package-btn-link {
+                display: block;
+                padding: 8px 20px;
+                font-size: 1.6rem;
+                text-transform: capitalize;
+                color: black;
+                opacity: 1;
+                font-weight: bold;
+                text-decoration: none;
+                margin: 0;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .package:hover {
+        .package-cover {
+            opacity: 0.5;
+            transition: opacity ease-out 0.6s;
+        }
+    }
+}
+
+.package {
+    position: relative;
+    margin-bottom: 12px;
+}

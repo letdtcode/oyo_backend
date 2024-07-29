@@ -1,0 +1,127 @@
+.form-dialog {
+    width: 100%;
+    align-items: center;
+    .container__preview {
+        min-height: 400px;
+        width: 1350px;
+        display: flex;
+        flex-wrap: wrap;
+        .img__preview {
+            position: relative;
+            width: 270px;
+            height: 270px;
+            text-align: center;
+            justify-content: center;
+            justify-items: center;
+            display: flex;
+            align-items: center;
+            .image {
+                object-fit: cover;
+                width: 250px;
+                height: 250px;
+                border-radius: 5px;
+            }
+            .remove-image {
+                position: absolute;
+                top: 0;
+                right: 0px;
+                z-index: 100;
+                border-radius: 50%;
+                border: 1px solid var(--text-color);
+                color: var(--text-color);
+            }
+            .remove-image:hover {
+                font-weight: 600;
+                border: 1px solid var(--btn-red);
+                color: var(--btn-red);
+            }
+        }
+    }
+
+    .form-button {
+        font-weight: bold;
+        height: 45px;
+        border-radius: 6px;
+        font-size: 16px;
+        line-height: 48px;
+        padding: 0 16px;
+        font-weight: 600;
+        color: #fff;
+        text-align: center;
+    }
+    .form-button:disabled {
+        color: var(--disabled-cl);
+        background-color: var(--disabled-br);
+    }
+
+    .form-element {
+        border-radius: 5%;
+        padding-bottom: 10px;
+        font-size: 15px;
+    }
+
+    h5 {
+        color: rgb(231, 9, 14);
+        margin-top: 0;
+    }
+    h4 {
+        text-align: center;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: smaller;
+    }
+    header {
+        font-weight: bold;
+        font-size: x-large;
+    }
+
+    .centered-line {
+        flex: 1;
+        border-bottom: 1px solid; /* Màu của đường gạch ngang */
+        margin: 0 10px; /* Khoảng cách giữa đường gạch và chữ */
+    }
+
+    .btn-cancel {
+        border: none;
+        color: #fff;
+        border-radius: 5px;
+        padding: 9px 25px;
+        margin-right: 16px;
+        font-weight: 600;
+        background-color: var(--main-color-red);
+        cursor: pointer;
+    }
+    .btn-cancel:hover {
+        background-color: var(--second-color-red);
+        color: #fff;
+    }
+}
+.btn-upload {
+    border: none;
+    border-radius: 5px;
+    padding: 9px 25px;
+    margin-right: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    svg{
+        position: absolute;
+    margin-top: -5px;
+    margin-left: -20px;
+    }
+}
+.btn-save {
+    border: none;
+    border-radius: 5px;
+    padding: 9px 25px;
+    margin-right: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    background-color: var(--main-color);
+    color: #fff;
+}
+
+.btn-save:hover {
+    background-color: var(--second-color);
+}

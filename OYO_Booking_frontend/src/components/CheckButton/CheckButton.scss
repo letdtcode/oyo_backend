@@ -1,0 +1,46 @@
+.check-btn {
+    display: flex;
+    padding-top: 5px;
+    align-items: center;
+
+    .btn-no {
+        display: flex;
+        justify-content: center;
+        border: 1px solid var(--text-color);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        align-items: center;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .btn-no:hover {
+        border: 1px solid black;
+    }
+
+    .btn-yes {
+        display: flex;
+        justify-content: center;
+        border: 1px solid var(--text-color);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        align-items: center;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+
+    .btn-yes:hover {
+        border: 1px solid black;
+    }
+
+    .check-yes {
+        background: var(--blue-color);
+        color: white;
+    }
+    .check-no{
+        background: var(--red-color);
+        color: white;
+    }
+}

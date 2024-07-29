@@ -1,0 +1,51 @@
+.highlight {
+    color: white !important;
+    background: #ff5722;
+    // border-radius: 15px;
+}
+
+.data-isbooking {
+    .react-calendar {
+        width: 100%;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        background-color: inherit;
+        color: inherit;
+
+        .react-calendar__navigation__prev2-button {
+            border-top-left-radius: 15px;
+            background-color: inherit;
+            color: inherit;
+        }
+        .react-calendar__navigation {
+            button {
+                background-color: inherit;
+                color: inherit;
+            }
+        }
+        .react-calendar__navigation__next2-button {
+            border-top-right-radius: 15px;
+        }
+        // .react-calendar__month-view__days {
+        //     button {
+        //         background-color: inherit;
+        //         color: inherit;
+        //     }
+        // }
+        .react-calendar__tile--rangeBothEnds {
+            // border-radius: 15px;
+        }
+
+        .react-calendar__tile--rangeBothEnds:hover {
+            // border-radius: 15px;
+        }
+
+        .react-calendar__tile:hover {
+            // border-radius: 15px;
+        }
+        button:disabled{
+            background-color: var(--disabled-br);
+            color: var(--disabled-cl);
+        }
+    }
+}

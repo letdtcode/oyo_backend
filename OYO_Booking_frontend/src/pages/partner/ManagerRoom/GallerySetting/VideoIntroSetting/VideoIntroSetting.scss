@@ -1,0 +1,17 @@
+.video-intro-setting {
+    .video-intro-setting__container {
+        position: relative;
+    }
+    .video-intro-setting__btn-save {
+        position: absolute;
+        top: 0rem;
+        right: 5rem;
+        background: #4caf50;
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+        padding: 8px 15px;
+        color: #fff;
+        font-weight: 600;
+    }
+}

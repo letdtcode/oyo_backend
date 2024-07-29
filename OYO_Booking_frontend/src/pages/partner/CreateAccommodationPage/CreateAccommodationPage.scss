@@ -1,0 +1,51 @@
+.create-acoom__page {
+    margin-top: 75px;
+    padding: 0 50px;
+    .create-acoom__title {
+        display: flex;
+        &__btn-back{
+            margin-right: 10px;
+            background-color: transparent;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            aspect-ratio: 1 / 1;
+
+            &:hover{
+               scale: 1.2;
+            }
+          
+        }
+    }
+    .create-acoom__content {
+        .create-acoom__content__cate {
+            .col{
+                padding: 10px;
+            }
+            .create-acoom__content__cate__item {
+                width: 100%;
+                aspect-ratio: 2/1;
+                &:hover{
+                    scale: 1.05;
+                }
+               display: grid;
+                text-align: center;
+                place-items: center;
+
+                .cate-item__image {
+                    height: 50px;
+                    width: 50px;
+                    filter: var(--filter-icon-black)
+                }
+            }
+        }
+    }
+    .screen__container{
+        padding: 20px;
+        line-height: 2;
+        .btn-save-acoom{
+            margin-top: 20px;
+            padding:  5px 20px;
+        }
+    }
+}

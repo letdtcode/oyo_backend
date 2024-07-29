@@ -1,0 +1,35 @@
+.convenient-room {
+    margin: 30px;
+    h1 {
+        padding-bottom: 20px;
+    }
+    .col {
+        width: 333px;
+    }
+    .convenient-item {
+        display: flex;
+        padding-bottom: 15px;
+        margin: 0;
+
+        .icon-convenient {
+            margin: 0;
+            padding: 0;
+            font-size: 2rem;
+            height: 2rem;
+            width: 2rem;
+        }
+        img {
+            height: 30px;
+            filter: var(--filter-icon);
+        }
+        p {
+            // text-wrap: nowrap;
+            font-size: 17px;
+            padding-top: 4px;
+            padding-left: 10px;
+            white-space: nowrap; /* Ngăn chặn văn bản từ việc xuống dòng */
+            overflow: hidden; /* Ẩn nội dung dư thừa */
+            text-overflow: ellipsis; /* Hiển thị dấu "..." khi văn bản tràn ra ngoài */
+        }
+    }
+}

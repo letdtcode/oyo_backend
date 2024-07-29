@@ -1,0 +1,14 @@
+[
+    {
+        "cost": 20000.0,
+        "surchargeName": "Phí môi trường"
+    },
+    {
+        "cost": 20000.0,
+        "surchargeName": "Phí vệ sinh"
+    },
+    {
+        "cost": 20000.0,
+        "surchargeName": "Phí sử dụng tiện ích"
+    }
+]

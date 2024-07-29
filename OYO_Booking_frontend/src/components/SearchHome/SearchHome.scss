@@ -1,0 +1,118 @@
+.search-home {
+    margin-top: 25px;
+
+    .searchInputs-home {
+        display: flex;
+        border-style: solid;
+        border-width: 1.5px;
+        border-color: #757575;
+        width: 96%;
+        height: 50px;
+        border-radius: 5px;
+
+        input {
+            background-color: white;
+            border: 0;
+            font-size: 14px;
+            width: 90%;
+            height: 100%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .searchIcon {
+            width: 50px;
+            background-color: white;
+            display: grid;
+            place-items: center;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+
+            svg {
+                font-size: 20px;
+            }
+        }
+
+        .searchIcon-clear {
+            width: 50px;
+            background-color: white;
+            display: grid;
+            place-items: center;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+
+            svg {
+                font-size: 20px;
+            }
+
+            #clearBtn {
+                cursor: pointer;
+                font-size: 20px;
+                position: absolute;
+                right: 6%;
+            }
+        }
+    }
+
+    .searchInputs:hover {
+        border-color: blue;
+    }
+
+    .dataResult {
+        margin-top: 5px;
+        width: 95.5%;
+        margin-left: 2px;
+        height: auto;
+        max-height: 300px;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        overflow: hidden;
+        overflow-y: auto;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Droid Sans, Helvetica Neue, Helvetica, Arial,
+            sans-serif;
+
+        .dataItem {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            position: relative;
+
+            p {
+                margin-left: 10px;
+                color: black;
+                font-size: 14px;
+            }
+
+            .image-item-search {
+                height: 52px;
+                width: 52px;
+                background: red;
+                margin-left: 5px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .price-item-search {
+                position: absolute;
+                right: 20px;
+            }
+        }
+
+        .dataItem:hover {
+            background-color: lightgrey;
+        }
+    }
+
+    .dataResult::-webkit-scrollbar {
+        display: none;
+    }
+}

@@ -1,0 +1,58 @@
+.general-info {
+    width: 100%;
+    // max-width: 600px; // Điều chỉnh kích thước tối đa nếu cần
+
+    .info__content {
+        width: 100%;
+        // max-width: 600px; 
+        margin-top: 20px; // Khoảng cách từ phần tử cha
+        padding: 20px; // Khoảng cách nội dung bên trong
+
+        .info__title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            display: block; // Hiển thị tiêu đề dưới dạng block để ngắt dòng
+        }
+
+        .info__input,
+        .info__textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+
+            &:focus {
+                outline: none;
+                border-color: #007bff;
+            }
+        }
+
+        .info__textarea {
+            min-height: 100px; // Điều chỉnh chiều cao tối thiểu của textarea
+            resize: vertical; // Cho phép điều chỉnh kích thước theo chiều dọc
+        }
+
+        .surcharge-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            .surcharge-item {
+                margin-bottom: 15px;
+
+                .info__title {
+                    margin-bottom: 5px;
+                }
+
+                .info__input {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

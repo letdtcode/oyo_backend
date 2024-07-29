@@ -1,0 +1,40 @@
+.mailbox {
+    .MuiPaper-root {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .header-myAccount {
+        width: 400px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        text-align: center;
+        font-size: x-large;
+    }
+    .divider {
+        flex-shrink: 0;
+        border-width: 0;
+        border-style: solid;
+        border-color: var(--divider);
+        border-bottom-width: thin;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .your-mail {
+        height: 500px;
+        background-color: var(--background-paper);
+        align-items: center;
+        text-align: center;
+        .notificationNone {
+            object-fit: cover;
+            object-position: center;
+            width: 50%;
+        }
+        ul {
+            font-weight: bold;
+            text-align: center;
+            font-size: large;
+        }
+    }
+}

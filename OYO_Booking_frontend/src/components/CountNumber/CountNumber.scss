@@ -1,0 +1,40 @@
+.count-number {
+    display: flex;
+    width: 150px;
+    justify-content: space-between;
+    align-items: center;
+
+    &__counter {
+        margin: 0 20px;
+    }
+
+    &__button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: white;
+        border: 1px solid var(--text-color);
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        &--reduce {
+            &:hover {
+                border: 1.5px solid black;
+            }
+        }
+
+        &--increase {
+            &:hover {
+                border: 1.5px solid black;
+            }
+        }
+
+        &--disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    }
+}

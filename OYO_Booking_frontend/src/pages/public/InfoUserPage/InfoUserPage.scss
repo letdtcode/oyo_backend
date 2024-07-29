@@ -1,0 +1,94 @@
+.info-user {
+    align-items: center;
+    width: 1079.2px;
+    height: max-content;
+    .row {
+        .heading {
+            font-size: xx-large;
+            margin-bottom: 5px;
+        }
+
+        .options {
+            font-size: medium;
+            font-weight: 600;
+
+            .option {
+                text-decoration: auto;
+                margin-right: 20px;
+                color: var(--mainColor-contrastText);
+            }
+
+            .selected-option {
+                color: var(--info-main);
+            }
+        }
+
+        .card-content {
+            margin-top: 5px;
+            height: 500px;
+            border-radius: 7px;
+            display: grid;
+
+            h2 {
+                margin-left: 20px;
+                font-size: large;
+            }
+
+            .divider {
+                border-style: solid;
+                border-color: var(--divider);
+                border-bottom-width: thin;
+                width: 95%;
+                margin-top: 4px;
+                margin-bottom: 4px;
+            }
+
+            .button {
+                font-weight: bold;
+                height: 40px;
+                color: #fff;
+                border-radius: 6px;
+                font-size: 16px;
+            }
+
+            .form {
+                width: 700px;
+                margin-left: 50px;
+                padding-right: 50px;
+            }
+
+            .editaccount {
+                width: 800px;
+
+                .element {
+                    .MuiSvgIcon-root {
+                        color: var(--info-main);
+                    }
+                }
+                .elementerror {
+                    .MuiOutlinedInput-root {
+                        border: 1px solid red;
+                    }
+                    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+                        border: 1px solid red;
+                    }
+                }
+                .form-button {
+                    display: flex;
+                    margin-top: 10px;
+                    padding-right: 0px;
+                    margin-left: 50px;
+                }
+            }
+
+            .changePassword {
+                width: 800px;
+                h5 {
+                    position: absolute;
+                    color: rgb(231, 9, 14);
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}

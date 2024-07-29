@@ -1,0 +1,83 @@
+.container__locationSetting {
+    font-size: 15px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    p{
+        font-weight: 600;
+    }
+    .MuiAccordionDetails-root{
+        // margin-left: 30px;
+        text-align: -webkit-center;
+        
+    }
+    .content-input {
+        margin-bottom: 20px;
+
+        h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    }
+
+    .input-address {
+        padding: 8px 20px;
+        width: 80%;
+        font-size: 16px;
+        margin-bottom: 20px;
+        word-wrap: break-word;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #bdbdbd;
+        padding-top: 15px;
+
+        .btn-close {
+            cursor: pointer;
+            text-decoration: underline;
+            margin: 0;
+            padding: 6px 8px;
+            width: auto;
+        }
+
+        .btn-close:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-save {
+            margin: 0;
+            padding: 6px 15px;
+            background: #4caf50;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-save:hover {
+            background: #66bb6a;
+        }
+    }
+    .container__address {
+        width: 80%;
+        display: flex;
+        padding-bottom: 20px;
+        .input__address
+        {
+            width: 300px;
+        }
+    }
+}

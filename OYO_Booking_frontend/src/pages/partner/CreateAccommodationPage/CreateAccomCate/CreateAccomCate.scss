@@ -1,0 +1,29 @@
+.create-acoom__page {
+    padding: 0 50px;
+    .create-acoom__title {
+    }
+    .create-acoom__content {
+        .create-acoom__content__cate {
+            .col{
+                padding: 10px;
+            }
+            .create-acoom__content__cate__item {
+                width: 100%;
+                aspect-ratio: 2/1;
+                &:hover{
+                    scale: 1.05;
+                }
+               display: grid;
+                text-align: center;
+                place-items: center;
+
+                .cate-item__image {
+                    height: 50px;
+                    width: 50px;
+                    filter: var(--filter-icon-black)
+                }
+            }
+        }
+    }
+}
+    

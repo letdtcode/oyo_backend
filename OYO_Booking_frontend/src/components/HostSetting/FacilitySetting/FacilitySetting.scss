@@ -1,0 +1,99 @@
+.facility-setting {
+    font-size: 15px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    font-weight: 600;
+
+    h3 {
+        margin-bottom: 20px;
+    }
+
+    .accordion-summary {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__title {
+            width: 33%;
+            flex-shrink: 0;
+        }
+
+        &__subtitle {
+            color: var(--text-secondary);
+        }
+    }
+
+    .accordion-details {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+
+        .accordion-details__section {
+            width: 100%;
+            margin-bottom: 20px;
+
+            .accordion-details__title {
+                margin: 0;
+            }
+
+            .accordion-details__description {
+                margin-top: 10px;
+                color: var(--text-color);
+            }
+
+            .accordion-details__input {
+                padding: 8px 20px;
+                width: 500px;
+                font-size: 16px;
+            }
+
+            .accordion-details__textarea {
+                width: 500px;
+                font-size: 16px;
+                height: 100px;
+            }
+
+            .accordion-details__time-input {
+                width: 250px;
+                font-size: 16px;
+                padding: 8px 20px;
+            }
+        }
+
+        .accordion-details__btn {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #bdbdbd;
+            padding-top: 15px;
+
+            .accordion-details__btn-close {
+                cursor: pointer;
+                text-decoration: underline;
+                margin: 0;
+                padding: 6px 8px;
+                width: auto;
+
+                &:hover {
+                    background: #e0e0e0;
+                }
+            }
+
+            .accordion-details__btn-save {
+                margin: 0;
+                padding: 6px 15px;
+                background: #4caf50;
+                border-radius: 5px;
+                cursor: pointer;
+                border: none;
+                color: white;
+
+                &:hover {
+                    background: #66bb6a;
+                }
+            }
+        }
+    }
+}

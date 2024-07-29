@@ -1,0 +1,31 @@
+.item-notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 8px;
+    &__image {
+        width: 56px;
+        height: 56px;
+    }
+
+    &__container {
+        font-size: 14px;
+        line-height: 17px;
+        text-align: justify;
+        padding-left: 10px;
+    }
+    &__title {
+        font-weight: 600;
+        color: #1a202c;
+    }
+    &__content {
+        color: rgb(74, 85, 104);
+        margin-top: 6px;
+        margin-bottom: 6px;
+        overflow: hidden;
+    }
+
+    &__date-time {
+        color: rgb(74, 85, 104);
+    }
+}

@@ -1,0 +1,44 @@
+.room-setting{
+    .info-count__room {
+        width: 100%;
+        .accomCateName{
+            margin-left: 100px;
+            margin-right: 100px;
+            label{
+                font-weight: bold;
+                font-size: 1.5rem;
+            }
+        }
+        li {
+            font-size: 20px !important;
+        }
+
+        .count {
+            display: flex;
+            justify-content: space-between;
+            margin-left: 100px;
+            margin-right: 100px;
+            text-align: center;
+
+            p {
+                font-weight: bold;
+                font-size: 1.5rem;
+            }
+            .input__count_guest {
+                font-weight: 500;
+                width: 150px;
+                border: 1px solid #616161;
+                border-radius: 5px;
+                text-align: center;
+                font-size: 1.5rem;
+                height: 40px;
+                place-self: center;
+            }
+        }
+        .cateName {
+            margin: 0 100px;
+            font-weight: bold !important;
+            font-size: 1.5rem;
+        }
+    }
+}

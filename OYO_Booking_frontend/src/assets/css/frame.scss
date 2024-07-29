@@ -1,0 +1,29 @@
+.frame-page {
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    max-width:  1500px;
+    align-items: center;
+    margin: 0 auto;
+    background-color: var(--background-default);
+    color: var(--background-contrastText);
+}
+
+.content {
+    color: var(--background-contrastText);
+    background-color: var(--background-default);
+    align-items: center;
+    max-width: 1500px;
+    min-height: 500px;
+    top: 0;
+    margin-top: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    height: max-content;
+}
+.paper {
+    background-color: var(--background-paper);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: var(--background-contrastText);
+    border-radius: 7px;
+}

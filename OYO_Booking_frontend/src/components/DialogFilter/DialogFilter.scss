@@ -1,0 +1,22 @@
+.dialog-filter {
+    margin-top: 10px;
+    font-size: 15px;
+
+    .btn-show {
+        font-size: 12px;
+    }
+
+    .title-conv {
+        color: red;
+    }
+}
+.container__filter {
+    .container__address {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        .input__address {
+            width: 30%;
+        }
+    }
+}

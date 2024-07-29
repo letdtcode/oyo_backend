@@ -1,0 +1,43 @@
+.header-listroom {
+    padding-top: 40px;
+    padding-left: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.data-table {
+    padding-left: 50px;
+    padding-right: 50px;
+
+    .MuiTablePagination-displayedRows {
+        font-size: 14px;
+    }
+
+    svg {
+        font-size: 16px;
+    }
+
+    // .MuiDataGrid-virtualScroller {
+    //     overflow-x: hidden;
+    // }
+}
+
+.welcome-card {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(45deg, #498dc5bd, #ef5350);
+
+    .welcome-content {
+        padding-top: 100px;
+        padding-left: 150px;
+        h1 {
+            color: var(--white-color);
+        }
+        p {
+            color: var(--white-color);
+            font-size: 16px;
+        }
+    }
+}

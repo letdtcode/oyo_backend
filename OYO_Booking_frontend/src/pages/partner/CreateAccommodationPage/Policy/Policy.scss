@@ -1,0 +1,21 @@
+.policy {
+    &__content {
+        // Phần nội dung của policy
+    }
+
+    &__content__item {
+        display: flex;
+        justify-content: space-between;
+        // Mỗi mục trong nội dung policy
+    }
+
+    .title {
+        // Kiểu dáng cho tiêu đề
+    }
+
+    .input-select {
+        padding: 8px 20px;
+        width: 500px;
+        font-size: 16px;
+    }
+}

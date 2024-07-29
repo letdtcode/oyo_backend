@@ -1,0 +1,94 @@
+.step-one {
+  margin-top: -45px;
+  position: absolute;
+  width: 100%;
+
+  .l-6:nth-child(1) {
+    position: relative;
+    height: 100vh;
+    background: linear-gradient(45deg, #4db6ac, #d4e157);
+    z-index: -1;
+    display: grid;
+    justify-items: center; /* Căn giữa chiều ngang */
+
+    .require-step1 {
+      position: absolute;
+      margin-top: 12%;
+
+      h1 {
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+  .l-6:nth-child(2) {
+    position: relative;
+    height: 90vh;
+    display: grid;
+    justify-items: center; /* Căn giữa chiều ngang */
+    align-content: center; /* Căn giữa chiều dọc */
+
+    .selected-locate {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      li {
+        font-size: 20px !important;
+      }
+
+      .MuiSelect-select {
+        padding-top: 14px;
+      }
+
+      .MuiFormLabel-root {
+        font-size: 14px;
+      }
+
+      .MuiOutlinedInput-input {
+        font-size: 14px;
+        padding-top: 16px;
+        padding-bottom: 13px;
+      }
+
+      .MuiPaper-root {
+        .MuiButtonBase-root {
+          padding-top: 20px;
+        }
+      }
+    }
+
+    .input-address-step1 {
+      width: 50%;
+      padding: 10px 20px 10px 10px;
+      font-size: 14px;
+    }
+
+    .span-address-step1 {
+      text-align: left;
+      width: 345px;
+      color: rgba(0, 0, 0, 0.6);
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      margin-top: 6px;
+    }
+
+    .btn-out {
+      position: absolute;
+      top: 70px;
+      right: 50px;
+      font-size: 12px;
+      border-radius: 15px;
+      color: var(--white-color);
+      padding: 5px 20px;
+      background: #616161;
+      width: auto;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-out:hover {
+      background: #9e9e9e;
+    }
+  }
+}

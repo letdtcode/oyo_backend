@@ -1,0 +1,14 @@
+.dialog__imgs {
+    
+    .container__imgs {
+        text-align: center;
+        .img {
+            min-width: 600px;
+            min-height: 300px;
+            margin-bottom: 30px;
+            max-height: 600px;
+            max-width: 1300px;
+            object-fit: cover;
+        }
+    }
+}

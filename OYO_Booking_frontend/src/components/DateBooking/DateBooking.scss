@@ -1,0 +1,30 @@
+.date__booking {
+
+    .info-day {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .day {
+            p {
+                margin: 0;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .edit-date {
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .edit-date:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .rdrDefinedRangesWrapper {
+        display: none;
+    }
+
+}

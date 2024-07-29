@@ -1,0 +1,49 @@
+.scroll-spy {
+    padding-top: 100px;
+    padding-bottom: 400px;
+
+    svg {
+        padding-top: 3px;
+    }
+
+    .link-sidebar {
+        position: relative;
+        z-index: 1;
+        width: 30%;
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: black;
+        margin-bottom: 100px;
+        padding-bottom: 20px;
+        text-decoration: none;
+    }
+
+    li {
+        position: relative;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        padding-left: 20px;
+        list-style: none;
+        border-left: 4px solid var(--border-scroll);
+        color: var(--border-scroll);
+       
+    }
+
+    li:nth-child(2) {
+        margin-top: 10px !important;
+    }
+
+    .is-current {
+        border-left: 4px solid black;
+
+        a {
+            color: black;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+    }
+    a{
+        text-decoration: none;
+        color: var(--text-color);
+    }
+}

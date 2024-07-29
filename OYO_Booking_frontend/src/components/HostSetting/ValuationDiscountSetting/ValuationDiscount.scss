@@ -1,0 +1,77 @@
+.ValuationDiscount {
+    h3 {
+        padding-bottom: 15px;
+    }
+
+    .content-input {
+        width: 100%;
+        margin-bottom: 20px;
+        h4 {
+            margin: 0;
+        }
+
+        p {
+            margin-top: 10px;
+            color: var(--text-color);
+        }
+
+        .input-price-room__setting {
+            padding: 8px 20px 8px 10px;
+            width: 500px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .content-input-discount {
+        width: 100%;
+        margin-bottom: 70px;
+        h4 {
+            margin: 0;
+        }
+
+        p {
+            margin-top: 10px;
+            color: var(--text-color);
+        }
+
+        .input-price-room__setting {
+            padding: 8px 20px 8px 10px;
+            width: 500px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .btn {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #bdbdbd;
+        padding-top: 15px;
+
+        .btn-close {
+            cursor: pointer;
+            text-decoration: underline;
+            margin: 0;
+            padding: 6px 8px;
+            width: auto;
+        }
+
+        .btn-close:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-save {
+            margin: 0;
+            padding: 6px 15px;
+            background: #4caf50;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-save:hover {
+            background: #66bb6a;
+        }
+    }
+}

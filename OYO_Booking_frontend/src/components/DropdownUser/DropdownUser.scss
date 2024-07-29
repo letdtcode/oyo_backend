@@ -1,0 +1,33 @@
+.Dropdown {
+    z-index: 10000;
+    position: relative;
+   
+}
+
+.dropdown-menu {
+    .header-myAccount {
+        margin-top: 2px;
+        margin-left: 10px;
+        font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
+    li{
+        font-weight: 300;
+    }
+    svg{
+        color:rgba(1,148,243,1.00)!important;
+    }
+    .divider{
+        flex-shrink: 0;
+        border-width: 0;
+        border-style: solid;
+        border-color: var(--divider);
+        border-bottom-width: thin;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+    
+}

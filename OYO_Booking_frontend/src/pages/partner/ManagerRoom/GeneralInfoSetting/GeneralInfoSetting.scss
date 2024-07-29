@@ -1,0 +1,115 @@
+.general-info-setting-container {
+    font-size: 15px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    font-weight: 600;
+
+    &__title {
+        margin-bottom: 20px;
+    }
+
+    &__content {
+        .accordion-summary {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .accordion-summary__title {
+                width: 33%;
+                flex-shrink: 0;
+                font-weight: 600;
+            }
+
+            .accordion-summary__subtitle {
+                color: var(--text-secondary);
+                font-weight: 600;
+            }
+        }
+
+        .accordion-details {
+            // display: flex;
+            // flex-direction: column;
+            // padding: 20px;
+
+            .accordion-details__section {
+                width: 100%;
+                // margin-bottom: 10px;
+                padding: 10px;
+                border-radius: 5px;
+             
+
+                .accordion-details__title {
+                    margin: 0 0 10px;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                }
+
+                .accordion-details__description {
+                    margin: 0 0 15px;
+                    color: var(--text-color);
+                    font-size: 1rem;
+                    line-height: 1.5;
+                }
+
+                .accordion-details__input,
+                .accordion-details__textarea,
+                .accordion-details__time-input {
+                    padding: 10px;
+                    width: 100%;
+                    max-width: 500px;
+                    font-size: 1rem;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    transition: border-color 0.3s ease;
+
+                    &:focus {
+                        border-color: #4caf50;
+                        outline: none;
+                    }
+                }
+
+                .accordion-details__textarea {
+                    height: 100px;
+                }
+            }
+
+            .accordion-details__btn {
+                display: flex;
+                justify-content: space-between;
+                border-top: 1px solid #bdbdbd;
+                padding-top: 15px;
+
+                .accordion-details__btn-close {
+                    cursor: pointer;
+                    text-decoration: underline;
+                    margin: 0;
+                    padding: 6px 8px;
+                    width: auto;
+                    transition: background-color 0.3s ease;
+
+                    &:hover {
+                        background: #e0e0e0;
+                    }
+                }
+
+                .accordion-details__btn-save {
+                    margin: 0;
+                    padding: 6px 15px;
+                    background: #4caf50;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    border: none;
+                    color: white;
+                    transition: background-color 0.3s ease;
+
+                    &:hover {
+                        background: #66bb6a;
+                    }
+                }
+            }
+        }
+    }
+}

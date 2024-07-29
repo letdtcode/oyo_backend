@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+.layout-admin {
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.7px;
+  margin: 0;
+
+  a {
+    text-decoration: none;
+    color: unset;
+  }
+
+  a:hover {
+    color: var(--main-color);
+  }
+
+  button {
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    color: var(--txt-color);
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  input {
+    border: 2px solid transparent;
+    outline: 0;
+  }
+
+  input:focus {
+    border: 2px solid var(--main-color);
+  }
+
+  .card-admin {
+    padding: 30px;
+    margin-bottom: 30px;
+    background-color: var(--main-bg);
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+  }
+
+  .full-height {
+    height: 100%;
+  }
+
+  .card.full-height {
+    height: calc(100% - 30px);
+  }
+
+  .card__header {
+    text-transform: capitalize;
+  }
+
+  .card > div ~ div {
+    margin-top: 30px;
+  }
+
+  .card__footer {
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  .light-background {
+    background-color: var(--main-bg-light);
+    color: #000;
+  }
+
+  .dark-background {
+    background-color: var(--main-bg-dark);
+    color: #fff;
+  }
+
+  .blue-color {
+    background-color: var(--main-color-blue);
+    color: #fff;
+  }
+
+  .red-color {
+    background-color: var(--main-color-red);
+    color: #fff;
+  }
+
+  .cyan-color {
+    background-color: var(--main-color-cyan);
+    color: #fff;
+  }
+
+  .green-color {
+    background-color: var(--main-color-green);
+    color: #fff;
+  }
+
+  .orange-color {
+    background-color: var(--main-color-orange);
+    color: #fff;
+  }
+
+  .theme-mode-light {
+    --main-bg: var(--main-bg-light);
+    --second-bg: var(--second-bg-light);
+    --txt-color: var(--txt-color-light);
+    --box-shadow: var(--box-shadow-light);
+  }
+
+  .theme-mode-dark {
+    --main-bg: var(--main-bg-dark);
+    --second-bg: var(--second-bg-dark);
+    --txt-color: var(--txt-color-dark);
+    --box-shadow: var(--box-shadow-dark);
+  }
+
+  .theme-color-blue {
+    --main-color: var(--main-color-blue);
+    --second-color: var(--second-color-blue);
+  }
+
+  .theme-color-red {
+    --main-color: var(--main-color-red);
+    --second-color: var(--second-color-red);
+  }
+
+  .theme-color-cyan {
+    --main-color: var(--main-color-cyan);
+    --second-color: var(--second-color-cyan);
+  }
+
+  .theme-color-green {
+    --main-color: var(--main-color-green);
+    --second-color: var(--second-color-green);
+  }
+
+  .theme-color-orange {
+    --main-color: var(--main-color-orange);
+    --second-color: var(--second-color-orange);
+  }
+
+  .layout {
+    color: var(--txt-color);
+  }
+
+  .layout__content {
+    padding-left: var(--sidebar-width);
+    background-color: var(--second-bg);
+    min-height: 100vh;
+  }
+
+  .layout__content-main {
+    padding: 0px 30px 20px 30px;
+  }
+}

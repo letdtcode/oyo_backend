@@ -1,0 +1,15 @@
+.noResults{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.loader{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .image__loader{
+        width: 125px;   
+        align-items: center;
+    }
+}

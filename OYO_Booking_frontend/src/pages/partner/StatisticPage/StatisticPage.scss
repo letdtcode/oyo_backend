@@ -1,0 +1,53 @@
+.statis-page {
+    margin-top: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
+    .choose-year {
+        display: flex;
+        padding-left: 20px;
+        margin-bottom: 25px;
+        align-items: center;
+        justify-content: center;
+
+        h2 {
+            margin: 0;
+            margin-right: 10px;
+        }
+
+        .input-year {
+            padding: 8px 20px 8px 10px;
+            width: 150px;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .btn-statistic {
+            font-size: 14px !important;
+            padding: 6px 25px !important;
+            border: none;
+            font-weight: 520;
+            background: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-statistic:hover {
+            background: #43a047;
+        }
+    }
+
+    .card-statis {
+        width: auto;
+        margin: 0 20px;
+        height: 60px;
+        background: white;
+        border: 1px solid black;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+
+        h3 {
+            font-size: 15px;
+        }
+    }
+}

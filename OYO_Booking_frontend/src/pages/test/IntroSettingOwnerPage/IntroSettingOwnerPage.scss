@@ -1,0 +1,100 @@
+.introsettingowner-page {
+    width: 100%;
+    position: relative;
+    height: max-content!important;
+    .row {
+        margin: 0;
+    }
+
+    .l-6:nth-child(1) {
+        position: relative;
+       
+        background: red;
+        margin: 0;
+        background-image: url("/src/assets/imageMaster/tohomesetup.gif");
+        
+        .sidebar__logo {
+            position: absolute;
+            left: 30px;
+            top: 20px;
+            cursor: pointer;
+
+            img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    }
+
+    .l-6:nth-child(2) {
+        margin: 0;
+        position: relative;
+        height: 100vh;
+        padding: 0;
+
+        .text-thanks {
+            position: absolute;
+            top: 40%;
+            width: 100%;
+            text-align: center;
+
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            p {
+                font-size: 1.3rem;
+                padding: 0 80px;
+            }
+        }
+
+        button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--primary-main);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 50px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 50ms ease-in;
+            margin-top: 10px;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button:hover {
+            background-color: var(--primary-main);
+        }
+
+        .btn-out {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 12px;
+            border-radius: 15px;
+            color: var(--background-default);
+            padding: 5px 20px;
+            background: var(--text-color );
+            width: auto;
+            cursor: pointer;
+        }
+
+        .btn-out:hover {
+            background: #9e9e9e;
+        }
+
+
+    }
+}

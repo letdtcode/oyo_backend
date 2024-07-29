@@ -1,0 +1,14 @@
+.general-policy {
+    .general-policy__content-item {
+        .general-policy__title {
+            font-size: 14px;
+            font-weight: 600;
+            padding-bottom: 8px;
+        }
+        .general-policy__content{
+            font-size: 14px;
+            line-height: 21px;
+            color: var(--text);
+        }
+    }
+}

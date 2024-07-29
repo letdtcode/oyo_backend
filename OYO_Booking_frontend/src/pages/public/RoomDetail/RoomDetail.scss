@@ -1,0 +1,414 @@
+.detail-room {
+    max-width: 1080px;
+    margin-top: 40px;
+    height: max-content;
+    padding-top: 40px;
+    .breadcrumb {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+    }
+    .info-room {
+        .header-room {
+            margin-bottom: 5px;
+            h1 {
+                font-size: 24px;
+                font-weight: 600;
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .heading {
+                display: flex;
+                justify-content: space-between;
+
+                .heading__left {
+                    display: grid;
+                    .star-rating__home {
+                        .star {
+                            height: 20px;
+                        }
+                    }
+                    .obility__room {
+                        display: block;
+
+                        img {
+                            width: 16px;
+                            margin-top: 5px;
+                        }
+
+                        p {
+                            color: rgba(2, 100, 200, 1);
+                            font-size: 1.2rem;
+                            background-color: (--background-paper);
+                            border-radius: 10px;
+                            margin: 0;
+                            margin-top: 8px;
+                            margin-right: 5px;
+                        }
+                    }
+
+                    .locate__room {
+                        display: flex;
+                        p {
+                            margin: 0;
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-size: 14px;
+                        }
+
+                        .icon_locate {
+                            height: 20px;
+                            color: var(--primary-main);
+                        }
+                    }
+                }
+
+                .heading__right {
+                 
+                  
+                    justify-items: center;
+                    font-size: 14px;
+                    width: max-content;
+     
+                    .icon_rate {
+                        font-size: 2rem;
+                        color: blue;
+                    }
+
+                    p {
+                        margin: 0;
+
+                        margin-top: 3px;
+                        margin-left: 3px;
+                    }
+
+                    .view {
+                        margin-left: auto;
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        white-space: nowrap;
+                        &__icon {
+                            margin-right: 5px;
+                            margin-left: 5px;
+                            color: var(--primary-main)
+                        }
+                    }
+                    .card-like__container {
+                        position: relative;
+                        height: 23px;
+                        width: 100%;
+                        top: -8px;
+                        right: 5px;
+
+                        .card-like {
+                            position: absolute;
+                            padding: 5px 5px;
+                            right: 0;
+                            width: max-content;
+                            display: flex;
+                            border-radius: 20%;
+
+                            &:hover {
+                                cursor: pointer;
+                                background-color: #f7f7f7;
+                            }
+
+                            .icon_love {
+                                color: red;
+                                font-size: 25px;
+                            }
+
+                            p {
+                                margin: 0;
+                                font-size: 16px;
+                                padding-left: 5px;
+                            }
+                        }
+                    }
+                }
+
+                .card-room {
+                    padding-left: 15px;
+                    padding-right: 15px;
+
+                    .button-Favorite {
+                    }
+
+                    .button-Favorite {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding-bottom: 20px;
+                    }
+
+                    .button-booking {
+                        padding-bottom: 20px;
+                    }
+                }
+
+                .price-room {
+                    font-weight: 600;
+                    font-size: large;
+                    color: var(--orange-main);
+                }
+            }
+        }
+    }
+
+    .about-room {
+        position: relative;
+        span {
+        }
+        h2 {
+            font-size: large;
+            padding-top: 10px;
+            margin-bottom: 0px;
+        }
+
+        p {
+            margin-top: 0px;
+            font-size: medium;
+        }
+
+        .title-room {
+            padding-right: 15px;
+
+            .desc-room {
+                h3 {
+                    font-size: 16px;
+                }
+
+                h4 {
+                    font-size: 13px;
+                    margin-left: 10px;
+                }
+                p {
+                    word-wrap: break-word;
+                    overflow: hidden;
+                }
+            }
+
+            .bed-room {
+                padding-bottom: 1px;
+            }
+        }
+
+        .card-room {
+            padding-left: 15px;
+            padding-right: 15px;
+
+            .desc-room {
+            }
+
+            .button-Favorite {
+            }
+
+            .button-Favorite {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-bottom: 20px;
+            }
+        }
+        .col {
+            position: relative;
+        }
+        .card-book__detail {
+            width: 100%;
+            top: 0;
+            height: max-content;
+            border-radius: 10px;
+            // position: fixed;
+            position: relative;
+            z-index: 90;
+            .price-room {
+                padding: 5px 17px;
+                font-size: 24px;
+                line-height: 29px;
+                color: rgb(34, 34, 34);
+                font-family: Montserrat, sans-serif;
+                display: flex;
+                text-align: center;
+                align-items: center;
+                width: 100%;
+                flex-flow: wrap;
+                &__value {
+                    font-weight: 600;
+                }
+                &__unit {
+                    font-weight: 400;
+                    font-size: 15px;
+                }
+                &.root {
+                    font-weight: 500;
+                    font-size: 15px;
+                    text-decoration: line-through;
+                    color: #4a5568; /* Màu của đường gạch ngang */
+                }
+            }
+
+            .discount-percent {
+                padding-top: 5px;
+                line-height: 29px;
+
+                span {
+                    padding: 1px 4px;
+                    font-size: 15px;
+                    font-weight: 600;
+                    font-family: Montserrat, sans-serif;
+                    color: white;
+                    background-color: #ff3366;
+                    border-radius: 3px;
+                    margin: 0;
+                }
+            }
+            .total-price {
+                display: flex;
+                justify-content: space-between;
+                margin-left: 25px;
+                margin-right: 25px;
+                font-size: 15px;
+                font-weight: 500;
+                .title-price {
+                    height: max-content;
+                }
+                .real-price {
+                    margin: 0;
+                    height: max-content;
+                }
+            }
+            .list__surcharge {
+                position: static;
+            }
+            .price__home {
+                display: grid;
+                .price__before-discount {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0 20px;
+                    height: 10px;
+                    .price__home__root {
+                        text-decoration: line-through;
+                        color: red; /* Màu của đường gạch ngang */
+                        font-size: smaller;
+                        font-weight: 600;
+                    }
+                    .title-price {
+                        min-width: 1px;
+                    }
+                }
+                .real-price {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0 20px;
+                    .title-price {
+                        min-width: 1px;
+                    }
+                }
+            }
+            .price-total {
+                display: flex;
+                justify-content: space-between;
+                margin-left: 25px;
+                margin-right: 25px;
+                .title-price {
+                    display: flex;
+                    align-items: center;
+
+                    .name-surcharge {
+                        margin: 5px 0;
+                    }
+                }
+
+                .real-price {
+                    display: flex;
+                    .cost-surcharge {
+                        margin: 5px 0;
+                    }
+                }
+
+                p {
+                    font-size: 14px;
+                }
+            }
+
+            .discount-campain {
+                margin-left: 25px;
+                margin-right: 25px;
+
+                .discount-campain__title {
+                    display: flex;
+                    align-items: center;
+
+                    .title {
+                        margin: 0;
+                        color: red;
+                    }
+                }
+
+                p {
+                    font-size: 15px;
+                }
+            }
+        }
+
+        .btn-booking {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: -6px;
+            margin-bottom: 3px;
+            padding-bottom: 11px;
+            padding-top: 10px;
+            // background-color: rgb(74, 188, 122);
+
+            .btn-booking-room {
+                width: 200px;
+                padding: 8px 28px;
+                cursor: pointer;
+                border: none;
+
+                color: white;
+                border-radius: 5px;
+            }
+
+            .btn-booking-room:hover {
+            }
+            .btn-booking-room:disabled {
+                background-color: var(--disabled-br);
+                color: var(--disabled-cl);
+            }
+        }
+        .card-like {
+            bottom: 0;
+            height: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .icon_love {
+                color: red;
+                font-size: 25px;
+            }
+
+            p {
+                margin: 0;
+                font-size: 16px;
+                padding-left: 10px;
+            }
+        }
+        .MuiAccordionSummary-content {
+            justify-content: space-between;
+            margin: 0px;
+        }
+        .MuiAccordionSummary-expandIconWrapper {
+            margin-right: -24px;
+        }
+        .MuiAccordionSummary-root {
+            min-height: 0px;
+        }
+        .MuiAccordionSummary-contentGutters {
+        }
+    }
+}

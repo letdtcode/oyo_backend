@@ -1,0 +1,33 @@
+.container__address {
+    display: flex;
+    gap: 10px;
+
+    .input__address {
+        flex: 1;
+
+
+        .MuiAutocomplete-root {
+            width: 100%;
+
+            .MuiFormControl-root {
+                width: 100%;
+
+                .MuiInputLabel-root {
+                    display: block !important;
+                }
+
+                .MuiInputBase-root {
+                    width: 100%;
+                }
+            }
+
+            .MuiAutocomplete-inputRoot {
+                width: 100%;
+            }
+        }
+
+        .MuiAutocomplete-popper {
+            z-index: 2000; /* Tăng chỉ số z để hiển thị trên các phần tử khác */
+        }
+    }
+}

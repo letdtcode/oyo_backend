@@ -1,0 +1,363 @@
+html[mode='light'] {
+    --background-default: #fcfcfc;
+    --background-paper: #ffffff;
+    --background-contrastText: #000000;
+    --input-background: #f0f2f5;
+    --mainColor-main: #a6a4a2;
+    --mainColor-contrastText: #000000;
+    --item-hover: #d2d8de;
+    --orange-main: #f4511e;
+    --disabled-br: #e0e0e0;
+    --disabled-cl: #a6a6a6;
+    --text-color: #9a9a9a;
+    --filter-icon: brightness(0);
+    --filter-notbooking: invert(0%);
+    --btn-br-mode: #e3e5ea;
+    --btn-br-hover-mode: #d8dadf;
+    --btn-cl-mode: #2c2c2d;
+    --filter-icon-black: invert(0%);
+
+    --green-mainChannel: 0 255 0;
+    --common-black: #000;
+    --common-white: #fff;
+    --common-background: #fff;
+    --common-onBackground: #000;
+    --common-backgroundChannel: 255 255 255;
+    --common-onBackgroundChannel: 0 0 0;
+    --primary-main: #42a5f5;
+    --primary-light: #42a5f5;
+    --primary-dark: #1565c0;
+    --primary-contrastText: #fff;
+    --primary-mainChannel: 25 118 210;
+    --primary-lightChannel: 66 165 245;
+    --primary-darkChannel: 21 101 192;
+    --primary-contrastTextChannel: 255 255 255;
+    --secondary-main: #9c27b0;
+    --secondary-light: #ba68c8;
+    --secondary-dark: #7b1fa2;
+    --secondary-contrastText: #fff;
+    --secondary-mainChannel: 156 39 176;
+    --secondary-lightChannel: 186 104 200;
+    --secondary-darkChannel: 123 31 162;
+    --secondary-contrastTextChannel: 255 255 255;
+    --error-main: #d32f2f;
+    --error-light: #ef5350;
+    --error-dark: #c62828;
+    --error-contrastText: #fff;
+    --error-mainChannel: 211 47 47;
+    --error-lightChannel: 239 83 80;
+    --error-darkChannel: 198 40 40;
+    --error-contrastTextChannel: 255 255 255;
+    --warning-main: #ed6c02;
+    --warning-light: #ff9800;
+    --warning-dark: #e65100;
+    --warning-contrastText: #fff;
+    --warning-mainChannel: 237 108 2;
+    --warning-lightChannel: 255 152 0;
+    --warning-darkChannel: 230 81 0;
+    --warning-contrastTextChannel: 255 255 255;
+    --info-main: #0288d1;
+    --info-light: #03a9f4;
+    --info-dark: #01579b;
+    --info-contrastText: #fff;
+    --info-mainChannel: 2 136 209;
+    --info-lightChannel: 3 169 244;
+    --info-darkChannel: 1 87 155;
+    --info-contrastTextChannel: 255 255 255;
+    --success-mode: #4caf50;
+    --success-contrastText: #fff;
+    --success-mainChannel: 46 125 50;
+    --success-lightChannel: 76 175 80;
+    --success-darkChannel: 27 94 32;
+    --success-contrastTextChannel: 255 255 255;
+    --grey-50: #fafafa;
+    --grey-100: #f5f5f5;
+    --grey-200: #eeeeee;
+    --grey-300: #e0e0e0;
+    --grey-400: #bdbdbd;
+    --grey-500: #9e9e9e;
+    --grey-600: #757575;
+    --grey-700: #616161;
+    --grey-800: #424242;
+    --grey-900: #212121;
+    --grey-A100: #f5f5f5;
+    --grey-A200: #eeeeee;
+    --grey-A400: #bdbdbd;
+    --grey-A700: #616161;
+    --text-primary: rgba(0, 0, 0, 0.87);
+    --text-secondary: rgba(0, 0, 0, 0.6);
+    --text-disabled: rgba(0, 0, 0, 0.38);
+    --text-primaryChannel: 0 0 0;
+    --text-secondaryChannel: 0 0 0;
+    --divider: rgba(0, 0, 0, 0.12);
+    --icon-color: ;
+}
+
+html[mode='dark'] {
+    --background-default: #18191a;
+    --background-paper: #242526;
+    --background-contrastText: #ffffffb3;
+    --background-defaultChannel: 34 34 34;
+    --input-background: #3a3b3c;
+    --item-hover: #6a6c6f;
+    --disabled-br: #5d5d5d;
+    --disabled-cl: #8e8e8e;
+    --text-color: #fff;
+    --filter-icon: brightness(20);
+    --filter-notbooking: invert(85%);
+    --btn-br-mode: #303031;
+    --btn-br-hover-mode: #444546;
+    --btn-cl-mode: #e4e6eb;
+    --filter-icon-black: invert(100%);
+
+    --background-contrastTextChannel: 255 255 255;
+    --mainColor-main: #424242;
+    --mainColor-contrastText: #fff;
+    --mainColor-mainChannel: 66 66 66;
+    --mainColor-contrastTextChannel: 255 255 255;
+    --orange-main: #f4511e;
+    --orange-contrastText: #fff;
+    --orange-mainChannel: 244 81 30;
+    --orange-contrastTextChannel: 255 255 255;
+
+    --green-mainChannel: 0 255 0;
+    --common-black: #000;
+    --common-white: #fff;
+    --common-background: #000;
+    --common-onBackground: #fff;
+    --common-backgroundChannel: 0 0 0;
+    --common-onBackgroundChannel: 255 255 255;
+    --primary-main: #90caf9;
+    --primary-light: #e3f2fd;
+    --primary-dark: #42a5f5;
+    --primary-contrastText: rgba(0, 0, 0, 0.87);
+    --primary-mainChannel: 144 202 249;
+    --primary-lightChannel: 227 242 253;
+    --primary-darkChannel: 66 165 245;
+    --primary-contrastTextChannel: 0 0 0;
+    --secondary-main: #ce93d8;
+    --secondary-light: #f3e5f5;
+    --secondary-dark: #ab47bc;
+    --secondary-contrastText: rgba(0, 0, 0, 0.87);
+    --secondary-mainChannel: 206 147 216;
+    --secondary-lightChannel: 243 229 245;
+    --secondary-darkChannel: 171 71 188;
+    --secondary-contrastTextChannel: 0 0 0;
+    --error-main: #f44336;
+    --error-light: #e57373;
+    --error-dark: #d32f2f;
+    --error-contrastText: #fff;
+    --error-mainChannel: 244 67 54;
+    --error-lightChannel: 229 115 115;
+    --error-darkChannel: 211 47 47;
+    --error-contrastTextChannel: 255 255 255;
+    --warning-main: #ffa726;
+    --warning-light: #ffb74d;
+    --warning-dark: #f57c00;
+    --warning-contrastText: rgba(0, 0, 0, 0.87);
+    --warning-mainChannel: 255 167 38;
+    --warning-lightChannel: 255 183 77;
+    --warning-darkChannel: 245 124 0;
+    --warning-contrastTextChannel: 0 0 0;
+    --info-main: #29b6f6;
+    --info-light: #4fc3f7;
+    --info-dark: #0288d1;
+    --info-contrastText: rgba(0, 0, 0, 0.87);
+    --info-mainChannel: 41 182 246;
+    --info-lightChannel: 79 195 247;
+    --info-darkChannel: 2 136 209;
+    --info-contrastTextChannel: 0 0 0;
+    --success-mode: #388e3c;
+
+    --success-contrastText: rgba(0, 0, 0, 0.87);
+    --success-mainChannel: 102 187 106;
+    --success-lightChannel: 129 199 132;
+    --success-darkChannel: 56 142 60;
+    --success-contrastTextChannel: 0 0 0;
+    --grey-50: #fafafa;
+    --grey-100: #f5f5f5;
+    --grey-200: #eeeeee;
+    --grey-300: #e0e0e0;
+    --grey-400: #bdbdbd;
+    --grey-500: #9e9e9e;
+    --grey-600: #757575;
+    --grey-700: #616161;
+    --grey-800: #424242;
+    --grey-900: #212121;
+    --grey-A100: #f5f5f5;
+    --grey-A200: #eeeeee;
+    --grey-A400: #bdbdbd;
+    --grey-A700: #616161;
+    --text-primary: #fff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-disabled: rgba(255, 255, 255, 0.5);
+    --text-icon: rgba(255, 255, 255, 0.5);
+    --text-primaryChannel: 255 255 255;
+    --text-secondaryChannel: 255 255 255;
+    --divider: rgba(255, 255, 255, 0.12);
+}
+
+:root {
+    --text-color: #9a9a9a;
+    --white-color: #fafafa;
+    --heading-color: #555555;
+    --blue-color: #42a5f5;
+    --red-color: #f76570;
+    --yellow-color: #ffd105;
+    --purple-color: #ba71da;
+    --orange-color: #f3a46b;
+    --black-color: #333333;
+    --success-main: #2e7d32;
+    --baby-blue: #dcebfb;
+
+    --yellow-grad: linear-gradient(to right, #ffd205, #ff9e05);
+    --blue-grad: linear-gradient(to right, #14bad4, #14d4b2);
+    --red-grad: linear-gradient(to right, #f76670, #f78d66);
+    --green-grad: linear-gradient(to right, #1bbc99, #1bbc65);
+    --purple-grad: linear-gradient(to right, #bb71d7, #d9717c);
+    --orange-grad: linear-gradient(to right, #f3a56b, #f3c76b);
+
+    --btn-orange: #ff9800;
+    --btn-orange-hover: #f57c00;
+    --btn-blue: #4f46e5;
+    --btn-blue-hover: #1e88e5;
+    --btn-red: #f44336;
+    --btn-red-hover: #ef5350;
+
+    --border-scroll: #eeeeee;
+
+    --blue-link: #1877f2;
+
+    --bg: #242526;
+    --bg-accent: #484a4d;
+    // --text-color: #dadce1;
+    --nav-size: 60px;
+    --border: 1px solid #474a4d;
+    --border-radius: 8px;
+    --speed: 500ms;
+
+    --main-bg: #ffffff;
+    --second-bg: #fafafb;
+    --txt-color: #455560;
+    --txt-white: #fff;
+    --main-color: #349eff;
+    --second-color: #62b4ff;
+    --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    --main-bg-light: #ffffff;
+    --second-bg-light: #fafafb;
+    --txt-color-light: #455560;
+    --box-shadow-light: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    --main-bg-dark: #2d2d2d;
+    --second-bg-dark: #202020;
+    --txt-color-dark: #bbbbbb;
+    --box-shadow-dark: rgba(0, 0, 0, 0.2) 0px 5px 10px;
+
+    --main-color-blue: #349eff;
+    --second-color-blue: #62b4ff;
+    --third-color-blue: #cafff9;
+
+    --main-color-red: #fb0b12;
+    --second-color-red: #ff4a6b;
+
+    --main-color-cyan: #10d4d2;
+    --second-color-cyan: #2ae9e6;
+
+    --main-color-green: #019707;
+    --second-color-green: #4caf50;
+
+    --main-color-orange: #d68102;
+    --second-color-orange: #fca11a;
+
+    --sidebar-width: 300px;
+    --border-radius: 15px;
+    --topnav-height: 90px;
+    --transition-cubic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --green: #00ff00;
+    --yellow: #fbbc04;
+    --divider-main: rgba(0, 0, 0, 0.12);
+
+    .MuiButton-root {
+        text-transform: none !important;
+        font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+    }
+
+    .MuiButtonBase-root {
+    }
+
+    .MuiToolbar-root {
+        // background-color: var(--primary-main)
+    }
+
+    .MuiIconButton-root {
+        color: inherit;
+    }
+
+    .MuiPaper-root {
+        // color: inherit;
+    }
+
+    .MuiInputBase-root {
+        color: inherit;
+        background: var(--input-background);
+    }
+    .MuiInputBase-root {
+        input:disabled {
+            color: var(--disabled-cl);
+            background: var(--disabled-br);
+        }
+    }
+    .MuiOutlinedInput-input {
+        color: inherit;
+    }
+
+    .MuiMenu-paper {
+        background-color: var(--background-paper);
+    }
+
+    .MuiMenu-list {
+        color: var(--background-contrastText);
+    }
+
+    .MuiMenuItem-root:hover {
+        background-color: var(--item-hover);
+    }
+    .MuiAppBar-root {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+    // .MuiAutocomplete-root{
+    //     color:inherit
+    // }
+    .MuiFormLabel-root {
+        color: inherit;
+    }
+    .MuiDialogContentText-root {
+        color: inherit;
+    }
+    .divider {
+        border-style: solid;
+        border-color: var(--divider);
+        border-bottom-width: thin;
+        width: 95%;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+    .divider-full {
+        border-style: solid;
+        border-color: var(--divider);
+        border-bottom-width: thin;
+        width: 100%;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+    .MuiAccordion-rounded {
+        background-color: initial;
+        color: inherit;
+    }
+    .MuiAccordionSummary-expandIconWrapper {
+        background-color: initial;
+        color: inherit;
+    }
+}

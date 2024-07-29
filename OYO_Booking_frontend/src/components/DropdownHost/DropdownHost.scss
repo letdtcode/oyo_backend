@@ -1,0 +1,109 @@
+.info-dropdown {
+    .nav-item {
+        list-style: none;
+
+        .icon-button {
+            padding-top: 5px;
+        }
+
+        .icon-button:hover {
+            border-bottom: none;
+        }
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    .dropdown {
+        position: absolute;
+        z-index: 99;
+        top: 58px;
+        width: 250px !important;
+        right: -100px;
+        height: auto !important;
+        transform: translateX(-45%);
+        background-color: white;
+        border: var(--border);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        overflow: hidden;
+        transition: height var(--speed) ease;
+
+        .menu {
+            width: 100%;
+        }
+
+        .menu-item {
+            height: 40px !important;
+            display: flex;
+            align-items: center;
+            border-radius: var(--border-radius);
+            transition: background var(--speed);
+            padding: 0.5rem;
+            width: 100%;
+            color: black;
+            font-weight: 500;
+
+            .icon-button {
+                margin-right: 0.5rem;
+            }
+
+            .icon-button:hover {
+                filter: none;
+            }
+
+            .icon-right {
+                margin-left: auto;
+            }
+        }
+
+        .menu-item:hover {
+            background-color: #525357;
+        }
+    }
+
+    /* CSSTransition classes  */
+    .menu-primary-enter {
+        position: absolute;
+        transform: translateX(-110%);
+    }
+    .menu-primary-enter-active {
+        transform: translateX(0%);
+        transition: all var(--speed) ease;
+    }
+    .menu-primary-exit {
+        position: absolute;
+    }
+    .menu-primary-exit-active {
+        transform: translateX(-110%);
+        transition: all var(--speed) ease;
+    }
+
+    .menu-secondary-enter {
+        transform: translateX(110%);
+    }
+    .menu-secondary-enter-active {
+        transform: translateX(0%);
+        transition: all var(--speed) ease;
+    }
+
+    .menu-secondary-exit-active {
+        transform: translateX(110%);
+        transition: all var(--speed) ease;
+    }
+    a {
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    .dropdown__link {
+        color: var(--black-color);
+        width: 100%;
+    }
+
+    .dropdown__link:hover {
+        background: var(--text-color);
+        border-bottom: none !important;
+    }
+}

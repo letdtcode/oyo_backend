@@ -1,0 +1,198 @@
+.rooms-and-rate-container {
+}
+
+.week-navigation {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+
+    &__icon {
+        height: 20px;
+        width: 20px;
+        color: #fff;
+    }
+
+    &__save {
+        margin-right: auto;
+        padding: 5px 10px;
+        font-size: 14px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #218838;
+        }
+    }
+
+    .search-input-home {
+        display: flex;
+        border-style: solid;
+        border-width: 1.5px;
+        border-color: #757575;
+        width: 300px;
+
+        input {
+            background-color: white;
+            border: 0;
+            font-size: 14px;
+            width: 90%;
+            height: 100%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .searchIcon {
+            width: 50px;
+            background-color: white;
+            display: grid;
+            place-items: center;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+
+            svg {
+                font-size: 20px;
+            }
+        }
+
+        .searchIcon-clear {
+            width: 50px;
+            background-color: white;
+            display: grid;
+            place-items: center;
+            // border-top-right-radius: 5px;
+            // border-bottom-right-radius: 5px;
+
+            svg {
+                font-size: 20px;
+            }
+
+            #clearBtn {
+                cursor: pointer;
+                font-size: 20px;
+                position: absolute;
+                right: 6%;
+            }
+        }
+    }
+}
+
+.week-navigation button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+        &:hover {
+            background-color: #ccc;
+        }
+    }
+}
+
+.week-navigation button:hover {
+    background-color: #0056b3;
+}
+
+.table-container {
+    overflow-x: auto;
+    .currentWeek {
+        width: 250px;
+    }
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 10px;
+    border: 2px solid #ccc;
+}
+.table-container th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-align: center;
+    font-size: small;
+}
+
+.table-container td input[type='text'] {
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.table-container td input[type='text']:focus {
+    outline: none;
+    border-color: #007bff;
+    color: var(--info-main);
+}
+
+.rate-room {
+    &__name {
+        display: flex;
+        width: 250px;
+        white-space: nowrap; // Đảm bảo chỉ hiển thị trên một dòng
+        overflow: hidden; // Ẩn phần dư thừa nếu tên phòng dài hơn chiều rộng
+        text-overflow: ellipsis; // Hiển thị dấu chấm (...) nếu tên phòng quá dài
+        transition: width 0.3s; // Tạo hiệu ứng chuyển đổi cho việc thay đổi chiều rộng khi hover
+
+        &:hover {
+            width: auto; // Hiển thị toàn bộ nội dung khi hover
+            z-index: 9999; // Đảm bảo nội dung được hiển thị trên các phần tử khác
+            position: absolute; // Di chuyển phần tử ra khỏi vị trí ban đầu để hiển thị toàn bộ nội dung
+
+            background-color: white; // Màu nền khi hiển thị toàn bộ nội dung
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // Tạo hiệu ứng bóng cho phần tử
+            padding: 10px; // Khoảng cách giữa nội dung và viền
+        }
+    }
+    &__price {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__td {
+        border: 1px solid transparent;
+
+        .rate-room__input {
+        }
+    }
+}
+
+// Thêm các lớp màu cho giá
+.rate-room__input {
+    &.default-price {
+        color: #000000; // Màu đen
+    }
+
+    &.higher-price {
+        color: #ffa500; // Màu cam
+    }
+
+    &.lower-price {
+        color: #008000; // Màu xanh lá cây
+    }
+}
+.table-container th.weekend {
+    background-color: #ffe0b2; // Light orange background for weekends
+    color: #d84315; // Darker orange text for weekends
+}

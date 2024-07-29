@@ -1,0 +1,66 @@
+@use '../../assets/css/responsive.scss';
+.slider__home {
+    position: relative;
+    margin: 2px 0;
+    width: 100%;
+    margin-top: 75px;
+    z-index: 100;
+
+    .slider__home-item {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+    }
+
+    .slick-next {
+        position: absolute;
+        right: 0;
+        opacity: 0;
+    }
+
+    .content-search {
+        position: absolute;
+        top: 30%;
+        left: 10%;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Droid Sans, Helvetica Neue, Helvetica, Arial,
+            sans-serif;
+        @mixin responsive-styles {
+            .title-home {
+                font-size: 33px;
+                color: white;
+                font-weight: 500;
+            }
+    
+            p {
+                color: white;
+                font-size: 12px;
+                margin: 0;
+            }
+        }
+        .title-home {
+            font-size: 55px;
+            color: white;
+            font-weight: 500;
+        }
+
+        p {
+            color: white;
+            font-size: 20px;
+            margin: 0;
+        }
+        @include responsive.mobile-small {
+            @include responsive-styles;
+        }
+
+        @include responsive.mobile-medium {
+            @include responsive-styles;
+        }
+
+        @include responsive.mobile-large {
+            @include responsive-styles;
+        }
+        @include responsive.mobile-xsmall {
+            @include responsive-styles;
+        }
+    }
+}

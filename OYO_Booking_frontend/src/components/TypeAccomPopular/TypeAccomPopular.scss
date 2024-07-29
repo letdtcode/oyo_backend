@@ -1,0 +1,53 @@
+.type-accom-popular {
+    margin: 100px 100px 0px 100px;
+    .type-accom-popular__head {
+        h1 {
+            font-size: 2em;
+            font-weight: bold;
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            margin-bottom: 20px;
+        }
+    }
+    .slick-prev:before,
+    .slick-next:before {
+        color: black;
+    }
+}
+.slick-list {
+    .slide {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        flex: 0.5;
+        margin: 10px;
+        position: relative;
+        display: flex;
+        place-content: center;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.7s ease-in-out;
+        &:hover {
+            transform: scale(1.05);
+        }
+        h1 {
+            position: absolute;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 29px;
+            color: #fff;
+            bottom: 60px;
+        }
+        span {
+            position: absolute;
+            bottom: 0;
+           
+            bottom: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            line-height: 22px;
+        }
+    }
+}

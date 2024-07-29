@@ -1,0 +1,156 @@
+@use '../../../assets/css/responsive.scss';
+.appbar {
+    height: 75px;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    background-color: var(--background-paper) !important;
+    .toolbar {
+        background-color: var(--background-paper);
+        color: var(--background-contrastText);
+        font-weight: bold;
+        
+
+        @include responsive.desktop {
+            max-width: 1440px;
+            width: 100%;
+        }
+        @include responsive.laptop {
+            max-width: 1280px;
+            width: 100%;
+        }
+        @include responsive.tablet {
+            max-width: 1024px;
+            width: 100%;
+        }
+        @mixin responsive-styles {
+        
+            .element {
+                display: none !important;
+                &__drawer {
+                    display: block !important;
+                }
+            }
+        }
+
+        @include responsive.mobile-small {
+            @include responsive-styles;
+            max-width: 381px;
+            width: 100%;
+        }
+
+        @include responsive.mobile-medium {
+            @include responsive-styles;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        @include responsive.mobile-large {
+            @include responsive-styles;
+            max-width: 768px;
+            width: 100%;
+        }
+        @include responsive.mobile-xsmall {
+            @include responsive-styles;
+            max-width: 380px;
+            width: 100%;
+        }
+        
+        button {
+            text-transform: none;
+            font-weight: inherit;
+            color: inherit;
+        }
+        button:hover {
+            color: var(--primary-main);
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        a:hover {
+            color: var(--primary-main);
+        }
+        .logo {
+            padding-left: 30px;
+            width: 150px;
+            overflow: hidden;
+            .logo-bg {
+                height: 75px;
+                transform: scale(2);
+            }
+        }
+        .appbar-right-menu {
+            margin-left: auto !important;
+        }
+        .element {
+            padding-left: 15px;
+            padding-right: 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            &__drawer {
+                display: none;
+            }
+        }
+        .element__actived {
+            padding-left: 15px;
+            padding-right: 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            color: var(--primary-main);
+        }
+    }
+    .MuiButton-root {
+        text-transform: none !important;
+    }
+}
+.drawer-content {
+    width: 250px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 100px;
+            height: 100px;
+        }
+    }
+    .drawer-item {
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+        a {
+            color: var(--text-primary);
+            text-decoration: none;
+            &:hover {
+                color: var(--primary-main);
+            }
+        }
+        button {
+            justify-content: flex-start;
+            color: var(--text-primary);
+            &:hover {
+                color: var(--primary-main);
+            }
+            
+        }
+        &:hover {
+            background-color: var(--background-paper);
+        }
+    }
+}

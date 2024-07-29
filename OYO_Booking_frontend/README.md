@@ -1,0 +1,6 @@
+Environment Variables
+
+VITE_API_BASE_URL= http://localhost:8080/api/v1
+VITE_PAYPAL_CLIENT_ID= AYE5cyLWOZZW2-PLHdIrxPT14X70Y9ku_EWu2ACcK8M465uFy1qDtcwGE75uB4g-Lb4G1FTQCK8r-dQq
+VITE_API_KEY_GOOGLE=AIzaSyD6vLxBPqdXfOrMPDt4bKPy-O_96K588to
+VITE_API_URL_TRANSLATE=https://translation.googleapis.com/language/translate/v2

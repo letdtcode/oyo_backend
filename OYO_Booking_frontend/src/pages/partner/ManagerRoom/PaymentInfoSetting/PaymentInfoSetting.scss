@@ -1,0 +1,76 @@
+.payment-info-setting-container {
+    font-size: 15px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    font-weight: 600;
+    &__title {
+        margin-bottom: 20px;
+    }
+
+    &__content {
+        .accordion-summary {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &__title {
+                width: 33%;
+                flex-shrink: 0;
+            }
+        }
+
+        .accordion-details {
+
+            padding: 20px;
+
+            &__section {
+                display: flex;
+                justify-content: space-between;
+                border-top: 1px solid #bdbdbd;
+                padding-top: 15px;
+
+
+
+                .accordion-details__btn-close {
+                    cursor: pointer;
+                    text-decoration: underline;
+                    margin: 0;
+                    padding: 6px 8px;
+                    width: auto;
+
+                    &:hover {
+                        background: #e0e0e0;
+                    }
+                }
+
+                .accordion-details__btn-save {
+                    margin: 0;
+                    padding: 6px 15px;
+                    background: #4caf50;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    border: none;
+                    color: white;
+
+                    &:hover {
+                        background: #66bb6a;
+                    }
+                }
+            }
+            &__btn{
+                display: flex;
+                justify-content: space-between;
+                border-top: 1px solid #bdbdbd;
+                padding-top: 15px;
+            }
+
+            .custom-input {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+    }
+}

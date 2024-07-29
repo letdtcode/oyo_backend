@@ -1,0 +1,30 @@
+.listdata_history {
+    width: 100%;
+    margin-top: 20px;
+
+    .no-data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        p {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+    }
+
+    .skeleton-loader {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

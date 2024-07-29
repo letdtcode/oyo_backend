@@ -1,0 +1,126 @@
+.confirm-page {
+    .logo {
+        position: absolute;
+        left: 5%;
+        font-size: 30px;
+        flex: 1;
+        z-index: 100;
+        color: var(--black);
+        .logo-bg {
+            height: 100px;
+        }
+    }
+
+    .content-confirm {
+        position: relative;
+        width: 90%;
+        height: 80vh;
+        margin: auto;
+
+        h1 {
+            padding-left: 60px;
+        }
+
+        span {
+            font-size: 1.3rem;
+            padding-left: 60px;
+        }
+
+        .status {
+            padding-left: 60px;
+
+            p {
+                font-size: 1.4rem;
+                font-weight: bold;
+                margin: 0;
+                margin-bottom: 10px;
+                color: var(--text-color);
+            }
+
+            span {
+                padding: 0;
+                color: var(--text-color);
+            }
+
+            .status-icon {
+                display: flex;
+
+                .icon-success {
+                    background: green;
+                    border-radius: 50%;
+                    width: 15px;
+                    height: 15px;
+                    color: white;
+                    margin-right: 10px;
+                }
+
+                p {
+                    font-weight: normal;
+                }
+            }
+        }
+
+        .container__card {
+            margin-top: 10px;
+            border: 1px solid var(--text-color);
+            width: 400px;
+            min-width: 200px;   
+            .card {
+                margin: 10px;
+                min-height: 300px;
+                height: max-content;
+                background: white;
+                margin-bottom: 20px;
+                position: relative;
+
+                img {
+                    width: 99.8%;
+                    height: 250px;
+                    border-radius: 10px 10px 0 0;
+                }
+
+                h2 {
+                    padding-left: 20px;
+                    margin-bottom: 7px;
+                }
+                h3{
+                    word-wrap: break-word;
+                    overflow: hidden;
+                }
+
+                p {
+                    color: var(--text-color);
+                    margin-top: 0;
+                    padding-left: 20px;
+                    font-size: 1.3rem;
+                }
+                .price{
+                    display: flex;
+                    justify-content: space-between;
+                }
+                span {
+                    // position: absolute;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .btn-post {
+            margin: auto;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--btn-red);
+            color: #ffffff;
+            font-size: 14px;
+            padding: 12px 50px;
+            letter-spacing: 1px;
+            transition: transform 50ms ease-in;
+            margin-top: 10px;
+        }
+
+        .image-home{
+            height: 200px;
+        }
+    }
+}

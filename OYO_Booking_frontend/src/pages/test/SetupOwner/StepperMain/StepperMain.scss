@@ -1,0 +1,53 @@
+.step-main {
+    width: 100%;
+    margin-top: 20px !important;
+    position: relative;
+
+    .MuiInputLabel-root{
+        font-size: small;
+    }
+    .MuiOutlinedInput-root{
+        padding:  6px!important;
+        justify-content: center;
+        font-size: small;
+    }
+    .row {
+        margin: 0;
+    }
+
+    svg {
+        width: 25px;
+        height: 25px;
+
+        .MuiStepIcon-text {
+            font-size: 10px;
+        }
+    }
+
+    span {
+        font-size: 1.2rem;
+    }
+
+    // .MuiButtonBase-root {
+    //     font-size: 1.4rem;
+    //     color: white !important;
+    //     text-transform: none;
+    //     text-decoration: underline;
+    //     padding-left: 0;
+    //     text-align: start;
+
+    // }
+
+    // .MuiButtonBase-root:hover {
+    //     background: var(--white-color);
+    // }
+
+    // .MuiButtonBase-root {
+    //     background: var(--primary-main);
+    //     color: var(--background-default);
+    // }
+
+    // .MuiButtonBase-root:hover {
+    //     background: var(--primary-main);
+    // }
+}

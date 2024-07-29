@@ -1,0 +1,118 @@
+.date-range-selector {
+    display: flex;
+    place-content: center;
+    .nice-dates {
+        place-content: center;
+        width: 90%;
+        .info_date {
+            border-radius: 5px;
+            border: 2px solid var(--divider);
+            justify-content: space-between;
+          
+            display: flex;
+            height: 60px;
+            .focused{
+                border: 2px solid var(--primary-main)!important;
+            }
+            .checkin {
+                width: 50%;
+                border-right: 2px solid var(--divider);
+                text-align: center;
+                position: relative;
+                .title__checkin {
+                    padding-top: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .icon__expand {
+                    position: absolute;
+                    z-index: 100;
+                    right: 0;
+                    top: 15px;
+                }
+                .date__checkin {
+                    border: none; /* Ẩn viền của input */
+                    outline: none; /* Ẩn đường viền khi input được focus */
+                    width: 100%;
+                    text-align: center;
+                    &__input{
+                        position: absolute;
+                        left: -9999px;
+                        width: 1px;
+                        height: 1px;
+                        overflow: hidden;
+                        opacity: 0;
+                    }
+                }
+            }
+            .checkout {
+                width: 50%;
+                text-align: center;
+                position: relative;
+                .title__checkout {
+                    padding-top: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .icon__expand {
+                    position: absolute;
+                    z-index: 100;
+                    right: 0;
+                    top: 15px;
+                }
+                .date__checkout {
+                    border: none; /* Ẩn viền của input */
+                    outline: none; /* Ẩn đường viền khi input được focus */
+                    width: 100%;
+                    text-align: center;
+                    &__input{
+                        position: absolute;
+                        left: -9999px;
+                        width: 1px;
+                        height: 1px;
+                        overflow: hidden;
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+        .nice-dates-popover{
+            z-index: 100;
+            .nice-dates-grid{
+                .nice-dates-grid_container{
+                    span{
+                        margin-left:0px;
+                    }
+                    .nice-dates-day{
+
+                    }
+                    .-selected{
+                        background-color: var(--primary-main);
+                    }
+                    .-selected-start{
+                        
+                        border-top-left-radius: 50%;
+                        border-bottom-left-radius: 50%;
+                    }
+                    .-selected-end{
+                       
+                        border-top-right-radius: 50%;
+                        border-bottom-right-radius: 50%;
+                    }
+                    .-selected-middle{
+                      
+                    }
+                    .nice-dates-day:before {
+                        background-color: inherit;
+                        z-index: 1;
+                    }
+                    .nice-dates-day{
+                        margin-bottom:1px;
+                    }
+                }
+            }
+        }
+    }
+}

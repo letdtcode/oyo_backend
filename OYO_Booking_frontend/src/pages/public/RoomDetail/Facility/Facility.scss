@@ -1,0 +1,42 @@
+.facility{
+    .slick-slider{
+        .slick-prev,
+        .slick-next {
+          display: none !important;
+        }
+        .slick-track{
+            height: 120px;
+        }   
+        .slick-slide{
+            
+           
+            .facility-item{
+                align-items: center;
+                text-align: -webkit-center;
+
+                .icon-facility{
+                    width: 35px;
+
+                }
+                .name-facility{
+                    width: 100px;
+                    height: 70px;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3; /* Số dòng muốn hiển thị */
+                    -webkit-box-orient: vertical;
+                    white-space: normal; 
+                }
+            }
+        }
+        .slick-active{
+
+        }
+        .slick-current{
+
+        }
+    }
+    .slick-initialized{
+
+    }
+}

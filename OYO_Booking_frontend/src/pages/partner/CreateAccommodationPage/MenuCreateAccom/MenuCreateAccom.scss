@@ -1,0 +1,60 @@
+.menu-create-accom__container {
+    .menu-create-accom__content {
+        line-height: 2;
+        .options-card {
+            height: 300px;
+            .option {
+                margin: 15px 0;
+                padding: 5px 20px;
+                color: var(--mainColor-contrastText);
+                background-color: #dcebfb;
+                font-size: 14px;
+                display: flex;
+                position: relative;
+                text-decoration: auto;
+
+                .option-icon {
+                    color: var(--info-main);
+                    padding-right: 10px;
+                }
+            }
+            .selected-option {
+                background-color: var(--primary-main);
+                color: var(--primary-contrastText);
+            }
+            .option:hover {
+                scale: 1.05;
+            }
+        }
+        .progress__underway {
+            margin: 15px 0;
+            padding: 5px 10px;
+            color: var(--mainColor-contrastText);
+            font-size: 14px;
+            position: relative;
+            text-decoration: auto;
+            .progress {
+                position: relative;
+                height: 100%;
+                width: 95%;
+                text-align: center;
+                margin: auto;
+                align-items: center;
+                .percent {
+                    color: #000;
+                    font-weight: 600;
+                    position: absolute;
+                    top: 0;
+                    left: 45%;
+                }
+            }
+
+            .option {
+                width: 95%;
+                margin: auto;
+                margin-top: 9px;
+                margin-bottom: 9px;
+            }
+        }
+    }
+}

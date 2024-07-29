@@ -1,0 +1,90 @@
+.step-two {
+    margin-top: -45px;
+    position: absolute;
+    width: 100%;
+
+    .l-6:nth-child(1) {
+        position: relative;
+        height: 100vh;
+        background: #bbdefb;
+        z-index: -1;
+        display: grid;
+        justify-items: center; /* Căn giữa chiều ngang */
+        background-image: url('/src/assets/imageMaster/tohomesetup.gif');
+        .require-step2 {
+            position: absolute;
+            margin-top: 18%;
+
+            .image-step2 {
+                width: 100%;
+                padding: 0 50px;
+            }
+
+            h1 {
+                text-align: center;
+                width: 100%;
+            }
+        }
+    }
+
+    .l-6:nth-child(2) {
+        position: relative;
+        height: 90vh;
+        display: grid;
+        justify-items: center; /* Căn giữa chiều ngang */
+        align-content: center; /* Căn giữa chiều dọc */
+
+        .info-count__room {
+            width: 100%;
+
+            li {
+                font-size: 20px !important;
+            }
+
+            .count {
+                display: flex;
+                justify-content: space-between;
+                margin-left: 100px;
+                margin-right: 100px;
+                text-align: center;
+
+                p {
+                    font-weight: bold;
+                    font-size: 1.5rem;
+                }
+                .input__count_guest {
+                    font-weight: 500;
+                    width: 150px;
+                    border: 1px solid #616161;
+                    border-radius: 5px;
+                    text-align: center;
+                    font-size: 1.5rem;
+                    height: 40px;
+                    place-self: center;
+                }
+            }
+            .cateName {
+                margin: 0 100px;
+                font-weight: bold !important;
+                font-size: 1.5rem;
+            }
+        }
+        .btn-out {
+            position: absolute;
+            top: 70px;
+            right: 50px;
+            font-size: 12px;
+            border-radius: 15px;
+            color: var(--white-color);
+            padding: 5px 20px;
+            background: #616161;
+            width: auto;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-out:hover {
+            background: #9e9e9e;
+        }
+    }
+}

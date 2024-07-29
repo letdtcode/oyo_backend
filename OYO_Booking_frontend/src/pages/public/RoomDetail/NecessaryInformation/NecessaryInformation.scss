@@ -1,0 +1,22 @@
+.necessary-information{
+    .necessary-information__title{
+
+    }
+    .necessary-information__content{
+        display: flex;
+        .necessary-information__content-item{
+            width: 150px;
+            border-left: 1px solid var(--divider);
+            text-align: center;
+            .title{
+                font-size: 14px;
+                line-height: 17px;
+            }
+            .time{
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 21px;
+            }
+        }
+    }
+}

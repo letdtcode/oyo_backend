@@ -1,0 +1,46 @@
+.container__setting__convenien{
+    padding-right: 60px;
+    margin-bottom: 4px;
+    .title-item {
+        padding-left: 32px;
+        h1 {
+            font-size:  medium;
+            margin-bottom: 5px;
+        }
+
+        span {
+            font-size: medium;
+        }
+    }
+    .container__convenienItem{
+        padding: 0 50px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 1000px;
+        word-wrap: break-word;
+        .item {
+            display: flex;
+            justify-items: center;
+            padding-left: 30px;
+            width: 400px;
+            border-bottom: 1px solid var(--divider-main);
+    
+            p {
+                font-size: medium;
+                padding-left: 30px;
+                font-weight: 500;
+                align-self: center;
+                
+            }
+            img{
+                width: 30px;
+                height: 30px;
+                margin-top: 10px;
+                margin-left: 10px;
+                align-self: center;
+
+            }
+        }
+    }
+   
+}

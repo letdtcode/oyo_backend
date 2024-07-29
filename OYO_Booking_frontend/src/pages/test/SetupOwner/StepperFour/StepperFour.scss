@@ -1,0 +1,103 @@
+.step-four {
+    margin-top: -45px;
+    position: absolute;
+    width: 100%;
+
+    .l-6:nth-child(1) {
+        position: relative;
+        height: 100vh;
+        background: linear-gradient(45deg, #bdbdbd, #f5f5f5);
+        z-index: -1;
+        display: grid;
+        justify-items: center; /* Căn giữa chiều ngang */
+
+        .require-step4 {
+            position: absolute;
+            margin-top: 16%;
+
+            .image-step4 {
+                width: 95%;
+            }
+
+            h1 {
+                margin-top: -50px;
+                position: absolute;
+                text-align: center;
+                width: 100%;
+            }
+        }
+    }
+
+    .l-6:nth-child(2) {
+        position: relative;
+        height: 90vh;
+
+        .upload-file {
+            position: absolute;
+            top: 10%;
+            left: 15%;
+        }
+
+        .step-four__upload-video {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #307dca;
+            border-radius: 20px;
+            margin: 0 auto;
+            cursor: pointer;
+            width: 20%;
+            min-height: 100px;
+            position: relative;
+            right: -13.8rem;
+            top: 15rem;
+
+            label {
+                cursor: pointer;
+            }
+            .step-four__inner {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                justify-content: center;
+                width: 100%;
+
+                .step-four__img-initial {
+                    text-align: center;
+
+                    img {
+                        display: inline-block;
+                        width: 30%;
+                        height: 20%;
+                    }
+                    h3 {
+                        font-size: medium;
+                        font-weight: 500;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+
+        .btn-out {
+            position: absolute;
+            top: 70px;
+            right: 50px;
+            font-size: 12px;
+            border-radius: 15px;
+            color: var(--white-color);
+            padding: 5px 20px;
+            background: #616161;
+            width: auto;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0;
+        }
+
+        .btn-out:hover {
+            background: #9e9e9e;
+        }
+    }
+}

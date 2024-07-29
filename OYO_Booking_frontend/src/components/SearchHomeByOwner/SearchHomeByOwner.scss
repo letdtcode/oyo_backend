@@ -1,0 +1,71 @@
+.search-home-by-owner {
+    margin-left: 25px;
+    .searchInputs-home {
+        display: flex;
+        border-style: solid;
+        border-width: 1.5px;
+        border-color: #757575;
+        width: 400px;
+        height: 40px;
+        border-radius: 5px;
+
+        .search-owner {
+            background-color: white;
+            border: 0;
+            font-size: 14px;
+            width: 400px;
+            height: 100%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .searchIcon {
+            width: 50px;
+            background-color: white;
+            display: grid;
+            place-items: center;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+
+            svg {
+                font-size: 20px;
+            }
+        }
+
+        .searchIcon-clear {
+            width: 50px;
+            background-color: white;
+            display: grid;
+            place-items: center;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+
+            svg {
+                font-size: 20px;
+            }
+
+            #clearBtn {
+                cursor: pointer;
+                font-size: 20px;
+                position: absolute;
+                right: 6%;
+            }
+        }
+    }
+
+    .searchInputs:hover {
+        border-color: blue;
+    }
+}
+
+.search-owner:active {
+    .search-home-by-owner {
+        border-color: blue;
+        border: 2px solid blue;
+    }
+}

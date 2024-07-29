@@ -1,0 +1,79 @@
+  [
+  {
+    "userName": "User1",
+    "urlAvatar": "https://www.vietnamfineart.com.vn/wp-content/uploads/2023/03/avatar-gai-xinh-10-4.jpg",
+    "rating": 4,
+    "timestamp": "2023-10-28 14:30",
+    "content": "Khi đặt phòng trong ứng dụng, tôi không thấy toàn bộ phòng. Mới thấy 1 góc, phòng tiêu chuẩn ngủ 2 người hơi hẹp. Vào là giường đã kín phòng, nhưng phòng gia đình có thể ngủ được 3 người rất rộng rãi và thoải mái, phòng tắm có 2 khu khô và ướt riêng biệt. Điểm bất lợi duy nhất là Phòng Tiêu chuẩn và Phòng Gia đình nằm ",
+    "listImage": [
+      "https://pistachiohotel.com/UploadFile/Gallery/Overview/a3.jpg",
+      "https://asiky.com/files/images/Article/tin-tuc/chup-anh-khach-san.jpg"
+    ],
+    "likes": 10
+  },
+  {
+    "userName": "User2",
+    "urlAvatar": "https://imgt.taimienphi.vn/cf/Images/np/2022/8/16/anh-gai-xinh-cute-de-thuong-hot-girl-2.jpg",
+    "rating": 5,
+    "timestamp": "2023-10-28 15:15",
+    "content": "Nói chung là ok, buffet sáng rất ngon. Có rất nhiều để lựa chọn.",
+    "listImage": [
+      "https://images.squarespace-cdn.com/content/v1/5aadf482aa49a1d810879b88/1626698419120-J7CH9BPMB2YI728SLFPN/1.jpg"
+    ],
+    "likes": 25
+  },
+  {
+    "userName": "User3",
+    "urlAvatar": "https://www.nhaban.vn/gallery.nb/estates/5259229/medium/26_62fa079cb6823.jpg",
+    "rating": 3,
+    "timestamp": "2023-10-28 16:00",
+    "content": "Khá ổn, nhưng có thể cải thiện thêm.",
+    "listImage": [],
+    "likes": 5
+  },
+  {
+    "userName": "User 4",
+    "urlAvatar": "https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-cap-2-3.jpg",
+    "rating": 3,
+    "timestamp": "2023-10-28 16:00",
+    "content": "Khá ổn, nhưng có thể cải thiện thêm.",
+    "listImage": [],
+    "likes": 5
+  },
+  {
+    "userName": "User 5",
+    "urlAvatar": "https://cce.edu.vn/wp-content/uploads/2023/06/hinh-anh-gai-xinh-de-thuong-nhat-1-600x600.jpg",
+    "rating": 3,
+    "timestamp": "2023-10-28 16:00",
+    "content": "Khá ổn, nhưng có thể cải thiện thêm.",
+    "listImage": [],
+    "likes": 5
+  },
+  {
+    "userName": "User6",
+    "urlAvatar": "https://toigingiuvedep.vn/wp-content/uploads/2021/06/anh-gai-xinh-cap-2-3-cute-baby.jpg",
+    "rating": 3,
+    "timestamp": "2023-10-28 16:00",
+    "content": "Khá ổn, nhưng có thể cải thiện thêm.",
+    "listImage": [],
+    "likes": 5
+  },
+  {
+    "userName": "User7",
+    "urlAvatar": "https://hinhgaixinh.com/wp-content/uploads/2021/12/hinh-anh-gai-xinh-cap-2-3-trong-sang-nhat-mien-bac.jpg",
+    "rating": 3,
+    "timestamp": "2023-10-28 16:00",
+    "content": "Khá ổn, nhưng có thể cải thiện thêm.",
+    "listImage": [],
+    "likes": 5
+  },
+  {
+    "userName": "User8",
+    "urlAvatar": "https://hinhgaixinh.com/wp-content/uploads/2021/03/20210314-nu-sinh-nhat-ban-4-600x883.jpg",
+    "rating": 3,
+    "timestamp": "2023-10-28 16:00",
+    "content": "Khá ổn, nhưng có thể cải thiện thêm.",
+    "listImage": [],
+    "likes": 5
+  }
+]

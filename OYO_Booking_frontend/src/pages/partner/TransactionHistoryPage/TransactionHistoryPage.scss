@@ -1,0 +1,50 @@
+.transaction-history-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+
+    .title-transaction-history {
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .tab-content {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+.listdata_history {
+    width: 100%;
+    margin-top: 20px;
+
+    .no-data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        p {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+    }
+
+    .skeleton-loader {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

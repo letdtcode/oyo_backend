@@ -1,0 +1,19 @@
+.menu-language{
+    max-width:none!important;
+    .li{
+        .check-icon{
+            margin-left: auto;
+        }
+    }
+    .MuiPaper-root{
+        width: 170px;
+    }
+    .check-icon{
+        margin-left: auto!important;
+        color: var(--primary-main);
+    }
+   
+}
+.flag{
+    border-radius: 50%;
+}

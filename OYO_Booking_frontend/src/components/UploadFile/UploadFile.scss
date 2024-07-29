@@ -1,0 +1,135 @@
+.drop-file-input {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    border: 2px solid burlywood;
+    border-radius: 20px;
+    margin-top: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--input-bg);
+
+    input {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .desc-input-file {
+        font-weight: 500;
+        font-size: 14px;
+        padding: 0 15px;
+        font-style: italic;
+    }
+
+    .drop-file-input__label {
+        text-align: center;
+        color: var(--txt-second-color);
+        font-weight: 600;
+        padding: 10px;
+
+        img {
+            width: 100px;
+        }
+        
+        p {
+            font-size: 1.4rem;
+        }
+    }
+}
+
+.drop-file-input:hover,
+.drop-file-input.dragover {
+    opacity: 0.6;
+}
+
+.drop-file-preview {
+    width: 350px;
+
+    .list-preview {
+        max-height: 150px;
+        height: auto;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+   
+    p {
+        font-weight: 500;
+    }
+
+    .drop-file-preview__title {
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+        margin-left: 3px;
+    }
+    
+    .drop-file-preview__item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-color: var(--input-bg);
+        padding: 10px 15px;
+        border-radius: 20px;
+
+        img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .drop-file-preview__item__info {
+            display: flex;
+            flex-direction: column;
+
+            p {
+                font-size: 1.2rem;
+                padding: 0;
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+
+            .size-file {
+                font-size: 10px;
+            }
+        }
+
+        .drop-file-preview__item__del {
+            background-color: var(--box-bg);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    }
+
+    .drop-file-preview__item:hover .drop-file-preview__item__del {
+        opacity: 1;
+    }
+}
+
+
+
+
+
+
+
+
+
+

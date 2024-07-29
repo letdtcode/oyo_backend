@@ -1,0 +1,105 @@
+.count-room-detail-setting {
+    font-size: 15px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    font-weight: 600;
+
+    .accordion-summary {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__title {
+            width: 33%;
+            flex-shrink: 0;
+        }
+    }
+
+    .accordion-details {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+
+        &__section {
+            margin-bottom: 15px;
+
+            &__label {
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            &__input {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                width: 100%;
+            }
+        }
+
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+
+            &__type-room {
+                flex: 1;
+                text-align: center;
+                font-weight: bold;
+            }
+        }
+
+        &__count-room {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            margin-bottom: 15px;
+            &__item {
+                text-align: center;
+                &__header {
+                }
+            }
+        }
+
+        &__bedroom {
+            margin-bottom: 15px;
+
+            &__option-bed {
+                margin-bottom: 10px;
+            }
+        }
+
+        &__btn {
+            display: flex;
+            justify-content: space-between;
+
+            &-close {
+                cursor: pointer;
+                text-decoration: underline;
+                margin: 0;
+                padding: 6px 8px;
+                width: auto;
+
+                &:hover {
+                    background: #e0e0e0;
+                }
+            }
+
+            &-save {
+                margin: 0;
+                padding: 6px 15px;
+                background: #4caf50;
+                border-radius: 5px;
+                cursor: pointer;
+                border: none;
+                color: white;
+
+                &:hover {
+                    background: #66bb6a;
+                }
+            }
+        }
+    }
+}

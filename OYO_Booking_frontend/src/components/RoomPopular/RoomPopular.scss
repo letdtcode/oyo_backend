@@ -1,0 +1,148 @@
+.room__popular {
+    margin: 0 100px;
+    margin-top: 100px;
+
+    .row {
+        margin-left: -9px;
+        margin-right: -9px;
+        .container__room__popular {
+            padding: 10px;
+            height: fit-content;
+            margin-bottom: 10px;
+            .slick-slider {
+                height: 215px;
+            }
+            .slick-dots li h1 {
+                font-size: 2.5rem;
+                font-weight: 600;
+                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Droid Sans, Helvetica Neue, Helvetica,
+                    Arial, sans-serif;
+                margin-bottom: 20px;
+            }
+
+            .slick-list {
+                height: 215px;
+                border-radius: 5px;
+            }
+
+            .slick-next {
+                border-radius: 100%;
+                margin-top: 15px;
+                left: 90%;
+                z-index: 100;
+            }
+
+            .slick-prev {
+                width: 100px;
+                margin-top: 15px;
+                z-index: 100;
+            }
+
+            .slick-dots {
+                margin-top: -55px;
+                position: relative;
+                li {
+                    button:before {
+                        color: #bbbcb0 !important;
+                    }
+                }
+            }
+
+            .image-home {
+                width: 100%;
+                height: 215px;
+            }
+
+            .love_room {
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin-top: 20px;
+                margin-right: 25px;
+
+                .icon_love {
+                    cursor: pointer;
+                    color: white;
+                    font-size: 30px;
+                }
+
+                .icon_love__true {
+                    cursor: pointer;
+                    color: red;
+                    font-size: 30px;
+                }
+            }
+
+            .info__room {
+                margin-top: 5px;
+                cursor: pointer;
+
+                h2 {
+                    font-size: medium;
+                    padding-left: 10px;
+                    word-wrap: break-word;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin: 0;
+                }
+
+                .obility__room {
+                    display: flex;
+
+                    img {
+                        width: 16px;
+                        margin-top: 5px;
+                    }
+
+                    p {
+                        font-size: small;
+                        font-weight: 500;
+                        padding: 3px 18px;
+                        color: rgba(2, 100, 200, 1);
+                        background-color: #bbdefb;
+                        border-radius: 10px;
+                        margin: 0;
+                        margin-top: 8px;
+                        margin-right: 5px;
+                        margin-left: 10px;
+                    }
+                }
+
+                .locate__room {
+                    margin-top: 10px;
+                    display: flex;
+                    margin-left: 10px;
+
+                    span {
+                        margin: 0;
+                        font-size: 0.9rem;
+                        font-weight: 300;
+                        color: rgba(2, 100, 200, 1);
+                    }
+                    .icon_locate {
+                        color: rgba(2, 100, 200, 1);
+                        font-size: 1.2rem;
+                        margin-right: 5px;
+                    }
+                }
+
+                .price__room {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    margin-top: 5px;
+
+                    span {
+                        font-size: 0.9rem;
+                        color: var(--success-mode);
+                    }
+                    .price__room__value {
+                        font-weight: 800;
+                    }
+                }
+            }
+        }
+    }
+}

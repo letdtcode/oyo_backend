@@ -1,0 +1,114 @@
+.new-accom__page {
+    .header__admin {
+        margin-bottom: 20px;
+
+        .page-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    }
+
+    .new-accom__container {
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        .new-accom__details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .new-accom__images {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+
+                .new-accom__image {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                    border-radius: 5px;
+                }
+            }
+
+            .new-accom__info {
+                h3 {
+                    font-size: 22px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    margin-bottom: 5px;
+                }
+            }
+
+            .new-accom__facilities {
+                h4 {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+
+                h5 {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-top: 10px;
+                    margin-bottom: 5px;
+                }
+
+                ul {
+                    list-style: none;
+                    padding: 0;
+
+                    li {
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                    }
+                }
+            }
+
+            .new-accom__surcharges {
+                h4 {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+
+                ul {
+                    list-style: none;
+                    padding: 0;
+                }
+            }
+
+            .new-accom__actions {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+
+                .approve-button,
+                .reject-button {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+
+                .approve-button {
+                    background-color: #28a745;
+                    color: #fff;
+                }
+
+                .reject-button {
+                    background-color: #dc3545;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

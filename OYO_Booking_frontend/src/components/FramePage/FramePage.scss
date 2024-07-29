@@ -1,0 +1,54 @@
+@use '../../assets/css/responsive.scss';
+.background__frame-page {
+    background-color: var(--background-default);
+    color: var(--background-contrastText);
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    @keyframes slideIn {
+        to {
+            transform: translateX(0);
+        }
+    }
+    @include responsive.desktop {
+        max-width: 1440px;
+    }
+    @include responsive.laptop {
+    }
+    @include responsive.tablet {
+    }
+    @mixin responsive-styles {
+    }
+
+    @include responsive.mobile-small {
+        @include responsive-styles;
+    }
+
+    @include responsive.mobile-medium {
+        @include responsive-styles;
+    }
+
+    @include responsive.mobile-large {
+        @include responsive-styles;
+    }
+    @include responsive.mobile-xsmall {
+        @include responsive-styles;
+    }
+    .body-page {
+        color: var(--background-contrastText);
+        background-color: var(--background-default);
+        align-items: center;
+        max-width: 1500px;
+        min-height: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        height: max-content;
+    }
+    .owner {
+        transform: translateY(100%);
+        animation: slideIn 0.8s forwards;
+    }
+}

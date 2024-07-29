@@ -1,0 +1,42 @@
+
+.modal-update-avatar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .box-update-avatar{
+        width: 650px;
+        height: 750px;
+        display: flex;
+        flex-flow: column;
+    //    / justify-content: center;
+        align-items: center;    
+
+        header {
+            font-size: x-large;
+            margin-top: 15px;
+            padding-bottom: 10px;
+            font-weight: 600;
+          }
+        .avatar-editor{
+            width: 450px!important;
+            height: 450px!important;
+        }
+        .silder{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 70%;
+        }
+        .button{
+            margin: 10px;
+            font-weight: bold;
+            height: 45px;
+            border-radius: 6px;
+            width: 75px;
+        }
+        .save{
+            color: #fff;
+           
+        }
+    }
+   
+}

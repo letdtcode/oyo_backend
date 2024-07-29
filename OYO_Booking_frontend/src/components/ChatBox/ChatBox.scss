@@ -1,0 +1,68 @@
+.chatbox {
+    position: fixed;
+    bottom: 0px;
+    right: 20px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+    background-color: #fff;
+
+    .chatbox-header {
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+
+        &__avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        &__name {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &__close-btn {
+            cursor: pointer;
+        }
+    }
+
+    .chatbox-messages {
+        height: 200px;
+        overflow-y: auto;
+        padding: 10px;
+
+        .message {
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+    }
+
+    .input-message {
+        width: calc(100% - 80px);
+        padding: 10px;
+        border: none;
+        border-top: 1px solid #ccc;
+        &::first-letter {
+            text-transform: capitalize;
+        }
+    }
+
+    .send-btn {
+        width: 70px;
+        padding: 10px;
+        background-color: #4267B2; /* Facebook blue */
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+}

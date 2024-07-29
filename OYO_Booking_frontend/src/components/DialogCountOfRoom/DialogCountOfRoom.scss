@@ -1,0 +1,20 @@
+.dialog-count-of__room {
+    font-size: 15px;
+
+    .edit-count-bed {
+        cursor: pointer;
+        color: black;
+    }
+
+    .edit-count-bed:hover {
+        text-decoration: underline;
+    }
+
+    .btn-show {
+        font-size: 12px;
+    }
+
+    .title-conv {
+        color: red;
+    }
+}

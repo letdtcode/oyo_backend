@@ -1,0 +1,112 @@
+.diaglog-feedback {
+    border-radius: 5px;
+    // height: 600px;
+    .title {
+        font-size: x-large;
+    }
+    .form__feedback {
+        margin-top: -30px;
+        .thanksReview {
+            font-size: medium;
+        }
+        .fillReview {
+        }
+        .MuiDialogContent-root {
+        }
+        .input__title {
+            position: relative;
+            width: 100%;
+            font-size: medium;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid var(--divider);
+            background-color: var(--input-background);
+            margin-top: 5px;
+        }
+        // .input__feedback {
+        //     margin-top: 20px;
+        //     position: relative;
+        //     width: 100%;
+        //     font-size: medium;
+        //     height: 40px;
+        //     border-radius: 5px;
+        //     border: 1px solid var(--divider);
+        //     background-color: var(--input-background);
+        //     transition: all 0.3s; /* Thêm hiệu ứng chuyển động */
+
+        //     &:focus {
+        //         height: 70px;
+        //         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm shadow */
+        //     }
+        // }
+        .input__feedback {
+            position: relative;
+            width: 100%;
+            font-size: medium;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid var(--divider);
+            background-color: var(--input-background);
+            margin-top: 20px;
+        }
+        .btn-upload {
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            padding: 9px 25px;
+            margin-right: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            background-color: var(--btn-br-mode);
+            color: var(--btn-cl-mode);
+            svg {
+                position: absolute;
+                margin-top: -5px;
+                margin-left: -20px;
+            }
+            &:hover {
+                background-color: var(--btn-br-hover-mode);
+            }
+        }
+
+        .btn-review-detail {
+            border: none;
+            border-radius: 5px;
+            padding: 9px 25px;
+            margin-right: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            background-color: var(--main-color);
+            color: var(--btn-cl-mode);
+        }
+
+        .btn-review-detail:hover {
+            background-color: var(--second-color);
+        }
+
+        .btn-review-cancel {
+            border: none;
+            border-radius: 5px;
+            padding: 9px 25px;
+            margin-right: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: var(--btn-br-mode);
+            color: var(--btn-cl-mode);
+            &:hover {
+                background-color: var(--btn-br-hover-mode);
+            }
+        }
+        
+        .container__preview {
+            display: flex;
+            margin-top: 20px;
+            .img__preview {
+                border-radius: 3px;
+                margin-left: 3px;
+                height: 100px;
+                width: 100px;
+            }
+        }
+    }
+}

@@ -1,0 +1,158 @@
+[{
+    "success": true,
+    "statusCode": 200,
+    "data": {
+        "accomName": "Nhà mái vòm tại San Sả Hồ, Việt Nam",
+        "description": "Căn hộ được trang bị đầy đủ tiện nghi với các thiết bị và dụng cụ nhà bếp phù hợp với các gia đình lưu trú dài hạn. Lò sưởi củi ấm cho mùa đông. Ngoài phòng ngủ chính với giường cỡ king, còn có thêm một giường trên gác mái.",
+        "addressDetail": "41/21/5 Cầu Xây, Xã Song Giang, Huyện Gia Bình, Tỉnh Bắc Ninh",
+        "addressGeneral": "Huyện Gia Bình, Tỉnh Bắc Ninh",
+        "cldVideoId": null,
+        "acreage": 200.7,
+        "numPeople": 4,
+        "numBathRoom": 2,
+        "numBedRoom": 2,
+        "numKitchen": 2,
+        "numView": 302,
+        "gradeRate": 5.0,
+        "numReview": 0,
+        "pricePerNight": 300000.0,
+        "discount": 0.0,
+        "guide": "Đến là đón",
+        "cancellationPolicy": "CANCEL_24H",
+        "cancellationFeeRate": 10,
+        "imageAccomsUrls": [
+            "https://res.cloudinary.com/dyv5zrsgj/image/upload/v1703612880/oyo_booking/home20/313e8b78-9ebc-4407-a998-4871c262fa06_zyyytw.webp",
+            "https://res.cloudinary.com/dyv5zrsgj/image/upload/v1703612881/oyo_booking/home20/cd9abb5c-2892-48b4-9fdc-62318fb4d66c_w4eyed.jpg",
+            "https://res.cloudinary.com/dyv5zrsgj/image/upload/v1703612883/oyo_booking/home20/2a6e1a98-c743-4d5d-85f3-36ebb3f6403c_kxdy4e.jpg",
+            "https://res.cloudinary.com/dyv5zrsgj/image/upload/v1703612884/oyo_booking/home20/d98d8d2a-6091-4886-b5fb-c9460be7adf2_vkggeo.jpg",
+            "https://res.cloudinary.com/dyv5zrsgj/image/upload/v1703612886/oyo_booking/home20/2c3fd8ca-5ae5-4343-827a-aae627686866_iuz8pt.webp"
+        ],
+        "userId": 2,
+        "nameHost": "Nguyen Duc Thanh",
+        "accomCateName": "Thuyền",
+        "bedRooms": [
+            {
+                "id": 3,
+                "typeBedName": "Giường đơn",
+                "typeBedCode": "TYPE_BED_003",
+                "status": "ENABLE"
+            },
+            {
+                "id": 3,
+                "typeBedName": "Giường đơn",
+                "typeBedCode": "TYPE_BED_003",
+                "status": "ENABLE"
+            }
+        ],
+        "facilityCategoryList": [
+            {
+                "faciCateName": "Phòng tắm",
+                "faciCateCode": "FACI_CATE_004",
+                "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
+                "infoFacilityList": [
+                    {
+                        "id": 25,
+                        "facilityName": "Dầu gội đầu",
+                        "facilityCode": "FACI_025",
+                        "facilityCateCode": "FACI_CATE_004",
+                        "facilityCateName": "Phòng tắm",
+                        "imageUrl": "https://img.icons8.com/dotty/25/22C3E6/shampoo.png",
+                        "status": "ENABLE"
+                    }
+                ],
+                "status": "ENABLE"
+            },
+            {
+                "faciCateName": "Bếp",
+                "faciCateCode": "FACI_CATE_003",
+                "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
+                "infoFacilityList": [
+                    {
+                        "id": 12,
+                        "facilityName": "Máy pha cà phê/trà",
+                        "facilityCode": "FACI_012",
+                        "facilityCateCode": "FACI_CATE_003",
+                        "facilityCateName": "Bếp",
+                        "imageUrl": "https://img.icons8.com/carbon-copy/25/22C3E6/coffee-maker.png",
+                        "status": "ENABLE"
+                    },
+                    {
+                        "id": 18,
+                        "facilityName": "Nhà bếp",
+                        "facilityCode": "FACI_018",
+                        "facilityCateCode": "FACI_CATE_003",
+                        "facilityCateName": "Bếp",
+                        "imageUrl": "https://img.icons8.com/carbon-copy/25/22C3E6/kitchen-room.png",
+                        "status": "ENABLE"
+                    }
+                ],
+                "status": "ENABLE"
+            },
+            {
+                "faciCateName": "Ngoài trời",
+                "faciCateCode": "FACI_CATE_005",
+                "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
+                "infoFacilityList": [
+                    {
+                        "id": 28,
+                        "facilityName": "Bếp nướng",
+                        "facilityCode": "FACI_028",
+                        "facilityCateCode": "FACI_CATE_005",
+                        "facilityCateName": "Ngoài trời",
+                        "imageUrl": "https://img.icons8.com/ios/25/22C3E6/barbeque.png",
+                        "status": "ENABLE"
+                    }
+                ],
+                "status": "ENABLE"
+            },
+            {
+                "faciCateName": "Giải trí",
+                "faciCateCode": "FACI_CATE_006",
+                "description": "Đây là các tiện nghi mà khách hàng thường tìm kiếm khi đặt chỗ ở",
+                "infoFacilityList": [
+                    {
+                        "id": 39,
+                        "facilityName": "Internet miễn phí",
+                        "facilityCode": "FACI_039",
+                        "facilityCateCode": "FACI_CATE_006",
+                        "facilityCateName": "Giải trí",
+                        "imageUrl": "https://img.icons8.com/dotty/25/22C3E6/internet.png",
+                        "status": "ENABLE"
+                    },
+                    {
+                        "id": 34,
+                        "facilityName": "Trò chơi bàn cờ",
+                        "facilityCode": "FACI_034",
+                        "facilityCateCode": "FACI_CATE_006",
+                        "facilityCateName": "Giải trí",
+                        "imageUrl": "https://img.icons8.com/external-ddara-lineal-ddara/25/22C3E6/external-board-game-gaming-gambling-ddara-lineal-ddara.png",
+                        "status": "ENABLE"
+                    }
+                ],
+                "status": "ENABLE"
+            }
+        ],
+        "surchargeList": [
+            {
+                "cost": 20000.0,
+                "surchargeName": "Phí môi trường",
+                "surchargeCode": "SUR_001"
+            },
+            {
+                "cost": 20000.0,
+                "surchargeName": "Phí vệ sinh",
+                "surchargeCode": "SUR_002"
+            },
+            {
+                "cost": 20000.0,
+                "surchargeName": "Phí sử dụng tiện ích",
+                "surchargeCode": "SUR_003"
+            }
+        ],
+       
+        "status": "APPROVED",
+        "latitude": null,
+        "longitude": null,
+        "id": 20
+    }
+}]

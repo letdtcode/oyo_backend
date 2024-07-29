@@ -1,0 +1,59 @@
+.MuiPopover-paper {
+    .popover-price__title {
+        width: 300px;
+        text-align: center;
+        padding: 5px 3px;
+        margin: 0;
+        font-size: large;
+        font-weight: 500;
+    }
+
+    .item-price {
+        margin: 0 8px;
+        justify-content: space-between;
+        padding: 5px 6px 5px 5px;
+
+        &__title {
+            font-size: 15px;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        &__content {
+            font-size: 14px;
+            padding: 0px 8px;
+            font-weight: 300;
+            .price-before-discount {
+                display: flex;
+                font-size: 12px;
+                align-items: center;
+                line-height: 14px;
+                margin-bottom: 2px;
+                justify-content: flex-end;
+                .discount-percent {
+                    color: #ffffff;
+                    padding: 1px 3px;
+                    font-weight: 600;
+                    margin-right: 8px;
+                    border-radius: 4px;
+                    background-color: #ff3366;
+                }
+                .price-origin {
+                    color: #4a5568;
+                    text-decoration-line: line-through;
+                }
+            }
+
+            .price-after-discount {
+                display: flex;
+                justify-content: space-between;
+
+                .title-price {
+                }
+
+                .price-current {
+                }
+            }
+        }
+    }
+}

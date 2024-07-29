@@ -1,0 +1,141 @@
+.calendar {
+    padding-top: 80px;
+
+    .idRoom-selected {
+        display: flex;
+        margin-bottom: 20px;
+        margin-left: 150px;
+    }
+
+    // Nếu bị ăn css thì đoạn button này bị
+
+    .MuiGrid-root {
+        height: 500px;
+        margin: auto;
+
+        .MuiCalendarPicker-root {
+            padding-top: 0;
+            margin: auto;
+            width: 500px;
+            height: 500px;
+            max-height: 500px;
+
+            .PrivatePickersSlideTransition-root {
+                height: 350px;
+            }
+        }
+    }
+
+    .MuiTypography-root {
+        font-size: 16px;
+        width: 65px;
+        height: 65px;
+    }
+
+    .MuiPickersDay-root {
+        font-size: 16px;
+        width: 65px;
+        height: 65px;
+    }
+
+    button {
+        font-size: 20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .PrivatePickersSlideTransition-root {
+        overflow: hidden;
+    }
+
+    .MuiPickersCalendarHeader-label {
+        font-size: 17px;
+    }
+
+    .PrivatePickersYear-yearButton {
+        width: 60%;
+    }
+
+    #demo-simple-select-standard {
+        font-size: 14px;
+    }
+
+    .MuiSvgIcon-root {
+        font-size: 30px;
+    }
+
+    .card-price__calendar {
+        width: 500px;
+        height: 450px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        position: relative;
+
+        .title-date {
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .price-show {
+            margin: 0;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        form {
+            width: 100%;
+            padding-left: 100px;
+            padding-right: 100px;
+
+            .input-price {
+                width: 100%;
+                padding: 5px 10px 5px 20px;
+                margin-bottom: 20px;
+            }
+
+            .btn-save__price {
+                width: 100%;
+                margin: auto;
+                padding: 2px 10px;
+                width: auto;
+                height: auto;
+                display: flex;
+                justify-content: center;
+            }
+
+            .btn-save__price-notallow {
+                width: 100%;
+                margin: auto;
+                padding: 2px 10px;
+                width: auto;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
+        }
+
+        .img-price {
+           
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .policy__edit-price {
+            position: absolute;
+            bottom: 0;
+            font-size: 14px;
+            padding: 5px 25px;
+
+            .link-plus {
+                color: var(--blue-link);
+                text-decoration: underline;
+                margin-left: 5px;
+            }
+        }
+    }
+}

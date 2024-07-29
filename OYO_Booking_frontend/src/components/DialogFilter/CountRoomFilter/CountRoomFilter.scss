@@ -1,0 +1,42 @@
+.count-room__filter {
+  .title-count__filter {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+
+  .list-number__choose {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    .item-first {
+      margin: 0;
+      padding: 10px 15px;
+      border: 1px solid #bdbdbd;
+      display: flex;
+      align-items: center;
+      border-radius: 20px;
+      margin-right: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .item-chose {
+      margin: 0;
+      padding: 5px 25px;
+      border: 1px solid #bdbdbd;
+      display: flex;
+      align-items: center;
+      border-radius: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .active {
+      background: black;
+      color: white;
+    }
+  }
+}

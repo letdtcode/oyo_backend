@@ -1,0 +1,34 @@
+.address-info__content {
+    .address-info__title {
+    }
+    .box-address {
+        .container__address {
+            display: block;
+            .input__address {
+                width: 100%;
+                height: 40px;
+                border-radius: 5px;
+
+                font-size: 14px;
+                margin-bottom: 30px;
+            }
+        }
+
+        .input-address-step1 {
+            height: 2.3rem;
+            border-radius: 5px;
+            border: 0.2px solid black;
+            width: 100% !important;
+        }
+        .input-guide-step1 {
+            height: 5rem;
+            border-radius: 5px;
+            border: 0.2px solid black;
+            width: 100% !important;
+        }
+    }
+    .container__google-map {
+        position: relative;
+        height: auto;
+    }
+}
