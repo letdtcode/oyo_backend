@@ -63,7 +63,6 @@ public class ClientBookingController {
     }
 
     @GetMapping("/success")
-    @PreAuthorize("hasRole('CLIENT')")
     public RedirectView paymentSuccessAndCaptureTransaction(HttpServletRequest request) {
         String paypalOrderId = request.getParameter("token");
         String payerId = request.getParameter("PayerID");

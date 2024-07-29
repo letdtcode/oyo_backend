@@ -29,6 +29,16 @@ import java.util.UUID;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(RuntimeException.class)
+    public ProblemDetail handleRuntimeException(final RuntimeException ex, final HttpServletRequest request) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setProperty("guid", UUID.randomUUID());
+        problemDetail.setProperty("method", request.getMethod());
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
     @ExceptionHandler(NotCredentialException.class)
     public ProblemDetail handleNotPermission(final NotCredentialException ex, final HttpServletRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
