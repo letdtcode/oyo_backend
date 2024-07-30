@@ -31,6 +31,7 @@ public interface SecurityConstants {
             "/api/v1/media/cloud/**"
     };
     String[] IGNORING_API_PATHS = {
+            "/api/v1/public/**",
             "/api/v1/auth/**",
             "/ws/**",
             "/api/v1/client/booking/success-payment",
