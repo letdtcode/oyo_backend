@@ -48,7 +48,6 @@ public class PartnerManageBookingController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/pages")
-    @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getListBookingOfPartner(@RequestParam(value = "status", required = false)
                                                      @Pattern(regexp = "WAITING|CHECK_IN|CHECK_OUT|CANCELED",
                                                              message = "Status must be WAITING|CHECK_IN|CHECK_OUT|CANCELED")
@@ -75,7 +74,6 @@ public class PartnerManageBookingController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/check-in")
-    @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> checkInBooking(@RequestParam("bookingCode")
                                             @NotNull(message = "Booking code must not null")
                                             String bookingCode) {
@@ -96,7 +94,6 @@ public class PartnerManageBookingController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/check-out")
-    @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> checkOutBooking(@RequestParam("bookingCode")
                                              @NotNull(message = "Booking code must not null")
                                              String bookingCode) {

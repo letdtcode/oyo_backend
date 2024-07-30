@@ -46,7 +46,6 @@ public class ClientReviewController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/create")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> createReviewForBooking(@RequestBody @Valid ReviewBookingRequest request) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();

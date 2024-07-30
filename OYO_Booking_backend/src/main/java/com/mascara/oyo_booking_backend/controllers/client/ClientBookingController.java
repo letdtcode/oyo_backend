@@ -54,7 +54,6 @@ public class ClientBookingController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/create")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> createOrderBooking(@RequestBody @Valid BookingRequest request) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
@@ -62,7 +61,7 @@ public class ClientBookingController {
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
-    @GetMapping("/success")
+    @GetMapping("/success-payment")
     public RedirectView paymentSuccessAndCaptureTransaction(HttpServletRequest request) {
         String paypalOrderId = request.getParameter("token");
         String payerId = request.getParameter("PayerID");
@@ -73,8 +72,15 @@ public class ClientBookingController {
         return redirectView;
     }
 
+    @GetMapping("/cancel-payment")
+    public RedirectView paymentCancel(HttpServletRequest request) {
+        String paypalOrderId = request.getParameter("token");
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(AppConstant.FRONTEND_HOST + "/payment/cancel");
+        return redirectView;
+    }
+
     @GetMapping("/history")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> showHistoryBooking(@RequestParam("pageNumber")
                                                 @NotNull(message = "Page number must not be null")
                                                 @Min(value = 0, message = "Page number must greater or equal 0")
@@ -97,7 +103,6 @@ public class ClientBookingController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/cancel")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> cancelBooking(@Valid @RequestBody CancelBookingRequest request) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();

@@ -50,7 +50,6 @@ public class CmsAccomCategoryController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/pages")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllAcommCategoryWithPaging(@RequestParam("pageNumber")
                                                            @NotNull(message = "Page number must not be null")
                                                            @Min(value = 0, message = "Page number must greater or equal 0")
@@ -71,7 +70,6 @@ public class CmsAccomCategoryController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addAccomCategory(@RequestBody @Valid AddAccomCategoryRequest request) {
         GetAccomCategoryResponse response = accomCategoryService.addAccomCategory(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
@@ -83,7 +81,6 @@ public class CmsAccomCategoryController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/{id}/update")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateAccomCategory(@RequestBody @Valid UpdateAccomCategoryRequest request,
                                                  @PathVariable("id") @NotNull Long id) {
         GetAccomCategoryResponse response = accomCategoryService.updateAccomCategory(request, id);
@@ -96,7 +93,6 @@ public class CmsAccomCategoryController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/{id}/change-status")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusAccomCategory(@PathVariable("id") @NotNull Long id,
                                                        @RequestParam("status") @NotBlank @Status String status) {
         BaseMessageData response = accomCategoryService.changeStatusAccomCategory(id, status);
@@ -109,7 +105,6 @@ public class CmsAccomCategoryController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @DeleteMapping("/{id}/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAccomCategory(@PathVariable("id") @NotNull Long id) {
         BaseMessageData response = accomCategoryService.deleteAccomCategory(id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));

@@ -32,7 +32,6 @@ public class CmsUserController {
     private UserService userService;
 
     @GetMapping("/pages")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllUserWithPaging(@RequestParam("pageNumber")
                                                   @NotNull(message = "Page number must not be null")
                                                   @Min(value = 0, message = "Page number must greater or equal 0")
@@ -48,7 +47,6 @@ public class CmsUserController {
     }
 
     @PutMapping("/{mail}/change-status")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusUser(@PathVariable("mail")
                                               @Email String mail,
                                               @RequestParam("status")
@@ -62,7 +60,6 @@ public class CmsUserController {
     }
 
     @DeleteMapping("/{mail}/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable("mail") @Email String mail) {
         BaseMessageData messageReponse = userService.deleteUser(mail);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));

@@ -11,9 +11,9 @@ import lombok.Getter;
  */
 @Getter
 public enum RoleEnum {
-    ROLE_CLIENT("ROLE_CLIENT", "Khách hàng"),
-    ROLE_ADMIN("ROLE_ADMIN", "Admin"),
-    ROLE_PARTNER("ROLE_PARTNER", "Đối tác");
+    CLIENT("CLIENT", "Khách hàng"),
+    ADMIN("ADMIN", "Admin"),
+    PARTNER("PARTNER", "Đối tác");
     private final String key;
     private final String value;
 

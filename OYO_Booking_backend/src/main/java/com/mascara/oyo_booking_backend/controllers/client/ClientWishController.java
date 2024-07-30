@@ -42,7 +42,6 @@ public class ClientWishController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/check-accom-user")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> checkAccomPlaceIsWishOfUser(@RequestParam("accomId") @NotNull Long accomId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();
@@ -59,7 +58,6 @@ public class ClientWishController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/handle")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> handleWishItemOfUser(@RequestParam("accomId") @NotNull Long accomId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();

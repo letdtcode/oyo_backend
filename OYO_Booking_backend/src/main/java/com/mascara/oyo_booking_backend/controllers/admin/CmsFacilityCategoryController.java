@@ -38,7 +38,6 @@ public class CmsFacilityCategoryController {
     private FacilityCategoryService facilityCategoryService;
 
     @GetMapping("/pages")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllFacilityCategoryWithPaging(@RequestParam("pageNumber")
                                                         @NotNull(message = "Page number must not be null")
                                                         @Min(value = 0, message = "Page number must greater or equal 0")
@@ -54,14 +53,12 @@ public class CmsFacilityCategoryController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addFacilityCategory(@RequestBody @Valid AddFacilityCategoryRequest request) {
         GetFacilityCategoryResponse response = facilityCategoryService.addFacilityCategory(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @PutMapping("/{id}/update")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateFacilityCategory(@RequestBody @Valid UpdateFacilityCategoryRequest request,
                                                     @PathVariable("id") @NotNull Long id) {
         GetFacilityCategoryResponse response = facilityCategoryService.updateFacilityCategory(request, id);
@@ -69,7 +66,6 @@ public class CmsFacilityCategoryController {
     }
 
     @PutMapping("/{id}/change-status")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusFacilityCategory(@PathVariable("id") @NotNull Long id,
                                                           @RequestParam("status") @NotBlank @Status String status) {
         BaseMessageData messageReponse = facilityCategoryService.changeStatusFacilityCategory(id, status);
@@ -77,7 +73,6 @@ public class CmsFacilityCategoryController {
     }
 
     @DeleteMapping("/{id}/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteFacilityCategory(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = facilityCategoryService.deletedFacilityCategory(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));

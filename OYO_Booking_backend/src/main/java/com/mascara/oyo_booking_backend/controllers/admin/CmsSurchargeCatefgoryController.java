@@ -39,7 +39,6 @@ public class CmsSurchargeCatefgoryController {
     private SurchargeService surchargeService;
 
     @GetMapping("/pages")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllSurchargeCategoryWithPaging(@RequestParam("pageNumber")
                                                               @NotNull(message = "Page number must not be null")
                                                               @Min(value = 0, message = "Page number must greater or equal 0")
@@ -55,14 +54,12 @@ public class CmsSurchargeCatefgoryController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addFacility(@RequestBody @Valid AddSurchargeCategoryRequest request) {
         GetSurchargeCategoryResponse response = surchargeService.addSurchargeCategory(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @PutMapping("/{id}/update")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateFacility(@RequestBody @Valid UpdateSurchargeCategoryRequest request,
                                             @PathVariable("id") @NotNull Long id) {
         GetSurchargeCategoryResponse response = surchargeService.updateSurchargeCategory(request, id);
@@ -70,7 +67,6 @@ public class CmsSurchargeCatefgoryController {
     }
 
     @PutMapping("/{id}/change-status")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusFacility(@PathVariable("surchargeCateCode") @NotNull Long id,
                                                   @RequestParam("status") @NotBlank @Status String status) {
         BaseMessageData messageReponse = surchargeService.changeStatusSurchargeCategory(id, status);
@@ -78,7 +74,6 @@ public class CmsSurchargeCatefgoryController {
     }
 
     @DeleteMapping("/{id}/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteFacility(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = surchargeService.deletedSurchargeCategory(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));

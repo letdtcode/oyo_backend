@@ -37,7 +37,6 @@ public class CmsFacilityController {
     private FacilityService facilityService;
 
     @GetMapping("/pages")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllFacilityCategoryWithPaging(@RequestParam("pageNumber")
                                                               @NotNull(message = "Page number must not be null")
                                                               @Min(value = 0, message = "Page number must greater or equal 0")
@@ -53,14 +52,12 @@ public class CmsFacilityController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addFacility(@RequestBody @Valid AddFacilityRequest request) {
         GetFacilityResponse response = facilityService.addFacility(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @PutMapping("/{id}/update")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateFacility(@RequestBody @Valid UpdateFacilityRequest request,
                                             @PathVariable("id") @NotNull Long id) {
         GetFacilityResponse response = facilityService.updateFacility(request, id);
@@ -68,7 +65,6 @@ public class CmsFacilityController {
     }
 
     @PutMapping("/{id}/change-status")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusFacility(@PathVariable("id") @NotNull Long id,
                                                   @RequestParam("status") @NotBlank @Status String status) {
         BaseMessageData messageReponse = facilityService.changeStatusFacility(id, status);
@@ -76,7 +72,6 @@ public class CmsFacilityController {
     }
 
     @DeleteMapping("/{id}/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteFacility(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = facilityService.deletedFacility(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));

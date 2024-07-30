@@ -43,7 +43,6 @@ public class ClientNotificationController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/page")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> getDataNotificationOfUser(@RequestParam("pageNumber")
                                                        @NotNull(message = "Page number must not be null")
                                                        @Min(value = 0, message = "Page number must greater or equal 0")
@@ -67,7 +66,6 @@ public class ClientNotificationController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PutMapping("/reset-all")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> resetAllNotification() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String userMail = principal.getName();

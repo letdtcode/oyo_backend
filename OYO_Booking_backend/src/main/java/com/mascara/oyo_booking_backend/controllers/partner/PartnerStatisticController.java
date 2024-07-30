@@ -41,7 +41,6 @@ public class PartnerStatisticController {
     private final PartnerStatisticService partnerStatisticService;
 
     @GetMapping("")
-    @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getStatisticOfHost(@ParameterObject @Valid HostHomeStatisticFilter request) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         String hostMail = principal.getName();
@@ -50,7 +49,6 @@ public class PartnerStatisticController {
     }
 
     @GetMapping("/month")
-    @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getStatisticHomeByMonthAndYearOfHost(@ParameterObject @Valid HostHomeStatisticMonthFilter request,
                                                                   @RequestParam("pageNumber")
                                                                   @NotNull(message = "Page number must not be null")

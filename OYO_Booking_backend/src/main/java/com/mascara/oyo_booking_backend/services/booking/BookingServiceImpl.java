@@ -223,8 +223,8 @@ public class BookingServiceImpl implements BookingService {
                 paypalRequest.setApplicationContext(new PaypalRequest.PayPalAppContext()
                         .setBrandName("OYO")
                         .setLandingPage(PaymentLandingPage.BILLING)
-                        .setReturnUrl(AppConstant.BACKEND_HOST + "/api/v1/client/booking/success")
-                        .setCancelUrl(AppConstant.BACKEND_HOST + "/api/v1/client/booking/cancel"));
+                        .setReturnUrl(AppConstant.BACKEND_HOST + "/api/v1/client/booking/success-payment")
+                        .setCancelUrl(AppConstant.BACKEND_HOST + "/api/v1/client/booking/cancel-payment"));
 
                 PaypalResponse paypalResponse = payPalHttpClient.createPaypalTransaction(paypalRequest);
 

@@ -137,9 +137,6 @@ public class AuthController {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
         InfoUserResponse infoUser = userMapper.toInfoUserResponse(user);
-//        if (infoUser.getAvatarUrl() == null) {
-//            infoUser.setAvatarUrl(avatar_default);
-//        }
         LoginResponse response = new LoginResponse(accessToken, refreshToken, roles, infoUser);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }

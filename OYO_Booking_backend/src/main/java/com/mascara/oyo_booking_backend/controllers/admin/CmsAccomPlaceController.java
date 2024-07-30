@@ -40,7 +40,6 @@ public class CmsAccomPlaceController {
     private AccomPlaceService accomPlaceService;
 
     @GetMapping("/pages")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllAcommPlaceWithPaging(@RequestParam("pageNumber")
                                                         @NotNull(message = "Page number must not be null")
                                                         @Min(value = 0, message = "Page number must greater or equal 0")
@@ -63,7 +62,6 @@ public class CmsAccomPlaceController {
     }
 
     @PutMapping("/{id}/change-status")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusAccomPlace(@PathVariable("id") @NotNull Long id,
                                                     @RequestParam("status") @NotBlank @Pattern(regexp = "(?i)APPROVED|BANNED|WAITING_FOR_COMPLETE|WAITING_FOR_APPROVAL", message = "Status not be accepted") String status) {
         BaseMessageData messageReponse = accomPlaceService.changeStatusAccomPlace(id, status);
@@ -71,14 +69,12 @@ public class CmsAccomPlaceController {
     }
 
     @PostMapping("/{id}/approve-accom")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> approveAccom(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = accomPlaceService.approveAccomPlace(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAccomPlace(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = accomPlaceService.deleteAccomPlaceForAdmin(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));
@@ -90,7 +86,6 @@ public class CmsAccomPlaceController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/{id}/detail")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getInfoAccomPlaceDetails(@PathVariable("id") Long id) {
         GetAccomPlaceDetailResponse response = accomPlaceService.getAccomPlaceDetails(id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));

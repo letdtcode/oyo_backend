@@ -44,7 +44,6 @@ public class MediaCloudinaryController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/upload")
-    @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             throw new ResourceNotFoundException(MessageConstant.FILE_IS_NULL);
@@ -59,7 +58,6 @@ public class MediaCloudinaryController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @PostMapping("/upload-multil")
-    @PreAuthorize("hasRole('CLIENT') or hasRole('PARTNER') or hasRole('ADMIN')")
     public ResponseEntity<?> uploadMultipleFile(@RequestParam("files") List<MultipartFile> files) {
         if (files.isEmpty()) {
             throw new ResourceNotFoundException(MessageConstant.FILE_IS_NULL);

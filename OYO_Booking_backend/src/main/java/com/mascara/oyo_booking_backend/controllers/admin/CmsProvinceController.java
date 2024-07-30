@@ -34,14 +34,12 @@ public class CmsProvinceController {
     private ProvinceService provinceService;
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addProvince(@RequestBody @Valid AddProvinceRequest request) {
         BaseMessageData response = provinceService.addProvince(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @PutMapping("/{id}/update")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateProvince(@RequestBody @Valid UpdateProvinceRequest request,
                                             @PathVariable("id") @NotNull Long id) {
         UpdateProvinceResponse response = provinceService.updateProvince(request, id);
@@ -49,7 +47,6 @@ public class CmsProvinceController {
     }
 
     @DeleteMapping("/{id}/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteProvince(@PathVariable("id") @NotNull Long id) {
         BaseMessageData response = provinceService.deleteProvince(id);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));

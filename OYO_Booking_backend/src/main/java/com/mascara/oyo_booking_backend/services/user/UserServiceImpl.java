@@ -1,6 +1,12 @@
 package com.mascara.oyo_booking_backend.services.user;
 
 import com.mascara.oyo_booking_backend.common.constant.MessageConstant;
+import com.mascara.oyo_booking_backend.common.enums.user.AuthProviderEnum;
+import com.mascara.oyo_booking_backend.common.enums.user.RoleEnum;
+import com.mascara.oyo_booking_backend.common.enums.user.UserStatusEnum;
+import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
+import com.mascara.oyo_booking_backend.common.exceptions.TokenRefreshException;
+import com.mascara.oyo_booking_backend.common.mapper.authentication.UserMapper;
 import com.mascara.oyo_booking_backend.dtos.auth.request.RegisterRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.request.TokenRefreshRequest;
 import com.mascara.oyo_booking_backend.dtos.auth.response.TokenRefreshResponse;
@@ -15,16 +21,10 @@ import com.mascara.oyo_booking_backend.entities.authentication.User;
 import com.mascara.oyo_booking_backend.entities.booking.BookingList;
 import com.mascara.oyo_booking_backend.entities.review.ReviewList;
 import com.mascara.oyo_booking_backend.entities.wish.WishList;
-import com.mascara.oyo_booking_backend.common.enums.user.AuthProviderEnum;
-import com.mascara.oyo_booking_backend.common.enums.user.RoleEnum;
-import com.mascara.oyo_booking_backend.common.enums.user.UserStatusEnum;
-import com.mascara.oyo_booking_backend.common.exceptions.ResourceNotFoundException;
-import com.mascara.oyo_booking_backend.common.exceptions.TokenRefreshException;
 import com.mascara.oyo_booking_backend.external_modules.mail.EmailDetails;
 import com.mascara.oyo_booking_backend.external_modules.mail.model_mail.ResetPasswordInfo;
 import com.mascara.oyo_booking_backend.external_modules.mail.service.EmailService;
 import com.mascara.oyo_booking_backend.external_modules.storage.cloudinary.CloudinaryService;
-import com.mascara.oyo_booking_backend.common.mapper.authentication.UserMapper;
 import com.mascara.oyo_booking_backend.repositories.RefreshTokenRepository;
 import com.mascara.oyo_booking_backend.repositories.RoleRepository;
 import com.mascara.oyo_booking_backend.repositories.UserRepository;
@@ -95,17 +95,17 @@ public class UserServiceImpl implements UserService {
         strRoles.forEach(role -> {
             switch (role) {
                 case "Admin":
-                    Role adminRole = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString())
+                    Role adminRole = roleRepository.findByRoleName(RoleEnum.ADMIN.toString())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(adminRole);
                     break;
                 case "Partner":
-                    Role modRole = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER.toString())
+                    Role modRole = roleRepository.findByRoleName(RoleEnum.PARTNER.toString())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(modRole);
                     break;
                 default:
-                    Role userRole = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT.toString())
+                    Role userRole = roleRepository.findByRoleName(RoleEnum.CLIENT.toString())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(userRole);
             }
@@ -146,24 +146,24 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT.toString())
+            Role userRole = roleRepository.findByRoleName(RoleEnum.CLIENT.toString())
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "Admin":
-                        Role adminRole = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString())
+                        Role adminRole = roleRepository.findByRoleName(RoleEnum.ADMIN.toString())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
                         break;
                     case "Partner":
-                        Role modRole = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER.toString())
+                        Role modRole = roleRepository.findByRoleName(RoleEnum.PARTNER.toString())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
                         break;
                     default:
-                        Role userRole = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT.toString())
+                        Role userRole = roleRepository.findByRoleName(RoleEnum.CLIENT.toString())
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }

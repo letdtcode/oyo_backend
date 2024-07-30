@@ -37,14 +37,12 @@ public class CmsTypeBedController {
     private TypeBedService typeBedService;
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addTypeBed(@RequestBody @Valid AddTypeBedRequest request) {
         GetTypeBedResponse response = typeBedService.addTypeBed(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @GetMapping("/pages")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllTypeBedWithPaging(@RequestParam("pageNumber")
                                                      @NotNull(message = "Page number must not be null")
                                                      @Min(value = 0, message = "Page number must greater or equal 0")
@@ -60,7 +58,6 @@ public class CmsTypeBedController {
     }
 
     @PutMapping("/{id}/update")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateTypeBed(@RequestBody @Valid UpdateTypeBedRequest request,
                                            @PathVariable("id") @NotNull Long id) {
         GetTypeBedResponse response = typeBedService.updateTypeBed(request, id);
@@ -68,7 +65,6 @@ public class CmsTypeBedController {
     }
 
     @PutMapping("/{id}/change-status")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeStatusTypeBed(@PathVariable("id")
                                                  @NotNull Long id,
                                                  @RequestParam("status")
@@ -79,7 +75,6 @@ public class CmsTypeBedController {
     }
 
     @DeleteMapping("/{id}/delete")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteTypeBed(@PathVariable("id") @NotNull Long id) {
         BaseMessageData messageReponse = typeBedService.deletedTypeBed(id);
         return ResponseEntity.ok(new BaseResponse(true, 200, messageReponse));

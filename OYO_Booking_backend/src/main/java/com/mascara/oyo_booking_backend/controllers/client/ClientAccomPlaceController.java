@@ -45,7 +45,6 @@ public class ClientAccomPlaceController {
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping("/recommend")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> getAccomPlaceRecommend(@RequestParam("pageNumber")
                                                     @NotNull(message = "Page number must not be null")
                                                     @Min(value = 0, message = "Page number must greater or equal 0")

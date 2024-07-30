@@ -71,24 +71,24 @@ public class InitDataService implements CommandLineRunner {
     private final EntityManager entityManager;
 
     public void initDataUser() {
-        Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ROLE_ADMIN.toString());
+        Optional<Role> roleAdmin = roleRepository.findByRoleName(RoleEnum.ADMIN.toString());
         if (!roleAdmin.isPresent()) {
-            Role admin = Role.builder().roleName(RoleEnum.ROLE_ADMIN).build();
+            Role admin = Role.builder().roleName(RoleEnum.ADMIN).build();
             admin.setCreatedBy("dev");
             roleRepository.save(admin);
         }
 
-        Optional<Role> rolePartner = roleRepository.findByRoleName(RoleEnum.ROLE_PARTNER.toString());
+        Optional<Role> rolePartner = roleRepository.findByRoleName(RoleEnum.PARTNER.toString());
         if (!rolePartner.isPresent()) {
-            Role partner = Role.builder().roleName(RoleEnum.ROLE_PARTNER).build();
+            Role partner = Role.builder().roleName(RoleEnum.PARTNER).build();
             partner.setCreatedBy("dev");
             partner.setLastModifiedBy("dev");
             roleRepository.save(partner);
         }
 
-        Optional<Role> roleClient = roleRepository.findByRoleName(RoleEnum.ROLE_CLIENT.toString());
+        Optional<Role> roleClient = roleRepository.findByRoleName(RoleEnum.CLIENT.toString());
         if (!roleClient.isPresent()) {
-            Role client = Role.builder().roleName(RoleEnum.ROLE_CLIENT).build();
+            Role client = Role.builder().roleName(RoleEnum.CLIENT).build();
             client.setCreatedBy("dev");
             roleRepository.save(client);
         }

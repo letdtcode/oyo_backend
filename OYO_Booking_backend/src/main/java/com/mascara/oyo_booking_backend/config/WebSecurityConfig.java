@@ -1,5 +1,6 @@
 package com.mascara.oyo_booking_backend.config;
 
+import com.mascara.oyo_booking_backend.common.constant.SecurityConstants;
 import com.mascara.oyo_booking_backend.securities.jwt.AuthEntryPointJwt;
 import com.mascara.oyo_booking_backend.securities.jwt.AuthTokenFilter;
 import com.mascara.oyo_booking_backend.securities.oauth2.CustomOAuth2UserService;
@@ -8,7 +9,6 @@ import com.mascara.oyo_booking_backend.securities.oauth2.OAuth2AuthenticationFai
 import com.mascara.oyo_booking_backend.securities.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.mascara.oyo_booking_backend.securities.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +16,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -83,7 +82,7 @@ public class WebSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://oyo-nine.vercel.app/","http://localhost:5174"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://oyo-nine.vercel.app/", "http://localhost:5174"));
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -103,18 +102,18 @@ public class WebSecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/api/v1/auth/**","/ws/**").permitAll()
-                                .requestMatchers("/api/v1/verify/**").permitAll()
-                                .requestMatchers("/api/v1/public/**").permitAll()
-                                .requestMatchers("/api/v1/client/**").permitAll()
-                                .requestMatchers("/api/v1/partner/**").permitAll()
-                                .requestMatchers("/api/v1/cms/**").permitAll()
-                                .requestMatchers("/api/v1/media/**").permitAll()
-                                .requestMatchers("/api/v1/test/**").permitAll()
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**").permitAll()
-                                .requestMatchers("/templates/**").permitAll()
+                                .requestMatchers(SecurityConstants.ADMIN_API_PATHS)
+                                .hasAuthority(SecurityConstants.Role.ADMIN)
+                                .requestMatchers(SecurityConstants.PARTNER_API_PATHS)
+                                .hasAuthority(SecurityConstants.Role.PARTNER)
+                                .requestMatchers(SecurityConstants.CLIENT_API_PATHS)
+                                .hasAuthority(SecurityConstants.Role.CLIENT)
+                                .requestMatchers(SecurityConstants.GENERAL_API_PATHS)
+                                .hasAnyAuthority(SecurityConstants.Role.ADMIN,
+                                        SecurityConstants.Role.PARTNER,
+                                        SecurityConstants.Role.CLIENT)
+                                .requestMatchers(SecurityConstants.IGNORING_API_PATHS)
+                                .permitAll()
                                 .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2Login ->

@@ -36,42 +36,36 @@ public class CmsStatisticController {
     private final AdminStatisticService adminStatisticService;
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getStatisticOfAdmin(@ParameterObject @Valid AdminHomeStatisticFilter request) {
         AdminStatisticResponse response = adminStatisticService.getStatisticOfAdmin(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @GetMapping("/guest")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getStatisticForGuestOfAdmin(@ParameterObject @Valid AdminStatisticDateFilter request) {
         BasePagingData<AdminStatisticForGuestResponse> response = adminStatisticService.getStatisticForGuestOfAdmin(request, 0, 200);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @GetMapping("/host")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getStatisticForHostOfAdmin(@ParameterObject @Valid AdminStatisticDateFilter request) {
         BasePagingData<AdminStatisticForHostResponse> response = adminStatisticService.getStatisticForHostOfAdmin(request, 0, 200);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @GetMapping("/accom-place")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getStatisticForAccomPlaceOfAdmin(@ParameterObject @Valid AdminStatisticDateFilter request) {
         BasePagingData<AdminStatisticForAccomPlaceResponse> response = adminStatisticService.getStatisticForAccomPlaceOfAdmin(request, 0, 200);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @GetMapping("/transaction")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getStatisticForTransactionOfAdmin(@ParameterObject @Valid AdminStatisticDateFilter request) {
         BasePagingData<AdminStatisticTransactionResponse> response = adminStatisticService.getStatisticForTransactionOfAdmin(request, 0, 200);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
     }
 
     @GetMapping("/chart")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getStatisticChart(@ParameterObject @Valid AdminHomeChartFilter request) {
         AdminStatisticChartResponse response = adminStatisticService.getStatistiChartAdmin(request);
         return ResponseEntity.ok(new BaseResponse<>(true, 200, response));
