@@ -1,4 +1,4 @@
-.booking__page {
+.booking-page {
     &.content {
         margin-top: 91px;
     }
@@ -191,22 +191,27 @@
                 margin: 0px 20px 5px 20px;
             }
         }
-        .btn__booking {
-            button {
-                width: 100%;
-                height: 50px;
-                border-radius: 5px;
-                border: none;
-                background-color: var(--main-color);
-                color: #fff;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-            }
-            button:hover {
+
+        .booking-page__btn-checkout {
+            text-transform: uppercase;
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--main-color);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+
+            &:hover {
                 background-color: var(--second-color);
             }
-            button:disabled {
+            &:disabled {
                 color: var(--disabled-cl);
                 background-color: var(--disabled-br);
             }

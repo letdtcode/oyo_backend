@@ -1134,6 +1134,18 @@
   resolved "https://registry.yarnpkg.com/@stomp/stompjs/-/stompjs-7.0.0.tgz#46b5c454a9dc8262e0b20f3b3dbacaa113993077"
   integrity sha512-fGdq4wPDnSV/KyOsjq4P+zLc8MFWC3lMmP5FBgLWKPJTYcuCbAIrnRGjB7q2jHZdYCOD5vxLuFoKIYLy5/u8Pw==
 
+"@tabler/icons-react@^3.11.0":
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-react/-/icons-react-3.11.0.tgz#13f511281cd03c601a6f321a588956f29d0dbc9c"
+  integrity sha512-xHNBi9mns1slvqos+7LkP3ube4CjWrANMbxMaorzwzO9J/+y1sAEG/sN8CV8FmtpYW/9/gDR+OWCjjLLg0RmAw==
+  dependencies:
+    "@tabler/icons" "3.11.0"
+
+"@tabler/icons@3.11.0":
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.11.0.tgz#63dde1cd024f0652ab08ff2589d2b26070594cfa"
+  integrity sha512-/vZinJNvCYhdAB+RUsyCpanSPuOEKHHIZi4Uu0Bw7ilewHnQhCWUPrT704uHCRli2ROl7spADPmWzAqOganA5A==
+
 "@tufjs/canonical-json@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@tufjs/canonical-json/-/canonical-json-2.0.0.tgz#a52f61a3d7374833fca945b2549bc30a2dd40d0a"

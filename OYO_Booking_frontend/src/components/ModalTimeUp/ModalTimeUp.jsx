@@ -7,7 +7,7 @@ const ModalTimeUp = ({ open, handleContinueBooking }) => {
         <>
             <Modal aria-labelledby="unstyled-modal-title" aria-describedby="unstyled-modal-description" open={open}>
                 <div className="modal-container">
-                    <div className="modal-time-up">
+                    <div className="modal-content modal-time-up">
                         <div className="modal-time-up__header">
                             <img src={TimeOutSvg}></img>
                         </div>

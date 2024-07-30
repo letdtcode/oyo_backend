@@ -22,6 +22,8 @@ import { transLateRoom } from '~/services/thirdPartyAPI/translateAPI';
 import { showRefundPolicy } from '~/utils/showRefundPolicy';
 import CountDownTimer from '~/components/CountDownTimer/CountDownTimer';
 import ModalTimeUp from '~/components/ModalTimeUp/ModalTimeUp';
+import ModalConfirmBooking from '~/components/ModalConfirmBooking/ModalConfirmBooking';
+import { IconCreditCardPay } from '@tabler/icons-react';
 
 const BookingPage = () => {
     const dispatch = useDispatch();
@@ -51,54 +53,55 @@ const BookingPage = () => {
     const [errors, setErrors] = useState({});
 
     // 15 phút
-    const TIME_COUNT_DOWN = 15 * 60 * 1000;
+    const TIME_COUNT_DOWN = 1 * 60 * 1000;
     const [targetTimeCountDown, setTargetTimeCountDown] = useState(new Date().getTime() + TIME_COUNT_DOWN);
-    const [open, setOpen] = useState(false);
+    const [openModalTimeUp, setOpenModalTimeUp] = useState(false);
+    const [openModalConfirmBooking, setOpenModalConfirmBooking] = useState(false);
 
     const handleContinueBooking = async () => {
         setTargetTimeCountDown(new Date().getTime() + TIME_COUNT_DOWN);
-        setOpen(false);
+        setOpenModalTimeUp(false);
         // navigate('/booking');
     };
 
     const handleShowModalTimeUp = () => {
-        setOpen(true);
+        setOpenModalTimeUp(true);
     };
 
     const handleBookingRoom = () => {
-        let idAccom = dataBooking.accomId;
-        setErrors({});
-        const checkValidate = validateBooking(dataBooking);
-        if (Object.keys(checkValidate).length === 0) {
-            dispatch(globalSlice.actions.setLoading(true));
-            const bookingRequest = {
-                nameCustomer: dataBooking.nameCustomer,
-                phoneNumberCustomer: dataBooking.phoneNumberCustomer,
-                checkIn: dataBooking.checkIn,
-                checkOut: dataBooking.checkOut,
-                numAdult: dataBooking.numAdult,
-                numChild: dataBooking.numChild,
-                numBornChild: dataBooking.numBornChild,
-                paymentPolicy: dataBooking.paymentPolicy,
-                paymentMethod: dataBooking.paymentMethod,
-                accomId: dataBooking.accomId
-            };
-
-            bookingAPI.createBooking(bookingRequest).then((dataResponse) => {
-                // console.log(dataResponse);
-                window.open(dataResponse.data.bookingPaypalCheckoutLink, 'haha', 'width=500,height=800');
-                // if (dataResponse?.statusCode === 200) {
-                //     enqueueSnackbar(t('message.bookingSuccess'), { variant: 'success' });
-                //     dispatch(bookingSlice.actions.clearInfoBooking());
-                //     dispatch(globalSlice.actions.setLoading(false));
-                //     navigate(`/room-detail/${idAccom}`);
-                // } else {
-                //     enqueueSnackbar(t('message.bookingFail'), { variant: 'error' });
-                // }
-            });
-        } else {
-            setErrors(checkValidate);
-        }
+        setOpenModalConfirmBooking(true);
+        // let idAccom = dataBooking.accomId;
+        // setErrors({});
+        // const checkValidate = validateBooking(dataBooking);
+        // if (Object.keys(checkValidate).length === 0) {
+        //     dispatch(globalSlice.actions.setLoading(true));
+        //     const bookingRequest = {
+        //         nameCustomer: dataBooking.nameCustomer,
+        //         phoneNumberCustomer: dataBooking.phoneNumberCustomer,
+        //         checkIn: dataBooking.checkIn,
+        //         checkOut: dataBooking.checkOut,
+        //         numAdult: dataBooking.numAdult,
+        //         numChild: dataBooking.numChild,
+        //         numBornChild: dataBooking.numBornChild,
+        //         paymentPolicy: dataBooking.paymentPolicy,
+        //         paymentMethod: dataBooking.paymentMethod,
+        //         accomId: dataBooking.accomId
+        //     };
+        //     bookingAPI.createBooking(bookingRequest).then((dataResponse) => {
+        //         // console.log(dataResponse);
+        //         window.open(dataResponse.data.bookingPaypalCheckoutLink, 'haha', 'width=500,height=800');
+        //         // if (dataResponse?.statusCode === 200) {
+        //         //     enqueueSnackbar(t('message.bookingSuccess'), { variant: 'success' });
+        //         //     dispatch(bookingSlice.actions.clearInfoBooking());
+        //         //     dispatch(globalSlice.actions.setLoading(false));
+        //         //     navigate(`/room-detail/${idAccom}`);
+        //         // } else {
+        //         //     enqueueSnackbar(t('message.bookingFail'), { variant: 'error' });
+        //         // }
+        //     });
+        // } else {
+        //     setErrors(checkValidate);
+        // }
     };
     useEffect(() => {
         const checkValidate = validateBooking(dataBooking);
@@ -127,9 +130,11 @@ const BookingPage = () => {
 
     return (
         <FramePage>
-            <ModalTimeUp open={open} handleContinueBooking={handleContinueBooking} />
+            <ModalConfirmBooking open={openModalConfirmBooking} />
+            <ModalTimeUp open={openModalTimeUp} handleContinueBooking={handleContinueBooking} />
             <CountDownTimer targetDate={targetTimeCountDown} handleShowModalTimeUp={handleShowModalTimeUp} />
-            <div className="booking__page content">
+
+            <div className="booking-page content">
                 <div className="content-booking">
                     <h1>{t('title.bookingOfYou.tilte')}</h1>
                     <div className="row">
@@ -178,11 +183,14 @@ const BookingPage = () => {
                                     <CheckBoxPaymentPolicy paymentPolicy={dataBooking.paymentPolicy} />
                                 </div>
                             </div>
+
                             <button
                                 disabled={Object.keys(errors).length !== 0 || !dataBooking.canBooking}
                                 onClick={handleBookingRoom}
+                                className="booking-page__btn-checkout"
                             >
-                                {t('common.booking')}
+                                <IconCreditCardPay size={25} style={{ marginRight: 10 }} />
+                                <span>{t('common.booking')}</span>
                             </button>
 
                             {/* {dataBooking.paymentMethod === 'PAYPAL' ? (

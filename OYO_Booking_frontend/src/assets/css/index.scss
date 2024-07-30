@@ -360,4 +360,28 @@ html[mode='dark'] {
         background-color: initial;
         color: inherit;
     }
+
+    // Dthanh
+    .MuiModal-root {
+        .MuiBackdrop-root {
+            &.MuiModal-backdrop {
+                // opacity: 0.55 !important;
+                // background-color: #e9ecef;
+            }
+        }
+    }
+
+    .modal-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+
+        .modal-content {
+            background-color: white;
+            border-radius: 5px;
+            width: 428px;
+            padding: 10px 10px;
+        }
+    }
 }

@@ -1,0 +1,21 @@
+.modal-confirm-booking {
+    .modal-confirm-booking__header {
+    }
+    .modal-confirm-booking__content {
+    }
+    .modal-confirm-booking__payment {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        span {
+            font-size: 14px;
+        }
+    }
+    .modal-confirm-booking__footer {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+}
