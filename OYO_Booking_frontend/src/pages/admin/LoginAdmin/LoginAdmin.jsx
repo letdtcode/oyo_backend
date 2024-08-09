@@ -54,7 +54,7 @@ export default function LoginAdmin() {
         await authAPI
             .loginRequest(data)
             .then((res) => {
-                if (res.statusCode === 200 && res.data.roles.find((role) => role === 'ROLE_ADMIN')) {
+                if (res.statusCode === 200 && res.data.roles.find((role) => role === 'ADMIN')) {
                     dispatch(userSlice.actions.signinAdmin(res.data));
                     enqueueSnackbar(t('message.signin'), { variant: 'success' });
                     navigate('/admin');
