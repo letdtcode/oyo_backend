@@ -6,3 +6,5 @@ ARG JAR_FILE=target/*.jar
 COPY ./target/OYO_Booking_backend-0.0.1-SNAPSHOT.jar OYO_Booking_backend.jar
 EXPOSE 8081
 ENTRYPOINT ["java","-jar","OYO_Booking_backend.jar"]
+
+cc
