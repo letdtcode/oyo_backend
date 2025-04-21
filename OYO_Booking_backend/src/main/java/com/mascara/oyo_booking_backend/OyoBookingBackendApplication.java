@@ -31,6 +31,8 @@ public class OyoBookingBackendApplication {
         });
     }
 
+    // Test
+
     @Bean
     public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();

@@ -17,8 +17,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class UpdateAccomCategoryRequest {
 
-    @NotNull (message = "Can not be null")
-    @NotBlank (message = "Can not be blank")
+    @NotNull(message = "Can not be null")
+    @NotBlank(message = "Can not be blank")
     private String accomCateName;
 
     @NotNull
